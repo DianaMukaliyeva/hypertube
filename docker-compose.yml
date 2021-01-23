@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:4.1.8-xenial
+    container_name: mongodb
+    restart: unless-stopped
+    volumes:
+      - mongodb:/data/db
+      - mongodb_config:/data/configdb
+
+  backend_hyper:
+    build:
+      context: ./backend
+      args:
+        - NODE_ENV=development
+    container_name: backend_hyper
+    image: backend_hyper
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      - PORT=5002
+    env_file: ./.env
+    ports:
+      - ${BACKEND_PORT_DEV}:5002
+    depends_on:
+      - mongodb
+    command: ['npm', 'run', 'dev']
+    restart: unless-stopped
+
+  frontend_hyper:
+    build:
+      context: ./frontend
+    container_name: frontend_hyper
+    image: frontend_hyper
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - ${FRONTEND_PORT_DEV}:3000
+    depends_on:
+      - backend_hyper
+    environment:
+      - REACT_APP_BACKEND_URL=${BACKEND_URL}
+    command: ['npm', 'start']
+    restart: unless-stopped
+
+volumes:
+  mongodb:
+  mongodb_config:
