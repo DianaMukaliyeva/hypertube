@@ -16,3 +16,5 @@ FRONTEND_PORT_DEV=3001
 To start it - run command `make up`
 
 Then when all images will be downloaded and containers are running go to `localhost:3001`.
+
+`localhost:8081` - tool for mongo database

@@ -43,5 +43,14 @@ restart:	##@Development Restart all or c=<name> containers
 logs:	##@Development Show logs for all or c=<name> containers
 	docker-compose -f docker-compose.yml logs --tail=100 -f $(c)
 
+logs-backend:	##@Development Show logs for all or c=<name> containers
+	docker-compose -f docker-compose.yml logs --tail=100 -f backend_hyper
+
+install-backend:	##@Development Install all packages on backend
+	docker-compose -f docker-compose.yml exec backend_hyper /bin/sh -c "npm ci"
+
+install-frontend:	##@Development Install all packages on frontend
+	docker-compose -f docker-compose.yml exec frontend_hyper /bin/sh -c "npm ci"
+
 ps:	##@Development Show status of containers
 	docker-compose -f docker-compose.yml ps

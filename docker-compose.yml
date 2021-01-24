@@ -1,9 +1,17 @@
 version: '3.8'
 
 services:
-  mongodb:
+  mongoadmin:
+    image: mongo-express
+    container_name: mongoadmin
+    depends_on:
+      - mongo
+    ports:
+      - 8081:8081
+
+  mongo:
     image: mongo:4.1.8-xenial
-    container_name: mongodb
+    container_name: mongo
     restart: unless-stopped
     volumes:
       - mongodb:/data/db
@@ -25,7 +33,7 @@ services:
     ports:
       - ${BACKEND_PORT_DEV}:5002
     depends_on:
-      - mongodb
+      - mongo
     command: ['npm', 'run', 'dev']
     restart: unless-stopped
 

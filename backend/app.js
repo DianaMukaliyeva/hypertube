@@ -6,7 +6,7 @@ const app = express();
 
 // connect to Mongo daemon
 mongoose
-  .connect('mongodb://mongodb:27017/express-mongo', {
+  .connect('mongodb://mongo:27017/express-mongo', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
