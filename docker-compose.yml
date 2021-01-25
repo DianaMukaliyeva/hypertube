@@ -46,10 +46,11 @@ services:
       - ./frontend:/app
       - /app/node_modules
     ports:
-      - ${FRONTEND_PORT_DEV}:3000
+      - ${FRONTEND_PORT_DEV}:${FRONTEND_PORT_DEV}
     depends_on:
       - backend_hyper
     environment:
+      - PORT=${FRONTEND_PORT_DEV}
       - REACT_APP_BACKEND_URL=${BACKEND_URL}
     command: ['npm', 'start']
     restart: unless-stopped

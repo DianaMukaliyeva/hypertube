@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:4.1.8-xenial
+    container_name: mongo_prod
+    restart: unless-stopped
+    volumes:
+      - somedb:/data/db
+
+  backend_hyper_prod:
+    build:
+      context: ./backend
+      args:
+        - NODE_ENV=production
+    container_name: backend_hyper_prod
+    image: backend_hyper_prod
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      - PORT=5999
+    env_file: ./.env
+    ports:
+      - 5999:5999
+    depends_on:
+      - mongo
+    command: ['node', 'server.js']
+    restart: unless-stopped
+
+  frontend_hyper_prod:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+      args:
+        BACKEND_URL: http://localhost:5999
+    container_name: frontend_hyper_prod
+    image: frontend_hyper_prod
+    ports:
+      - 80:80
+    depends_on:
+      - backend_hyper_prod
+    restart: unless-stopped
+
+volumes:
+  somedb:

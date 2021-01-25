@@ -54,3 +54,21 @@ install-frontend:	##@Development Install all packages on frontend
 
 ps:	##@Development Show status of containers
 	docker-compose -f docker-compose.yml ps
+
+build-prod:	##@Production Build all the project in production mode
+	docker-compose -f docker-compose.prod.yml -p hypertube-prod build $(c)
+
+up-prod:	##@Production Build and start all the project in production mode in foreground
+	docker-compose -f docker-compose.prod.yml -p hypertube-prod up
+
+start-prod:	##@Production Start all the project in production mode in background
+	docker-compose -f docker-compose.prod.yml -p hypertube-prod up -d $(c)
+
+down-prod:	##@Production Stop and delete all containers in production
+	docker-compose -f docker-compose.prod.yml -p hypertube-prod down $(c)
+
+stop-prod:	##@Production Stop all or c=<name> containers in production
+	docker-compose -f docker-compose.prod.yml -p hypertube-prod stop $(c)
+
+logs-prod:	##@Production Show logs for all or c=<name> containers in production
+	docker-compose -f docker-compose.prod.yml -p hypertube-prod logs --tail=100 -f $(c)

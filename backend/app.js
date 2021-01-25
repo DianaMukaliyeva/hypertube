@@ -6,7 +6,7 @@ const app = express();
 
 // connect to Mongo daemon
 mongoose
-  .connect('mongodb://mongo:27017/express-mongo', {
+  .connect(`mongodb://mongo:27017/hypertube`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
