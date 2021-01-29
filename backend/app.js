@@ -2,6 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 
+import User from './models/User.js';
+import Movie from './models/Movie.js';
+
 const app = express();
 
 // connect to Mongo daemon
@@ -9,23 +12,10 @@ mongoose
   .connect(`mongodb://mongo:27017/hypertube`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
   })
   .then(() => console.log('MongoDB Connected'))
   .catch((err) => console.log(err));
-
-// DB schema
-const ItemSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-});
-
-let Item = mongoose.model('item', ItemSchema);
 
 app.use(cors());
 app.use(express.json({ limit: 100000000 }));
@@ -35,18 +25,43 @@ app.get('/', (req, res) => {
   res.json('Hi from backend!!!');
 });
 
-app.get('/items', async (req, res) => {
-  console.log('in get items');
-  const items = await Item.find();
-  res.json({ items: items });
+app.get('/users', async (req, res) => {
+  console.log('in get users');
+  const users = await User.find();
+  res.json({ users });
 });
 
-app.post('/items', (req, res) => {
-  const newItem = new Item({
-    name: req.body.name,
+app.post('/users', (req, res) => {
+  const newUser = new User({
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    email: `${req.body.username}1@example.com`,
+    username: req.body.username,
+    password: 'some password',
   });
+  newUser
+    .save()
+    .then(() => res.sendStatus(201))
+    .catch((e) => res.status(400).json(e));
+});
 
-  newItem.save().then((item) => res.json());
+app.get('/movies', async (req, res) => {
+  console.log('in get movies');
+  const movies = await Movie.find();
+  res.json({ movies });
+});
+
+app.post('/movies', async (req, res) => {
+  const newMovie = new Movie({
+    serverLocation: req.body.location,
+  });
+  console.log(newMovie);
+  try {
+    await newMovie.save();
+    res.sendStatus(201);
+  } catch (e) {
+    res.status(400).json(e);
+  }
 });
 
 export default app;

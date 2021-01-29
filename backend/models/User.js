@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
   oauth: Array,
 });
 
-UserSchema.plugin(uniqueValidator, { message: 'is already taken.' });
+userSchema.plugin(uniqueValidator, { message: 'is already taken.' });
 
 userSchema.set('toJSON', {
   transform: (document, returnedObject) => {
@@ -49,3 +49,7 @@ userSchema.set('toJSON', {
     delete returnedObject.__v;
   },
 });
+
+const User = mongoose.model('User', userSchema);
+
+export default User;
