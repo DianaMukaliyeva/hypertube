@@ -1,11 +1,22 @@
 import React from 'react';
 import axios from 'axios';
 
+import i18n from './i18n';
+import { useTranslation } from 'react-i18next';
+import { Form } from 'react-bootstrap';
+
 const baseURL = process.env.REACT_APP_BACKEND_URL;
 
 function App() {
   const [users, setUsers] = React.useState([]);
   const [movies, setMovies] = React.useState([]);
+
+  const { t } = useTranslation();
+
+  const changeLanguage = (lang) => {
+    console.log('here');
+    i18n.changeLanguage(lang);
+  };
 
   const getMovies = async () => {
     const res = await axios.get(baseURL + '/movies');
@@ -48,10 +59,20 @@ function App() {
   React.useEffect(() => {
     getUsers();
     getMovies();
+    changeLanguage('en');
   }, []);
 
   return (
     <div>
+      <Form.Group>
+        <Form.Control size="sm" as="select" onChange={(e) => changeLanguage(e.target.value)}>
+          <option value="en">English</option>
+          <option value="de">German</option>
+          <option value="fi">Finnish</option>
+          <option value="ru">Russian</option>
+        </Form.Control>
+      </Form.Group>
+      <h1>{t('Welcome')}</h1>
       <p>Hypertube is here!!!</p>
       <h3>Add movie location:</h3>
       <form onSubmit={addMovie}>
