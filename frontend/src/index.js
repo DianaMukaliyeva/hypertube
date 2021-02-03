@@ -1,14 +1,15 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './i18n';
 
 ReactDOM.render(
   <Suspense fallback={<div>Loading</div>}>
-    <React.StrictMode>
+    <Router>
       <App />
-    </React.StrictMode>
+    </Router>
   </Suspense>,
   document.getElementById('root')
 );
