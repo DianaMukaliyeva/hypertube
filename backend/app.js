@@ -17,6 +17,7 @@ mongoose
     useUnifiedTopology: true,
     useCreateIndex: true,
   })
+  // eslint-disable-next-line no-console
   .then(() => console.log('MongoDB Connected'))
   .catch((err) => console.log(err));
 
