@@ -5,6 +5,8 @@ import mongoose from 'mongoose';
 import User from './models/User.js';
 import Movie from './models/Movie.js';
 
+import { fetchYTSMovieList } from './utilities/fetchMovieList.js'
+
 const app = express();
 
 // connect to Mongo daemon
@@ -20,18 +22,18 @@ mongoose
 app.use(cors());
 app.use(express.json({ limit: 100000000 }));
 
-app.get('/', (req, res) => {
+app.get('/', (req, res, next) => {
   console.log('we are here');
   res.json('Hi from backend!!!');
 });
 
-app.get('/users', async (req, res) => {
+app.get('/users', async (req, res, next) => {
   console.log('in get users');
   const users = await User.find();
   res.json({ users });
 });
 
-app.post('/users', (req, res) => {
+app.post('/users', (req, res, next) => {
   const newUser = new User({
     firstname: req.body.firstname,
     lastname: req.body.lastname,
@@ -45,13 +47,12 @@ app.post('/users', (req, res) => {
     .catch((e) => res.status(400).json(e));
 });
 
-app.get('/movies', async (req, res) => {
-  console.log('in get movies');
-  const movies = await Movie.find();
-  res.json({ movies });
+app.get('/movies', async (req, res, next) => {
+  const page = req.query.page || 1
+  res.json(await fetchYTSMovieList(page));
 });
 
-app.post('/movies', async (req, res) => {
+app.post('/movies', async (req, res, next) => {
   const newMovie = new Movie({
     serverLocation: req.body.location,
   });
