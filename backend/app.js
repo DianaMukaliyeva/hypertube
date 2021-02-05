@@ -3,7 +3,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import swaggerUi from 'swagger-ui-express';
 import yaml from 'js-yaml';
-import fs from 'fs';
+import fs from "fs";
 
 import User from './models/User.js';
 import Movie from './models/Movie.js';
