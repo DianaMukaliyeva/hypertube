@@ -1,37 +1,30 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-// import { Navbar } from 'react-bootstrap';
-
-// const Navigation = () => {
-//   return (
-//     <Navbar bg="light" expand="lg">
-//       <Navbar.Brand href="#home">Hypertube</Navbar.Brand>
-//       <Navbar.Toggle aria-controls="basic-navbar-nav" />
-//       <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
-//     </Navbar>
-//   );
-// };
-// export default Navigation;
+import { Navbar, Nav } from 'react-bootstrap';
+import { PersonFill } from 'react-bootstrap-icons';
+import { CameraReelsFill } from 'react-bootstrap-icons';
+import { BoxArrowRight } from 'react-bootstrap-icons';
 
 const Navigation = () => {
-  const padding = {
-    paddingRight: 5,
-  };
   return (
-    <div>
-      <Link style={padding} to="/">
+    <Navbar bg="light" expand="lg">
+      <Navbar.Brand href="/hypertube">
         {' '}
-        home
-      </Link>
-      <Link style={padding} to="/about">
-        {' '}
-        about
-      </Link>
-      <Link style={padding} to="/hypertube">
-        {' '}
-        hypertube
-      </Link>
-    </div>
+        <CameraReelsFill />
+        Hypertube
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Nav className="ml-auto">
+        <Nav.Link href="/profile">
+          <PersonFill />
+          Profile
+        </Nav.Link>
+        <Nav.Link href="/">
+          <BoxArrowRight />
+          Logout
+        </Nav.Link>
+      </Nav>
+    </Navbar>
   );
 };
+
 export default Navigation;
