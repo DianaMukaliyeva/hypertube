@@ -24,9 +24,9 @@ const Landing = () => {
   };
 
   return (
-    <div>
+    <div style={{ marginTop: '50px', textAlign: 'center' }}>
       <h1>{t('Welcome')}</h1>
-      <Form style={{ marginTop: '100px' }}>
+      <Form>
         <Form.Group>
           <Form.Control
             size="sm"
