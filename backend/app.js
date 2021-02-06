@@ -9,6 +9,8 @@ import fs from 'fs';
 import User from './models/User.js';
 import Movie from './models/Movie.js';
 
+import movieListUtils from './utilities/fetchMovieList.js';
+
 const app = express();
 
 // connect to Mongo daemon
@@ -50,9 +52,8 @@ app.post('/users', (req, res) => {
 });
 
 app.get('/movies', async (req, res) => {
-  console.log('in get movies');
-  const movies = await Movie.find();
-  res.json({ movies });
+  const page = req.query.page || 1;
+  res.json(await movieListUtils.fetchYTSMovieList(page));
 });
 
 app.post('/movies', async (req, res) => {
