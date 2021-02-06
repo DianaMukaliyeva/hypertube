@@ -66,8 +66,11 @@ stop-prod:	##@Production Stop all or c=<name> containers in production
 logs-prod:	##@Production Show logs for all or c=<name> containers in production
 	docker-compose -f docker-compose.prod.yml -p hypertube-prod logs --tail=100 -f $(c)
 
+#  docker-compose -f docker-compose.yml exec frontend_hyper /bin/sh -c "npm i react-i18next i18next --save"
+
 npm-back:	##@Development Install all packages on backend
 	docker-compose -f docker-compose.yml exec backend_hyper /bin/sh -c "npm i $(install)"
 
 npm-front:	##@Development Install all packages on frontend
 	docker-compose -f docker-compose.yml exec frontend_hyper /bin/sh -c "npm i $(install)"
+
