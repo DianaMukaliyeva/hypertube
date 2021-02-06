@@ -23,37 +23,40 @@ TBC....
 
 **Esa** - _Back/Front_ - [check his profile](https://github.com/ehalmkro)
 
-
 ## Tech Stack
+
 - **Language:** Javascript
 - **Database:** Mongo
 - **[Micro]Frameworks:** NodeJs - Express - React
-- **Libraries:** React Boostrap???? 
+- **Libraries:** React Boostrap????
 
-- **Internal API:** REST, view documentation here 
+- **Internal API:** REST, view documentation here
 - **External API:** torrent 1, torrent 2, IMDB?, subtitles?
 
 ## Functionality
 
 ### User
+
 - Authentication with Omniauth stategy : username/pass, Gmail, 42
 - Profile: username, firstname, lastname, avatar, email
-- Settings: interface available in English (by default), ?, ? 
+- Settings: interface available in English (by default), ?, ?
 
 ### Movie gallery
+
 - Infinite scroll gallery of thumbnail and move data: title, production year, IMDb not, watched/unwatched
-- Selection is created from two torrent listing 
+- Selection is created from two torrent listing
 - Filter / Sort: title, genre, IMDb grade, year
-- Search by title 
+- Search by title
 
 ### Video player
+
 - Movie details: title, summary, casting, year, length, rates
 - Subtitles in English, ?, ?, ? (if available)
 - Uninterrupted streaming
 - List of comments, option of leaving a comment
 - Movies unwatched for a month erased from the server
 
-## Run locally 
+## Run locally
 
 You need to have `.env` file at the root of the project:
 

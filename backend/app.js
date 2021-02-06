@@ -1,6 +1,10 @@
+/* eslint-disable no-console */
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import swaggerUi from 'swagger-ui-express';
+import yaml from 'js-yaml';
+import fs from 'fs';
 
 import User from './models/User.js';
 import Movie from './models/Movie.js';
@@ -11,7 +15,7 @@ const app = express();
 
 // connect to Mongo daemon
 mongoose
-  .connect(`mongodb://mongo:27017/hypertube`, {
+  .connect('mongodb://mongo:27017/hypertube', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -64,5 +68,16 @@ app.post('/movies', async (req, res, next) => {
     res.status(400).json(e);
   }
 });
+
+// Get document, or throw exception on error
+let doc;
+try {
+  doc = yaml.load(fs.readFileSync('./docs/docs.yaml', 'utf8'));
+} catch (e) {
+  console.log(e);
+}
+
+app.use(swaggerUi.serve);
+app.get('/docs', swaggerUi.setup(doc));
 
 export default app;
