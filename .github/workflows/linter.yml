@@ -21,8 +21,18 @@ jobs:
         run: |
           cd backend
           npm install
-          
+
+      - name: Install React dependencies
+        run: |
+          cd frontend
+          npm install
+
       - name: Run linters
-        run: | 
+        run: |
           cd backend
+          npm run lint
+
+      - name: Run linters in frontend
+        run: |
+          cd frontend
           npm run lint
