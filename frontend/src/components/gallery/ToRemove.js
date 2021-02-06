@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
+// eslint-disable-next-line no-undef
 const baseURL = process.env.REACT_APP_BACKEND_URL;
 
 const ToRemove = () => {
