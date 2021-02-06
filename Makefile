@@ -36,10 +36,6 @@ destroy:	##@Development Stop and delete all containers, their volumes and networ
 destroy-all:	##@Development Stop and delete all containers, their images, network and volumes
 	docker-compose -f docker-compose.yml down -v --rmi all $(c)
 
-restart:	##@Development Restart all or c=<name> containers
-	docker-compose -f docker-compose.yml stop $(c)
-	docker-compose -f docker-compose.yml up -d $(c)
-
 logs:	##@Development Show logs for all or c=<name> containers
 	docker-compose -f docker-compose.yml logs --tail=100 -f $(c)
 
@@ -51,9 +47,6 @@ install-backend:	##@Development Install all packages on backend
 
 install-frontend:	##@Development Install all packages on frontend
 	docker-compose -f docker-compose.yml exec frontend_hyper /bin/sh -c "npm ci"
-
-ps:	##@Development Show status of containers
-	docker-compose -f docker-compose.yml ps
 
 build-prod:	##@Production Build all the project in production mode
 	docker-compose -f docker-compose.prod.yml -p hypertube-prod build $(c)
@@ -73,5 +66,11 @@ stop-prod:	##@Production Stop all or c=<name> containers in production
 logs-prod:	##@Production Show logs for all or c=<name> containers in production
 	docker-compose -f docker-compose.prod.yml -p hypertube-prod logs --tail=100 -f $(c)
 
-
 #  docker-compose -f docker-compose.yml exec frontend_hyper /bin/sh -c "npm i react-i18next i18next --save"
+
+npm-back:	##@Development Install all packages on backend
+	docker-compose -f docker-compose.yml exec backend_hyper /bin/sh -c "npm i $(install)"
+
+npm-front:	##@Development Install all packages on frontend
+	docker-compose -f docker-compose.yml exec frontend_hyper /bin/sh -c "npm i $(install)"
+

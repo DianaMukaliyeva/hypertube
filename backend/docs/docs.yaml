@@ -1,0 +1,764 @@
+---
+openapi: 3.0.0
+info:
+  title: Hypertube
+  description: This is a Hypertube API
+  contact:
+    email: you@your-company.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/tes929/Hypertube/1.0.0
+    description: SwaggerHub API Auto Mocking
+tags:
+  - name: Auth
+    description: user auth routes.
+  - name: Users
+    description: user profile routes
+  - name: Movies
+    description: movie gallery routes
+paths:
+  /api/auth/login:
+    post:
+      tags:
+        - Auth
+      summary: user login
+      operationId: userLogin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body'
+        required: true
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse400'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+  /api/auth/gmail:
+    get:
+      tags:
+        - Auth
+      summary: login with gmail
+      operationId: gmailLogin
+      responses:
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+  /api/auth/42:
+    get:
+      tags:
+        - Auth
+      summary: login with gmail
+      operationId: 42Login
+      responses:
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+  /api/auth/recoverylink:
+    post:
+      tags:
+        - Auth
+      summary: send recover link
+      operationId: recoverLInk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_1'
+        required: true
+      responses:
+        '200':
+          description: recovery email has been successfully sent
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse400'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+  /api/users:
+    post:
+      tags:
+        - Users
+      summary: create account
+      operationId: createAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_2'
+        required: true
+      responses:
+        '201':
+          description: user successfully created
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse400'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+    patch:
+      tags:
+        - Users
+      summary: Change password
+      operationId: changePwd
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_3'
+        required: true
+      responses:
+        '200':
+          description: password successfully updated
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse400'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+  /api/users/{userId}:
+    get:
+      tags:
+        - Users
+      summary: get user details
+      operationId: getUser
+      parameters:
+        - name: userId
+          in: path
+          description: user id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: integer
+            example: 456
+      responses:
+        '200':
+          description: user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse400'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+    put:
+      tags:
+        - Users
+      summary: update user profile
+      operationId: updateUser
+      parameters:
+        - name: userId
+          in: path
+          description: user id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: integer
+            example: 456
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_4'
+        required: true
+      responses:
+        '200':
+          description: user successfully updated
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse400'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+  /api/movies:
+    get:
+      tags:
+        - Movies
+      summary: get list of movies
+      operationId: getMovies
+      parameters:
+        - name: decade
+          in: query
+          description: list of decades separated by comma
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: 2010,2000,1973
+        - name: imdb
+          in: query
+          description: list of imdb ranking separated by comma
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: 6,7,8
+        - name: genre
+          in: query
+          description: list of genres separated by comma
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: comedy,fantasy
+        - name: sort
+          in: query
+          description: sort 'a-z', 'z-a' 'newest', 'oldest', 'most-popular', 'least-popular'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: a-z
+        - name: search
+          in: query
+          description: search by movie's title
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: breaking
+      responses:
+        '200':
+          description: list of movies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse400'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+  /api/movies/genres:
+    get:
+      tags:
+        - Movies
+      summary: get list of genres
+      operationId: getGenres
+      responses:
+        '200':
+          description: list of genres
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse400'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+  /api/movies/{movieId}:
+    get:
+      tags:
+        - Movies
+      summary: get Movie
+      operationId: getMovieInfo
+      parameters:
+        - name: movieId
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: integer
+            example: 456
+      responses:
+        '200':
+          description: movie information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_4'
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse400'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+  /api/movies/{movieId}/comments:
+    post:
+      tags:
+        - Movies
+      summary: add comment to Movie
+      operationId: addComment
+      parameters:
+        - name: movieId
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: integer
+            example: 456
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_5'
+        required: true
+      responses:
+        '201':
+          description: comment added
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse400'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+components:
+  schemas:
+    ErrorResponse401-500:
+      required:
+        - errorType
+      type: object
+      properties:
+        errorType:
+          type: string
+          example: string
+    ErrorResponse400:
+      required:
+        - details
+        - errorType
+      type: object
+      properties:
+        errorType:
+          type: string
+          example: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorResponse400_details'
+    body:
+      required:
+        - password
+        - username
+      type: object
+      properties:
+        username:
+          type: string
+          example: jane88
+        password:
+          type: string
+          example: 123aaaa
+    inline_response_200:
+      type: object
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+    body_1:
+      required:
+        - username
+      type: object
+      properties:
+        username:
+          type: string
+          example: jane88
+    body_2:
+      required:
+        - confirmpassword
+        - email
+        - firstname
+        - lastname
+        - password
+        - username
+      type: object
+      properties:
+        username:
+          type: string
+          example: jane88
+        email:
+          type: string
+          example: jane88@test.com
+        firstname:
+          type: string
+          example: Jane
+        lastname:
+          type: string
+          example: Doe
+        password:
+          type: string
+          example: jane88ssssss
+        confirmpassword:
+          type: string
+          example: jane88ssssss
+    body_3:
+      required:
+        - confirmPassword
+        - newPassword
+        - token
+        - userId
+      type: object
+      properties:
+        newPassword:
+          type: string
+          example: jane88
+        confirmPassword:
+          type: string
+          example: jane88
+        token:
+          type: string
+          description: from recovery link params
+          example: some long token
+        userId:
+          type: integer
+          description: from recovery link params
+          example: 556
+    inline_response_200_1:
+      required:
+        - avatarPath
+        - firstname
+        - lastname
+        - username
+      type: object
+      properties:
+        username:
+          type: string
+          example: johny
+        firstname:
+          type: string
+          example: John
+        lastname:
+          type: string
+          example: Doe
+        email:
+          type: string
+          example: john.doe@example.com
+        avatarId:
+          type: integer
+          example: 465
+        avatarPath:
+          type: string
+          example: /images/765
+        language:
+          type: string
+          example: en
+      description: if user's own info, then send everything, otherwise - only requried
+    apiusersuserId_avatar:
+      type: object
+      properties:
+        oldId:
+          type: integer
+          example: 4568
+        base64:
+          type: string
+          example: some base 64
+    body_4:
+      required:
+        - oldPassword
+      type: object
+      properties:
+        username:
+          type: string
+          example: jane88
+        email:
+          type: string
+          example: jane88@test.com
+        firstname:
+          type: string
+          example: Jane
+        lastname:
+          type: string
+          example: Doe
+        avatar:
+          $ref: '#/components/schemas/apiusersuserId_avatar'
+        oldPassword:
+          type: string
+          example: old password
+        newPassword:
+          type: string
+          example: jane88ssssss
+        confirmPassword:
+          type: string
+          example: jane88ssssss
+    inline_response_200_2:
+      type: object
+      properties:
+        movies:
+          type: array
+          items:
+            $ref: '#/components/schemas/inline_response_200_2_movies'
+    inline_response_200_3:
+      type: object
+      properties:
+        genres:
+          type: array
+          example:
+            - comedy
+            - drama
+            - fantasy
+          items:
+            type: string
+    inline_response_200_4:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Epidemia
+        imdbRanking:
+          type: number
+          example: 8.4
+        year:
+          type: integer
+          example: 1984
+        genre:
+          type: string
+          example: comedy
+        description:
+          type: string
+          example: Cool movie
+        length:
+          type: integer
+          description: in minutes
+          example: 85
+        director:
+          type: string
+          example: Mike King
+        producer:
+          type: string
+          example: Alex Cohon
+        cast:
+          type: array
+          example:
+            - John Smith
+            - Rebecca Vincor
+          items:
+            type: string
+        magnet:
+          type: string
+          example: ???
+        subtitles:
+          $ref: '#/components/schemas/inline_response_200_4_subtitles'
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/inline_response_200_4_comments'
+    body_5:
+      type: object
+      properties:
+        userId:
+          type: integer
+          example: 465
+        message:
+          type: string
+          example: new comment
+    ErrorResponse400_details:
+      required:
+        - param
+        - provided
+        - reason
+      type: object
+      properties:
+        param:
+          type: string
+          example: string
+        provided:
+          type: string
+          example: string
+        reason:
+          type: string
+          example: string
+    inline_response_200_2_movies:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Epidemia
+        imdbNote:
+          type: string
+          example: ???
+        year:
+          type: integer
+          example: 1984
+        thumbnail:
+          type: string
+          example: /movies/movidl;
+        magnet:
+          type: string
+          example: ???
+        watched:
+          type: boolean
+          example: true
+    inline_response_200_4_subtitles:
+      type: object
+      properties:
+        en:
+          type: string
+          example: ???
+        userLanguage:
+          type: string
+          example: ???
+    inline_response_200_4_comments:
+      type: object
+      properties:
+        userId:
+          type: integer
+          example: 465
+        username:
+          type: string
+          example: John Doe
+        message:
+          type: string
+          example: amazing
+  responses:
+    '500ApiError':
+      description: Internal Server Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse401-500'
+    '409ApiError':
+      description: Conflict.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse401-500'
+    '404ApiError':
+      description: Not Found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse401-500'
+    '403ApiError':
+      description: Forbidden.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse401-500'
+    '401ApiError':
+      description: Unauthorized.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse401-500'
+    '400ApiError':
+      description: Bad Request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse400'
