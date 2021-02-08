@@ -8,6 +8,10 @@ describe('User API tests', () => {
   test('test okay', async () => {
     await request.get('/test').expect(200);
   });
+
+  test('test not okay', async () => {
+    await request.get('/test').expect(201);
+  });
 });
 
 afterAll(async () => {
