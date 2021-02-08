@@ -28,6 +28,11 @@ app.get('/', (req, res) => {
   res.json('Hi from backend!!!');
 });
 
+app.get('/test', (req, res) => {
+  console.log('DO NOT DELETE me, Im here for the github action tests! for now...');
+  res.status(200).json('test');
+});
+
 app.use('/movies', movieRoute);
 app.use('/users', userRoute);
 
