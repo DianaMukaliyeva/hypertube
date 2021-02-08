@@ -7,19 +7,18 @@ import { Form, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
 const Landing = () => {
+  const changeLanguage = (lang) => {
+    i18n.changeLanguage(lang);
+  };
   const { t } = useTranslation();
   useEffect(() => {
     changeLanguage('en');
   }, []);
 
-  const changeLanguage = (lang) => {
-    i18n.changeLanguage(lang);
-  };
-
   const history = useHistory();
 
   const login = () => {
-    let path = 'hypertube';
+    const path = 'hypertube';
     history.push(path);
   };
 

@@ -7,6 +7,24 @@
         "eslint:recommended",
         "plugin:react/recommended"
     ],
+    "settings": {
+        "react": {
+          "createClass": "createReactClass", 
+          "pragma": "React", 
+          "fragment": "Fragment",  
+          "version": "detect",
+          "flowVersion": "0.53" 
+        },
+        "propWrapperFunctions": [
+            "forbidExtraProps",
+            {"property": "freeze", "object": "Object"},
+            {"property": "myFavoriteWrapper"}
+        ],
+        "linkComponents": [
+          "Hyperlink",
+          {"name": "Link", "linkAttribute": "to"}
+        ]
+      },
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -19,6 +37,24 @@
     ],
     "rules": {
         "quotes": ["error", "single"],
-        "semi": ["error", "always", { "omitLastInOneLineBlock": true}]
+        "semi": ["error", "always", { "omitLastInOneLineBlock": true}],
+        "no-extra-semi": "error",
+        "eqeqeq": ["error", "always"],
+        "dot-notation": "error",
+        "no-empty-function": "error",
+        "no-lone-blocks": "error",
+        "no-magic-numbers": "error",
+        "no-useless-catch": "error",
+        "no-useless-return": "error",
+        "no-void": ["error", { "allowAsStatement": true }],
+        "require-await": "error",
+        "no-unused-vars": "error",
+        "no-use-before-define": "error",
+        "default-case": "error",
+        "max-len": ["error", { "code": 100, "tabWidth": 2 }],
+        "max-params": ["error", 3],
+        "no-trailing-spaces": "error",
+        "no-var": "error",
+        "prefer-const": "error"
     }
 }
