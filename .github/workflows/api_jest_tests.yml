@@ -1,0 +1,28 @@
+name: API Tests
+
+on: push
+
+jobs:
+  run-linters:
+    name: Run tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15
+
+      # ESLint and Prettier must be in `package.json`
+      - name: Install Node.js dependencies
+        run: |
+          cd backend
+          npm install
+          
+      - name: Run tests
+        run: |
+          cd backend
+          npm test
