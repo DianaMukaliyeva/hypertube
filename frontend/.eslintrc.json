@@ -43,7 +43,6 @@
         "dot-notation": "error",
         "no-empty-function": "error",
         "no-lone-blocks": "error",
-        "no-magic-numbers": "error",
         "no-useless-catch": "error",
         "no-useless-return": "error",
         "no-void": ["error", { "allowAsStatement": true }],
