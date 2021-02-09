@@ -5,6 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { Form, Button } from 'react-bootstrap';
 
 import { useHistory } from 'react-router-dom';
+import CustomModal from '../common/CustomModal';
+import LoginForm from '../user/LoginForm';
+
+import useModal from '../../hooks/useModal';
 
 const Landing = () => {
   const changeLanguage = (lang) => {
@@ -21,6 +25,8 @@ const Landing = () => {
     const path = 'hypertube';
     history.push(path);
   };
+
+  const loginModal = useModal(<LoginForm />);
 
   return (
     <div style={{ marginTop: '50px', textAlign: 'center' }}>
@@ -40,8 +46,12 @@ const Landing = () => {
         </Form.Group>
       </Form>
       <Button variant="primary" onClick={login}>
+        go to next page
+      </Button>
+      <Button variant="secondary" onClick={loginModal.handleClickOpen}>
         Login
       </Button>
+      <CustomModal {...loginModal} />
     </div>
   );
 };

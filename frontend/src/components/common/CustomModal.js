@@ -40,22 +40,18 @@ const DialogContent = withStyles((theme) => ({
     padding: theme.spacing(2),
   },
 }))(MuiDialogContent);
-s;
 
 const CustomModal = (props) => {
-  console.log('here', props);
   return (
     <div>
       <Dialog
-        fullWidth="true"
+        fullWidth
         maxWidth="md"
         onClose={props.handleClose}
         aria-labelledby="customized-dialog-title"
         open={props.open}>
-        <DialogTitle id="customized-dialog-title" onClose={props.handleClose}>
-          Modal title
-        </DialogTitle>
-        <DialogContent dividers> {props.component}</DialogContent>
+        <DialogTitle id="customized-dialog-title" onClose={props.handleClose}></DialogTitle>
+        <DialogContent> {props.component}</DialogContent>
       </Dialog>
     </div>
   );
