@@ -5,8 +5,11 @@ import mongoose from 'mongoose';
 import swaggerUi from 'swagger-ui-express';
 import yaml from 'js-yaml';
 import fs from 'fs';
+
 import movieRoute from './routes/movies.js';
 import userRoute from './routes/users.js';
+
+import middleware from './utilities/middleware.js';
 
 const app = express();
 
@@ -33,8 +36,11 @@ app.get('/test', (req, res) => {
   res.status(200).json('test');
 });
 
-app.use('/movies', movieRoute);
-app.use('/users', userRoute);
+app.use('/api/movies', movieRoute);
+app.use('/api/users', movieRoute);
+
+app.use('/movies', movieRoute); // THIS ROUTE DOES NOT COMPLY WITH API SPECS, HERE FOR COMPATIBILITY, WILL BE DEPRECATED
+app.use('/users', userRoute); // THIS ROUTE DOES NOT COMPLY WITH API SPECS, HERE FOR COMPATIBILITY, WILL BE DEPRECATED
 
 // Get document, or throw exception on error TODO: move this to /utilities
 let doc;
@@ -46,5 +52,8 @@ try {
 
 app.use(swaggerUi.serve);
 app.get('/docs', swaggerUi.setup(doc));
+
+app.use(middleware.errorHandler);
+app.use(middleware.unknownEndpoint);
 
 export default app;
