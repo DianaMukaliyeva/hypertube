@@ -2,13 +2,15 @@ import React, { useEffect } from 'react';
 import i18n from '../../i18n';
 import { useTranslation } from 'react-i18next';
 
-import { Form, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
 import { useHistory } from 'react-router-dom';
 import CustomModal from '../common/CustomModal';
 import LoginForm from '../user/LoginForm';
 
 import useModal from '../../hooks/useModal';
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 
 const Landing = () => {
   const changeLanguage = (lang) => {
@@ -45,12 +47,22 @@ const Landing = () => {
           </Form.Control>
         </Form.Group>
       </Form>
-      <Button variant="primary" onClick={login}>
-        go to next page
-      </Button>
-      <Button variant="secondary" onClick={loginModal.handleClickOpen}>
-        Login
-      </Button>
+      <Box display="flex" justifyContent="center">
+        <Box mr={2}>
+          <Button type="submit" variant="outlined" color="primary" onClick={login}>
+            go to next page
+          </Button>
+        </Box>
+        <Box>
+          <Button
+            type="submit"
+            variant="outlined"
+            color="secondary"
+            onClick={loginModal.handleClickOpen}>
+            Login
+          </Button>
+        </Box>
+      </Box>
       <CustomModal {...loginModal} />
     </div>
   );

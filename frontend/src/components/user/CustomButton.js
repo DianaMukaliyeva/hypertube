@@ -15,7 +15,7 @@ const CustomButton = ({ handleLogin }) => {
     <Button
       type="submit"
       fullWidth
-      variant="contained"
+      variant="outlined"
       color="primary"
       className={classes.submit}
       onClick={handleLogin}>
