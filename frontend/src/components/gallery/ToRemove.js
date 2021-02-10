@@ -61,11 +61,7 @@ const ToRemove = () => {
         <button type="submit">Save</button>
       </form>
       <h3>List of all movies locations:</h3>
-      <ul>
-        {movies.map((movie, index) => (
-          <li key={index}>{movie.serverLocation}</li>
-        ))}
-      </ul>
+      <ul>{movies && movies.map((movie, index) => <li key={index}>{movie.serverLocation}</li>)}</ul>
       <h3>Add user:</h3>
       <form onSubmit={addUser}>
         <div>
