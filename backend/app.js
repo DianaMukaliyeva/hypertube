@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import express from 'express';
 import cors from 'cors';
-import mongoose from 'mongoose';
 import swaggerUi from 'swagger-ui-express';
 import yaml from 'js-yaml';
 import fs from 'fs';
@@ -10,18 +9,10 @@ import movieRoute from './routes/movies.js';
 import userRoute from './routes/users.js';
 
 import middleware from './utilities/middleware.js';
+import database from './utilities/database.js';
 
 const app = express();
-
-// connect to Mongo daemon
-mongoose // TODO: async/await for these if possible, it's 2021 ;)
-  .connect('mongodb://mongo:27017/hypertube', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .then(() => console.log('MongoDB Connected'))
-  .catch((err) => console.log(err));
+database.connect();
 
 app.use(cors());
 app.use(express.json({ limit: 100000000 }));
@@ -37,10 +28,7 @@ app.get('/test', (req, res) => {
 });
 
 app.use('/api/movies', movieRoute);
-app.use('/api/users', movieRoute);
-
-app.use('/movies', movieRoute); // THIS ROUTE DOES NOT COMPLY WITH API SPECS, HERE FOR COMPATIBILITY, WILL BE DEPRECATED
-app.use('/users', userRoute); // THIS ROUTE DOES NOT COMPLY WITH API SPECS, HERE FOR COMPATIBILITY, WILL BE DEPRECATED
+app.use('/api/users', userRoute);
 
 // Get document, or throw exception on error TODO: move this to /utilities
 let doc;
