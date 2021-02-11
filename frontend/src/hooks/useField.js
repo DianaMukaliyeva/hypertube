@@ -29,7 +29,7 @@ const useField = (type, field) => {
         setValues({
           value: newValue,
           error: true,
-          helperText: err.errors,
+          helperText: t(err.errors),
         });
       });
   };
