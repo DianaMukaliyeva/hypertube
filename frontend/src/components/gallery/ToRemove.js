@@ -10,19 +10,19 @@ const ToRemove = () => {
   const [movies, setMovies] = React.useState([]);
 
   const getMovies = async () => {
-    const res = await axios.get(baseURL + '/movies');
+    const res = await axios.get(baseURL + '/api/movies');
     setMovies(res.data.movies);
   };
 
   const getUsers = async () => {
-    const res = await axios.get(baseURL + '/users');
+    const res = await axios.get(baseURL + '/api/users');
     setUsers(res.data.users);
   };
 
   const addUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(baseURL + '/users', {
+      await axios.post(baseURL + '/api/users', {
         username: e.target.username.value,
         firstname: e.target.firstname.value,
         lastname: e.target.lastname.value,
@@ -61,7 +61,7 @@ const ToRemove = () => {
         <button type="submit">Save</button>
       </form>
       <h3>List of all movies locations:</h3>
-      <ul>{movies && movies.map((movie, index) => <li key={index}>{movie.serverLocation}</li>)}</ul>
+      <ul>{movies && movies.map((movie, index) => <li key={index}>{movie.title}</li>)}</ul>
       <h3>Add user:</h3>
       <form onSubmit={addUser}>
         <div>
