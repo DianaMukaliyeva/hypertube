@@ -1,3 +1,25 @@
 {
-    "Welcome": "Привет!"
+    "Welcome": "Привет!",
+    "btn": {
+        "send": "Отправить"
+    },
+    "navbar": {
+        "profile": "Профиль",
+        "logout": "Выход"
+    },
+    "form": {
+        "username": "Логин",
+        "firstName": "Имя",
+        "lastName": "Фамилия",
+        "password": "Пароль",
+        "currentPassword": "Текущий пароль",
+        "newPassword": "Новый пароль",
+        "confirmPassword": "Подтвердить пароль",
+        "required": "обязательное поле",
+        "minLen": "минимальное кол-во знаков {{number}}",
+        "maxLen": "must be max {{number}} characters",
+        "nameFormat": "must contain only letters and numbers",
+        "correct": "верно"
+
+    }
 }

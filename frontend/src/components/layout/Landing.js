@@ -2,11 +2,18 @@ import React, { useEffect } from 'react';
 import i18n from '../../i18n';
 import { useTranslation } from 'react-i18next';
 
-import { Form, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
 import { useHistory } from 'react-router-dom';
+import CustomModal from '../common/CustomModal';
+import LoginForm from '../user/LoginForm';
 
-const Landing = () => {
+import useModal from '../../hooks/useModal';
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+import PropTypes from 'prop-types';
+
+const Landing = ({ user, setUser }) => {
   const changeLanguage = (lang) => {
     i18n.changeLanguage(lang);
   };
@@ -22,6 +29,9 @@ const Landing = () => {
     history.push(path);
   };
 
+  const loginModal = useModal(<LoginForm user={user} setUser={setUser} />);
+
+  //
   return (
     <div style={{ marginTop: '50px', textAlign: 'center' }}>
       <h1>{t('Welcome')}</h1>
@@ -39,11 +49,30 @@ const Landing = () => {
           </Form.Control>
         </Form.Group>
       </Form>
-      <Button variant="primary" onClick={login}>
-        Login
-      </Button>
+      <Box display="flex" justifyContent="center">
+        <Box mr={2}>
+          <Button type="submit" variant="outlined" color="primary" onClick={login}>
+            go to next page
+          </Button>
+        </Box>
+        <Box>
+          <Button
+            type="submit"
+            variant="outlined"
+            color="secondary"
+            onClick={loginModal.handleClickOpen}>
+            Login
+          </Button>
+        </Box>
+      </Box>
+      <CustomModal {...loginModal} />
     </div>
   );
+};
+
+Landing.propTypes = {
+  user: PropTypes.object.isRequired,
+  setUser: PropTypes.func.isRequired,
 };
 
 export default Landing;
