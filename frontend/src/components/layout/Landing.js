@@ -11,8 +11,9 @@ import LoginForm from '../user/LoginForm';
 import useModal from '../../hooks/useModal';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
+import PropTypes from 'prop-types';
 
-const Landing = () => {
+const Landing = ({ user, setUser }) => {
   const changeLanguage = (lang) => {
     i18n.changeLanguage(lang);
   };
@@ -28,8 +29,9 @@ const Landing = () => {
     history.push(path);
   };
 
-  const loginModal = useModal(<LoginForm />);
+  const loginModal = useModal(<LoginForm user={user} setUser={setUser} />);
 
+  //
   return (
     <div style={{ marginTop: '50px', textAlign: 'center' }}>
       <h1>{t('Welcome')}</h1>
@@ -66,6 +68,11 @@ const Landing = () => {
       <CustomModal {...loginModal} />
     </div>
   );
+};
+
+Landing.propTypes = {
+  user: PropTypes.object.isRequired,
+  setUser: PropTypes.func.isRequired,
 };
 
 export default Landing;

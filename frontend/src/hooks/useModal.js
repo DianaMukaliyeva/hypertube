@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useModal = (component) => {
+const useModal = (component, fullScreen) => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -15,6 +15,7 @@ const useModal = (component) => {
     setOpen,
     handleClickOpen,
     handleClose,
+    fullScreen,
   };
 };
 
