@@ -1,6 +1,5 @@
 import React from 'react';
-// import i18n from './../../i18n';
-// import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import { withRouter } from 'react-router-dom';
 
@@ -13,19 +12,26 @@ import Box from '@material-ui/core/Box';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-// import Container from '@material-ui/core/Container';
 
-const NavBar = () => {
-  //   const { t } = useTranslation();
+import MyProfile from '../user/MyProfile';
+import useModal from '../../hooks/useModal';
+import CustomModal from '../common/CustomModal';
 
-  //   useEffect(() => {
-  //     i18n.changeLanguage(lang);
-  //   }, [lang]);
+import PropTypes from 'prop-types';
+
+const NavBar = ({ user, history }) => {
+  const { t } = useTranslation();
 
   const handleClick = (url) => {
-    console.log('url', url);
-    // handleNavigation(url);
+    history.push(url);
   };
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    history.push('/');
+  };
+
+  // TO DO add responsiveness: move navbar to bottom, center icons
+  const profile = useModal(<MyProfile user={user} />);
 
   return (
     <AppBar style={{ padding: 0, backgroundColor: '#1b1d2f' }}>
@@ -38,7 +44,7 @@ const NavBar = () => {
                 size="small"
                 color="inherit"
                 key="hypertube"
-                onClick={() => handleClick('/')}>
+                onClick={() => handleClick('/hypertube')}>
                 <Typography style={{ color: 'white' }}>
                   <VideocamIcon />
                   Hypertube
@@ -51,10 +57,10 @@ const NavBar = () => {
                 color="inherit"
                 size="small"
                 key="profile"
-                onClick={() => handleClick('/')}>
+                onClick={profile.handleClickOpen}>
                 <Typography style={{ color: 'white' }}>
                   <AccountCircle />
-                  Profile
+                  {t('navbar.profile')}
                 </Typography>
               </IconButton>
             </Box>
@@ -64,18 +70,24 @@ const NavBar = () => {
                 size="small"
                 color="inherit"
                 key="logout"
-                onClick={() => handleClick('/')}>
+                onClick={() => handleLogout()}>
                 <Typography style={{ color: 'white' }}>
                   <ExitToAppIcon />
-                  Logout
+                  {t('navbar.logout')}
                 </Typography>
               </IconButton>
             </Box>
           </Box>
         </div>
       </Toolbar>
+      <CustomModal {...profile} />
     </AppBar>
   );
+};
+
+NavBar.propTypes = {
+  history: PropTypes.object,
+  user: PropTypes.object,
 };
 
 export default withRouter(NavBar);

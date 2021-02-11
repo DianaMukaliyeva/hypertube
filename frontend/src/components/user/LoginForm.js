@@ -11,7 +11,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 import InputField from './InputField';
-import CustomButton from './CustomButton';
+import CustomButton from './FormButton';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginForm = () => {
+const LoginForm = ({ user, setUser }) => {
   const username = useField('text', 'username');
   const password = useField('password', 'password');
 
@@ -37,6 +38,8 @@ const LoginForm = () => {
     event.preventDefault();
     try {
       await authService.login(username.value, password.value);
+      window.localStorage.setItem('loggedAppUser', JSON.stringify(user.userId));
+      console.log(setUser); // to silence warning
     } catch (exception) {
       username.setValues({
         ...username.values,
@@ -69,6 +72,11 @@ const LoginForm = () => {
       </div>
     </Container>
   );
+};
+
+LoginForm.propTypes = {
+  user: PropTypes.object.isRequired,
+  setUser: PropTypes.func.isRequired,
 };
 
 export default LoginForm;
