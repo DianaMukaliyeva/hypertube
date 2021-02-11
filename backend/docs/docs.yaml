@@ -332,15 +332,6 @@ paths:
           schema:
             type: string
             example: tt1211837
-        - name: hash
-          in: query
-          description: magnet link hash for YTS
-          required: true
-          style: simple
-          explode: true
-          schema:
-            type: string
-            example: 18566013BD5286AB1B155C809799820E043135AA
       responses:
         "200":
           description: movie information
@@ -598,7 +589,7 @@ components:
         title:
           type: string
           example: Epidemia
-        imdbRanking:
+        imdbRating:
           type: number
           example: 8.4
         year:
@@ -629,10 +620,15 @@ components:
             type: string
         subtitles:
           $ref: "#/components/schemas/inline_response_200_4_subtitles"
+        downloaded:
+          type: boolean
+        watched:
+          type: boolean
         comments:
           type: array
           items:
             $ref: "#/components/schemas/inline_response_200_4_comments"
+
     body_5:
       type: object
       properties:
@@ -664,9 +660,12 @@ components:
         title:
           type: string
           example: Epidemia
-        imdbNote:
+        imdbCode:
           type: string
-          example: ???
+          example: tt3501632
+        imdbRating:
+          type: float
+          example: 7.9
         year:
           type: integer
           example: 1984

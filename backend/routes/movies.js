@@ -3,6 +3,10 @@ import movieController from '../controllers/movieController.js';
 
 const movieRoute = express.Router();
 
+movieRoute.get('/:imdb_code', async (req, res, next) => {
+  await movieController.getMovieEntry(req, res, next);
+});
+
 movieRoute.get('/', async (req, res, next) => {
   await movieController.getMovieList(req, res, next);
 });
