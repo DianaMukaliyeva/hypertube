@@ -1,7 +1,7 @@
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 
-const baseUrl = process.env.REACT_APP_BACKEND_URL;
+const baseUrl = process.env.REACT_APP_BACKEND_URL; // eslint-disable-line no-undef
 
 const auth = async () => {
   // console.log('service > auth > auth');
