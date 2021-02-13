@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 import React from 'react';
-import './style.css';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -17,8 +16,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '2rem',
   },
   dividerStyle: {
-    background: 'gold',
-    opacity: '0.3'
+    background: '#fb3b64',
   },
   inline: {
     display: 'inline',

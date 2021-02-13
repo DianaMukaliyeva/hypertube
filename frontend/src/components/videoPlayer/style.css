@@ -1,7 +1,45 @@
 .MuiInput-underline:after {
-  border-bottom: 2px solid gold !important;
+  border-bottom: 2px solid #fb3b64 !important;
 }
 
-.MuiButton-contained:hover {
-  background-color: gold !important;
+@media screen and (max-width: 1200px) {
+  .vjs-big-play-centered {
+    width: 855px !important;
+    height: 480.75px !important;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .vjs-big-play-centered {
+    width: 600px !important;
+    height: 340px !important;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .vjs-big-play-centered {
+    width: 450px !important;
+    height: 255px !important;
+  }
+}
+
+@media screen and (max-width: 411px) {
+  .vjs-big-play-centered {
+    width: 290px !important;
+    height: 165px !important;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .vjs-big-play-centered {
+    width: 280px !important;
+    height: 160px !important;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .vjs-big-play-centered {
+    width: 220px !important;
+    height: 125px !important;
+  }
 }
