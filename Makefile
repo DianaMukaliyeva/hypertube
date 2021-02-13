@@ -74,3 +74,10 @@ npm-back:	##@Development Install package on backend
 npm-front:	##@Development Install package on frontend
 	docker-compose -f docker-compose.yml -p hypertube exec frontend_hyper /bin/sh -c "npm i $(install)"
 
+lint-back:
+	cd backend && npm run lint
+
+lint-front:
+	cd frontend && npm run lint
+
+lint: lint-back lint-front ## run make -j lint
