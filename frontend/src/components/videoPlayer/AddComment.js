@@ -17,7 +17,6 @@ const useStyles = makeStyles(() => ({
   },
   buttonStyle: {
     marginTop: '2rem',
-    background: 'white',
     width: '15%'
   }
 }));
@@ -37,7 +36,7 @@ const AddComment = () => {
         multiline='true'
         rows='7'
         label="Add comment" />
-      <Button variant="contained" className={classes.buttonStyle}>
+      <Button variant="outlined" color="secondary" className={classes.buttonStyle}>
         Send
       </Button>
     </div>

@@ -7,16 +7,18 @@ import StyleIcon from '@material-ui/icons/Style';
 import EventIcon from '@material-ui/icons/Event';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: '1rem',
   },
   icon: {
-    marginLeft: '62rem'
+    marginLeft: '62rem',
+    color: theme.palette.grey[500],
   },
   iconStar: {
-    color: 'gold',
+    color: '#fb3b64',
     marginRight: '4.6px',
   },
   intro: {
@@ -30,7 +32,9 @@ const TitleBanner = () => {
 
   return (
     <div className={classes.root}>
-      <CloseIcon className={classes.icon}/>
+     <IconButton aria-label="close" className={classes.icon}>
+          <CloseIcon />
+      </IconButton>
       <h2>Die Hard</h2>
       9.9 <StarRateIcon className={classes.iconStar}/>
       Action <StyleIcon className={classes.iconStar}/>
