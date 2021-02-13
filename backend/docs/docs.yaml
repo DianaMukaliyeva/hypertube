@@ -180,12 +180,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/inline_response_200_1"
-        "400":
-          description: Bad Request.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse400"
         "401":
           description: Unauthorized.
           content:
