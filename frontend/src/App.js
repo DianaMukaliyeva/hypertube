@@ -5,7 +5,7 @@ import Landing from './components/layout/Landing';
 import Hypertube from './components/gallery/Index';
 import Navbar from './components/layout/Navbar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import VideoPlayer from './components/videoPlayer/VideoPlayer';
+// import VideoPlayer from './components/videoPlayer/VideoPlayer';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -44,9 +44,9 @@ function App() {
               <Route exact path="/hypertube">
                 <Hypertube user={user} />
               </Route>
-              <Route exact path="/video-player">
+              {/* <Route exact path="/video-player">
                 <VideoPlayer />
-              </Route>
+              </Route> */}
             </Switch>
           </Box>
         </Container>
