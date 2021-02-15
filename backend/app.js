@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import express from 'express';
 import cors from 'cors';
+import 'express-async-errors';
 
 import movieRoute from './routes/movies.js';
 import userRoute from './routes/users.js';
