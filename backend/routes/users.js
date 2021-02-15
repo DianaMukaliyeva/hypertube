@@ -10,7 +10,7 @@ userRoute.get('/', userController.getUsers);
 
 userRoute.post('/', midlleware.validateUserCreation, userController.addUser);
 
-userRoute.patch('/', userController.updatePassword);
+userRoute.patch('/', midlleware.validatePasswordReset, userController.updatePassword);
 
 // TO DO: when middlware will be ready uncomment line below and delete another
 // userRoute.get('/:userId', midlleware.isAuthorized, userController.getUserInfo);

@@ -472,13 +472,13 @@ components:
           example: jane88ssssss
     body_3:
       required:
+        - password
         - confirmPassword
-        - newPassword
         - token
         - userId
       type: object
       properties:
-        newPassword:
+        password:
           type: string
           example: jane88
         confirmPassword:

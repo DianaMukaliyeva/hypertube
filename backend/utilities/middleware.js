@@ -1,22 +1,25 @@
+/* eslint-disable no-console */
 import { detailedError, createDetail } from './errors.js';
 import User from '../models/User.js';
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+// eslint-disable-next-line no-unused-vars
 const errorHandler = (error, req, res, next) => {
+  console.log('MIDDLEWARE > ERROR HANDLER');
   const {
     statusCode = error.statusCode | '500', // eslint-disable-line no-bitwise
     errorType = error.name,
     details = error.details,
   } = error;
 
-  return next(
-    res.status(statusCode).json({
-      statusCode,
-      errorType,
-      details,
-    }),
-  );
+  console.log(error);
+
+  return res.status(statusCode).json({
+    statusCode,
+    errorType,
+    details,
+  });
 };
 
 const unknownEndpoint = (req, res) => res.status(404).send({ error: 'unknown endpoint' }).end();
@@ -40,6 +43,14 @@ const validateField = async (value, fieldName) => {
       }
       if (await User.findOne((username) => username === fieldName.toLowerCase())) {
         return createDetail(fieldName, value, 'not unique');
+      }
+      break;
+    case 'userId':
+      if (!/^[0-9a-fA-F]{24}$/.test(value)) {
+        return createDetail(fieldName, value, 'not valid');
+      }
+      if (!(await User.findById(value))) {
+        return createDetail(fieldName, value, 'not found');
       }
       break;
     default:
@@ -66,6 +77,18 @@ const validatePasswords = (password, confirmPassword) => {
   return '';
 };
 
+const validateResetToken = async (token, userId) => {
+  if (!token) {
+    return createDetail('resetToken', token, 'required');
+  }
+
+  const user = await User.findById(userId);
+  if (user.token !== token) {
+    return createDetail('resetToken', token, 'not valid');
+  }
+  return '';
+};
+
 const validateUserCreation = async (req, res, next) => {
   const {
     username, email, firstname, lastname, password, confirmPassword,
@@ -86,4 +109,31 @@ const validateUserCreation = async (req, res, next) => {
   next();
 };
 
-export default { errorHandler, unknownEndpoint, validateUserCreation };
+const validatePasswordReset = async (req, res, next) => {
+  const {
+    password, confirmPassword, resetToken, userId,
+  } = req.body;
+  let errors = [];
+
+  errors.push(validatePasswords(password, confirmPassword));
+  const userIdError = await validateField(userId, 'userId');
+  errors.push(userIdError);
+
+  if (!userIdError) {
+    errors.push(await validateResetToken(resetToken, userId));
+  }
+  errors = errors.filter((error) => error);
+
+  if (errors.length > 0) {
+    throw detailedError(errors);
+  }
+
+  next();
+};
+
+export default {
+  errorHandler,
+  unknownEndpoint,
+  validateUserCreation,
+  validatePasswordReset,
+};
