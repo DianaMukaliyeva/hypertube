@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+import bcrypt from 'bcrypt';
+
 import { detailedError, createDetail } from './errors.js';
 import User from '../models/User.js';
 
@@ -115,13 +117,61 @@ const validatePasswordReset = async (req, res, next) => {
   } = req.body;
   let errors = [];
 
-  errors.push(validatePasswords(password, confirmPassword));
   const userIdError = await validateField(userId, 'userId');
   errors.push(userIdError);
 
   if (!userIdError) {
+    errors.push(validatePasswords(password, confirmPassword));
     errors.push(await validateResetToken(resetToken, userId));
   }
+
+  errors = errors.filter((error) => error);
+
+  if (errors.length > 0) {
+    throw detailedError(errors);
+  }
+
+  next();
+};
+
+const isPasswordValid = async (password, userId) => {
+  const user = await User.findById(userId);
+  return bcrypt.compare(password, user.password);
+};
+
+const validateUserUpdation = async (req, res, next) => {
+  const {
+    username, lastname, firstname, email, oldPassword, password, confirmPassword,
+  } = req.body;
+  const { userId } = req.params;
+  let errors = [];
+
+  const userIdError = await validateField(userId, 'userId');
+  errors.push(userIdError);
+
+  if (!userIdError) {
+    if (!oldPassword) {
+      errors.push(createDetail('oldPassword', '', 'required'));
+    } else if (!(await isPasswordValid(oldPassword, userId))) {
+      errors.push([createDetail('oldPassword', '******', 'wrong password')]);
+    }
+    if (username) {
+      errors.push(await validateField(username, 'username'));
+    }
+    if (email) {
+      errors.push(await validateField(email, 'email'));
+    }
+    if (lastname) {
+      errors.push(await validateField(lastname, 'lastname'));
+    }
+    if (firstname) {
+      errors.push(await validateField(firstname, 'firstname'));
+    }
+    if (password || confirmPassword) {
+      errors.push(validatePasswords(password, confirmPassword));
+    }
+  }
+
   errors = errors.filter((error) => error);
 
   if (errors.length > 0) {
@@ -135,5 +185,6 @@ export default {
   errorHandler,
   unknownEndpoint,
   validateUserCreation,
+  validateUserUpdation,
   validatePasswordReset,
 };

@@ -48,8 +48,32 @@ const addUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  console.log('CONTROLLER > USER > update user');
-  // TO DO: validate all data and password, hash password
+  const {
+    username, lastname, firstname, email, password, avatarBase64,
+  } = req.body;
+  const { userId } = req.params;
+  const user = await User.findById(userId);
+
+  if (username) {
+    user.username = username;
+  }
+  if (email) {
+    user.email = email;
+  }
+  if (lastname) {
+    user.lastname = lastname;
+  }
+  if (firstname) {
+    user.firstname = firstname;
+  }
+  if (password) {
+    user.password = bcrypt.hashSync(req.body.password, salt);
+  }
+  if (avatarBase64) {
+    user.avatar = avatarBase64;
+  }
+  await user.save();
+
   res.sendStatus(200);
 };
 

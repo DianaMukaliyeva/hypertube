@@ -519,15 +519,6 @@ components:
           type: string
           example: en
       description: if user's own info, then send everything, otherwise - only requried
-    apiusersuserId_avatar:
-      type: object
-      properties:
-        oldId:
-          type: integer
-          example: 4568
-        base64:
-          type: string
-          example: some base 64
     body_4:
       required:
         - oldPassword
@@ -545,12 +536,13 @@ components:
         lastname:
           type: string
           example: Doe
-        avatar:
-          $ref: '#/components/schemas/apiusersuserId_avatar'
+        avatarBase64:
+          type: string
+          example: 'base 64 string'
         oldPassword:
           type: string
           example: old password
-        newPassword:
+        password:
           type: string
           example: jane88ssssss
         confirmPassword:
