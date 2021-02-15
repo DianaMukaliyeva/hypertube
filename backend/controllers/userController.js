@@ -1,75 +1,58 @@
 /* eslint-disable no-console */
+import bcrypt from 'bcrypt';
+
 import User from '../models/User.js';
 
-const getUsers = async (req, res, next) => {
+const getUsers = async (req, res) => {
   // TO DO: // THIS ROUTE DOES NOT COMPLY WITH API SPECS, HERE FOR COMPATIBILITY, WILL BE DEPRECATED
   console.log('CONTROLLER > USER > get user');
-  try {
-    const users = await User.find();
-    res.json({ users });
-  } catch (err) {
-    next(err);
-  }
+  const users = await User.find();
+  res.json({ users });
 };
 
-const getUserInfo = async (req, res, next) => {
-  console.log('CONTROLLER > USER > get user info');
+const getUserInfo = async (req, res) => {
+  console.log('CONTROLLER > USER > GET USER INFO');
   const { userId } = req.params;
-  try {
-    const user = await User.findById(userId);
-    // TO DO: check if own info then send all info below, otherwise without email and language
-    const userInfo = {
-      username: user.username,
-      firstname: user.firstname,
-      lastname: user.lastname,
-      email: user.email,
-      avatarId: user.avatar,
-      language: user.language,
-    };
+  const user = await User.findById(userId);
+  // TO DO: check if own info then send all info below, otherwise without email and language
+  const userInfo = {
+    username: user.username,
+    firstname: user.firstname,
+    lastname: user.lastname,
+    email: user.email,
+    avatarId: user.avatar,
+    language: user.language,
+  };
 
-    res.json(userInfo);
-  } catch (err) {
-    next(err);
-  }
+  res.json(userInfo);
 };
 
-const addUser = async (req, res, next) => {
-  console.log('CONTROLLER > USER > add user');
-  // TO DO: validate all data and passwords, hash password
-  try {
-    const newUser = new User({
-      username: req.body.username,
-      email: `${req.body.username}1@example.com`,
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      password: 'some password',
-    });
-    newUser.save();
+const addUser = async (req, res) => {
+  console.log('CONTROLLER > USER > ADD USER');
+  const salt = bcrypt.genSaltSync(10);
 
-    res.sendStatus(201);
-  } catch (err) {
-    next(err);
-  }
+  const newUser = new User({
+    username: req.body.username,
+    email: req.body.email,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    password: bcrypt.hashSync(req.body.password, salt),
+  });
+  await newUser.save();
+
+  res.sendStatus(201);
 };
 
-const updateUser = async (req, res, next) => {
+const updateUser = async (req, res) => {
   console.log('CONTROLLER > USER > update user');
   // TO DO: validate all data and password, hash password
-  try {
-    res.sendStatus(200);
-  } catch (err) {
-    next(err);
-  }
+  res.sendStatus(200);
 };
 
-const updatePassword = async (req, res, next) => {
+const updatePassword = async (req, res) => {
   console.log('CONTROLLER > USER > update password');
   // TO DO: validate token with userId, new password and confirm password, hash password
-  try {
-    res.sendStatus(200);
-  } catch (err) {
-    next(err);
-  }
+  res.sendStatus(200);
 };
 
 export default {
