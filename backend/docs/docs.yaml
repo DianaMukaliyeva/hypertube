@@ -512,9 +512,6 @@ components:
         email:
           type: string
           example: john.doe@example.com
-        avatarId:
-          type: integer
-          example: 465
         avatarBase64String:
           type: string
           example: base64 image string

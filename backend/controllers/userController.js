@@ -14,17 +14,24 @@ const getUserInfo = async (req, res) => {
   console.log('CONTROLLER > USER > GET USER INFO');
   const { userId } = req.params;
   const user = await User.findById(userId);
-  // TO DO: check if own info then send all info below, otherwise without email and language
-  const userInfo = {
+
+  if (req.user && req.user.id === userId) {
+    return res.json({
+      username: user.username,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      avatarBase64String: user.avatar,
+    });
+  }
+
+  return res.json({
     username: user.username,
     firstname: user.firstname,
     lastname: user.lastname,
     email: user.email,
-    avatarId: user.avatar,
+    avatarBase64String: user.avatar,
     language: user.language,
-  };
-
-  res.json(userInfo);
+  });
 };
 
 const addUser = async (req, res) => {

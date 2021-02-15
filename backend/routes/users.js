@@ -12,7 +12,9 @@ userRoute.post('/', midlleware.validateUserCreation, userController.addUser);
 
 userRoute.patch('/', userController.updatePassword);
 
-userRoute.get('/:userId', userController.getUserInfo); // TO DO: add middleware that user authorized
+// TO DO: when middlware will be ready uncomment line below and delete another
+// userRoute.get('/:userId', midlleware.isAuthorized, userController.getUserInfo);
+userRoute.get('/:userId', userController.getUserInfo);
 
 userRoute.patch('/:userId', userController.updateUser); // TO DO: add middleware that user authorized
 
