@@ -2,7 +2,7 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 
-import userService from '../../services/user';
+import authService from '../../services/auth';
 import useField from '../../hooks/useField';
 
 import InputField from './InputField';
@@ -31,10 +31,7 @@ const RecoveryLinkForm = () => {
   const handleForgotPwd = async (event) => {
     event.preventDefault();
     try {
-      const data = {
-        email: email.value,
-      };
-      await userService.pwdUpdate(data);
+      await authService.recoveryLink(email.value);
     } catch (exception) {
       // TO DO show errors
     }

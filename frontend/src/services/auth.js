@@ -18,8 +18,8 @@ const login = async (email, password) => {
   return res.data;
 };
 
-const recoveryLink = async (credentials) => {
-  const res = await axios.post(baseUrl + '/recoverylink', credentials);
+const recoveryLink = async (email) => {
+  const res = await axios.post(baseUrl + '/recoverylink', { email });
   return res.data;
 };
 
