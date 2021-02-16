@@ -5,7 +5,6 @@ import Landing from './components/layout/Landing';
 import Hypertube from './components/gallery/Index';
 import Navbar from './components/layout/Navbar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-// import VideoPlayer from './components/videoPlayer/VideoPlayer';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -15,18 +14,18 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './styles/theme';
 
 import setAuthToken from './utils/setAuthToken';
+import jwt_decode from 'jwt-decode';
 
 function App() {
   const [user, setUser] = useState({ userId: '', lang: '' });
 
   useEffect(() => {
     setAuthToken(localStorage.getItem('token'));
-    // TO DO finish when backend is done
-    // try {
-    //   const res = await authService.auth();
-    //   setUser({userId: res.userId, lang: res.lang})
-    // } catch (exception) {
-    // }
+    if (localStorage.getItem('token')) {
+      const decoded = jwt_decode(localStorage.getItem('token'));
+      setUser({ userId: decoded.id, lang: decoded.lang });
+    }
+    // console.log('app token', localStorage.getItem('token'));
   }, []);
 
   // TO DO private routing
@@ -35,18 +34,15 @@ function App() {
       <CssBaseline />
       <Router>
         <Container>
-          <Navbar user={user} />
+          {user.userId && <Navbar user={user} setUser={setUser} />}
           <Box mt={10}>
             <Route exact path="/">
-              <Landing user={user} setUser={setUser} />
+              {user.userId ? <Hypertube user={user} /> : <Landing user={user} setUser={setUser} />}
             </Route>
             <Switch>
               <Route exact path="/hypertube">
                 <Hypertube user={user} />
               </Route>
-              {/* <Route exact path="/video-player">
-                <VideoPlayer />
-              </Route> */}
             </Switch>
           </Box>
         </Container>

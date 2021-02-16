@@ -19,15 +19,15 @@ import CustomModal from '../common/CustomModal';
 
 import PropTypes from 'prop-types';
 
-const NavBar = ({ user, history }) => {
+const NavBar = ({ user, setUser }) => {
   const { t } = useTranslation();
 
-  const handleClick = (url) => {
-    history.push(url);
+  const handleClick = () => {
+    // TO DO reset hypertube gallery
   };
   const handleLogout = () => {
     localStorage.removeItem('token');
-    history.push('/');
+    setUser({ userId: '', lang: '' });
   };
 
   // TO DO add responsiveness: move navbar to bottom, center icons
@@ -44,7 +44,7 @@ const NavBar = ({ user, history }) => {
                 size="small"
                 color="inherit"
                 key="hypertube"
-                onClick={() => handleClick('/hypertube')}>
+                onClick={() => handleClick()}>
                 <Typography style={{ color: 'white' }}>
                   <VideocamIcon />
                   Hypertube
@@ -86,8 +86,8 @@ const NavBar = ({ user, history }) => {
 };
 
 NavBar.propTypes = {
-  history: PropTypes.object,
-  user: PropTypes.object,
+  user: PropTypes.object.isRequired,
+  setUser: PropTypes.func.isRequired,
 };
 
 export default withRouter(NavBar);
