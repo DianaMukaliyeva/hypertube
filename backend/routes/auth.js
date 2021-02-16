@@ -1,14 +1,11 @@
 import express from 'express';
 import authController from '../controllers/authController.js';
+import middleware from '../utilities/authMiddleware.js';
 
 const authRoute = express.Router();
 
-authRoute.post('/login', async (req, res, next) => {
-  await authController.login(req, res, next);
-});
+authRoute.post('/login', authController.login);
 
-authRoute.get('/auth', async (req, res, next) => {
-  res.json('auth');
-});
+authRoute.get('/test', middleware.authRequired, authController.test);
 
 export default authRoute;

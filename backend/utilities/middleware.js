@@ -92,9 +92,7 @@ const validateResetToken = async (token, userId) => {
 };
 
 const validateUserCreation = async (req, res, next) => {
-  const {
-    username, email, firstname, lastname, password, confirmPassword,
-  } = req.body;
+  const { username, email, firstname, lastname, password, confirmPassword } = req.body;
   let errors = [];
 
   errors.push(await validateField(username, 'username'));
@@ -112,9 +110,7 @@ const validateUserCreation = async (req, res, next) => {
 };
 
 const validatePasswordReset = async (req, res, next) => {
-  const {
-    password, confirmPassword, resetToken, userId,
-  } = req.body;
+  const { password, confirmPassword, resetToken, userId } = req.body;
   let errors = [];
 
   const userIdError = await validateField(userId, 'userId');
@@ -140,9 +136,7 @@ const isPasswordValid = async (password, userId) => {
 };
 
 const validateUserUpdation = async (req, res, next) => {
-  const {
-    username, lastname, firstname, email, oldPassword, password, confirmPassword,
-  } = req.body;
+  const { username, lastname, firstname, email, oldPassword, password, confirmPassword } = req.body;
   const { userId } = req.params;
   let errors = [];
 
