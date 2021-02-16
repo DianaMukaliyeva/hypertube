@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types';
 
+/* eslint-disable react/prop-types */
 const Landing = ({ user, setUser }) => {
   const changeLanguage = (lang) => {
     i18n.changeLanguage(lang);
@@ -29,9 +30,8 @@ const Landing = ({ user, setUser }) => {
     history.push(path);
   };
 
-  const loginModal = useModal(<LoginForm user={user} setUser={setUser} />);
+  const loginModal = useModal(<LoginForm setUser={setUser} />);
 
-  //
   return (
     <div style={{ marginTop: '50px', textAlign: 'center' }}>
       <h1>{t('Welcome')}</h1>
@@ -49,22 +49,31 @@ const Landing = ({ user, setUser }) => {
           </Form.Control>
         </Form.Group>
       </Form>
-      <Box display="flex" justifyContent="center">
-        <Box mr={2}>
-          <Button type="submit" variant="outlined" color="primary" onClick={login}>
-            go to next page
-          </Button>
-        </Box>
-        <Box>
-          <Button
-            type="submit"
-            variant="outlined"
-            color="secondary"
-            onClick={loginModal.handleClickOpen}>
-            Login
-          </Button>
-        </Box>
-      </Box>
+      {!user.userId && (
+        <>
+          <Box display="flex" justifyContent="center">
+            <Box mr={2}>
+              <Button
+                type="submit"
+                variant="outlined"
+                color="primary"
+                onClick={loginModal.handleClickOpen}>
+                Login
+              </Button>
+            </Box>
+            <Box>
+              <Button type="submit" variant="outlined" color="secondary">
+                Create Account
+              </Button>
+            </Box>
+          </Box>
+          <Box mt={5}>
+            <Button type="submit" variant="outlined" color="primary" onClick={login}>
+              go to next page without AUTH
+            </Button>
+          </Box>
+        </>
+      )}
       <CustomModal {...loginModal} />
     </div>
   );
