@@ -14,6 +14,8 @@ import InputField from './InputField';
 import CustomButton from './FormButton';
 import PropTypes from 'prop-types';
 
+import jwt_decode from 'jwt-decode';
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(6),
@@ -28,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginForm = ({ user, setUser }) => {
-  const username = useField('text', 'username');
+const LoginForm = ({ setUser }) => {
+  const email = useField('email', 'email');
   const password = useField('password', 'password');
 
   // const recoveryLinkPopUp = useModal(<RecoveryLinkForm />);
@@ -37,12 +39,12 @@ const LoginForm = ({ user, setUser }) => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      await authService.login(username.value, password.value);
-      window.localStorage.setItem('loggedAppUser', JSON.stringify(user.userId));
-      console.log(setUser); // to silence warning
+      await authService.login(email.value, password.value);
+      const decoded = jwt_decode(localStorage.getItem('token'));
+      setUser({ userId: decoded.id, lang: decoded.lang });
     } catch (exception) {
-      username.setValues({
-        ...username.values,
+      email.setValues({
+        ...email.values,
         error: true,
         helperText: 'serverError',
       });
@@ -60,8 +62,8 @@ const LoginForm = ({ user, setUser }) => {
           Sign in
         </Typography>
         <form className={classes.form} noValidate>
-          <InputField values={username} label="Username" />
-          <InputField values={password} label="Password" />
+          <InputField values={email} label="email" />
+          <InputField values={password} label="Password" autocomplete="current-password" />
           <CustomButton handleLogin={handleLogin}>Sign In</CustomButton>
           <Box>
             <Link href="#" variant="body2">
@@ -75,7 +77,6 @@ const LoginForm = ({ user, setUser }) => {
 };
 
 LoginForm.propTypes = {
-  user: PropTypes.object.isRequired,
   setUser: PropTypes.func.isRequired,
 };
 
