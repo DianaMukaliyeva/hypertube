@@ -3,28 +3,33 @@ import bcrypt from 'bcrypt';
 import User from '../models/User.js';
 
 const login = async (req, res, next) => {
-  console.log('body', req.body);
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
-  const user = await User.findOne({ username: username });
+  const user = await User.findOne({ email: email });
 
-  const passwordCorrect = user === null ? false : await bcrypt.compare(password, password);
+  // const passwordCorrect = user === null ? false : await bcrypt.compare(password, password);
+  const passwordCorrect = true;
 
   if (!(user && passwordCorrect)) {
-    console.log('INVALID username or password');
     //   Throw error
     //   error: 'invalid username or password',
+  } else {
+    const userForToken = {
+      id: user._id,
+      lang: user.language,
+    };
+
+    const token = jwt.sign(userForToken, process.env.SECRET);
+
+    return res.status(200).json({ token });
   }
-  const userForToken = {
-    id: user._id,
-  };
+};
 
-  const token = jwt.sign(userForToken, process.env.SECRET);
-  console.log({ token });
-
-  res.status(200).json({ token });
+const test = async (req, res, next) => {
+  return res.status(200).json('success');
 };
 
 export default {
   login,
+  test,
 };
