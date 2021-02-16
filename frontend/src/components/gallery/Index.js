@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import VideoPlayer from '../videoPlayer/VideoPlayer';
 
 const Hypertube = ({ user }) => {
+  console.log('hypertube');
   const { t } = useTranslation();
   const movieModal = useModal(<VideoPlayer user={user} />, true);
   return (

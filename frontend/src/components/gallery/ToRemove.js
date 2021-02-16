@@ -1,6 +1,8 @@
 /* eslint-disable no-magic-numbers */
 import React from 'react';
 import axios from 'axios';
+import authService from '../../services/auth';
+import Button from '@material-ui/core/Button';
 
 // eslint-disable-next-line no-undef
 const baseURL = process.env.REACT_APP_BACKEND_URL;
@@ -17,6 +19,16 @@ const ToRemove = () => {
   const getUsers = async () => {
     const res = await axios.get(baseURL + '/api/users');
     setUsers(res.data.users);
+  };
+
+  const handleClick = async (event) => {
+    event.preventDefault();
+    try {
+      await authService.test();
+      console.log('test auth');
+    } catch (exception) {
+      console.log('test error');
+    }
   };
 
   const addUser = async (e) => {
@@ -99,6 +111,9 @@ const ToRemove = () => {
           ))}
         </tbody>
       </table>
+      <Button variant="outlined" color="secondary" onClick={handleClick}>
+        TEST AUTH
+      </Button>
     </>
   );
 };
