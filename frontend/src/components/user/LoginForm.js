@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 import InputField from './InputField';
-import CustomButton from './FormButton';
+import FormButton from './FormButton';
 import PropTypes from 'prop-types';
 
 import jwt_decode from 'jwt-decode';
@@ -64,7 +64,7 @@ const LoginForm = ({ setUser }) => {
         <form className={classes.form} noValidate>
           <InputField values={email} label="email" />
           <InputField values={password} label="Password" autocomplete="current-password" />
-          <CustomButton handleLogin={handleLogin}>Sign In</CustomButton>
+          <FormButton handleClick={handleLogin} name="Sign In" />
           <Box>
             <Link href="#" variant="body2">
               Forgot password?
