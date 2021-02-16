@@ -9,12 +9,15 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import RecoveryLinkForm from '../user/RecoveryLinkForm';
 
 import InputField from './InputField';
 import FormButton from './FormButton';
 import PropTypes from 'prop-types';
 
 import jwt_decode from 'jwt-decode';
+import CustomModal from '../common/CustomModal';
+import useModal from '../../hooks/useModal';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,7 +37,7 @@ const LoginForm = ({ setUser }) => {
   const email = useField('email', 'email');
   const password = useField('password', 'password');
 
-  // const recoveryLinkPopUp = useModal(<RecoveryLinkForm />);
+  const recoveryLinkModal = useModal(<RecoveryLinkForm />);
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -66,12 +69,13 @@ const LoginForm = ({ setUser }) => {
           <InputField values={password} label="Password" autocomplete="current-password" />
           <FormButton handleClick={handleLogin} name="Sign In" />
           <Box>
-            <Link href="#" variant="body2">
-              Forgot password?
+            <Link href="#" onClick={recoveryLinkModal.handleClickOpen}>
+              Forgot Password?
             </Link>
           </Box>
         </form>
       </div>
+      <CustomModal {...recoveryLinkModal} />
     </Container>
   );
 };

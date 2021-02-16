@@ -43,6 +43,7 @@ const CreateAccountForm = () => {
     try {
       const data = {
         username: username.value,
+        email: email.value,
         firstname: firstName.value,
         lastname: lastName.value,
         password: password.value,
