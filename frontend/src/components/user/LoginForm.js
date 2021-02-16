@@ -1,23 +1,22 @@
 import React from 'react';
-import useField from '../../hooks/useField';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import jwt_decode from 'jwt-decode';
 
+import useField from '../../hooks/useField';
+import useModal from '../../hooks/useModal';
 import authService from '../../services/auth';
 
-import CssBaseline from '@material-ui/core/CssBaseline';
+import InputField from './InputField';
+import RecoveryLinkForm from '../user/RecoveryLinkForm';
+import CustomModal from '../common/CustomModal';
+import FormButton from './FormButton';
+
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import RecoveryLinkForm from '../user/RecoveryLinkForm';
-
-import InputField from './InputField';
-import FormButton from './FormButton';
-import PropTypes from 'prop-types';
-
-import jwt_decode from 'jwt-decode';
-import CustomModal from '../common/CustomModal';
-import useModal from '../../hooks/useModal';
 
 const useStyles = makeStyles((theme) => ({
   paper: {

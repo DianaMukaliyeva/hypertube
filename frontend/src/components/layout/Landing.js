@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
 import i18n from '../../i18n';
 import { useTranslation } from 'react-i18next';
-
-// import { Form } from 'react-bootstrap';
-
 import { useHistory } from 'react-router-dom';
+
+import useModal from '../../hooks/useModal';
+
 import CustomModal from '../common/CustomModal';
 import LoginForm from '../user/LoginForm';
 import CreateAccountForm from '../user/CreateAccountForm';
 
-import useModal from '../../hooks/useModal';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types';
