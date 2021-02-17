@@ -204,7 +204,7 @@ const validateUserUpdation = async (req, res, next) => {
 
 const validateLogin = async (req, res, next) => {
   const { email, password } = req.body;
-  let errors = [];
+  const errors = [];
 
   const emailError = validateEmailFormat(email);
   emailError && errors.push(emailError);
