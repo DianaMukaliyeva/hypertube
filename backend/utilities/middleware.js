@@ -144,7 +144,7 @@ const validatePasswordAndEmail = async (email, password) => {
   }
   const user = await User.findOne({ email: email.toLowerCase() });
   if (!user) {
-    return createDetail('email', email, 'not unique');
+    return createDetail('email', email, 'does not exist');
   }
   if (!(await bcrypt.compare(password, user.password))) {
     return createDetail('password', '********', 'wrong password');
@@ -206,7 +206,8 @@ const validateLogin = async (req, res, next) => {
   const { email, password } = req.body;
   let errors = [];
 
-  validateEmailFormat(email) && errors.push(validateEmailFormat(email));
+  const emailError = validateEmailFormat(email);
+  emailError && errors.push(emailError);
   const passwordError = await validatePasswordAndEmail(email, password);
   passwordError && errors.push(passwordError);
 

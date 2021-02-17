@@ -10,7 +10,6 @@ const test = async () => {
 };
 
 const login = async (email, password) => {
-  console.log('credentials', { email, password });
   const res = await axios.post(baseUrl + '/login', { email, password });
   localStorage.setItem('token', res.data.token);
   setAuthToken(res.data.token);

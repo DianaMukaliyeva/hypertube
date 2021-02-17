@@ -1,7 +1,6 @@
 const sharedFunctions = {};
 
 sharedFunctions.showErrors = (errors, params) => {
-  console.log(errors, params);
   errors.map((detail) => {
     if (detail.param === 'username') {
       params.username.setValues({
