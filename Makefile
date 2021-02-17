@@ -42,12 +42,6 @@ logs:	##@Development Show logs for all or c=<name> containers
 logs-backend:	##@Development Show logs for all or c=<name> containers
 	docker-compose -f docker-compose.yml -p hypertube logs --tail=100 -f backend_hyper
 
-install-backend:	##@Development Install all packages on backend
-	docker-compose -f docker-compose.yml -p hypertube exec backend_hyper /bin/sh -c "npm ci"
-
-install-frontend:	##@Development Install all packages on frontend
-	docker-compose -f docker-compose.yml -p hypertube exec frontend_hyper /bin/sh -c "npm ci"
-
 build-prod:	##@Production Build all the project in production mode
 	docker-compose -f docker-compose.prod.yml -p hypertube-prod build $(c)
 
@@ -63,14 +57,16 @@ down-prod:	##@Production Stop and delete all containers in production
 stop-prod:	##@Production Stop all or c=<name> containers in production
 	docker-compose -f docker-compose.prod.yml -p hypertube-prod stop $(c)
 
-logs-prod:	##@Production Show logs for all or c=<name> containers in production
-	docker-compose -f docker-compose.prod.yml -p hypertube-prod logs --tail=100 -f $(c)
-
-#  docker-compose -f docker-compose.yml exec frontend_hyper /bin/sh -c "npm i react-i18next i18next --save"
-
 npm-back:	##@Development Install package on backend
-	docker-compose -f docker-compose.yml -p hypertube exec backend_hyper /bin/sh -c "npm i $(install)"
+	docker-compose -f docker-compose.yml -p hypertube exec backend_hyper /bin/sh -c "npm install $(i)"
 
 npm-front:	##@Development Install package on frontend
-	docker-compose -f docker-compose.yml -p hypertube exec frontend_hyper /bin/sh -c "npm i $(install)"
+	docker-compose -f docker-compose.yml -p hypertube exec frontend_hyper /bin/sh -c "npm install $(i)"
 
+lint-back:
+	cd backend && npm run lint
+
+lint-front:
+	cd frontend && npm run lint
+
+lint: lint-back lint-front ## run make -j lint
