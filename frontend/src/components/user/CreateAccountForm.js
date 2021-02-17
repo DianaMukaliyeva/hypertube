@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import useField from '../../hooks/useField';
-import Select from '@material-ui/core/Select';
 
 import userService from '../../services/user';
 
@@ -8,6 +7,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import InputField from './InputField';
 import FormButton from './FormButton';
@@ -25,6 +26,10 @@ const useStyles = makeStyles((theme) => ({
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
+  select: {
+    width: '100%',
+    marginTop: theme.spacing(2),
+  },
 }));
 
 const CreateAccountForm = () => {
@@ -34,7 +39,14 @@ const CreateAccountForm = () => {
   const email = useField('email', 'email');
   const password = useField('password', 'password');
   const confirmPassword = useField('password', 'confirmPassword');
-  const [lang, setLang] = useState('en');
+  const [lang, setLang] = useState({ label: '', code: '' });
+
+  const langOptions = [
+    { label: 'English', code: 'en' },
+    { label: 'German', code: 'de' },
+    { label: 'Finnish', code: 'fi' },
+    { label: 'Russian', code: 'ru' },
+  ];
 
   const classes = useStyles();
 
@@ -50,6 +62,7 @@ const CreateAccountForm = () => {
         confirmpassword: confirmPassword.value,
         language: lang,
       };
+      console.log('data', data);
       await userService.create(data);
     } catch (exception) {
       // TO DO show errors
@@ -74,12 +87,20 @@ const CreateAccountForm = () => {
             label="Confirm password"
             autocomplete="new-password"
           />
-          <Select native value={lang} onChange={(event) => setLang(event.target.value)}>
-            <option value="en">English</option>
-            <option value="de">German</option>
-            <option value="fi">Finnish</option>
-            <option value="ru">Russian</option>
-          </Select>
+          <Autocomplete
+            id="language"
+            value={lang}
+            options={langOptions}
+            getOptionLabel={(option) => option.label}
+            getOptionSelected={(option, value) => option.value === value.value}
+            className={classes.select}
+            onChange={(event, value) => {
+              if (value !== null) setLang(value);
+            }}
+            renderInput={(params) => (
+              <TextField required {...params} label="Select language" variant="outlined" />
+            )}
+          />
         </form>
         <FormButton handleClick={handleCreate} name="Create Account" />
       </div>

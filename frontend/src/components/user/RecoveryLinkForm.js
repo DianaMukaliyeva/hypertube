@@ -11,6 +11,7 @@ import FormButton from './FormButton';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
+// TO DO: move to styles
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(6),

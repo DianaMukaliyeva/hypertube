@@ -17,6 +17,7 @@ const InputField = ({ values, label }) => {
       label={label}
       helperText={helperText}
       autoFocus
+      autoComplete="current-password"
       type={type}
     />
   );
