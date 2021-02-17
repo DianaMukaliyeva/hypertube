@@ -66,10 +66,14 @@ const CreateAccountForm = () => {
         language: lang.code,
       };
       await userService.create(data);
+      setAlert({
+        show: true,
+        message: 'Account successfully created',
+        severity: 'success',
+      });
     } catch (err) {
       switch (err.response.data.statusCode) {
         case 400:
-          // TO DO remove [0] when backend gets fixed
           sharedFunctions.showErrors(err.response.data.details, {
             username,
             firstName,
