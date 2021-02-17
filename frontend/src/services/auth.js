@@ -6,7 +6,6 @@ const baseUrl = process.env.REACT_APP_BACKEND_URL + '/api/auth';
 
 const test = async () => {
   const res = await axios.get(baseUrl + '/test');
-  console.log('service test', res.data);
   return res.data;
 };
 

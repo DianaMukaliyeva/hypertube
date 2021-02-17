@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import useField from '../../hooks/useField';
 
 import userService from '../../services/user';
+import sharedFunctions from '../../utils/sharedFunctions';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -9,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { Alert } from '@material-ui/lab';
 
 import InputField from './InputField';
 import FormButton from './FormButton';
@@ -40,6 +42,7 @@ const CreateAccountForm = () => {
   const password = useField('password', 'password');
   const confirmPassword = useField('password', 'confirmPassword');
   const [lang, setLang] = useState({ label: '', code: '' });
+  const [alert, setAlert] = useState({ show: false, message: '', severity: '' });
 
   const langOptions = [
     { label: 'English', code: 'en' },
@@ -59,13 +62,38 @@ const CreateAccountForm = () => {
         firstname: firstName.value,
         lastname: lastName.value,
         password: password.value,
-        confirmpassword: confirmPassword.value,
-        language: lang,
+        confirmPassword: confirmPassword.value,
+        language: lang.code,
       };
-      console.log('data', data);
       await userService.create(data);
-    } catch (exception) {
-      // TO DO show errors
+    } catch (err) {
+      switch (err.response.data.statusCode) {
+        case 400:
+          // TO DO remove [0] when backend gets fixed
+          sharedFunctions.showErrors(err.response.data.details, {
+            username,
+            firstName,
+            lastName,
+            email,
+            password,
+            confirmPassword,
+          });
+          break;
+        case 500:
+          setAlert({
+            show: true,
+            message: 'Server error',
+            severity: 'error',
+          });
+          break;
+        default:
+          setAlert({
+            show: true,
+            message: 'Oops.. somthing went completely wrong',
+            severity: 'error',
+          });
+          break;
+      }
     }
   };
 
@@ -76,6 +104,11 @@ const CreateAccountForm = () => {
         <Typography component="h1" variant="h5">
           Create account
         </Typography>
+        {alert.show && (
+          <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
+            {alert.message}
+          </Alert>
+        )}
         <form className={classes.form} noValidate>
           <InputField values={username} label="Username" />
           <InputField values={firstName} label="First name" />
