@@ -9,15 +9,14 @@ const authentication = async (req, res, next) => {
       if (err) {
         req.user = undefined;
       } else {
-        const user = await User.findOne({ _id: decode.id });
-        req.user = user ? user._id : undefined;
+        const user = await User.findOne({ id: decode.id });
+        req.user = user ? user.id : undefined;
       }
-      return next();
     });
   } else {
     req.user = undefined;
-    return next();
   }
+  return next();
 };
 
 const authRequired = async (req, res, next) => {

@@ -4,10 +4,10 @@ import User from '../models/User.js';
 const login = async (req, res) => {
   const { email } = req.body;
 
-  const user = await User.findOne({ email: email });
+  const user = await User.findOne({ email });
 
   const userForToken = {
-    id: user._id,
+    id: user.id,
     lang: user.language,
   };
 
@@ -17,7 +17,7 @@ const login = async (req, res) => {
 };
 
 // TO DO: remove test route
-const test = async (req, res, next) => {
+const test = async (req, res) => {
   res.status(200).json('success');
 };
 
