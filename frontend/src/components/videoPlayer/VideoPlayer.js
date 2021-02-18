@@ -1,6 +1,7 @@
 import React from 'react';
 import VideoPlayerJS from 'react-video-js-player';
-import Vid from './video/DJI_0407.MP4';
+// import Vid from './video/DJI_0407.MP4';
+import Vid from './video/sample.mp4';
 import './style.css';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,8 +20,8 @@ const useStyles = makeStyles(() => ({
     background: 'rgba(27,29,47,0.4)',
   },
   icon: {
-    marginLeft: '62rem'
-  }
+    marginLeft: '62rem',
+  },
 }));
 
 const VideoPlayer = () => {
@@ -29,23 +30,19 @@ const VideoPlayer = () => {
   const src = Vid;
 
   return (
-    <Container  maxWidth="lg">
-    <Card  className={classes.root}>
-      <CardContent>
-        <TitleBanner />
-        <div className='test'>
-          <VideoPlayerJS
-            src={src}
-            width='1020'
-            heigh='650'
-          />
-        </div>
+    <Container maxWidth="lg">
+      <Card className={classes.root}>
+        <CardContent>
+          <TitleBanner />
+          <div className="test">
+            <VideoPlayerJS src={src} width="1020" heigh="650" />
+          </div>
           <MovieDetails />
-          <AddComment/>
+          <AddComment />
           <Comments />
         </CardContent>
-      </Card >
-       </Container>
+      </Card>
+    </Container>
   );
 };
 

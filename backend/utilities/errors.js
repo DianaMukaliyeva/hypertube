@@ -1,4 +1,4 @@
-const detailedError = (...details) => {
+const detailedError = (details) => {
   const error = new Error();
   error.statusCode = 400;
   error.errorType = 'bad request';

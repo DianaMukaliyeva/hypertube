@@ -45,7 +45,6 @@ const CustomModal = (props) => {
   return (
     <div>
       <Dialog
-        fullWidth
         fullScreen={props.fullScreen ? true : false}
         maxWidth="md"
         onClose={props.handleClose}

@@ -6,12 +6,12 @@ import useModal from '../../hooks/useModal';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import CustomModal from '../common/CustomModal';
-import Movie from '../movie/Index';
 import PropTypes from 'prop-types';
+import VideoPlayer from '../videoPlayer/VideoPlayer';
 
 const Hypertube = ({ user }) => {
   const { t } = useTranslation();
-  const movieModal = useModal(<Movie user={user} />, true);
+  const movieModal = useModal(<VideoPlayer user={user} />, true);
   return (
     <div>
       <h1>{t('Welcome')} to the movie gallery</h1>
