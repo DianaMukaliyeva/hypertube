@@ -13,10 +13,19 @@ const unauthorizedError = () => {
   return error;
 };
 
+const notFoundError = () => {
+  const error = new Error();
+  error.statusCode = 404;
+  error.errorType = 'not found';
+  return error;
+};
+
 const createDetail = (param, provided = '', reason) => ({
   param,
   provided,
   reason,
 });
 
-export { createDetail, detailedError, unauthorizedError };
+export {
+  createDetail, detailedError, notFoundError, unauthorizedError,
+};
