@@ -12,6 +12,7 @@ import CreateAccountForm from '../user/CreateAccountForm';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types';
+import PasswordResetForm from '../user/PasswordResetForm';
 
 /* eslint-disable react/prop-types */
 const Landing = ({ user, setUser }) => {
@@ -32,6 +33,7 @@ const Landing = ({ user, setUser }) => {
 
   const loginModal = useModal(<LoginForm setUser={setUser} />);
   const createAccountModal = useModal(<CreateAccountForm setUser={setUser} />);
+  const passwordResetModal = useModal(<PasswordResetForm />);
 
   return (
     <div style={{ marginTop: '50px', textAlign: 'center' }}>
@@ -67,6 +69,7 @@ const Landing = ({ user, setUser }) => {
       )}
       <CustomModal {...loginModal} />
       <CustomModal {...createAccountModal} />
+      <CustomModal {...passwordResetModal} />
     </div>
   );
 };

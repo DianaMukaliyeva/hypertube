@@ -40,6 +40,9 @@ function App() {
               <Route exact path="/hypertube">
                 <Hypertube user={user} />
               </Route>
+              <Route exact path="/passwordreset">
+                <Landing />
+              </Route>
             </Switch>
           </Box>
         </Container>
