@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /* eslint-disable react/prop-types */
-const CustomButton = ({ handleLogin }) => {
+const FormButton = ({ handleClick, name }) => {
   const classes = useStyles();
   return (
     <Button
@@ -18,10 +18,10 @@ const CustomButton = ({ handleLogin }) => {
       variant="outlined"
       color="primary"
       className={classes.submit}
-      onClick={handleLogin}>
-      Sign In
+      onClick={handleClick}>
+      {name}
     </Button>
   );
 };
 
-export default CustomButton;
+export default FormButton;

@@ -20,6 +20,7 @@
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "js-yaml": "^4.0.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.13",
     "mongoose-unique-validator": "^2.0.3",
     "swagger-ui-express": "^4.1.6"

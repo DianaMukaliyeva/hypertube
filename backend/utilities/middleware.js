@@ -35,7 +35,7 @@ const validateField = async (value, fieldName) => {
       if (!emailRegex.test(value)) {
         return createDetail(fieldName, value, 'invalid format');
       }
-      if (await User.findOne((email) => email === fieldName.toLowerCase())) {
+      if (await User.findOne({ email: value.toLowerCase() })) {
         return createDetail(fieldName, value, 'not unique');
       }
       break;
@@ -43,7 +43,7 @@ const validateField = async (value, fieldName) => {
       if (!/^[a-zA-Z0-9]+$/.test(value)) {
         return createDetail(fieldName, value, 'invalid characters');
       }
-      if (await User.findOne((username) => username === fieldName.toLowerCase())) {
+      if (await User.findOne({ username: value.toLowerCase() })) {
         return createDetail(fieldName, value, 'not unique');
       }
       break;
@@ -139,6 +139,33 @@ const isPasswordValid = async (password, userId) => {
   return bcrypt.compare(password, user.password);
 };
 
+const validatePasswordAndEmail = async (email, password) => {
+  if (!password) {
+    return createDetail('password', password, 'required');
+  }
+  if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/.test(password)) {
+    return createDetail('password', '********', 'invalid format');
+  }
+  const user = await User.findOne({ email: email.toLowerCase() });
+  if (!user) {
+    return createDetail('email', email, 'does not exist');
+  }
+  if (!(await bcrypt.compare(password, user.password))) {
+    return createDetail('password', '********', 'wrong password');
+  }
+  return '';
+};
+
+const validateEmailFormat = (email) => {
+  if (!email) {
+    return createDetail('email', email, 'required');
+  }
+  if (!emailRegex.test(email)) {
+    return createDetail('email', email, 'invalid format');
+  }
+  return '';
+};
+
 const validateUserUpdation = async (req, res, next) => {
   const {
     username, lastname, firstname, email, oldPassword, password, confirmPassword,
@@ -181,10 +208,26 @@ const validateUserUpdation = async (req, res, next) => {
   next();
 };
 
+const validateLogin = async (req, res, next) => {
+  const { email, password } = req.body;
+  let errors = [];
+
+  errors.push(validateEmailFormat(email));
+  errors.push(await validatePasswordAndEmail(email, password));
+  errors = errors.filter((error) => error);
+
+  if (errors.length > 0) {
+    throw detailedError(errors);
+  }
+
+  next();
+};
+
 export default {
   errorHandler,
   unknownEndpoint,
   validateUserCreation,
   validateUserUpdation,
   validatePasswordReset,
+  validateLogin,
 };

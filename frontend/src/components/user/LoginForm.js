@@ -1,18 +1,24 @@
-import React from 'react';
-import useField from '../../hooks/useField';
-
-import authService from '../../services/auth';
-
+import React, { useState } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import jwt_decode from 'jwt-decode';
+
+import useField from '../../hooks/useField';
+import useModal from '../../hooks/useModal';
+import authService from '../../services/auth';
+import sharedFunctions from '../../utils/sharedFunctions';
+
+import InputField from './InputField';
+import RecoveryLinkForm from '../user/RecoveryLinkForm';
+import CustomModal from '../common/CustomModal';
+import FormButton from './FormButton';
+
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
-import InputField from './InputField';
-import CustomButton from './FormButton';
-import PropTypes from 'prop-types';
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -28,25 +34,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginForm = ({ user, setUser }) => {
-  const username = useField('text', 'username');
+const LoginForm = ({ setUser }) => {
+  const email = useField('email', 'email');
   const password = useField('password', 'password');
+  const [alert, setAlert] = useState({ show: false, message: '', severity: '' });
 
-  // const recoveryLinkPopUp = useModal(<RecoveryLinkForm />);
+  const recoveryLinkModal = useModal(<RecoveryLinkForm />);
 
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      await authService.login(username.value, password.value);
-      window.localStorage.setItem('loggedAppUser', JSON.stringify(user.userId));
-      console.log(setUser); // to silence warning
-    } catch (exception) {
-      username.setValues({
-        ...username.values,
-        error: true,
-        helperText: 'serverError',
-      });
-      // Alert on error
+      await authService.login(email.value, password.value);
+      const decoded = jwt_decode(localStorage.getItem('token'));
+      setUser({ userId: decoded.id, lang: decoded.lang });
+    } catch (err) {
+      switch (err.response.data.statusCode) {
+        case 400:
+          sharedFunctions.showErrors(err.response.data.details, {
+            email,
+            password,
+          });
+          break;
+        case 500:
+          setAlert({
+            show: true,
+            message: 'Server error',
+            severity: 'error',
+          });
+          break;
+        default:
+          setAlert({
+            show: true,
+            message: 'Oops.. somthing went completely wrong',
+            severity: 'error',
+          });
+          break;
+      }
     }
   };
 
@@ -59,23 +82,28 @@ const LoginForm = ({ user, setUser }) => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+        {alert.show && (
+          <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
+            {alert.message}
+          </Alert>
+        )}
         <form className={classes.form} noValidate>
-          <InputField values={username} label="Username" />
-          <InputField values={password} label="Password" />
-          <CustomButton handleLogin={handleLogin}>Sign In</CustomButton>
+          <InputField values={email} label="email" />
+          <InputField values={password} label="Password" autocomplete="current-password" />
+          <FormButton handleClick={handleLogin} name="Sign In" />
           <Box>
-            <Link href="#" variant="body2">
-              Forgot password?
+            <Link href="#" onClick={recoveryLinkModal.handleClickOpen}>
+              Forgot Password?
             </Link>
           </Box>
         </form>
       </div>
+      <CustomModal {...recoveryLinkModal} />
     </Container>
   );
 };
 
 LoginForm.propTypes = {
-  user: PropTypes.object.isRequired,
   setUser: PropTypes.func.isRequired,
 };
 
