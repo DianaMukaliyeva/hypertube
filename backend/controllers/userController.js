@@ -2,6 +2,7 @@
 import bcrypt from 'bcrypt';
 
 import User from '../models/User.js';
+import { notFoundError } from '../utilities/errors.js';
 
 const salt = bcrypt.genSaltSync(10);
 
@@ -14,6 +15,9 @@ const getUsers = async (req, res) => {
 const getUserInfo = async (req, res) => {
   const { userId } = req.params;
   const user = await User.findById(userId);
+  if (!user) {
+    throw notFoundError();
+  }
 
   if (req.user && req.user.id === userId) {
     return res.json({
@@ -53,6 +57,9 @@ const updateUser = async (req, res) => {
   } = req.body;
   const { userId } = req.params;
   const user = await User.findById(userId);
+  if (!user) {
+    throw notFoundError();
+  }
 
   if (username) {
     user.username = username;
@@ -81,6 +88,10 @@ const updatePassword = async (req, res) => {
   const { password, userId } = req.body;
 
   const user = await User.findById(userId);
+  if (!user) {
+    throw notFoundError();
+  }
+
   user.password = bcrypt.hashSync(password, salt);
   await user.save();
 

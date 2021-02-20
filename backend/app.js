@@ -11,8 +11,6 @@ import middleware from './utilities/middleware.js';
 import database from './utilities/database.js';
 import swaggerDocs from './utilities/swagger.js';
 
-import authMiddleware from './utilities/authMiddleware.js';
-
 const app = express();
 
 database.connect();
@@ -20,7 +18,7 @@ app.use(cors());
 app.use(express.json({ limit: 100000000 }));
 
 // JWT setup
-app.use(authMiddleware.authentication);
+app.use(middleware.authentication);
 
 app.get('/test', (req, res) => {
   console.log('DO NOT DELETE me, Im here for the github action tests! for now...');
