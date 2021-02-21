@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 import User from '../models/User.js';
 import { notFoundError } from '../utilities/errors.js';
