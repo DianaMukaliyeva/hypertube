@@ -26,6 +26,11 @@ const validateField = async (value, fieldName) => {
         return createDetail(fieldName, value, 'not unique');
       }
       break;
+    case 'language':
+      if (!['en', 'fi', 'ru', 'de'].includes(value)) {
+        return createDetail(fieldName, value, 'not exists');
+      }
+      break;
     case 'userId':
       if (!/^[0-9a-fA-F]{24}$/.test(value)) {
         return createDetail(fieldName, value, 'not valid');
@@ -72,13 +77,14 @@ const validateResetToken = async (token, userId) => {
 
 const validateUserCreation = async (req, res, next) => {
   const {
-    username, email, firstname, lastname, password, confirmPassword,
+    username, email, firstname, language, lastname, password, confirmPassword,
   } = req.body;
   let errors = [];
 
   errors.push(await validateField(username, 'username'));
   errors.push(await validateField(email, 'email'));
   errors.push(await validateField(lastname, 'lastname'));
+  errors.push(await validateField(language, 'language'));
   errors.push(await validateField(firstname, 'firstname'));
   errors.push(validatePasswords(password, confirmPassword));
   errors = errors.filter((error) => error);
@@ -147,7 +153,14 @@ const validateEmailFormat = (email) => {
 
 const validateUserUpdation = async (req, res, next) => {
   const {
-    username, lastname, firstname, email, oldPassword, password, confirmPassword,
+    username,
+    lastname,
+    firstname,
+    language,
+    email,
+    oldPassword,
+    password,
+    confirmPassword,
   } = req.body;
   const { userId } = req.params;
   let errors = [];
@@ -175,6 +188,9 @@ const validateUserUpdation = async (req, res, next) => {
     }
     if (password || confirmPassword) {
       errors.push(validatePasswords(password, confirmPassword));
+    }
+    if (language) {
+      errors.push(await validateField(language, 'language'));
     }
   }
 
