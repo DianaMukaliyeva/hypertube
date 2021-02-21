@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 import { detailedError, createDetail } from './errors.js';
 import User from '../models/User.js';

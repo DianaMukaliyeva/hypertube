@@ -2,11 +2,13 @@
 import supertest from 'supertest';
 import app from '../app';
 
+import userUtils from './testUtils/userTestUtils';
+
 const request = supertest(app);
 
-describe('User API tests', () => {
+describe('Users API tests', () => {
   test('test okay', async () => {
-    await request.get('/test').expect(200);
+    await request.post('/api/users/').send(userUtils.newValidUser).expect(201);
   });
 });
 
