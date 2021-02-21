@@ -44,6 +44,7 @@ const addUser = async (req, res) => {
     email: req.body.email,
     firstname: req.body.firstname,
     lastname: req.body.lastname,
+    language: req.body.language,
     password: bcrypt.hashSync(req.body.password, salt),
   });
   await newUser.save();
@@ -53,7 +54,7 @@ const addUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const {
-    username, lastname, firstname, email, password, avatarBase64,
+    username, lastname, language, firstname, email, password, avatarBase64,
   } = req.body;
   const { userId } = req.params;
   const user = await User.findById(userId);
@@ -79,6 +80,10 @@ const updateUser = async (req, res) => {
   if (avatarBase64) {
     user.avatar = avatarBase64;
   }
+  if (language) {
+    user.language = language;
+  }
+
   await user.save();
 
   res.sendStatus(200);
