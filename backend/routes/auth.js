@@ -8,6 +8,8 @@ const authRoute = express.Router();
 
 authRoute.post('/login', inputValidator.validateLogin, authController.login);
 
-authRoute.get('/test', middleware.authRequired, authController.test);
+authRoute.post('/recoverylink', inputValidator.validateEmail, authController.recoveryEmail);
+
+authRoute.get('/test', inputValidator.validateEmail, authController.recoveryEmail);
 
 export default authRoute;
