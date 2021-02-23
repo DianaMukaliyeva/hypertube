@@ -75,8 +75,8 @@ const Landing = ({ user, setUser }) => {
 };
 
 Landing.propTypes = {
-  user: PropTypes.object.isRequired,
-  setUser: PropTypes.func.isRequired,
+  user: PropTypes.object,
+  setUser: PropTypes.func,
 };
 
 export default Landing;
