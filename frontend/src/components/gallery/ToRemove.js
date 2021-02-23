@@ -3,6 +3,9 @@ import React from 'react';
 import axios from 'axios';
 import authService from '../../services/auth';
 import Button from '@material-ui/core/Button';
+import useModal from '../../hooks/useModal';
+import UserProfile from '../user/UserProfile';
+import CustomModal from '../common/CustomModal';
 
 // eslint-disable-next-line no-undef
 const baseURL = process.env.REACT_APP_BACKEND_URL;
@@ -20,6 +23,8 @@ const ToRemove = () => {
     const res = await axios.get(baseURL + '/api/users');
     setUsers(res.data.users);
   };
+
+  const userProfileModal = useModal(<UserProfile userId={users[0] ? users[0].id : 'test' } />) ;
 
   const handleClick = async (event) => {
     event.preventDefault();
@@ -51,7 +56,9 @@ const ToRemove = () => {
   const addMovie = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(baseURL + '/movies', { location: e.target.location.value });
+      await axios.post(baseURL + '/movies', {
+        location: e.target.location.value,
+      });
     } catch (e) {
       alert(e.response.data.message);
     }
@@ -73,7 +80,10 @@ const ToRemove = () => {
         <button type="submit">Save</button>
       </form>
       <h3>List of all movies locations:</h3>
-      <ul>{movies && movies.map((movie, index) => <li key={index}>{movie.title}</li>)}</ul>
+      <ul>
+        {movies &&
+          movies.map((movie, index) => <li key={index}>{movie.title}</li>)}
+      </ul>
       <h3>Add user:</h3>
       <form onSubmit={addUser}>
         <div>
@@ -102,11 +112,21 @@ const ToRemove = () => {
           </tr>
           {users.map((user, index) => (
             <tr key={user.id}>
-              <td style={{ border: '1px solid black', textAlign: 'center' }}>{index + 1}</td>
-              <td style={{ border: '1px solid black', textAlign: 'center' }}>{user.id}</td>
-              <td style={{ border: '1px solid black', textAlign: 'center' }}>{user.username}</td>
-              <td style={{ border: '1px solid black', textAlign: 'center' }}>{user.firstname}</td>
-              <td style={{ border: '1px solid black', textAlign: 'center' }}>{user.lastname}</td>
+              <td style={{ border: '1px solid black', textAlign: 'center' }}>
+                {index + 1}
+              </td>
+              <td style={{ border: '1px solid black', textAlign: 'center' }}>
+                {user.id}
+              </td>
+              <td style={{ border: '1px solid black', textAlign: 'center' }}>
+                {user.username}
+              </td>
+              <td style={{ border: '1px solid black', textAlign: 'center' }}>
+                {user.firstname}
+              </td>
+              <td style={{ border: '1px solid black', textAlign: 'center' }}>
+                {user.lastname}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -114,6 +134,19 @@ const ToRemove = () => {
       <Button variant="outlined" color="secondary" onClick={handleClick}>
         TEST AUTH
       </Button>
+      {users[0] && (
+        <div>
+          <Button
+            type="submit"
+            variant="outlined"
+            color="primary"
+            onClick={userProfileModal.handleClickOpen}
+          >
+            User Profile
+          </Button>
+          <CustomModal {...userProfileModal} />
+        </div>
+      )}
     </>
   );
 };
