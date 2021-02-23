@@ -31,7 +31,9 @@ const recoveryEmail = async (req, res) => {
     lang: user.language,
   };
   const token = jwt.sign(userForToken, process.env.SECRET);
-  const temp = sendResetEmail(user.email, user.firstname, token, req);
+  user.token = token;
+  await user.save();
+  sendResetEmail(user.email, user.firstname, token, req);
 
   res.status(200).json('success');
 };

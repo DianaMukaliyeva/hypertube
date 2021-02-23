@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 // import PropTypes from 'prop-types';
+import jwt_decode from 'jwt-decode';
 
 import useField from '../../hooks/useField';
 import userService from '../../services/user';
@@ -13,6 +14,7 @@ import FormButton from './FormButton';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Alert } from '@material-ui/lab';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -29,21 +31,59 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PasswordResetForm = () => {
+  const history = useHistory();
   const password = useField('password', 'password');
   const confirmPassword = useField('password', 'password');
   const [alert, setAlert] = useState({ show: false, message: '', severity: '' });
 
+  let data = {};
+
+  useEffect(() => {
+    const token = history.location.search.split('=')[1];
+    if (token) {
+      try {
+        const decoded = jwt_decode(token);
+        data = {
+          userId: decoded.id,
+          resetToken: token,
+        };
+      } catch (err) {
+        setAlert({
+          show: true,
+          message: 'Invalid link, please try again',
+          severity: 'error',
+        });
+      }
+    }
+  }, []);
+
   const handleClick = async (event) => {
     event.preventDefault();
     try {
-      await userService.pwdUpdate();
+      data = {
+        ...data,
+        password: password.value,
+        confirmPassword: confirmPassword.value,
+      };
+      await userService.pwdUpdate(data);
     } catch (err) {
+      console.log(err.response.data);
       switch (err.response.data.statusCode) {
         case 400:
           sharedFunctions.showErrors(err.response.data.details, {
             password,
             confirmPassword,
           });
+          err.response.data.details.map((detail) => {
+            if (detail.param === 'userId') {
+              setAlert({
+                show: true,
+                message: 'Link has expired, please try again',
+                severity: 'error',
+              });
+            }
+          });
+
           break;
         case 500:
           setAlert({

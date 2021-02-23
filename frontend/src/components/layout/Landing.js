@@ -16,15 +16,18 @@ import PasswordResetForm from '../user/PasswordResetForm';
 
 /* eslint-disable react/prop-types */
 const Landing = ({ user, setUser }) => {
+  const history = useHistory();
   const changeLanguage = (lang) => {
     i18n.changeLanguage(lang);
   };
   const { t } = useTranslation();
+  const passwordResetModal = useModal(<PasswordResetForm />);
   useEffect(() => {
     changeLanguage('en');
+    if (/^(\/recoverylink)+/.test(history.location.pathname)) {
+      passwordResetModal.handleClickOpen(true);
+    }
   }, []);
-
-  const history = useHistory();
 
   const withoutLogin = () => {
     const path = 'hypertube';
@@ -33,7 +36,6 @@ const Landing = ({ user, setUser }) => {
 
   const loginModal = useModal(<LoginForm setUser={setUser} />);
   const createAccountModal = useModal(<CreateAccountForm setUser={setUser} />);
-  const passwordResetModal = useModal(<PasswordResetForm />);
 
   return (
     <div style={{ marginTop: '50px', textAlign: 'center' }}>
