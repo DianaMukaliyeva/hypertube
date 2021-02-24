@@ -31,7 +31,7 @@ const NavBar = ({ user, setUser }) => {
   };
 
   // TO DO add responsiveness: move navbar to bottom, center icons
-  const profile = useModal(<MyProfile user={user} />);
+  const profile = useModal(<MyProfile user={user} setUser={setUser} />);
 
   return (
     <AppBar style={{ padding: 0, backgroundColor: '#1b1d2f' }}>
