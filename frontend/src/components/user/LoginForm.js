@@ -3,6 +3,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import jwt_decode from 'jwt-decode';
+import { useHistory } from 'react-router-dom';
 
 import useField from '../../hooks/useField';
 import useModal from '../../hooks/useModal';
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LoginForm = ({ setUser }) => {
+  const history = useHistory();
   const email = useField('email', 'email');
   const password = useField('password', 'password');
   const [alert, setAlert] = useState({ show: false, message: '', severity: '' });
@@ -47,6 +49,7 @@ const LoginForm = ({ setUser }) => {
       await authService.login(email.value, password.value);
       const decoded = jwt_decode(localStorage.getItem('token'));
       setUser({ userId: decoded.id, lang: decoded.lang });
+      history.push('/');
     } catch (err) {
       switch (err.response.data.statusCode) {
         case 400:
