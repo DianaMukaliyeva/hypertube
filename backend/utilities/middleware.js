@@ -33,7 +33,6 @@ const authentication = (req, res, next) => {
         const user = await User.findById(decode.id);
         req.user = user ? user.id : undefined;
       }
-
       return next();
     });
   } else {
