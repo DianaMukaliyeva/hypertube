@@ -14,15 +14,17 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const getRootUrl = (req) => {
+const getRootUrl = () => {
   if (url) return url;
-  return req.protocol + '://' + req.get('host');
+  return url;
+  // return req.protocol + '://' + req.get('host');
 };
+
 const sendMail = (recipient, subject, content) => {
   const mailOptions = {
     from: 'hypertube@no-reply.com',
     to: recipient,
-    subject: subject,
+    subject,
     html: content,
   };
 
@@ -37,8 +39,8 @@ const sendResetEmail = (recipient, name, token, req) => {
         <div style="font-size:14px; background: #060629; padding-top: 20px; padding-bottom: 20px;">
             <h3 style="color: #fb3b64; font-family:sans-serif; text-align: center;">
                 Hi, ${
-                  name.charAt(0).toUpperCase() + name.slice(1)
-                }! You have submitted a password change request
+  name.charAt(0).toUpperCase() + name.slice(1)
+}! You have submitted a password change request
             </h3>
             <p style="color:white; text-align: center; padding-top: 5px;">
                 If it was you, to change your Hypertube password click the link below.

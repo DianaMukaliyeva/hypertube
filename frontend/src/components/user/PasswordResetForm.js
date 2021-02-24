@@ -35,18 +35,18 @@ const PasswordResetForm = () => {
   const password = useField('password', 'password');
   const confirmPassword = useField('password', 'password');
   const [alert, setAlert] = useState({ show: false, message: '', severity: '' });
-
-  let data = {};
+  const [user, setUser] = useState({});
+  console.log('user', user);
 
   useEffect(() => {
     const token = history.location.search.split('=')[1];
     if (token) {
       try {
         const decoded = jwt_decode(token);
-        data = {
+        setUser({
           userId: decoded.id,
           resetToken: token,
-        };
+        });
       } catch (err) {
         setAlert({
           show: true,
@@ -60,12 +60,18 @@ const PasswordResetForm = () => {
   const handleClick = async (event) => {
     event.preventDefault();
     try {
-      data = {
-        ...data,
+      const data = {
+        ...user,
         password: password.value,
         confirmPassword: confirmPassword.value,
       };
+      console.log('data', data);
       await userService.pwdUpdate(data);
+      setAlert({
+        show: true,
+        message: 'Your password was successfully updated',
+        severity: 'success',
+      });
     } catch (err) {
       console.log(err.response.data);
       switch (err.response.data.statusCode) {
@@ -75,10 +81,10 @@ const PasswordResetForm = () => {
             confirmPassword,
           });
           err.response.data.details.map((detail) => {
-            if (detail.param === 'userId') {
+            if (detail.param === 'userId' || detail.param === 'resetToken') {
               setAlert({
                 show: true,
-                message: 'Link has expired, please try again',
+                message: 'Error in reset link, please try again',
                 severity: 'error',
               });
             }
@@ -130,9 +136,5 @@ const PasswordResetForm = () => {
     </Container>
   );
 };
-
-// PasswordResetForm.propTypes = {
-//   setUser: PropTypes.func.isRequired,
-// };
 
 export default PasswordResetForm;
