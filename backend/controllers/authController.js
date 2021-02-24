@@ -17,11 +17,6 @@ const login = async (req, res) => {
   res.json({ token });
 };
 
-// TO DO: remove test route
-const test = async (req, res) => {
-  res.status(200).json('success');
-};
-
 const recoveryEmail = async (req, res) => {
   const { email } = req.body;
 
@@ -40,6 +35,5 @@ const recoveryEmail = async (req, res) => {
 
 export default {
   login,
-  test,
   recoveryEmail,
 };

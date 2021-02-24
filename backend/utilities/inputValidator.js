@@ -76,7 +76,9 @@ const validateResetToken = async (token, userId) => {
 };
 
 const validateUserCreation = async (req, res, next) => {
-  const { username, email, firstname, language, lastname, password, confirmPassword } = req.body;
+  const {
+    username, email, firstname, language, lastname, password, confirmPassword,
+  } = req.body;
   let errors = [];
 
   errors.push(await validateField(username, 'username'));
@@ -95,7 +97,9 @@ const validateUserCreation = async (req, res, next) => {
 };
 
 const validatePasswordReset = async (req, res, next) => {
-  const { password, confirmPassword, resetToken, userId } = req.body;
+  const {
+    password, confirmPassword, resetToken, userId,
+  } = req.body;
   let errors = [];
 
   const userIdError = await validateField(userId, 'userId');
@@ -216,16 +220,14 @@ const validateLogin = async (req, res, next) => {
 const validateEmail = async (req, res, next) => {
   const { email } = req.body;
   let errors = [];
-  console.log('validate email');
 
   errors.push(validateEmailFormat(email));
 
-  if (!(await User.findOne({ email: email }))) {
+  if (!(await User.findOne({ email }))) {
     const notFound = createDetail('email', email, 'not found');
     errors.push(notFound);
   }
   errors = errors.filter((error) => error);
-  console.log('errors', errors);
   if (errors.length > 0) {
     throw detailedError(errors);
   }

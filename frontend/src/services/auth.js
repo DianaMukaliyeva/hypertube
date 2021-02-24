@@ -4,11 +4,6 @@ import setAuthToken from '../utils/setAuthToken';
 // eslint-disable-next-line no-undef
 const baseUrl = process.env.REACT_APP_BACKEND_URL + '/api/auth';
 
-const test = async () => {
-  const res = await axios.get(baseUrl + '/test');
-  return res.data;
-};
-
 const login = async (email, password) => {
   const res = await axios.post(baseUrl + '/login', { email, password });
   localStorage.setItem('token', res.data.token);
@@ -21,4 +16,4 @@ const recoveryLink = async (email) => {
   return res.data;
 };
 
-export default { test, login, recoveryLink };
+export default { login, recoveryLink };
