@@ -1,7 +1,5 @@
 import * as yup from 'yup';
 
-// TO DO add more validation
-// TO DO for edit profile form, add more regex for other languages
 const schema = yup.object().shape({
   username: yup
     .string()

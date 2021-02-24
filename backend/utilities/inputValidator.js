@@ -164,7 +164,6 @@ const validateUserUpdation = async (req, res, next) => {
   } = req.body;
   const { userId } = req.params;
   let errors = [];
-
   const userIdError = await validateField(userId, 'userId');
   errors.push(userIdError);
 

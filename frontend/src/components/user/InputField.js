@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 
 /* eslint-disable react/prop-types */
-const InputField = ({ values, label, required = true }) => {
+const InputField = ({ values, label = '', required }) => {
   const { error, value, onChange, helperText, type } = values;
   return (
     <TextField

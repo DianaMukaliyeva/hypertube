@@ -19,7 +19,6 @@ const update = async (userId, data) => {
 };
 
 const pwdUpdate = async (data) => {
-  // console.log('pwd', data);
   const res = await axios.patch(baseUrl + '/', data);
   return res.data;
 };

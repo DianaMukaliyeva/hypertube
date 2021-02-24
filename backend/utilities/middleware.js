@@ -27,16 +27,13 @@ const unknownEndpoint = (req, res) => res.status(404).send({ error: 'unknown end
 const authentication = (req, res, next) => {
   if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
     jwt.verify(req.headers.authorization.split(' ')[1], process.env.SECRET, async (err, decode) => {
-      console.log('here', req.headers.authorization.split(' ')[1]);
       if (err) {
-        console.log('here1', req.headers.authorization);
         req.user = undefined;
       } else {
-        console.log('here2', req.headers.authorization);
         const user = await User.findById(decode.id);
         req.user = user ? user.id : undefined;
       }
-      console.log('here3', req.headers.authorization);
+
       return next();
     });
   } else {
