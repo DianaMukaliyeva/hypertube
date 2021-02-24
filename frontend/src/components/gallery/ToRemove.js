@@ -3,9 +3,6 @@ import React from 'react';
 import axios from 'axios';
 import authService from '../../services/auth';
 import Button from '@material-ui/core/Button';
-import useModal from '../../hooks/useModal';
-import UserProfile from '../user/UserProfile';
-import CustomModal from '../common/CustomModal';
 
 // eslint-disable-next-line no-undef
 const baseURL = process.env.REACT_APP_BACKEND_URL;
@@ -23,8 +20,6 @@ const ToRemove = () => {
     const res = await axios.get(baseURL + '/api/users');
     setUsers(res.data.users);
   };
-
-  const userProfileModal = useModal(<UserProfile userId={users[0] ? users[0].id : 'test' } />) ;
 
   const handleClick = async (event) => {
     event.preventDefault();
@@ -134,19 +129,6 @@ const ToRemove = () => {
       <Button variant="outlined" color="secondary" onClick={handleClick}>
         TEST AUTH
       </Button>
-      {users[0] && (
-        <div>
-          <Button
-            type="submit"
-            variant="outlined"
-            color="primary"
-            onClick={userProfileModal.handleClickOpen}
-          >
-            User Profile
-          </Button>
-          <CustomModal {...userProfileModal} />
-        </div>
-      )}
     </>
   );
 };
