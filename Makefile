@@ -63,10 +63,10 @@ npm-back:	##@Development Install package on backend
 npm-front:	##@Development Install package on frontend
 	docker-compose -f docker-compose.yml -p hypertube exec frontend_hyper /bin/sh -c "npm install $(i)"
 
-npm-back-test:	##@Development Install package on backend
+test-back:	##@Development Install package on backend
 	docker-compose -f docker-compose.yml -p hypertube exec backend_hyper /bin/sh -c "npm test"
 
-npm-front-test:	##@Development Install package on frontend
+test-front:	##@Development Install package on frontend
 	docker-compose -f docker-compose.yml -p hypertube exec frontend_hyper /bin/sh -c "npm test"
 
 lint-back:
