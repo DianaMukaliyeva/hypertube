@@ -1,50 +1,67 @@
 import React, { useEffect } from 'react';
-import i18n from '../../i18n';
-import { useTranslation } from 'react-i18next';
+import { makeStyles } from '@material-ui/core/styles';
+// import i18n from '../../i18n';
+// import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-
-import useModal from '../../hooks/useModal';
-
-import CustomModal from '../common/CustomModal';
-import LoginForm from '../user/LoginForm';
-import CreateAccountForm from '../user/CreateAccountForm';
+import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-import PropTypes from 'prop-types';
+import Typography from '@material-ui/core/Typography';
+
+import useModal from '../../hooks/useModal';
+import CustomModal from '../common/CustomModal';
+import LoginForm from '../user/LoginForm';
+import CreateAccountForm from '../user/CreateAccountForm';
 import PasswordResetForm from '../user/PasswordResetForm';
 
-/* eslint-disable react/prop-types */
+// TO DO move to styles
+const useStyles = makeStyles((theme) => ({
+  button: {
+    [theme.breakpoints.up('xs')]: {
+      width: '250px',
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: '300px',
+    },
+  },
+  box: {
+    [theme.breakpoints.up('xs')]: {
+      flexDirection: 'column',
+    },
+    [theme.breakpoints.up('md')]: {
+      flexDirection: 'row',
+    },
+  },
+}));
+
 const Landing = ({ user, setUser }) => {
   const history = useHistory();
-  const changeLanguage = (lang) => {
-    i18n.changeLanguage(lang);
-  };
-  const { t } = useTranslation();
+  const classes = useStyles();
+  // const changeLanguage = (lang) => {
+  //   i18n.changeLanguage(lang);
+  // };
+  // const { t } = useTranslation();
   const passwordResetModal = useModal(<PasswordResetForm />);
   useEffect(() => {
-    changeLanguage('en');
+    // changeLanguage('en');
     if (/^(\/recoverylink)+/.test(history.location.pathname)) {
       passwordResetModal.handleClickOpen(true);
     }
   }, []);
 
-  const withoutLogin = () => {
-    const path = 'hypertube';
-    history.push(path);
-  };
-
   const loginModal = useModal(<LoginForm setUser={setUser} />);
   const createAccountModal = useModal(<CreateAccountForm setUser={setUser} />);
 
   return (
-    <div style={{ marginTop: '50px', textAlign: 'center' }}>
-      <h1>{t('Welcome')}</h1>
+    <div style={{ marginTop: '25%', textAlign: 'center' }}>
+      <Typography variant="h1">HYPERTUBE</Typography>
       {!user.userId && (
         <>
-          <Box display="flex" justifyContent="center">
-            <Box mr={2}>
+          <Box mt={5} display="flex" justifyContent="center" className={classes.box}>
+            <Box m={3}>
               <Button
+                className={classes.button}
                 type="submit"
                 variant="outlined"
                 color="primary"
@@ -52,8 +69,9 @@ const Landing = ({ user, setUser }) => {
                 Login
               </Button>
             </Box>
-            <Box>
+            <Box m={3}>
               <Button
+                className={classes.button}
                 type="submit"
                 variant="outlined"
                 color="secondary"
@@ -61,11 +79,6 @@ const Landing = ({ user, setUser }) => {
                 Create Account
               </Button>
             </Box>
-          </Box>
-          <Box mt={5}>
-            <Button type="submit" variant="outlined" color="primary" onClick={withoutLogin}>
-              go to next page without AUTH
-            </Button>
           </Box>
         </>
       )}
