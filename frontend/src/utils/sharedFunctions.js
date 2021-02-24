@@ -34,6 +34,12 @@ sharedFunctions.showErrors = (errors, params) => {
         helperText: detail.reason,
         error: true,
       });
+    } else if (detail.param === 'oldPassword') {
+      params.oldPassword.setValues({
+        ...params.oldPassword.values,
+        helperText: detail.reason,
+        error: true,
+      });
     }
   });
 };
