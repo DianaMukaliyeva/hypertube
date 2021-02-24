@@ -73,7 +73,6 @@ const PasswordResetForm = () => {
         severity: 'success',
       });
     } catch (err) {
-      console.log(err.response.data);
       switch (err.response.data.statusCode) {
         case 400:
           sharedFunctions.showErrors(err.response.data.details, {
@@ -124,11 +123,17 @@ const PasswordResetForm = () => {
           </Alert>
         )}
         <form className={classes.form} noValidate>
-          <InputField values={password} label="New password" autocomplete="current-password" />
+          <InputField
+            values={password}
+            label="New password"
+            autocomplete="current-password"
+            required={true}
+          />
           <InputField
             values={confirmPassword}
             label="Confirm password"
             autocomplete="current-password"
+            required={true}
           />
           <FormButton handleClick={handleClick} name="Save" />
         </form>

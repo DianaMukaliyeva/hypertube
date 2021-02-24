@@ -91,8 +91,13 @@ const LoginForm = ({ setUser }) => {
           </Alert>
         )}
         <form className={classes.form} noValidate>
-          <InputField values={email} label="email" />
-          <InputField values={password} label="Password" autocomplete="current-password" />
+          <InputField values={email} label="email" required={true} />
+          <InputField
+            values={password}
+            label="Password"
+            autocomplete="current-password"
+            required={true}
+          />
           <FormButton handleClick={handleLogin} name="Sign In" />
           <Box>
             <Link href="#" onClick={recoveryLinkModal.handleClickOpen}>
