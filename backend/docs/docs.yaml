@@ -448,6 +448,7 @@ components:
         - email
         - firstname
         - lastname
+        - language
         - password
         - username
       type: object
@@ -464,6 +465,9 @@ components:
         lastname:
           type: string
           example: Doe
+        language:
+          type: string
+          example: en
         password:
           type: string
           example: jane88ssssss
@@ -536,6 +540,9 @@ components:
         lastname:
           type: string
           example: Doe
+        language:
+          type: string
+          example: en
         avatarBase64:
           type: string
           example: 'base 64 string'
