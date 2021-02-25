@@ -13,7 +13,7 @@ import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 
-import MyProfile from '../user/MyProfile';
+import MyProfile from '../user/MyProfile/MyProfile';
 import useModal from '../../hooks/useModal';
 import CustomModal from '../common/CustomModal';
 
@@ -44,7 +44,8 @@ const NavBar = ({ user, setUser }) => {
                 size="small"
                 color="inherit"
                 key="hypertube"
-                onClick={() => handleClick()}>
+                onClick={() => handleClick()}
+              >
                 <Typography style={{ color: 'white' }}>
                   <VideocamIcon />
                   Hypertube
@@ -57,7 +58,8 @@ const NavBar = ({ user, setUser }) => {
                 color="inherit"
                 size="small"
                 key="profile"
-                onClick={profile.handleClickOpen}>
+                onClick={profile.handleClickOpen}
+              >
                 <Typography style={{ color: 'white' }}>
                   <AccountCircle />
                   {t('navbar.profile')}
@@ -70,7 +72,8 @@ const NavBar = ({ user, setUser }) => {
                 size="small"
                 color="inherit"
                 key="logout"
-                onClick={() => handleLogout()}>
+                onClick={() => handleLogout()}
+              >
                 <Typography style={{ color: 'white' }}>
                   <ExitToAppIcon />
                   {t('navbar.logout')}
