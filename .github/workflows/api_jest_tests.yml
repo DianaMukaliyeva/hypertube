@@ -3,7 +3,7 @@ name: API Tests
 on: push
 
 jobs:
-  run-linters:
+  run-tests:
     name: Run tests
     runs-on: ubuntu-latest
 
@@ -15,6 +15,16 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 15
+          
+      - name: Create env file
+        run: |
+          touch .env
+          echo BACKEND_PORT_DEV=3000 >> .env
+          echo BACKEND_URL=http://localhost:3000 >> .env
+          echo OMDB_KEY=2c600c89 >> .env
+          echo FRONTEND_PORT_DEV=3001 >> .env
+          echo SECRET=some_json_secret >> .env
+          cat .env
           
       - name: Start Docker
         run: |
