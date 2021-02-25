@@ -50,7 +50,7 @@ const UserProfile = ({ userId }) => {
           <Box className={classes.imageContainer}>
             <img
               className={classes.image}
-              src={user.base64avatar || emptyAvatar}
+              src={user.avatarBase64String || emptyAvatar}
               alt={user.username}
             />
           </Box>
