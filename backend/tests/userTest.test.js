@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import mongoose from 'mongoose';
 import supertest from 'supertest';
 import app from '../app';
 
@@ -14,4 +15,5 @@ describe('Users API tests', () => {
 
 afterAll(async () => {
   await new Promise((resolve) => setTimeout(resolve, 5000));
+  mongoose.connection.close();
 });
