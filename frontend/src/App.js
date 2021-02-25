@@ -5,11 +5,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from './styles/theme';
 import jwt_decode from 'jwt-decode';
 
-import setAuthToken from './utils/setAuthToken';
-
 import Hypertube from './components/gallery/Index';
 import Landing from './components/layout/Landing';
 import Navbar from './components/layout/Navbar';
+import setAuthToken from './utils/setAuthToken';
 
 import Box from '@material-ui/core/Box';
 import { Container } from 'react-bootstrap';
@@ -25,7 +24,6 @@ function App() {
     }
   }, []);
 
-  // TO DO remove switch, once authentication is implemented on backend
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -37,8 +35,8 @@ function App() {
               {user.userId ? <Hypertube user={user} /> : <Landing user={user} setUser={setUser} />}
             </Route>
             <Switch>
-              <Route exact path="/hypertube">
-                <Hypertube user={user} />
+              <Route path="/recoverylink">
+                <Landing user={user} setUser={setUser} />
               </Route>
             </Switch>
           </Box>

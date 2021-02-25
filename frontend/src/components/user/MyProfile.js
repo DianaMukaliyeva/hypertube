@@ -22,6 +22,7 @@ import CustomModal from '../common/CustomModal';
 import useModal from '../../hooks/useModal';
 import UserProfile from './UserProfile';
 
+// TO DO move to styles
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(6),

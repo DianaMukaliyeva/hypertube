@@ -3,7 +3,7 @@ name: API Tests
 on: push
 
 jobs:
-  run-linters:
+  run-tests:
     name: Run tests
     runs-on: ubuntu-latest
 
@@ -16,19 +16,22 @@ jobs:
         with:
           node-version: 15
           
-      - name: Start MongoDB
-        uses: supercharge/mongodb-github-action@1.3.0
-        with:
-          mongodb-version: 4
-          
-      - name: Install Node.js dependencies
+      - name: Create env file
         run: |
-          cd backend
-          npm install
+          touch .env
+          echo BACKEND_PORT_DEV=3000 >> .env
+          echo BACKEND_URL=http://localhost:3000 >> .env
+          echo OMDB_KEY=2c600c89 >> .env
+          echo FRONTEND_PORT_DEV=3001 >> .env
+          echo SECRET=some_json_secret >> .env
+          cat .env
+          
+      - name: Start Docker
+        run: |
+          make build
+          make start
           
       - name: Run tests
-        run: |
-          cd backend
-          npm test    
+        run: make test-back
         env:
          CI: true
