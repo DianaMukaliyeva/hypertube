@@ -5,22 +5,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import { Alert } from '@material-ui/lab';
 
-import emptyAvatar from '../emptyAvatar.png';
+import emptyAvatar from './emptyAvatar.png';
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(6),
-    marginBottom: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  column: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: 0,
-  },
+const useStyles = makeStyles(() => ({
   imageContainer: {
     width: '100%',
     height: 'auto',
@@ -35,8 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UpdatePhoto = ({ user }) => {
-  const [photo, setPhoto] = useState(user.avatarBase64);
+const UpdatePhoto = ({ avatar, setAvatar }) => {
   const [alert, setAlert] = useState({
     show: false,
     message: '',
@@ -58,13 +44,12 @@ const UpdatePhoto = ({ user }) => {
     }
 
     reader.onloadend = () => {
-      setPhoto(reader.result);
+      setAvatar(reader.result);
     };
 
     reader.readAsDataURL(file);
   };
 
-  console.log('🚀  photo', photo);
   return (
     <>
       <Box className={classes.imageContainer}>
@@ -79,7 +64,7 @@ const UpdatePhoto = ({ user }) => {
         <label htmlFor="upload-input">
           <img
             className={classes.image}
-            src={photo || emptyAvatar}
+            src={avatar || emptyAvatar}
             alt="current profile picture"
           />
         </label>
@@ -96,8 +81,13 @@ const UpdatePhoto = ({ user }) => {
   );
 };
 
+UpdatePhoto.defaultProps = {
+  avatar: null,
+};
+
 UpdatePhoto.propTypes = {
-  user: PropTypes.object.isRequired,
+  avatar: PropTypes.string,
+  setAvatar: PropTypes.func.isRequired,
 };
 
 export default UpdatePhoto;

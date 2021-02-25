@@ -13,7 +13,7 @@ import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 
-import MyProfile from '../user/MyProfile/MyProfile';
+import MyProfile from '../user/MyProfile';
 import useModal from '../../hooks/useModal';
 import CustomModal from '../common/CustomModal';
 
