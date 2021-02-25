@@ -46,6 +46,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// todo: add translations
+
 const MyProfile = ({ user, setUser }) => {
   // todo remove when done
   console.log('🚀  logging setUser just to do something with it', setUser);
@@ -120,10 +122,12 @@ const MyProfile = ({ user, setUser }) => {
   }, []);
 
   useEffect(() => {
-    userData && userData.avatarBase64 && setAvatar(userData.avatarBase64);
+    userData &&
+      userData.avatarBase64String &&
+      setAvatar(userData.avatarBase64String);
   }, [userData]);
 
-  const handleClick = async (event) => {
+  const handleUpdate = async (event) => {
     event.preventDefault();
     try {
       const data = {};
@@ -135,7 +139,8 @@ const MyProfile = ({ user, setUser }) => {
       if (password.value) data.password = password.value;
       if (confirmPassword.value) data.confirmPassword = confirmPassword.value;
       if (lang) data.language = lang.code;
-      if (avatar) data.avatarBase64 = avatar;
+      if (userData && userData.avatarBase64String !== avatar)
+        data.avatarBase64String = avatar;
       await userService.update(user.userId, data);
       setAlert({
         show: true,
@@ -255,7 +260,7 @@ const MyProfile = ({ user, setUser }) => {
               {alert.message}
             </Alert>
           )}
-          <FormButton handleClick={handleClick} name="Update" />
+          <FormButton handleClick={handleUpdate} name="Update" />
         </Grid>
       </Grid>
       <CustomModal {...userProfileModal} />

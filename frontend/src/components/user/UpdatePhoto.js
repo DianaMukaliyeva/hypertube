@@ -9,13 +9,18 @@ import emptyAvatar from './emptyAvatar.png';
 
 const useStyles = makeStyles(() => ({
   imageContainer: {
-    width: '100%',
-    height: 'auto',
+    width: '200px',
+    height: '200px',
+    overflow: 'hidden',
     marginTop: '16px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   image: {
-    width: '100%',
-    height: 'auto',
+    maxWidth: '200px',
+    maxHeight: '200px',
+    cursor: 'pointer',
   },
   input: {
     display: 'none',
@@ -39,7 +44,11 @@ const UpdatePhoto = ({ avatar, setAvatar }) => {
     if (!file) return; // is this needed??
 
     if (file.size > 350000) {
-      setAlert(true, 'Max photo size is 350kb', 'error');
+      setAlert({
+        show: true,
+        message: 'Max photo size is 350kb',
+        severity: 'error',
+      });
       return;
     }
 
@@ -69,6 +78,7 @@ const UpdatePhoto = ({ avatar, setAvatar }) => {
           />
         </label>
       </Box>
+
       {alert.show && (
         <Alert
           severity={alert.severity}
