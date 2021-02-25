@@ -31,11 +31,6 @@ jobs:
           make build
           make start
           
-      - name: Install Node.js dependencies
-        run: |
-          cd backend
-          npm install
-          
       - name: Run tests
         run: make test-back
         env:
