@@ -114,18 +114,25 @@ const CreateAccountForm = () => {
           </Alert>
         )}
         <form className={classes.form} noValidate>
-          <InputField values={username} label="Username" />
-          <InputField values={firstName} label="First name" />
-          <InputField values={lastName} label="Last name" />
-          <InputField values={email} label="email" />
-          <InputField values={password} label="Password" autocomplete="new-password" />
+          <InputField values={username} label="Username" required={true} />
+          <InputField values={firstName} label="First name" required={true} />
+          <InputField values={lastName} label="Last name" required={true} />
+          <InputField values={email} label="email" required={true} />
+          <InputField
+            values={password}
+            label="Password"
+            autocomplete="new-password"
+            required={true}
+          />
           <InputField
             values={confirmPassword}
             label="Confirm password"
             autocomplete="new-password"
+            required={true}
           />
           <Autocomplete
             id="language"
+            required={true}
             value={lang}
             options={langOptions}
             getOptionLabel={(option) => option.label}

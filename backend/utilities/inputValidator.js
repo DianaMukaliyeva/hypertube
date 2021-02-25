@@ -164,7 +164,6 @@ const validateUserUpdation = async (req, res, next) => {
   } = req.body;
   const { userId } = req.params;
   let errors = [];
-
   const userIdError = await validateField(userId, 'userId');
   errors.push(userIdError);
 
@@ -217,10 +216,28 @@ const validateLogin = async (req, res, next) => {
 
   next();
 };
+const validateEmail = async (req, res, next) => {
+  const { email } = req.body;
+  let errors = [];
+
+  errors.push(validateEmailFormat(email));
+
+  if (!(await User.findOne({ email }))) {
+    const notFound = createDetail('email', email, 'not found');
+    errors.push(notFound);
+  }
+  errors = errors.filter((error) => error);
+  if (errors.length > 0) {
+    throw detailedError(errors);
+  }
+
+  next();
+};
 
 export default {
   validateUserCreation,
   validateUserUpdation,
   validatePasswordReset,
   validateLogin,
+  validateEmail,
 };

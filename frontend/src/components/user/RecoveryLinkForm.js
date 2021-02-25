@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -7,9 +7,11 @@ import useField from '../../hooks/useField';
 
 import InputField from './InputField';
 import FormButton from './FormButton';
+import sharedFunctions from '../../utils/sharedFunctions';
 
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import { Alert } from '@material-ui/lab';
 
 // TO DO: move to styles
 const useStyles = makeStyles((theme) => ({
@@ -28,13 +30,40 @@ const useStyles = makeStyles((theme) => ({
 
 const RecoveryLinkForm = () => {
   const email = useField('email', 'email');
+  const [alert, setAlert] = useState({ show: false, message: '', severity: '' });
 
   const handleForgotPwd = async (event) => {
     event.preventDefault();
     try {
       await authService.recoveryLink(email.value);
-    } catch (exception) {
-      // TO DO show errors
+      setAlert({
+        show: true,
+        message: 'Check your email for further instructions',
+        severity: 'success',
+      });
+    } catch (err) {
+      // console.log('err', err.response.data);
+      switch (err.response.data.statusCode) {
+        case 400:
+          sharedFunctions.showErrors(err.response.data.details, {
+            email,
+          });
+          break;
+        case 500:
+          setAlert({
+            show: true,
+            message: 'Server error',
+            severity: 'error',
+          });
+          break;
+        default:
+          setAlert({
+            show: true,
+            message: 'Oops.. somthing went completely wrong',
+            severity: 'error',
+          });
+          break;
+      }
     }
   };
 
@@ -47,8 +76,13 @@ const RecoveryLinkForm = () => {
         <Typography component="h1" variant="h5">
           Recovery link
         </Typography>
+        {alert.show && (
+          <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
+            {alert.message}
+          </Alert>
+        )}
         <form className={classes.form} noValidate>
-          <InputField values={email} label="email" />
+          <InputField values={email} label="email" required={true} />
           <FormButton handleClick={handleForgotPwd} name="Send" />
         </form>
         <div>We will send a recover link to your email</div>

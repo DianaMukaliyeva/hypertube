@@ -1,25 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import jwt_decode from 'jwt-decode';
-import { useHistory } from 'react-router-dom';
 
 import useField from '../../hooks/useField';
-import useModal from '../../hooks/useModal';
-import authService from '../../services/auth';
+import userService from '../../services/user';
 import sharedFunctions from '../../utils/sharedFunctions';
 
 import InputField from './InputField';
-import RecoveryLinkForm from '../user/RecoveryLinkForm';
-import CustomModal from '../common/CustomModal';
 import FormButton from './FormButton';
 
-import Link from '@material-ui/core/Link';
-import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Alert } from '@material-ui/lab';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,28 +30,64 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginForm = ({ setUser }) => {
+const PasswordResetForm = () => {
   const history = useHistory();
-  const email = useField('email', 'email');
   const password = useField('password', 'password');
+  const confirmPassword = useField('password', 'password');
   const [alert, setAlert] = useState({ show: false, message: '', severity: '' });
+  const [user, setUser] = useState({});
 
-  const recoveryLinkModal = useModal(<RecoveryLinkForm />);
+  useEffect(() => {
+    const token = history.location.search.split('=')[1];
+    if (token) {
+      try {
+        const decoded = jwt_decode(token);
+        setUser({
+          userId: decoded.id,
+          resetToken: token,
+        });
+      } catch (err) {
+        setAlert({
+          show: true,
+          message: 'Invalid link, please try again',
+          severity: 'error',
+        });
+      }
+    }
+  }, []);
 
-  const handleLogin = async (event) => {
+  const handleClick = async (event) => {
     event.preventDefault();
     try {
-      await authService.login(email.value, password.value);
-      const decoded = jwt_decode(localStorage.getItem('token'));
-      setUser({ userId: decoded.id, lang: decoded.lang });
-      history.push('/');
+      const data = {
+        ...user,
+        password: password.value,
+        confirmPassword: confirmPassword.value,
+      };
+
+      await userService.pwdUpdate(data);
+      setAlert({
+        show: true,
+        message: 'Your password was successfully updated',
+        severity: 'success',
+      });
     } catch (err) {
       switch (err.response.data.statusCode) {
         case 400:
           sharedFunctions.showErrors(err.response.data.details, {
-            email,
             password,
+            confirmPassword,
           });
+          err.response.data.details.map((detail) => {
+            if (detail.param === 'userId' || detail.param === 'resetToken') {
+              setAlert({
+                show: true,
+                message: 'Error in reset link, please try again',
+                severity: 'error',
+              });
+            }
+          });
+
           break;
         case 500:
           setAlert({
@@ -83,7 +114,7 @@ const LoginForm = ({ setUser }) => {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Sign in
+          Password Reset
         </Typography>
         {alert.show && (
           <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
@@ -91,28 +122,23 @@ const LoginForm = ({ setUser }) => {
           </Alert>
         )}
         <form className={classes.form} noValidate>
-          <InputField values={email} label="email" required={true} />
           <InputField
             values={password}
-            label="Password"
-            autocomplete="current-password"
+            label="New password"
+            autocomplete="new-password"
             required={true}
           />
-          <FormButton handleClick={handleLogin} name="Sign In" />
-          <Box>
-            <Link href="#" onClick={recoveryLinkModal.handleClickOpen}>
-              Forgot Password?
-            </Link>
-          </Box>
+          <InputField
+            values={confirmPassword}
+            label="Confirm password"
+            autocomplete="confirm-password"
+            required={true}
+          />
+          <FormButton handleClick={handleClick} name="Save" />
         </form>
       </div>
-      <CustomModal {...recoveryLinkModal} />
     </Container>
   );
 };
 
-LoginForm.propTypes = {
-  setUser: PropTypes.func.isRequired,
-};
-
-export default LoginForm;
+export default PasswordResetForm;
