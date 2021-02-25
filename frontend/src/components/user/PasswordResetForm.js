@@ -36,7 +36,6 @@ const PasswordResetForm = () => {
   const confirmPassword = useField('password', 'password');
   const [alert, setAlert] = useState({ show: false, message: '', severity: '' });
   const [user, setUser] = useState({});
-  console.log('user', user);
 
   useEffect(() => {
     const token = history.location.search.split('=')[1];
@@ -65,7 +64,7 @@ const PasswordResetForm = () => {
         password: password.value,
         confirmPassword: confirmPassword.value,
       };
-      console.log('data', data);
+
       await userService.pwdUpdate(data);
       setAlert({
         show: true,
@@ -126,13 +125,13 @@ const PasswordResetForm = () => {
           <InputField
             values={password}
             label="New password"
-            autocomplete="current-password"
+            autocomplete="new-password"
             required={true}
           />
           <InputField
             values={confirmPassword}
             label="Confirm password"
-            autocomplete="current-password"
+            autocomplete="confirm-password"
             required={true}
           />
           <FormButton handleClick={handleClick} name="Save" />
