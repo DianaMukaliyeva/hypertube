@@ -22,5 +22,9 @@
     "email": "must be valid email",
     "correct": "correct",
     "selectLanguage": "Select language"
+  },
+  "myProfile": {
+    "form.myProfile": "My Profile",
+    "update": "Update"
   }
 }

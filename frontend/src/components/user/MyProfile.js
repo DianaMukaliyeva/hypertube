@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -71,6 +72,7 @@ const MyProfile = ({ user, setUser }) => {
     severity: '',
   });
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const langOptions = [
     { label: 'English', code: 'en' },
@@ -183,7 +185,7 @@ const MyProfile = ({ user, setUser }) => {
     <Container component="main" className={classes.paper} maxWidth="sm">
       <CssBaseline />
       <Typography component="h2" variant="h4" gutterBottom>
-        My profile
+        {t('form.myProfile')}
       </Typography>
 
       <Grid container spacing={6}>
@@ -204,31 +206,31 @@ const MyProfile = ({ user, setUser }) => {
           <form className={classes.form} noValidate>
             <InputField
               values={username}
-              label={`username: ${userData.username}`}
+              label={`${t('form.username')}: ${userData.username}`}
             />
             <InputField
               values={firstName}
-              label={`first name: ${userData.firstname}`}
+              label={`${t('form.firstName')}: ${userData.firstname}`}
             />
             <InputField
               values={lastName}
-              label={`last name: ${userData.lastname}`}
+              label={`${t('form.lastName')}: ${userData.lastname}`}
             />
-            <InputField values={email} label={`email: ${userData.email}`} />
+            <InputField values={email} label={`Email: ${userData.email}`} />
             <InputField
               values={oldPassword}
-              label="current password"
+              label={t('form.currentPassword')}
               autocomplete="old-pwd"
               required={true}
             />
             <InputField
               values={password}
-              label="new password"
+              label={t('form.newPassword')}
               autocomplete="new-pwd"
             />
             <InputField
               values={confirmPassword}
-              label="confirm new password"
+              label={t('form.confirmPassword')}
               autocomplete="new-pwd"
             />
             <Autocomplete
@@ -247,7 +249,7 @@ const MyProfile = ({ user, setUser }) => {
                 <TextField
                   required
                   {...params}
-                  label="Select language"
+                  label={t('form.selectLanguage')}
                   variant="outlined"
                 />
               )}
@@ -261,7 +263,7 @@ const MyProfile = ({ user, setUser }) => {
               {alert.message}
             </Alert>
           )}
-          <FormButton handleClick={handleUpdate} name="Update" />
+          <FormButton handleClick={handleUpdate} name={t('form.update')} />
         </Grid>
       </Grid>
       <CustomModal {...userProfileModal} />
