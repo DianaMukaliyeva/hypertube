@@ -1,25 +1,26 @@
 {
-    "btn": {
-        "send": "Send"
-    },
-    "navbar": {
-        "profile": "Profile",
-        "logout": "Logout"
-    },
-    "form": {
-        "username": "Username",
-        "firstName": "First name",
-        "lastName": "Last name",
-        "password": "Password",
-        "currentPassword": "Current password",
-        "newPassword": "New password",
-        "confirmPassword": "Confirm password",
-        "required": "required field",
-        "minLen": "must be at least 2 characters",
-        "maxLen": "must be max 45 characters",
-        "nameFormat": "must contain only letters and numbers",
-        "passwordFormat": "must contain at least 1 upper case, 1 lower case, 1 number",
-        "email": "must be valid email",
-        "correct": "correct"
-    }
+  "btn": {
+    "send": "Send"
+  },
+  "navbar": {
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "form": {
+    "username": "Username",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "password": "Password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "required": "required field",
+    "minLen": "must be at least 2 characters",
+    "maxLen": "must be max 45 characters",
+    "nameFormat": "must contain only letters and numbers",
+    "passwordFormat": "must contain at least 1 upper case, 1 lower case, 1 number",
+    "email": "must be valid email",
+    "correct": "correct",
+    "selectLanguage": "Select language"
+  }
 }
