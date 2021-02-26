@@ -26,12 +26,11 @@ jobs:
           echo SECRET=some_json_secret >> .env
           cat .env
           
-      - name: Start Docker
+      - name: Build and Start Docker Containers
         run: |
           make build
           make start
           
       - name: Run tests
-        run: make test-back
-        env:
-         CI: true
+        run:  docker-compose -f docker-compose.yml -p hypertube exec -T backend_hyper /bin/sh -c "npm test"  
+          
