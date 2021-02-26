@@ -17,12 +17,22 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   imageContainer: {
-    width: '150px',
-    height: '150px',
+    width: '200px',
+    height: '200px',
+    overflow: 'hidden',
+    marginTop: '16px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   image: {
-    width: '100%',
-    height: 'auto',
+    maxWidth: '200px',
+    maxHeight: '200px',
+    display: 'block',
+    cursor: 'pointer',
+  },
+  username: {
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -41,24 +51,23 @@ const UserProfile = ({ userId }) => {
 
   return (
     user && (
-      <Container component="main" maxWidth="xs">
+      <Container component="main" className={classes.paper} maxWidth="xs">
         <CssBaseline />
-        <div className={classes.paper}>
-          <Typography component="h1" variant="h5" gutterBottom>
-            Profile
-          </Typography>
-          <Box className={classes.imageContainer}>
-            <img
-              className={classes.image}
-              src={user.avatarBase64String || emptyAvatar}
-              alt={user.username}
-            />
-          </Box>
-          <Typography variant="body1">
-            {user.firstname} {user.lastname}
-          </Typography>
-          <Typography variant="body1">{user && user.username}</Typography>
-        </div>
+        <Typography component="h2" variant="h5" gutterBottom>
+          Profile
+        </Typography>
+        <Box className={classes.imageContainer}>
+          <img
+            className={classes.image}
+            src={user.avatarBase64String || emptyAvatar}
+            alt={user.username}
+          />
+        </Box>
+
+        <Typography variant="body1" className={classes.username}>
+          {user.firstname} {user.lastname}
+        </Typography>
+        <Typography variant="body1">{user && user.username}</Typography>
       </Container>
     )
   );
