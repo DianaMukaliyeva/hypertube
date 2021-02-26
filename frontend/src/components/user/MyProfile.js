@@ -46,13 +46,13 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     marginTop: theme.spacing(2),
   },
+  alert: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
-// todo: add translations
-
 const MyProfile = ({ user, setUser }) => {
-  // todo remove when done
-  console.log('🚀  logging setUser just to do something with it', setUser);
+  console.log('🚀 ~ file: MyProfile.js ~ line 54 ~ MyProfile ~ user', user);
 
   const [userData, setUserData] = useState({ language: '' });
 
@@ -83,11 +83,6 @@ const MyProfile = ({ user, setUser }) => {
 
   // todo: remove when done
   const userProfileModal = useModal(<UserProfile userId={user.userId} />);
-
-  /*console.log(
-    '🚀 ~ file: MyProfile.js ~ line 185 ~ MyProfile ~ userInformation',
-    userInformation
-  );*/
 
   useEffect(() => {
     userService
@@ -142,9 +137,11 @@ const MyProfile = ({ user, setUser }) => {
       if (password.value) data.password = password.value;
       if (confirmPassword.value) data.confirmPassword = confirmPassword.value;
       if (lang) data.language = lang.code;
-      if (userData && userData.avatarBase64String !== avatar)
-        data.avatarBase64String = avatar;
+      if (userData) data.avatarBase64String = avatar;
+
       await userService.update(user.userId, data);
+      if (lang) setUser({ ...user, lang: lang });
+      setUserData({ ...userData, ...data });
       setAlert({
         show: true,
         message: 'Account successfully updated',
@@ -182,92 +179,98 @@ const MyProfile = ({ user, setUser }) => {
   };
 
   return (
-    <Container component="main" className={classes.paper} maxWidth="sm">
-      <CssBaseline />
-      <Typography component="h2" variant="h4" gutterBottom>
-        {t('form.myProfile')}
-      </Typography>
+    userData && (
+      <Container component="main" className={classes.paper} maxWidth="sm">
+        <CssBaseline />
+        <Typography component="h2" variant="h4" gutterBottom>
+          {t('myProfile.title')}
+        </Typography>
 
-      <Grid container spacing={6}>
-        <Grid item xs={12} sm={5} className={classes.column}>
-          <UpdatePhoto avatar={avatar} setAvatar={setAvatar} />
+        <Grid container spacing={6}>
+          <Grid item xs={12} sm={5} className={classes.column}>
+            <UpdatePhoto avatar={avatar} setAvatar={setAvatar} />
 
-          <Button
-            type="submit"
-            variant="outlined"
-            color="primary"
-            onClick={userProfileModal.handleClickOpen}
-          >
-            User Profile
-          </Button>
-          <p>(this button will be removed)</p>
-        </Grid>
-        <Grid item xs={12} sm={7} className={classes.column}>
-          <form className={classes.form} noValidate>
-            <InputField
-              values={username}
-              label={`${t('form.username')}: ${userData.username}`}
-            />
-            <InputField
-              values={firstName}
-              label={`${t('form.firstName')}: ${userData.firstname}`}
-            />
-            <InputField
-              values={lastName}
-              label={`${t('form.lastName')}: ${userData.lastname}`}
-            />
-            <InputField values={email} label={`Email: ${userData.email}`} />
-            <InputField
-              values={oldPassword}
-              label={t('form.currentPassword')}
-              autocomplete="old-pwd"
-              required={true}
-            />
-            <InputField
-              values={password}
-              label={t('form.newPassword')}
-              autocomplete="new-pwd"
-            />
-            <InputField
-              values={confirmPassword}
-              label={t('form.confirmPassword')}
-              autocomplete="new-pwd"
-            />
-            <Autocomplete
-              id="language"
-              value={lang}
-              options={langOptions}
-              getOptionLabel={(option) => option.label}
-              getOptionSelected={(option, value) =>
-                option.value === value.value
-              }
-              className={classes.select}
-              onChange={(event, value) => {
-                if (value !== null) setLang(value);
-              }}
-              renderInput={(params) => (
-                <TextField
-                  required
-                  {...params}
-                  label={t('form.selectLanguage')}
-                  variant="outlined"
-                />
-              )}
-            />
-          </form>
-          {alert.show && (
-            <Alert
-              severity={alert.severity}
-              onClose={() => setAlert({ ...alert, show: false })}
+            <Button
+              type="submit"
+              variant="outlined"
+              color="primary"
+              onClick={userProfileModal.handleClickOpen}
             >
-              {alert.message}
-            </Alert>
-          )}
-          <FormButton handleClick={handleUpdate} name={t('form.update')} />
+              User Profile
+            </Button>
+            <p>(this button will be removed)</p>
+          </Grid>
+          <Grid item xs={12} sm={7} className={classes.column}>
+            <form className={classes.form} noValidate>
+              <InputField
+                values={username}
+                label={`${t('form.username')}: ${userData.username}`}
+              />
+              <InputField
+                values={firstName}
+                label={`${t('form.firstName')}: ${userData.firstname}`}
+              />
+              <InputField
+                values={lastName}
+                label={`${t('form.lastName')}: ${userData.lastname}`}
+              />
+              <InputField values={email} label={`Email: ${userData.email}`} />
+              <InputField
+                values={oldPassword}
+                label={t('form.currentPassword')}
+                autocomplete="old-pwd"
+                required={true}
+              />
+              <InputField
+                values={password}
+                label={t('form.newPassword')}
+                autocomplete="new-pwd"
+              />
+              <InputField
+                values={confirmPassword}
+                label={t('form.confirmPassword')}
+                autocomplete="new-pwd"
+              />
+              <Autocomplete
+                id="language"
+                value={lang}
+                options={langOptions}
+                getOptionLabel={(option) => option.label}
+                getOptionSelected={(option, value) =>
+                  option.value === value.value
+                }
+                className={classes.select}
+                onChange={(event, value) => {
+                  if (value !== null) setLang(value);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    required
+                    {...params}
+                    label={t('form.selectLanguage')}
+                    variant="outlined"
+                  />
+                )}
+              />
+              {alert.show && (
+                <Alert
+                  className={classes.alert}
+                  severity={alert.severity}
+                  onClose={() => setAlert({ ...alert, show: false })}
+                >
+                  {alert.message}
+                </Alert>
+              )}
+              <FormButton
+                handleClick={handleUpdate}
+                name={t('myProfile.update')}
+              />
+            </form>
+          </Grid>
         </Grid>
-      </Grid>
-      <CustomModal {...userProfileModal} />
-    </Container>
+        <CustomModal {...userProfileModal} />
+      </Container>
+    )
   );
 };
 
