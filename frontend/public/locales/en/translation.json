@@ -24,7 +24,7 @@
     "selectLanguage": "Select language"
   },
   "myProfile": {
-    "form.myProfile": "My Profile",
+    "title": "My Profile",
     "update": "Update"
   }
 }
