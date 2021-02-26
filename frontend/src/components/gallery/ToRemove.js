@@ -39,7 +39,9 @@ const ToRemove = () => {
   const addMovie = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(baseURL + '/movies', { location: e.target.location.value });
+      await axios.post(baseURL + '/movies', {
+        location: e.target.location.value,
+      });
     } catch (e) {
       alert(e.response.data.message);
     }
@@ -61,7 +63,10 @@ const ToRemove = () => {
         <button type="submit">Save</button>
       </form>
       <h3>List of all movies locations:</h3>
-      <ul>{movies && movies.map((movie, index) => <li key={index}>{movie.title}</li>)}</ul>
+      <ul>
+        {movies &&
+          movies.map((movie, index) => <li key={index}>{movie.title}</li>)}
+      </ul>
       <h3>Add user:</h3>
       <form onSubmit={addUser}>
         <div>
@@ -90,11 +95,21 @@ const ToRemove = () => {
           </tr>
           {users.map((user, index) => (
             <tr key={user.id}>
-              <td style={{ border: '1px solid black', textAlign: 'center' }}>{index + 1}</td>
-              <td style={{ border: '1px solid black', textAlign: 'center' }}>{user.id}</td>
-              <td style={{ border: '1px solid black', textAlign: 'center' }}>{user.username}</td>
-              <td style={{ border: '1px solid black', textAlign: 'center' }}>{user.firstname}</td>
-              <td style={{ border: '1px solid black', textAlign: 'center' }}>{user.lastname}</td>
+              <td style={{ border: '1px solid black', textAlign: 'center' }}>
+                {index + 1}
+              </td>
+              <td style={{ border: '1px solid black', textAlign: 'center' }}>
+                {user.id}
+              </td>
+              <td style={{ border: '1px solid black', textAlign: 'center' }}>
+                {user.username}
+              </td>
+              <td style={{ border: '1px solid black', textAlign: 'center' }}>
+                {user.firstname}
+              </td>
+              <td style={{ border: '1px solid black', textAlign: 'center' }}>
+                {user.lastname}
+              </td>
             </tr>
           ))}
         </tbody>
