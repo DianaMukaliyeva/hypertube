@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import { Alert } from '@material-ui/lab';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import emptyAvatar from './emptyAvatar.png';
 
@@ -20,10 +22,17 @@ const useStyles = makeStyles(() => ({
   image: {
     maxWidth: '200px',
     maxHeight: '200px',
+    display: 'block',
     cursor: 'pointer',
   },
   input: {
     display: 'none',
+  },
+  deleteButton: {
+    zIndex: 10,
+    position: 'relative',
+    left: '85px',
+    top: '-35px',
   },
 }));
 
@@ -41,7 +50,7 @@ const UpdatePhoto = ({ avatar, setAvatar }) => {
     const reader = new FileReader();
     const file = e.target.files[0];
 
-    if (!file) return; // is this needed??
+    if (!file) return;
 
     if (file.size > 350000) {
       setAlert({
@@ -57,6 +66,10 @@ const UpdatePhoto = ({ avatar, setAvatar }) => {
     };
 
     reader.readAsDataURL(file);
+  };
+
+  const handleDelete = () => {
+    setAvatar(null);
   };
 
   return (
@@ -78,6 +91,18 @@ const UpdatePhoto = ({ avatar, setAvatar }) => {
           />
         </label>
       </Box>
+      {avatar && (
+        <IconButton
+          className={classes.deleteButton}
+          variant="button"
+          size="small"
+          color="inherit"
+          key="logout"
+          onClick={handleDelete}
+        >
+          <DeleteIcon />
+        </IconButton>
+      )}
 
       {alert.show && (
         <Alert
