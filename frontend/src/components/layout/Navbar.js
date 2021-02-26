@@ -31,7 +31,7 @@ const NavBar = ({ user, setUser }) => {
   };
 
   // TO DO add responsiveness: move navbar to bottom, center icons
-  const profile = useModal(<MyProfile user={user} />);
+  const profile = useModal(<MyProfile user={user} setUser={setUser} />);
 
   return (
     <AppBar style={{ padding: 0, backgroundColor: '#1b1d2f' }}>
@@ -44,7 +44,8 @@ const NavBar = ({ user, setUser }) => {
                 size="small"
                 color="inherit"
                 key="hypertube"
-                onClick={() => handleClick()}>
+                onClick={() => handleClick()}
+              >
                 <Typography style={{ color: 'white' }}>
                   <VideocamIcon />
                   Hypertube
@@ -57,7 +58,8 @@ const NavBar = ({ user, setUser }) => {
                 color="inherit"
                 size="small"
                 key="profile"
-                onClick={profile.handleClickOpen}>
+                onClick={profile.handleClickOpen}
+              >
                 <Typography style={{ color: 'white' }}>
                   <AccountCircle />
                   {t('navbar.profile')}
@@ -70,7 +72,8 @@ const NavBar = ({ user, setUser }) => {
                 size="small"
                 color="inherit"
                 key="logout"
-                onClick={() => handleLogout()}>
+                onClick={() => handleLogout()}
+              >
                 <Typography style={{ color: 'white' }}>
                   <ExitToAppIcon />
                   {t('navbar.logout')}
