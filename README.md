@@ -15,13 +15,15 @@ TBC....
 
 ## Team
 
-**Tatiana** - _Back/Front_ - [check her profile](https://github.com/T7Q)
+**Tatiana** - _Back/Front_ - [check profile](https://github.com/T7Q)
 
-**Diana** - _Back/Front_ - [check her profile](https://github.com/DianaMukaliyeva)
+**Diana** - _Back/Front_ - [check profile](https://github.com/DianaMukaliyeva)
 
-**Ilja** - _Back/Front_ - [check his profile](https://github.com/iljaSL)
+**Ilja** - _Back/Front_ - [check profile](https://github.com/iljaSL)
 
-**Esa** - _Back/Front_ - [check his profile](https://github.com/ehalmkro)
+**Esa** - _Back/Front_ - [check profile](https://github.com/ehalmkro)
+
+**Liisa** - _Back/Front_ - [check profile](https://github.com/lapaset)
 
 ## Tech Stack
 
