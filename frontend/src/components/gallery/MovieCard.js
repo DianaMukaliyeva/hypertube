@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -46,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MovieCard = ({ openMovie, movie }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -66,7 +69,9 @@ const MovieCard = ({ openMovie, movie }) => {
               {movie.title}
             </Typography>
             <Box justifyContent="space-between" display="flex">
-              <Typography color="textSecondary">IMDB rating: {movie.imdbRating}</Typography>
+              <Typography color="textSecondary">
+                IMDB {t('movie.rating')}: {movie.imdbRating}
+              </Typography>
               <Typography color="textSecondary">{movie.year}</Typography>
             </Box>
           </CardContent>

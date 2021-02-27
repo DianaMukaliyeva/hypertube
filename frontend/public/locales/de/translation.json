@@ -1,24 +1,31 @@
 {
-    "btn": {
-        "send": "Send"
-    },
-    "navbar": {
-        "profile": "Profile",
-        "logout": "Logout"
-    },
-    "form": {
-        "username": "Username",
-        "firstName": "First name",
-        "lastName": "Last name",
-        "password": "Password",
-        "currentPassword": "Current password",
-        "newPassword": "New password",
-        "confirmPassword": "Confirm password",
-        "required": "required field",
-        "minLen": "must be at least {{number}} characters",
-        "maxLen": "must be max {{number}} characters",
-        "nameFormat": "must contain only letters and numbers",
-        "email": "must be valid email",
-        "correct": "correct"
-    }
+  "btn": {
+    "send": "Send"
+  },
+  "navbar": {
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "form": {
+    "username": "Username",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "password": "Password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "required": "required field",
+    "minLen": "must be at least {{number}} characters",
+    "maxLen": "must be max {{number}} characters",
+    "nameFormat": "must contain only letters and numbers",
+    "email": "must be valid email",
+    "correct": "correct"
+  },
+  "myProfile": {
+    "title": "My Profile",
+    "update": "Update"
+  },
+  "movie": {
+    "rating": "rating"
+  }
 }
