@@ -14,7 +14,7 @@ beforeAll(async () => {
   });
 });
 
-describe('Users Creation API tests', () => {
+describe('Users Creation API Tests', () => {
   test('create user / Username is NOT valid - expect 400', async () => {
     await request.post('/api/users/').send(userUtils.invalidUsers[7]).expect(400);
   });
