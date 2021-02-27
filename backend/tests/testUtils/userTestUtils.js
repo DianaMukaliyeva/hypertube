@@ -10,6 +10,25 @@ const newValidUser = {
   language: 'de',
 };
 
+const validForgotPassword = {
+  email: 'o1ddss22@rvemold.com',
+};
+
+const invalidForgotPassword = [
+  {
+    email: '',
+  },
+  {
+    email: 'o1ddss22rvemold.com',
+  },
+  {
+    email: 'o1ddss22@rvemoldcom',
+  },
+  {
+    email: 'peter@gmail.com',
+  },
+];
+
 const validLogInUser = {
   email: 'o1ddss22@rvemold.com',
   password: 'Nena123',
@@ -164,4 +183,6 @@ export default {
   validLogInUser,
   sqlInjections,
   invalidLogin,
+  invalidForgotPassword,
+  validForgotPassword,
 };

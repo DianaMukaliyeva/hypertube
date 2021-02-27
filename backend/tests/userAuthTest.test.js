@@ -61,6 +61,26 @@ describe('Login User API Tests', () => {
     await request.post('/api/auth/login').send(userUtils.invalidLogin[5]).expect(400);
   });
 
+  test('forgot password / empty field - expect 400', async () => {
+    await request.post('/api/auth/recoverylink').send(userUtils.invalidForgotPassword[0]).expect(400);
+  });
+
+  test('forgot password / invalid email - expect 400', async () => {
+    await request.post('/api/auth/recoverylink').send(userUtils.invalidForgotPassword[1]).expect(400);
+  });
+
+  test('forgot password / invalid email - expect 400', async () => {
+    await request.post('/api/auth/recoverylink').send(userUtils.invalidForgotPassword[2]).expect(400);
+  });
+
+  test('forgot password / email is not registered - expect 400', async () => {
+    await request.post('/api/auth/recoverylink').send(userUtils.invalidForgotPassword[3]).expect(400);
+  });
+
+  test('forgot password success - expect 200', async () => {
+    await request.post('/api/auth/recoverylink').send(userUtils.validForgotPassword).expect(200);
+  });
+
   test('login user success - expect 200', async () => {
     await request.post('/api/auth/login').send(userUtils.validLogInUser).expect(200);
   });
