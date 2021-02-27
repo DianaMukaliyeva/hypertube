@@ -83,9 +83,9 @@ const updateUser = async (req, res) => {
   if (password) {
     user.password = bcrypt.hashSync(req.body.password, salt);
   }
-
-  user.avatar = avatarBase64String;
-
+  if (avatarBase64String !== undefined) {
+    user.avatar = avatarBase64String;
+  }
   if (language) {
     user.language = language;
   }
