@@ -52,8 +52,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MyProfile = ({ user, setUser }) => {
-  console.log('🚀 ~ file: MyProfile.js ~ line 54 ~ MyProfile ~ user', user);
-
   const [userData, setUserData] = useState({ language: '' });
 
   const username = useField('text', 'username');
@@ -137,11 +135,13 @@ const MyProfile = ({ user, setUser }) => {
       if (password.value) data.password = password.value;
       if (confirmPassword.value) data.confirmPassword = confirmPassword.value;
       if (lang) data.language = lang.code;
-      if (userData) data.avatarBase64String = avatar;
+      if (userData.avatarBase64String !== avatar)
+        data.avatarBase64String = avatar;
 
       await userService.update(user.userId, data);
       if (lang) setUser({ ...user, lang: lang });
-      setUserData({ ...userData, ...data });
+
+      setUserData({ ...userData, ...data, avatarBase64String: avatar });
       setAlert({
         show: true,
         message: 'Account successfully updated',
