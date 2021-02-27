@@ -42,10 +42,6 @@ const UserProfile = ({ userId }) => {
 
   useEffect(async () => {
     const userFromDb = await userService.get(userId);
-    console.log(
-      '🚀 ~ file: UserProfile.js ~ line 29 ~ useEffect ~ userFromDb',
-      userFromDb
-    );
     if (userFromDb) setUser(userFromDb);
   }, [userId]);
 
