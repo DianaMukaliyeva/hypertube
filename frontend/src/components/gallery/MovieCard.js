@@ -10,6 +10,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 import useModal from '../../hooks/useModal';
 import CustomModal from '../common/CustomModal';
@@ -48,10 +49,15 @@ const useStyles = makeStyles((theme) => ({
   overlay: {
     opacity: 0.5,
   },
+  watchedIcon: {
+    position: 'absolute',
+    top: '10px',
+    right: '10px',
+  },
 }));
 
 const MovieCard = ({ movie }) => {
-  const movieModal = useModal(<VideoPlayer movie={movie} />, true);
+  const movieModal = useModal(<VideoPlayer movie={movie} />, false);
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -67,6 +73,7 @@ const MovieCard = ({ movie }) => {
             title={movie.title}
           />
           <CardContent className={classes.cardContent}>
+            {movie.watched && <VisibilityIcon className={classes.watchedIcon} />}
             <Typography
               color={movie.watched ? 'textSecondary' : 'textPrimary'}
               variant="h6"
