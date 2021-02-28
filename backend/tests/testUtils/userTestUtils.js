@@ -1,3 +1,5 @@
+/* eslint-disable quotes */
+/* eslint-disable quote-props */
 const newValidUser = {
   username: 'leon',
   email: 'o1ddss22@rvemold.com',
@@ -7,6 +9,80 @@ const newValidUser = {
   confirmPassword: 'Nena123',
   language: 'de',
 };
+
+const validForgotPassword = {
+  email: 'o1ddss22@rvemold.com',
+};
+
+const invalidForgotPassword = [
+  {
+    email: '',
+  },
+  {
+    email: 'o1ddss22rvemold.com',
+  },
+  {
+    email: 'o1ddss22@rvemoldcom',
+  },
+  {
+    email: 'peter@gmail.com',
+  },
+];
+
+const validLogInUser = {
+  email: 'o1ddss22@rvemold.com',
+  password: 'Nena123',
+};
+
+const invalidLogin = [
+  {
+    email: '',
+    password: 'Nena123',
+  },
+  {
+    email: 'o1ddss22rvemold.com',
+    password: 'Nena123',
+  },
+  {
+    email: 'o1ddss22@rvemoldcom',
+    password: 'Nena123',
+  },
+  {
+    email: 'o1ddss22@rvemoldsd.com',
+    password: 'Nena123',
+  },
+  {
+    email: 'o1ddss22@rvemold.com',
+    password: '',
+  },
+  {
+    email: 'o1ddss22@rvemold.com',
+    password: 'Nena1234',
+  },
+];
+
+const sqlInjections = [
+  {
+    email: { "$ne": null },
+    password: { "$ne": null },
+  },
+  {
+    email: { "$gt": undefined },
+    password: { "$gt": undefined },
+  },
+  {
+    email: { "$gt": "" },
+    password: { "$gt": "" },
+  },
+  {
+    email: 'o1ddss22@rvemold.com',
+    password: { "$ne": null },
+  },
+  {
+    email: { "$eq": "o1ddss22@rvemold.com" },
+    password: { "$regex": "^m" },
+  },
+];
 
 const invalidUsers = [
   {
@@ -104,4 +180,9 @@ const invalidUsers = [
 export default {
   newValidUser,
   invalidUsers,
+  validLogInUser,
+  sqlInjections,
+  invalidLogin,
+  invalidForgotPassword,
+  validForgotPassword,
 };

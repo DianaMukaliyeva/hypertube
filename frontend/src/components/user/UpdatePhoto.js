@@ -63,7 +63,6 @@ const UpdatePhoto = ({ avatar, setAvatar }) => {
 
     reader.onloadend = () => {
       setAvatar(reader.result);
-      e.target.value = null;
     };
 
     reader.readAsDataURL(file);
