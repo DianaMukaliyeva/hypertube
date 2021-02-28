@@ -11,6 +11,10 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 
+import useModal from '../../hooks/useModal';
+import CustomModal from '../common/CustomModal';
+import VideoPlayer from '../videoPlayer/VideoPlayer';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -35,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     marginBottom: '10px',
-    height: '65px',
+    minHeight: '65px',
   },
   cardContent: {
     textAlign: 'center',
@@ -46,13 +50,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieCard = ({ openMovie, movie }) => {
+const MovieCard = ({ movie }) => {
+  const movieModal = useModal(<VideoPlayer movie={movie} />, true);
   const classes = useStyles();
   const { t } = useTranslation();
 
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
-      <Card onClick={openMovie} className={classes.root}>
+      <Card onClick={movieModal.handleClickOpen} className={classes.root}>
         <CardActionArea>
           <CardMedia
             className={classes.cardMedia + ' ' + (movie.watched ? classes.overlay : '')}
@@ -77,12 +82,12 @@ const MovieCard = ({ openMovie, movie }) => {
           </CardContent>
         </CardActionArea>
       </Card>
+      <CustomModal {...movieModal} />
     </Grid>
   );
 };
 
 MovieCard.propTypes = {
-  openMovie: PropTypes.func.isRequired,
   movie: PropTypes.object.isRequired,
 };
 

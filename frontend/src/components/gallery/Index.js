@@ -1,58 +1,52 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-import useModal from '../../hooks/useModal';
+import MovieCard from './MovieCard';
 import galleryService from '../../services/gallery';
-import CustomModal from '../common/CustomModal';
-import VideoPlayer from '../videoPlayer/VideoPlayer';
 
-const Hypertube = ({ user }) => {
+const Gallery = () => {
   const [movies, setMovies] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
-  // const [page, setPage] = React.useState(0);
-  const { t } = useTranslation();
-  const movieModal = useModal(<VideoPlayer user={user} />, true);
+  const [page, setPage] = React.useState(1);
+  const [hasMore, setHasMore] = React.useState(true);
 
   const getMovies = async () => {
-    setLoading(true);
-    const moviesData = await galleryService.getMovies();
-    setMovies(moviesData);
-    setLoading(false);
+    const moviesData = await galleryService.getMovies(page);
+    setPage(page + 1);
+    if (moviesData.movies.length === 0) {
+      setHasMore(false);
+    } else {
+      setMovies(movies.concat(moviesData.movies));
+    }
   };
-
-  console.log('movies', movies);
 
   React.useEffect(() => {
     getMovies();
   }, []);
 
-  if (loading) {
-    return <div>Loading</div>;
-  }
-
   return (
     <div>
-      <h1>{t('Welcome')} to the movie gallery</h1>
-      <Box>
-        <Button
-          type="submit"
-          variant="outlined"
-          color="secondary"
-          onClick={movieModal.handleClickOpen}>
-          MOVIE HERE
-        </Button>
-      </Box>
-      <Box mt={10}></Box>
-      <CustomModal {...movieModal} />
+      <InfiniteScroll
+        style={{ overflow: 'none' }}
+        dataLength={movies.length}
+        next={getMovies}
+        hasMore={hasMore}
+        loader={
+          <Box p={3} textAlign="center">
+            <CircularProgress />
+          </Box>
+        }
+        endMessage={<p></p>}>
+        <Grid container spacing={3}>
+          {movies.map((movie, index) => (
+            <MovieCard key={index} movie={movie} />
+          ))}
+        </Grid>
+      </InfiniteScroll>
     </div>
   );
 };
 
-Hypertube.propTypes = {
-  user: PropTypes.object.isRequired,
-};
-
-export default Hypertube;
+export default Gallery;
