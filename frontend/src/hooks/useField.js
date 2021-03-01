@@ -3,7 +3,7 @@ import { useState } from 'react';
 import schema from '../utils/validationSchema';
 import { useTranslation } from 'react-i18next';
 
-const useField = (type, field) => {
+const useField = (type, field, id) => {
   const { t } = useTranslation();
   const [values, setValues] = useState({
     value: '',
@@ -42,6 +42,7 @@ const useField = (type, field) => {
     error: values.error,
     values,
     setValues,
+    id,
   };
 };
 
