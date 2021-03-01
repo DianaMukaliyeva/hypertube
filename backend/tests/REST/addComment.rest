@@ -1,0 +1,8 @@
+POST http://localhost:3000/api/movies/604d3965cd80d5001f5880e1/comments HTTP/1.1
+content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwM2QzZjMwMTQ4YzM4MDBjNGRmZTIzOSIsImxhbmciOiJkZSIsImlhdCI6MTYxNDYyNjYzOH0.-EDyxfk1FoQFJlRw4JpzvZtnxt6WUztxanDVEwonI9Q
+
+{
+  "userId": "603bfa6fb32fad001f61dcd3",
+  "comment": "Awesome Movie"
+}
