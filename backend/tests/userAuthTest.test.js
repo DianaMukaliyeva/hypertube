@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
-import mongoose from 'mongoose';
 import supertest from 'supertest';
 import app from '../app';
 import User from '../models/User';
+import database from '../utilities/database';
 
 import userUtils from './testUtils/userTestUtils';
 
@@ -62,19 +62,31 @@ describe('Login User API Tests', () => {
   });
 
   test('forgot password / empty field - expect 400', async () => {
-    await request.post('/api/auth/recoverylink').send(userUtils.invalidForgotPassword[0]).expect(400);
+    await request
+      .post('/api/auth/recoverylink')
+      .send(userUtils.invalidForgotPassword[0])
+      .expect(400);
   });
 
   test('forgot password / invalid email - expect 400', async () => {
-    await request.post('/api/auth/recoverylink').send(userUtils.invalidForgotPassword[1]).expect(400);
+    await request
+      .post('/api/auth/recoverylink')
+      .send(userUtils.invalidForgotPassword[1])
+      .expect(400);
   });
 
   test('forgot password / invalid email - expect 400', async () => {
-    await request.post('/api/auth/recoverylink').send(userUtils.invalidForgotPassword[2]).expect(400);
+    await request
+      .post('/api/auth/recoverylink')
+      .send(userUtils.invalidForgotPassword[2])
+      .expect(400);
   });
 
   test('forgot password / email is not registered - expect 400', async () => {
-    await request.post('/api/auth/recoverylink').send(userUtils.invalidForgotPassword[3]).expect(400);
+    await request
+      .post('/api/auth/recoverylink')
+      .send(userUtils.invalidForgotPassword[3])
+      .expect(400);
   });
 
   test('forgot password success - expect 200', async () => {
@@ -88,5 +100,5 @@ describe('Login User API Tests', () => {
 
 afterAll(async () => {
   await new Promise((resolve) => setTimeout(resolve, 5000));
-  mongoose.connection.close();
+  database.closeDatabase();
 });

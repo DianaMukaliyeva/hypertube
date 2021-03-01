@@ -241,6 +241,13 @@ paths:
       summary: get list of movies
       operationId: getMovies
       parameters:
+        - name: page
+          in: query
+          description: page
+          required: true
+          schema:
+            type: integer
+            example: 2
         - name: decade
           in: query
           description: decade
@@ -543,7 +550,7 @@ components:
         language:
           type: string
           example: en
-        avatarBase64:
+        avatarBase64String:
           type: string
           example: 'base 64 string'
         oldPassword:

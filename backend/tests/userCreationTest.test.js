@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
-import mongoose from 'mongoose';
 import supertest from 'supertest';
 import app from '../app';
 import User from '../models/User';
+import database from '../utilities/database';
 
 import userUtils from './testUtils/userTestUtils';
 
@@ -66,5 +66,5 @@ describe('Users Creation API Tests', () => {
 
 afterAll(async () => {
   await new Promise((resolve) => setTimeout(resolve, 5000));
-  mongoose.connection.close();
+  database.closeDatabase();
 });
