@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import LoginForm from './LoginForm';
 
 const mockSetUser = jest.fn((u) => u);
@@ -18,8 +18,28 @@ jest.mock('react-i18next', () => ({
   },
 }));
 
-test('renders a button', () => {
-  const { getByRole } = render(<LoginForm setUser={mockSetUser} />);
+describe('all elements are rendered', () => {
+  beforeEach(() => {
+    render(<LoginForm setUser={mockSetUser} />);
+  });
 
-  expect(getByRole('button')).toBeInTheDocument();
+  test('renders header Sign in', () => {
+    expect(screen.getByRole('heading')).toHaveTextContent(/sign in/i);
+  });
+
+  test('renders email field', () => {
+    expect(screen.getByLabelText(/email/i));
+  });
+
+  test('renders password field', () => {
+    expect(screen.getByLabelText(/password/i));
+  });
+
+  test('renders a button', () => {
+    expect(screen.getByRole('button'));
+  });
+
+  test('renders Forgot password link', () => {
+    expect(screen.getByText(/forgot password/i));
+  });
 });
