@@ -26,5 +26,8 @@
   "myProfile": {
     "title": "My Profile",
     "update": "Update"
+  },
+  "movie": {
+    "rating": "rating"
   }
 }
