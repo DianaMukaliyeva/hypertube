@@ -37,9 +37,13 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginForm = ({ setUser }) => {
   const history = useHistory();
-  const email = useField('email', 'email');
-  const password = useField('password', 'password');
-  const [alert, setAlert] = useState({ show: false, message: '', severity: '' });
+  const email = useField('email', 'email', 'login-email');
+  const password = useField('password', 'password', 'login-password');
+  const [alert, setAlert] = useState({
+    show: false,
+    message: '',
+    severity: '',
+  });
 
   const recoveryLinkModal = useModal(<RecoveryLinkForm />);
 
@@ -86,7 +90,10 @@ const LoginForm = ({ setUser }) => {
           Sign in
         </Typography>
         {alert.show && (
-          <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
+          <Alert
+            severity={alert.severity}
+            onClose={() => setAlert({ ...alert, show: false })}
+          >
             {alert.message}
           </Alert>
         )}
