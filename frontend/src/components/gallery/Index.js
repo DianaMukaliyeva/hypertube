@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -7,18 +8,24 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import MovieCard from './MovieCard';
 import galleryService from '../../services/gallery';
 
-const Gallery = () => {
+const Gallery = ({ setUser }) => {
   const [movies, setMovies] = React.useState([]);
   const [page, setPage] = React.useState(1);
   const [hasMore, setHasMore] = React.useState(true);
 
   const getMovies = async () => {
-    const moviesData = await galleryService.getMovies(page);
-    setPage(page + 1);
-    if (moviesData.movies.length === 0) {
-      setHasMore(false);
-    } else {
-      setMovies(movies.concat(moviesData.movies));
+    try {
+      const moviesData = await galleryService.getMovies(page);
+      setPage(page + 1);
+      if (moviesData.movies.length === 0) {
+        setHasMore(false);
+      } else {
+        setMovies(movies.concat(moviesData.movies));
+      }
+    } catch (e) {
+      if (e.response && e.response.status === 401) {
+        setUser({ userId: '', lang: '' });
+      }
     }
   };
 
@@ -47,6 +54,10 @@ const Gallery = () => {
       </InfiniteScroll>
     </div>
   );
+};
+
+Gallery.propTypes = {
+  setUser: PropTypes.func.isRequired,
 };
 
 export default Gallery;
