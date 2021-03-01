@@ -66,6 +66,7 @@ const UpdatePhoto = ({ avatar, setAvatar }) => {
     };
 
     reader.readAsDataURL(file);
+    if (alert.show) setAlert({ ...alert, show: false });
   };
 
   const handleDelete = () => {
