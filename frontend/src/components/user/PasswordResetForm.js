@@ -32,9 +32,17 @@ const useStyles = makeStyles((theme) => ({
 
 const PasswordResetForm = () => {
   const history = useHistory();
-  const password = useField('password', 'password');
-  const confirmPassword = useField('password', 'password');
-  const [alert, setAlert] = useState({ show: false, message: '', severity: '' });
+  const password = useField('password', 'password', 'reset-password');
+  const confirmPassword = useField(
+    'password',
+    'password',
+    'reset-confirm-password'
+  );
+  const [alert, setAlert] = useState({
+    show: false,
+    message: '',
+    severity: '',
+  });
   const [user, setUser] = useState({});
 
   useEffect(() => {
@@ -117,7 +125,10 @@ const PasswordResetForm = () => {
           Password Reset
         </Typography>
         {alert.show && (
-          <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
+          <Alert
+            severity={alert.severity}
+            onClose={() => setAlert({ ...alert, show: false })}
+          >
             {alert.message}
           </Alert>
         )}

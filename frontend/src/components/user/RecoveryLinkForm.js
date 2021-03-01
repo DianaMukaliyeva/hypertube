@@ -29,8 +29,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RecoveryLinkForm = () => {
-  const email = useField('email', 'email');
-  const [alert, setAlert] = useState({ show: false, message: '', severity: '' });
+  const email = useField('email', 'email', 'forgot-email');
+  const [alert, setAlert] = useState({
+    show: false,
+    message: '',
+    severity: '',
+  });
 
   const handleForgotPwd = async (event) => {
     event.preventDefault();
@@ -77,7 +81,10 @@ const RecoveryLinkForm = () => {
           Recovery link
         </Typography>
         {alert.show && (
-          <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
+          <Alert
+            severity={alert.severity}
+            onClose={() => setAlert({ ...alert, show: false })}
+          >
             {alert.message}
           </Alert>
         )}
