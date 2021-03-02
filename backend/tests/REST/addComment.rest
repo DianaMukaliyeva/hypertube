@@ -3,6 +3,5 @@ content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwM2U4YjlmMDBlZGU0MDEyOGNlNDhhZCIsImxhbmciOiJkZSIsImlhdCI6MTYxNDcxMTcyNX0.llVv5Y8RQw7qEBB0F_jvBRSDypHcQ_4M3HyVzlO7cMs
 
 {
-  "userId": "603bfa6fb32fad001f61dcd3",
   "comment": "Cool movie!"
 }
