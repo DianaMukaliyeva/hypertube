@@ -9,32 +9,39 @@ const fetchYTSMovieList = async (page = 1) => {
   const limit = 24;
   const { OMDB_KEY, TORRENT_API } = process.env;
 
-  let res = await axios
-    .get(`${TORRENT_API}?sort_by=download_count&page=${page}&limit=${limit}&`);
+  let res = await axios.get(`${TORRENT_API}?sort_by=download_count&page=${page}&limit=${limit}&`);
   if (res.status !== 200) throw new Error('Could not fetch movie list!'); // todo: custom errors for these
   if (!res.data.data.movies) throw new Error('Page does not exist'); // todo: custom errors for these
   const movieList = res.data.data.movies;
   let movies = [];
-  await Promise.all(movieList.map(async (movie) => {
-    res = await axios.get(`http://www.omdbapi.com/?i=${movie.imdb_code}&apikey=${OMDB_KEY}`);
-    if (res.status !== 200) throw requestError;
-    movies = [...movies, {
-      title: res.data.Title,
-      imdbCode: movie.imdb_code,
-      imdbRating: movie.rating,
-      year: parseInt(res.data.Year, 10),
-      thumbnail: res.data.Poster,
-      hash: `${movie.torrents[0].hash}`,
-      watched: false, // placeholder until the backend logic is added
-    }];
-  }));
+  console.log('list', movieList[0]);
+  await Promise.all(
+    movieList.map(async (movie, index) => {
+      res = await axios.get(`http://www.omdbapi.com/?i=${movie.imdb_code}&apikey=${OMDB_KEY}`);
+      if (index === 0) {
+        console.log('here', res.data);
+      }
+      if (res.status !== 200) throw requestError;
+      movies = [
+        ...movies,
+        {
+          title: res.data.Title,
+          imdbCode: movie.imdb_code,
+          imdbRating: movie.rating,
+          year: parseInt(res.data.Year, 10),
+          thumbnail: res.data.Poster,
+          hash: `${movie.torrents[0].hash}`,
+          watched: false, // placeholder until the backend logic is added
+        },
+      ];
+    }),
+  );
   return { movies };
 };
 
 const fetchTorrentData = async (imdbCode) => {
   const { TORRENT_API } = process.env;
-  const res = await axios
-    .get(`${TORRENT_API}?query_term=${imdbCode}`);
+  const res = await axios.get(`${TORRENT_API}?query_term=${imdbCode}`);
   if (res.status !== 200 || !res.data.data) throw requestError;
   return res.data.data;
 };
@@ -56,15 +63,15 @@ const fetchComments = async (imdbCode) => {
     avatar: 1,
   });
 
-  return (!res) ? false : res.comments;
+  return !res ? false : res.comments;
 };
 
-const parseMovieResponse = (movieInfo, torrentData, comments) => (
+const parseMovieResponse = (movieInfo, torrentData, comments) =>
   /* storing magnet link components here for now as we might need them in movie routes later, sry.
   also todo: add tracker listing into a config file
  const { hash } = torrentData.movies[0].torrents[0];
  `magnet:?xt=urn:btih:${hash}&dn=${movieInfo.Title}&tr=[PLACEHOLDER_FOR_TRACKER]`; */
-  {
+  ({
     title: movieInfo.Title,
     imdbRating: torrentData.movies[0].rating,
     year: movieInfo.Year,
