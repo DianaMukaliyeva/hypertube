@@ -29,39 +29,37 @@ const getMovieEntry = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
-const addComment = async (req, res, next) => {
-  try {
-    const newComment = {
-      userId: req.body.userId,
-      comment: req.body.comment,
-    };
-    const imdbCode = req.params.imdb_code;
+const addComment = async (req, res) => {
+  const newComment = {
+    userId: req.user,
+    comment: req.body.comment,
+  };
+  const imdbCode = req.params.imdb_code;
 
-    if (newComment.comment === '') throw detailedError();
+  if (!newComment.comment) throw detailedError();
 
-    const movieId = await Movie.findOneAndUpdate({
-      _id: imdbCode,
-    }, {
-      $addToSet: {
-        comments: newComment,
-      },
+  const movie = await Movie.findOneAndUpdate({
+    imdbCode,
+  }, {
+    $addToSet: {
+      comments: newComment,
+    },
+  });
+
+  if (movie === null) {
+    const newMovieInDB = new Movie({
+      imdbCode,
+      comments: [
+        {
+          userId: req.body.userId,
+          comment: req.body.comment,
+        },
+      ],
     });
+    await newMovieInDB.save();
+  }
 
-    if (movieId === null) {
-      const newMovieInDB = new Movie({
-        _id: imdbCode,
-        comments: [
-          {
-            userId: req.body.userId,
-            comment: req.body.comment,
-          },
-        ],
-      });
-      await newMovieInDB.save();
-    }
-
-    res.sendStatus(201);
-  } catch (err) { next(err); }
+  res.sendStatus(201);
 };
 
 export default {
