@@ -6,13 +6,11 @@ import uniqueValidator from 'mongoose-unique-validator';
 const userSchema = new mongoose.Schema({
   firstname: {
     type: String,
-    lowercase: true,
     required: true,
     index: true,
   },
   lastname: {
     type: String,
-    lowercase: true,
     required: true,
     index: true,
   },
@@ -26,7 +24,6 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String,
     unique: true,
-    lowercase: true,
     required: true,
     index: true,
   },

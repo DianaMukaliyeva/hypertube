@@ -3,9 +3,10 @@ import TextField from '@material-ui/core/TextField';
 
 /* eslint-disable react/prop-types */
 const InputField = ({ values, label = '', required }) => {
-  const { error, value, onChange, helperText, type } = values;
+  const { error, value, onChange, helperText, type, id } = values;
   return (
     <TextField
+      id={id}
       error={error}
       value={value}
       onChange={onChange}

@@ -35,14 +35,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateAccountForm = () => {
-  const username = useField('text', 'username');
-  const firstName = useField('text', 'name');
-  const lastName = useField('text', 'name');
-  const email = useField('email', 'email');
-  const password = useField('password', 'password');
-  const confirmPassword = useField('password', 'confirmPassword');
+  const username = useField('text', 'username', 'create-username');
+  const firstName = useField('text', 'name', 'create-firstname');
+  const lastName = useField('text', 'name', 'create-lastname');
+  const email = useField('email', 'email', 'create-email');
+  const password = useField('password', 'password', 'create-password');
+  const confirmPassword = useField(
+    'password',
+    'confirmPassword',
+    'create-confirm-password'
+  );
   const [lang, setLang] = useState({ label: '', code: '' });
-  const [alert, setAlert] = useState({ show: false, message: '', severity: '' });
+  const [alert, setAlert] = useState({
+    show: false,
+    message: '',
+    severity: '',
+  });
 
   const langOptions = [
     { label: 'English', code: 'en' },
@@ -109,7 +117,10 @@ const CreateAccountForm = () => {
           Create account
         </Typography>
         {alert.show && (
-          <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
+          <Alert
+            severity={alert.severity}
+            onClose={() => setAlert({ ...alert, show: false })}
+          >
             {alert.message}
           </Alert>
         )}
@@ -142,7 +153,12 @@ const CreateAccountForm = () => {
               if (value !== null) setLang(value);
             }}
             renderInput={(params) => (
-              <TextField required {...params} label="Select language" variant="outlined" />
+              <TextField
+                required
+                {...params}
+                label="Select language"
+                variant="outlined"
+              />
             )}
           />
         </form>

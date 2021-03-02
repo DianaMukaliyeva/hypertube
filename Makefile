@@ -76,3 +76,11 @@ lint-front:
 	cd frontend && npm run lint
 
 lint: lint-back lint-front ## run make -j lint
+
+lint-back-fix:
+	cd backend && npm run lint:fix
+
+lint-front-fix:
+	cd frontend && npm run lint:fix
+
+lint-fix: lint-back-fix lint-front-fix ## run make -j lint

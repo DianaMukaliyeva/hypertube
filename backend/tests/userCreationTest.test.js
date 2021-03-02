@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
-import mongoose from 'mongoose';
 import supertest from 'supertest';
 import app from '../app';
 import User from '../models/User';
+import database from '../utilities/database';
 
 import userUtils from './testUtils/userTestUtils';
 
@@ -14,7 +14,7 @@ beforeAll(async () => {
   });
 });
 
-describe('Users Creation API tests', () => {
+describe('Users Creation API Tests', () => {
   test('create user / Username is NOT valid - expect 400', async () => {
     await request.post('/api/users/').send(userUtils.invalidUsers[7]).expect(400);
   });
@@ -66,5 +66,5 @@ describe('Users Creation API tests', () => {
 
 afterAll(async () => {
   await new Promise((resolve) => setTimeout(resolve, 5000));
-  mongoose.connection.close();
+  database.closeDatabase();
 });

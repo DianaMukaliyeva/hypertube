@@ -30,10 +30,10 @@ TBC....
 - **Language:** Javascript
 - **Database:** Mongo
 - **[Micro]Frameworks:** NodeJs - Express - React
-- **Libraries:** React Boostrap????
+- **Libraries:** Material UI
 
 - **Internal API:** REST, view documentation here
-- **External API:** torrent 1, torrent 2, IMDB?, subtitles?
+- **External API:** torrent 1?, IMDB, subtitles?
 
 ## Functionality
 
@@ -41,7 +41,7 @@ TBC....
 
 - Authentication with Omniauth stategy : username/pass, Gmail, 42
 - Profile: username, firstname, lastname, avatar, email
-- Settings: interface available in English (by default), ?, ?
+- Settings: interface available in English (by default), German, Finnish, Russian
 
 ### Movie gallery
 
@@ -53,7 +53,7 @@ TBC....
 ### Video player
 
 - Movie details: title, summary, casting, year, length, rates
-- Subtitles in English, ?, ?, ? (if available)
+- Subtitles in English, German, Finnish, Russian (if available)
 - Uninterrupted streaming
 - List of comments, option of leaving a comment
 - Movies unwatched for a month erased from the server
