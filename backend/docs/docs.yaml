@@ -629,10 +629,7 @@ components:
     body_5:
       type: object
       properties:
-        userId:
-          type: integer
-          example: 465
-        message:
+        comment:
           type: string
           example: new comment
     ErrorResponse400_details:
