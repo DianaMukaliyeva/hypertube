@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import MovieCard from './MovieCard';
+import Filter from './Filter';
 import galleryService from '../../services/gallery';
 
 const Gallery = ({ setUser }) => {
@@ -35,6 +36,7 @@ const Gallery = ({ setUser }) => {
 
   return (
     <div>
+      <Filter />
       <InfiniteScroll
         style={{ overflow: 'none' }}
         dataLength={movies.length}

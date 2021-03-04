@@ -27,5 +27,41 @@
   },
   "movie": {
     "rating": "luokitus"
+  },
+  "filter": {
+    "s": "'s",
+    "earlier": "earlier's",
+    "yearLabel": "YEAR",
+    "searchLabel": "Search for a Movie",
+    "ratingLabel": "IMDb RATING",
+    "genreLabel": "GENRE",
+    "sortLabel": "SORT BY",
+    "mostPopular": "Most Popular",
+    "leastPopular": "Least Popular",
+    "newest": "Newest",
+    "oldest": "Oldest"
+  },
+  "genres": {
+    "comedy": "Comedy",
+    "sci-fi": "Sci-Fi",
+    "horror": "Horror",
+    "romance": "Romance",
+    "action": "Action",
+    "thriller": "Thriller",
+    "drama": "Drama",
+    "documentary": "Documentary",
+    "mystery": "Mystery",
+    "crime": "Crime",
+    "animation": "Animation",
+    "adventure": "Adventure",
+    "fantasy": "Fantasy",
+    "superhero": "Superhero",
+    "biography": "Biography",
+    "family": "Family",
+    "history": "History",
+    "film-noir": "Film Noir",
+    "musical": "Musical",
+    "sport": "Sport",
+    "war": "War"
   }
 }
