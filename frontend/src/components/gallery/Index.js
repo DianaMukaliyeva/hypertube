@@ -13,10 +13,15 @@ const Gallery = ({ setUser }) => {
   const [movies, setMovies] = React.useState([]);
   const [page, setPage] = React.useState(1);
   const [hasMore, setHasMore] = React.useState(true);
+  const [filter, setFilter] = React.useState({});
+  const [search, setSearch] = React.useState({
+    value: '',
+    typingTimeout: 0,
+  });
 
   const getMovies = async () => {
     try {
-      const moviesData = await galleryService.getMovies(page);
+      const moviesData = await galleryService.getMovies(page, filter, search.value);
       setPage(page + 1);
       if (moviesData.movies.length === 0) {
         setHasMore(false);
@@ -30,13 +35,25 @@ const Gallery = ({ setUser }) => {
     }
   };
 
+  const type = (value) => {
+    if (search.typingTimeout) {
+      clearTimeout(search.typingTimeout);
+    }
+    setSearch({
+      value,
+      typingTimeout: setTimeout(() => {
+        getMovies();
+      }, 500),
+    });
+  };
+
   React.useEffect(() => {
     getMovies();
-  }, []);
+  }, [filter]);
 
   return (
     <div>
-      <Filter />
+      <Filter type={type} filter={filter} setFilter={setFilter} />
       <InfiniteScroll
         style={{ overflow: 'none' }}
         dataLength={movies.length}

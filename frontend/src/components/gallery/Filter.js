@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -55,15 +55,8 @@ const ratings = [
   },
 ];
 
-const Filter = () => {
+const Filter = ({ type, filter, setFilter }) => {
   const { t } = useTranslation();
-  const [year, setYear] = React.useState();
-  const [genre, setGenre] = React.useState();
-  const [rating, setRating] = React.useState();
-  const [sort, setSort] = React.useState();
-  const [search, setSearch] = React.useState('');
-  console.log('filter', year, genre, rating, sort, search);
-
   const years = [
     {
       title: '2020' + t('filter.s'),
@@ -220,9 +213,10 @@ const Filter = () => {
           <FormControl size="small" fullWidth variant="outlined">
             <InputLabel htmlFor="outlined-adornment-amount">{t('filter.searchLabel')}</InputLabel>
             <OutlinedInput
+              type="search"
               style={{ borderRadius: '50px' }}
               id="outlined-adornment-amount"
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => type(e.target.value)}
               endAdornment={
                 <InputAdornment position="end">
                   <SearchIcon />
@@ -236,9 +230,12 @@ const Filter = () => {
           <Autocomplete
             size="small"
             id="movie-year"
-            onChange={(event, value) => setYear(value)}
+            onChange={(event, value) =>
+              setFilter({ ...filter, decade: (value && value.year) || null })
+            }
             options={years}
             getOptionLabel={(option) => option.title}
+            getOptionSelected={(option) => option.title}
             renderInput={(params) => (
               <TextField {...params} variant="outlined" label={t('filter.yearLabel')} />
             )}
@@ -248,7 +245,9 @@ const Filter = () => {
           <Autocomplete
             size="small"
             id="movie-rating"
-            onChange={(event, value) => setRating(value)}
+            onChange={(event, value) =>
+              setFilter({ ...filter, imdb: (value && value.rating) || null })
+            }
             options={ratings}
             getOptionLabel={(option) => option.title}
             renderInput={(params) => (
@@ -260,9 +259,12 @@ const Filter = () => {
           <Autocomplete
             size="small"
             id="movie-genre"
-            onChange={(event, value) => setGenre(value)}
+            onChange={(event, value) =>
+              setFilter({ ...filter, genre: (value && value.genre) || null })
+            }
             options={genres}
             getOptionLabel={(option) => option.title}
+            getOptionSelected={(option) => option.title}
             renderInput={(params) => (
               <TextField {...params} variant="outlined" label={t('filter.genreLabel')} />
             )}
@@ -272,9 +274,12 @@ const Filter = () => {
           <Autocomplete
             size="small"
             id="movie-sort"
-            onChange={(event, value) => setSort(value)}
+            onChange={(event, value) =>
+              setFilter({ ...filter, sort: (value && value.sort) || null })
+            }
             options={sorts}
             getOptionLabel={(option) => option.title}
+            getOptionSelected={(option) => option.title}
             renderInput={(params) => (
               <TextField {...params} variant="outlined" label={t('filter.sortLabel')} />
             )}
@@ -285,8 +290,10 @@ const Filter = () => {
   );
 };
 
-// Filter.propTypes = {
-//   movie: PropTypes.object.isRequired,
-// };
+Filter.propTypes = {
+  type: PropTypes.func.isRequired,
+  filter: PropTypes.object.isRequired,
+  setFilter: PropTypes.func.isRequired,
+};
 
 export default Filter;
