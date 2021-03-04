@@ -82,7 +82,7 @@ const MovieCard = ({ movie }) => {
             </Typography>
             <Box justifyContent="space-between" display="flex">
               <Typography color="textSecondary">
-                IMDB {t('movie.rating')}: {movie.imdbRating}
+                IMDb {t('movie.rating')}: {movie.imdbRating}
               </Typography>
               <Typography color="textSecondary">{movie.year}</Typography>
             </Box>
