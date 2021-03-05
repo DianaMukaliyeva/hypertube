@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import bcrypt from 'bcryptjs';
@@ -46,7 +48,7 @@ const googleUser = (req, res) => {
 };
 
 const googleCallback = async (req, res) => {
-  const code = req.query.code;
+  const { code } = req.query;
 
   const tokens = await google.getTokens(code);
 
@@ -59,7 +61,7 @@ const googleCallback = async (req, res) => {
         },
       }
     )
-    .then((res) => res.data)
+    .then((result) => result.data)
     .catch((error) => {
       throw new Error(error.message);
     });
@@ -67,14 +69,14 @@ const googleCallback = async (req, res) => {
   let userFromDB = await User.find({ email: user.email }).map((u) => u[0]);
 
   if (!userFromDB) {
-		const salt = bcrypt.genSaltSync(10);
+    const salt = bcrypt.genSaltSync(10);
     const getLanguage = (locale) => {
       if (locale.startsWith('fi')) return 'fi';
       if (locale.startsWith('ru')) return 'ru';
       if (locale.startsWith('de')) return 'de';
       return 'en';
     };
-		
+
     const userToDB = new User({
       email: user.email,
       username: `${user.given_name}${user.id}`,

@@ -19,13 +19,13 @@ const recoveryLink = async (email) => {
 const googleLogin = async () => {
   const res = await axios.get(baseUrl + '/google');
   localStorage.setItem('token', res.data.token);
-	setAuthToken(res.data.token);
+  setAuthToken(res.data.token);
   return res.data;
 };
 
 const googleUrl = async () => {
-	const res = await axios.get(baseUrl + '/google/url');
-	return res.data;
+  const res = await axios.get(baseUrl + '/google/url');
+  return res.data;
 };
 
 export default { login, recoveryLink, googleLogin, googleUrl };

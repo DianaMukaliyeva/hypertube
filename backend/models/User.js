@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
   language: { type: String, default: 'en', enum: ['en', 'fi', 'ru', 'de'] },
   watched: [{ movieId: String, time: String }],
   oauth: Array,
-	hasPw: { type: Boolean, default: true }
+  hasPw: { type: Boolean, default: true },
 });
 
 userSchema.plugin(uniqueValidator, { message: 'is already taken.' });
