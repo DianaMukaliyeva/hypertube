@@ -16,4 +16,20 @@ const recoveryLink = async (email) => {
   return res.data;
 };
 
-export default { login, recoveryLink };
+const googleUrl = async () => {
+  const res = await axios.get(baseUrl + '/google');
+  return res.data;
+};
+
+const fortytwoUrl = async () => {
+	const res = await axios.get(baseUrl + '/42');
+	return res.data;
+};
+
+const getToken = async () => {
+	const res = await axios.get(baseUrl + '/token');
+	localStorage.setItem('token', res.data.token);
+	return res.data;
+};
+
+export default { login, recoveryLink, getToken, googleUrl, fortytwoUrl };

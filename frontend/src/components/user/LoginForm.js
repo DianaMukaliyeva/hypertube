@@ -17,6 +17,7 @@ import FormButton from './FormButton';
 
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Alert } from '@material-ui/lab';
@@ -80,6 +81,16 @@ const LoginForm = ({ setUser }) => {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    const url = await authService.googleUrl();
+    window.location = url;
+  };
+
+  const handle42SignIn = async () => {
+    const url = await authService.fortytwoUrl();
+    window.location = url;
+  };
+
   const classes = useStyles();
 
   return (
@@ -97,6 +108,18 @@ const LoginForm = ({ setUser }) => {
             {alert.message}
           </Alert>
         )}
+        <Grid container spacing={3}>
+          <Grid item xs={6}>
+            <FormButton
+              handleClick={handleGoogleSignIn}
+              name="Sign in with Google"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <FormButton handleClick={handle42SignIn} name="Sign in with 42" />
+          </Grid>
+        </Grid>
+
         <form className={classes.form} noValidate>
           <InputField values={email} label="email" required={true} />
           <InputField
