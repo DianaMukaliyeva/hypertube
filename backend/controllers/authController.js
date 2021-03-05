@@ -64,43 +64,33 @@ const googleCallback = async (req, res) => {
       throw new Error(error.message);
     });
 
-  console.log(
-    '🚀 ~ file: authController.js ~ line 66 ~ googleCallback ~ user',
-    user
-  );
+  let userFromDB = await User.find({ email: user.email }).map((u) => u[0]);
 
-  // validate user
-  // create random pw
+  if (!userFromDB) {
+		const salt = bcrypt.genSaltSync(10);
+    const getLanguage = (locale) => {
+      if (locale.startsWith('fi')) return 'fi';
+      if (locale.startsWith('ru')) return 'ru';
+      if (locale.startsWith('de')) return 'de';
+      return 'en';
+    };
+		
+    const userToDB = new User({
+      email: user.email,
+      username: `${user.given_name}${user.id}`,
+      firstname: user.given_name,
+      lastname: user.family_name,
+      language: getLanguage(user.locale),
+      password: bcrypt.hashSync(process.env.OMNIAUTH_PW, salt),
+      hasPw: false,
+    });
 
-  const getLanguage = (locale) => {
-    if (locale.startsWith('fi')) return 'fi';
-    if (locale.startsWith('ru')) return 'ru';
-    if (locale.startsWith('de')) return 'de';
-    return 'en';
-  };
-
-  const salt = bcrypt.genSaltSync(10);
-  const password = bcrypt.hashSync('Kakkels1', salt);
-  console.log('password', password);
-
-  const userToDB = {
-    username: `${user.given_name}${user.id}`,
-    firstname: user.given_name,
-    lastname: user.family_name,
-    password: password,
-    language: getLanguage(user.locale),
-    hasPassword: false,
-  };
-  console.log(
-    '🚀 ~ file: authController.js ~ line 91 ~ googleCallback ~ userToDB ',
-    userToDB
-  );
-
-  const userFromDB = await User.findOrCreate({ email: user.email }, userToDB);
+    userFromDB = await userToDB.save();
+  }
 
   const userForToken = {
-    id: userFromDB.doc._id,
-    lang: userFromDB.doc.language,
+    id: userFromDB._id,
+    lang: userFromDB.language,
   };
 
   google.setUserToken(jwt.sign(userForToken, process.env.SECRET));
