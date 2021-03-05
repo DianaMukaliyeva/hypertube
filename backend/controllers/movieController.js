@@ -1,16 +1,10 @@
 import movieListUtils from '../utilities/movieAPIUtilities.js';
 import Movie from '../models/Movie.js';
 
-import { detailedError } from '../utilities/errors.js';
-
-const getMovieList = async (req, res, next) => {
-  // todo: add parameters
-  try {
-    const page = req.query.page || 1;
-    res.json(await movieListUtils.fetchYTSMovieList(page));
-  } catch (err) {
-    next(err);
-  }
+const getMovieList = async (req, res) => {
+  const { page = 1, ...filters } = req.query;
+  const movies = await movieListUtils.fetchYTSMovieList(page, filters);
+  res.json(movies);
 };
 
 const addMovieToDb = async (req, res, next) => {

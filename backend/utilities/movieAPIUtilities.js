@@ -4,7 +4,7 @@ const requestError = new Error('Could not fetch movie data'); // todo: specify t
 requestError.code = 'movieRequest';
 requestError.name = 'Request failed';
 
-const fetchYTSMovieList = async (page = 1) => {
+const fetchYTSMovieList = async (page = 1, filters) => {
   const limit = 24;
   const { OMDB_KEY, TORRENT_API } = process.env;
 
@@ -13,13 +13,9 @@ const fetchYTSMovieList = async (page = 1) => {
   if (!res.data.data.movies) throw new Error('Page does not exist'); // todo: custom errors for these
   const movieList = res.data.data.movies;
   let movies = [];
-  console.log('list', movieList[0]);
   await Promise.all(
     movieList.map(async (movie, index) => {
       res = await axios.get(`http://www.omdbapi.com/?i=${movie.imdb_code}&apikey=${OMDB_KEY}`);
-      if (index === 0) {
-        console.log('here', res.data);
-      }
       if (res.status !== 200) throw requestError;
       movies = [
         ...movies,
