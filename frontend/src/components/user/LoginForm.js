@@ -80,6 +80,11 @@ const LoginForm = ({ setUser }) => {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    const url = await authService.googleUrl();
+    window.location = url;
+  };
+
   const classes = useStyles();
 
   return (
@@ -97,6 +102,8 @@ const LoginForm = ({ setUser }) => {
             {alert.message}
           </Alert>
         )}
+        <FormButton handleClick={handleGoogleSignIn} name="Sign in with Google" />
+
         <form className={classes.form} noValidate>
           <InputField values={email} label="email" required={true} />
           <InputField
