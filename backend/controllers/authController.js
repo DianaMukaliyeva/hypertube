@@ -42,7 +42,7 @@ const googleURL = (req, res) => {
 };
 
 const googleUser = (req, res) => {
-	res.json({ token: google.getUserToken() });
+  res.json({ token: google.getUserToken() });
 };
 
 const googleCallback = async (req, res) => {
@@ -64,19 +64,39 @@ const googleCallback = async (req, res) => {
       throw new Error(error.message);
     });
 
-  const salt = bcrypt.genSaltSync(10);
-
-  const userFromDB = await User.findOrCreate(
-    { email: user.email },
-    {
-      username: `${user.given_name}${user.id}`,
-      firstname: user.given_name,
-      lastname: user.family_name,
-      language: user.locale,
-      password: bcrypt.hashSync(process.env.EMAIL_PWD, salt),
-			hasPassword: false,
-    }
+  console.log(
+    '🚀 ~ file: authController.js ~ line 66 ~ googleCallback ~ user',
+    user
   );
+
+  // validate user
+  // create random pw
+
+  const getLanguage = (locale) => {
+    if (locale.startsWith('fi')) return 'fi';
+    if (locale.startsWith('ru')) return 'ru';
+    if (locale.startsWith('de')) return 'de';
+    return 'en';
+  };
+
+  const salt = bcrypt.genSaltSync(10);
+  const password = bcrypt.hashSync('Kakkels1', salt);
+  console.log('password', password);
+
+  const userToDB = {
+    username: `${user.given_name}${user.id}`,
+    firstname: user.given_name,
+    lastname: user.family_name,
+    password: password,
+    language: getLanguage(user.locale),
+    hasPassword: false,
+  };
+  console.log(
+    '🚀 ~ file: authController.js ~ line 91 ~ googleCallback ~ userToDB ',
+    userToDB
+  );
+
+  const userFromDB = await User.findOrCreate({ email: user.email }, userToDB);
 
   const userForToken = {
     id: userFromDB.doc._id,
