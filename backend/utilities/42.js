@@ -37,4 +37,6 @@ const getUser = async (token) => {
   };
 };
 
-export default { redirectURI, get42URL, getAuthorizationToken, getUser };
+export default {
+  redirectURI, get42URL, getAuthorizationToken, getUser,
+};

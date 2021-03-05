@@ -6,7 +6,7 @@ const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BACKEND_URL } = process.env;
 const oauth2Client = new google.auth.OAuth2(
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
-  `${BACKEND_URL}/api/auth/google/callback`
+  `${BACKEND_URL}/api/auth/google/callback`,
 );
 
 const getGoogleAuthURL = () => {
@@ -34,7 +34,7 @@ const getUser = async (tokens) => {
       headers: {
         Authorization: `Bearer ${tokens.id_token}`,
       },
-    }
+    },
   );
 
   const getLanguage = (locale) => {
@@ -56,5 +56,5 @@ const getUser = async (tokens) => {
 export default {
   getGoogleAuthURL,
   getTokens,
-	getUser,
+  getUser,
 };

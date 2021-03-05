@@ -77,11 +77,11 @@ const googleCallback = async (req, res) => {
 
   const tokens = await google.getTokens(code);
 
-	const userToDB = await google.getUser(tokens);
+  const userToDB = await google.getUser(tokens);
 
   const userFromDB = await findOrCreateUser(userToDB);
 
-	setUserToken(userFromDB._id, userFromDB.language);
+  setUserToken(userFromDB._id, userFromDB.language);
 
   res.redirect(`${process.env.FRONTEND_URL_DEV}?auth=token`);
 };
@@ -93,8 +93,9 @@ const fortytwoURL = (req, res) => {
 const fortytwoCallback = async (req, res) => {
   const { code, state } = req.query;
 
-  if (code === undefined || state !== process.env.FORTYTWO_STATE)
+  if (code === undefined || state !== process.env.FORTYTWO_STATE) {
     return res.redirect(process.env.FRONTEND_URL_DEV);
+  }
 
   const token = await fortytwo.getAuthorizationToken(code, state);
 
@@ -102,9 +103,9 @@ const fortytwoCallback = async (req, res) => {
 
   const userFromDB = await findOrCreateUser(userToDB);
 
-	setUserToken(userFromDB._id, userFromDB.language);
+  setUserToken(userFromDB._id, userFromDB.language);
 
-  res.redirect(`${process.env.FRONTEND_URL_DEV}?auth=token`);
+  return res.redirect(`${process.env.FRONTEND_URL_DEV}?auth=token`);
 };
 
 export default {
