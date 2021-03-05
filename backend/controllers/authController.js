@@ -59,7 +59,7 @@ const googleCallback = async (req, res) => {
         headers: {
           Authorization: `Bearer ${tokens.id_token}`,
         },
-      }
+      },
     )
     .then((result) => result.data)
     .catch((error) => {
