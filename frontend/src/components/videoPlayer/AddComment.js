@@ -41,7 +41,6 @@ const AddComment = ({ data }) => {
   const handleComment = async (e) => {
     e.preventDefault();
     try {
-      console.log('DATA', data.movie.imdbCode);
       await movieService.createComment(comment, data.movie.imdbCode);
       setAlert({
         show: true,
