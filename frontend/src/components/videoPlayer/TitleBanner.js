@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '1rem',
   },
 }));
-// eslint-disable-next-line no-undef
+
 const TitleBanner = ({ movie }) => {
   const classes = useStyles();
 
