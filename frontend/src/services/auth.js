@@ -16,16 +16,20 @@ const recoveryLink = async (email) => {
   return res.data;
 };
 
-const googleLogin = async () => {
-  const res = await axios.get(baseUrl + '/google');
-  localStorage.setItem('token', res.data.token);
-  setAuthToken(res.data.token);
-  return res.data;
-};
-
 const googleUrl = async () => {
-  const res = await axios.get(baseUrl + '/google/url');
+  const res = await axios.get(baseUrl + '/google');
   return res.data;
 };
 
-export default { login, recoveryLink, googleLogin, googleUrl };
+const fortytwoUrl = async () => {
+	const res = await axios.get(baseUrl + '/42');
+	return res.data;
+};
+
+const getToken = async () => {
+	const res = await axios.get(baseUrl + '/token');
+	localStorage.setItem('token', res.data.token);
+	return res.data;
+};
+
+export default { login, recoveryLink, getToken, googleUrl, fortytwoUrl };
