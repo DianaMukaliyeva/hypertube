@@ -78,29 +78,7 @@ const googleCallback = async (req, res) => {
 
   const tokens = await google.getTokens(code);
 
-  const { data: user } = await axios.get(
-    `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${tokens.access_token}`,
-    {
-      headers: {
-        Authorization: `Bearer ${tokens.id_token}`,
-      },
-    }
-  );
-
-  const getLanguage = (locale) => {
-    if (locale.startsWith('fi')) return 'fi';
-    if (locale.startsWith('ru')) return 'ru';
-    if (locale.startsWith('de')) return 'de';
-    return 'en';
-  };
-
-  const userToDB = {
-    email: user.email,
-    username: `${user.given_name}${user.id}`,
-    firstname: user.given_name,
-    lastname: user.family_name,
-    language: getLanguage(user.locale),
-  };
+	const userToDB = await google.getUser(tokens);
 
   const userFromDB = await findOrCreateUser(userToDB);
 
