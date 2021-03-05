@@ -18,10 +18,12 @@ const Gallery = ({ setUser }) => {
     value: '',
     typingTimeout: 0,
   });
+  const mountedRef = React.useRef(true);
 
   const getMovies = async () => {
     try {
       const moviesData = await galleryService.getMovies(page, filter, search.value);
+      if (!mountedRef.current) return null;
       setPage(page + 1);
       if (moviesData.movies.length === 0) {
         setHasMore(false);
@@ -49,6 +51,9 @@ const Gallery = ({ setUser }) => {
 
   React.useEffect(() => {
     getMovies();
+    return () => {
+      mountedRef.current = false;
+    };
   }, [filter]);
 
   return (
