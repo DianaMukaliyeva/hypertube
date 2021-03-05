@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
 import jwt from 'jsonwebtoken';
-import axios from 'axios';
 import bcrypt from 'bcryptjs';
 
 import User from '../models/User.js';
