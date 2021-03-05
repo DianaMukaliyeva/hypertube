@@ -28,23 +28,23 @@ function App() {
     const setUserFromToken = (token) => {
       const decoded = jwt_decode(token);
       setUser({ userId: decoded.id, lang: decoded.lang });
+			setAuthToken(token);
     };
 
-    const checkGoogleToken = async () => {
+    const checkToken = async () => {
       try {
-        const googleToken = await authService.googleLogin();
-        setUserFromToken(googleToken.token);
+        const { token } = await authService.getToken();
+        setUserFromToken(token);
 				history.push('/');
       } catch (e) {
         console.log(e);
       }
     };
 
-    if (location.search === '?auth=google') {
-      checkGoogleToken();
+    if (location.search === '?auth=token') {
+      checkToken();
     } else if (localStorage.getItem('token')) {
       setUserFromToken(localStorage.getItem('token'));
-      setAuthToken(localStorage.getItem('token'));
     } else setAuthToken(null);
   }, []);
 
