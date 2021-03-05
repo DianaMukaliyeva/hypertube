@@ -2,6 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 import mongoose from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
+import findOrCreate from 'mongoose-findorcreate'
 
 const userSchema = new mongoose.Schema({
   firstname: {
@@ -33,9 +34,11 @@ const userSchema = new mongoose.Schema({
   language: { type: String, default: 'en', enum: ['en', 'fi', 'ru', 'de'] },
   watched: [{ movieId: String, time: String }],
   oauth: Array,
+	hasPassword: { type: Boolean, default: true }
 });
 
 userSchema.plugin(uniqueValidator, { message: 'is already taken.' });
+userSchema.plugin(findOrCreate);
 
 userSchema.set('toJSON', {
   transform: (document, returnedObject) => {
