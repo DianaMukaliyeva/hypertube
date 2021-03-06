@@ -64,6 +64,9 @@ const addComment = async (req, res) => {
 };
 
 const playMovie = async (req, res, next) => {
+  // request params/body should include optional start time
+  // from which to start the eventual filestream from
+  // todo: update route docs
   const { imdbCode } = req.params;
   Movie.findOne({ imdbCode }, (err, obj) => {
     if (err) throw err;

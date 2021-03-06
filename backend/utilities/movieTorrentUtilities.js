@@ -4,6 +4,8 @@ import movieListUtils from './movieAPIUtilities.js';
 import Movie from '../models/Movie.js';
 
 const downloadMovie = async (req, res, next) => {
+  // download should prioritize the start time from the request
+  // and start the filestream from that byte
   let filePath;
   const { imdbCode } = req.params;
   const torrentData = await movieListUtils.fetchTorrentData(imdbCode);
