@@ -1,4 +1,5 @@
 import movieListUtils from '../utilities/movieAPIUtilities.js';
+import movieTorrentUtils from '../utilities/movieTorrentUtilities.js';
 import Movie from '../models/Movie.js';
 
 import { detailedError } from '../utilities/errors.js';
@@ -22,7 +23,7 @@ const addMovieToDb = async (req, res, next) => {
 
 const getMovieEntry = async (req, res, next) => {
   try {
-    const imdbCode = req.params.imdb_code;
+    const { imdbCode } = req.params;
     const torrentData = await movieListUtils.fetchTorrentData(imdbCode);
     const movieInfo = await movieListUtils.fetchMovieInfo(imdbCode);
     res.json(movieListUtils.parseMovieResponse(movieInfo, torrentData));
@@ -62,9 +63,22 @@ const addComment = async (req, res) => {
   res.sendStatus(201);
 };
 
+const playMovie = async (req, res, next) => {
+  const { imdbCode } = req.params;
+  Movie.findOne({ imdbCode }, (err, obj) => {
+    if (err) throw err;
+    else if (obj && 'serverLocation' in obj) {
+      // adding location as a request param might not be the prettiest approach...
+      req.serverLocation = obj.serverLocation;
+      movieTorrentUtils.startFileStream(req, res, next);
+    } else movieTorrentUtils.downloadMovie(req, res, next);
+  });
+};
+
 export default {
   getMovieList,
   addMovieToDb,
   getMovieEntry,
+  playMovie,
   addComment,
 };

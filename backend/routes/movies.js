@@ -4,7 +4,11 @@ import middleware from '../utilities/middleware.js';
 
 const movieRoute = express.Router();
 
-movieRoute.get('/:imdb_code', async (req, res, next) => {
+movieRoute.get('/:imdbCode/play', async (req, res, next) => {
+  await movieController.playMovie(req, res, next);
+});
+
+movieRoute.get('/:imdbCode', async (req, res, next) => {
   await movieController.getMovieEntry(req, res, next);
 });
 

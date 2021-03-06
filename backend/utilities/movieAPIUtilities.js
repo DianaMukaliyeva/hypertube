@@ -35,7 +35,7 @@ const fetchTorrentData = async (imdbCode) => {
   const res = await axios
     .get(`${TORRENT_API}?query_term=${imdbCode}`);
   if (res.status !== 200 || !res.data.data) throw requestError;
-  return res.data.data;
+  return res.data.data.movies[0];
 };
 
 const fetchMovieInfo = async (imdbCode) => {
@@ -54,7 +54,7 @@ const parseMovieResponse = (movieInfo, torrentData) => (
 
   {
     title: movieInfo.Title,
-    imdbRating: torrentData.movies[0].rating,
+    imdbRating: torrentData.rating,
     year: movieInfo.Year,
     genre: movieInfo.Genre, // need to split this if we only want one
     description: movieInfo.Plot,
@@ -62,10 +62,12 @@ const parseMovieResponse = (movieInfo, torrentData) => (
     director: movieInfo.Director,
     cast: movieInfo.Actors.split(', '),
     subtitles: [{ en: 'placeholder subtitle object' }], // todo: investigate API for this
+    hash: torrentData.torrents[0].hash,
     downloaded: false, // if movie is already downloaded to server, identified with imdbCode
     watched: false, // to see if user has already watched the movie, identified with imdbCode
     comments: [{ userId: 123, username: 'Nina Lustig', message: 'Placeholder comment' }], // todo: add functionality
   });
+
 export default {
   fetchYTSMovieList,
   fetchTorrentData,

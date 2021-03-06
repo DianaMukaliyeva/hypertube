@@ -30,27 +30,27 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/body'
+              $ref: "#/components/schemas/body"
         required: true
       responses:
-        '200':
+        "200":
           description: search results matching criteria
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200'
-        '400':
+                $ref: "#/components/schemas/inline_response_200"
+        "400":
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse400'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse400"
+        "500":
           description: Internal Server Error.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse401-500'
+                $ref: "#/components/schemas/ErrorResponse401-500"
   /api/auth/gmail:
     get:
       tags:
@@ -58,12 +58,12 @@ paths:
       summary: login with gmail
       operationId: gmailLogin
       responses:
-        '500':
+        "500":
           description: Internal Server Error.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse401-500'
+                $ref: "#/components/schemas/ErrorResponse401-500"
   /api/auth/42:
     get:
       tags:
@@ -71,12 +71,12 @@ paths:
       summary: login with 42 account
       operationId: 42Login
       responses:
-        '500':
+        "500":
           description: Internal Server Error.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse401-500'
+                $ref: "#/components/schemas/ErrorResponse401-500"
   /api/auth/recoverylink:
     post:
       tags:
@@ -87,23 +87,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/body_1'
+              $ref: "#/components/schemas/body_1"
         required: true
       responses:
-        '200':
+        "200":
           description: recovery email has been successfully sent
-        '400':
+        "400":
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse400'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse400"
+        "500":
           description: Internal Server Error.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse401-500'
+                $ref: "#/components/schemas/ErrorResponse401-500"
   /api/users:
     post:
       tags:
@@ -114,23 +114,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/body_2'
+              $ref: "#/components/schemas/body_2"
         required: true
       responses:
-        '201':
+        "201":
           description: user successfully created
-        '400':
+        "400":
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse400'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse400"
+        "500":
           description: Internal Server Error.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse401-500'
+                $ref: "#/components/schemas/ErrorResponse401-500"
     patch:
       tags:
         - Users
@@ -140,23 +140,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/body_3'
+              $ref: "#/components/schemas/body_3"
         required: true
       responses:
-        '200':
+        "200":
           description: password successfully updated
-        '400':
+        "400":
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse400'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse400"
+        "500":
           description: Internal Server Error.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse401-500'
+                $ref: "#/components/schemas/ErrorResponse401-500"
   /api/users/{userId}:
     get:
       tags:
@@ -174,24 +174,30 @@ paths:
             type: integer
             example: 456
       responses:
-        '200':
+        "200":
           description: user information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_1'
-        '401':
+                $ref: "#/components/schemas/inline_response_200_1"
+        "400":
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse400"
+        "401":
           description: Unauthorized.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse401-500'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse401-500"
+        "500":
           description: Internal Server Error.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse401-500'
+                $ref: "#/components/schemas/ErrorResponse401-500"
     patch:
       tags:
         - Users
@@ -211,29 +217,29 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/body_4'
+              $ref: "#/components/schemas/body_4"
         required: true
       responses:
-        '200':
+        "200":
           description: user successfully updated
-        '400':
+        "400":
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse400'
-        '401':
+                $ref: "#/components/schemas/ErrorResponse400"
+        "401":
           description: Unauthorized.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse401-500'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse401-500"
+        "500":
           description: Internal Server Error.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse401-500'
+                $ref: "#/components/schemas/ErrorResponse401-500"
   /api/movies:
     get:
       tags:
@@ -241,13 +247,6 @@ paths:
       summary: get list of movies
       operationId: getMovies
       parameters:
-        - name: page
-          in: query
-          description: page
-          required: true
-          schema:
-            type: integer
-            example: 2
         - name: decade
           in: query
           description: decade
@@ -294,30 +293,30 @@ paths:
             type: string
             example: breaking
       responses:
-        '200':
+        "200":
           description: list of movies
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_2'
-        '400':
+                $ref: "#/components/schemas/inline_response_200_2"
+        "400":
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse400'
-        '401':
+                $ref: "#/components/schemas/ErrorResponse400"
+        "401":
           description: Unauthorized.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse401-500'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse401-500"
+        "500":
           description: Internal Server Error.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse401-500'
+                $ref: "#/components/schemas/ErrorResponse401-500"
   /api/movies/{imdbCode}:
     get:
       tags:
@@ -334,30 +333,30 @@ paths:
             type: string
             example: tt1211837
       responses:
-        '200':
+        "200":
           description: movie information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_4'
-        '400':
+                $ref: "#/components/schemas/inline_response_200_4"
+        "400":
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse400'
-        '401':
+                $ref: "#/components/schemas/ErrorResponse400"
+        "401":
           description: Unauthorized.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse401-500'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse401-500"
+        "500":
           description: Internal Server Error.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse401-500'
+                $ref: "#/components/schemas/ErrorResponse401-500"
   /api/movies/{imdbCode}/comments:
     post:
       tags:
@@ -377,29 +376,29 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/body_5'
+              $ref: "#/components/schemas/body_5"
         required: true
       responses:
-        '201':
+        "201":
           description: comment added
-        '400':
+        "400":
           description: Bad Request.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse400'
-        '401':
+                $ref: "#/components/schemas/ErrorResponse400"
+        "401":
           description: Unauthorized.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse401-500'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse401-500"
+        "500":
           description: Internal Server Error.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse401-500'
+                $ref: "#/components/schemas/ErrorResponse401-500"
 components:
   schemas:
     ErrorResponse401-500:
@@ -422,7 +421,7 @@ components:
         details:
           type: array
           items:
-            $ref: '#/components/schemas/ErrorResponse400_details'
+            $ref: "#/components/schemas/ErrorResponse400_details"
     body:
       required:
         - password
@@ -451,11 +450,10 @@ components:
           example: plustig@lustiger.de
     body_2:
       required:
-        - confirmPassword
+        - confirmpassword
         - email
         - firstname
         - lastname
-        - language
         - password
         - username
       type: object
@@ -472,24 +470,21 @@ components:
         lastname:
           type: string
           example: Doe
-        language:
-          type: string
-          example: en
         password:
           type: string
           example: jane88ssssss
-        confirmPassword:
+        confirmpassword:
           type: string
           example: jane88ssssss
     body_3:
       required:
-        - password
         - confirmPassword
+        - newPassword
         - token
         - userId
       type: object
       properties:
-        password:
+        newPassword:
           type: string
           example: jane88
         confirmPassword:
@@ -523,6 +518,9 @@ components:
         email:
           type: string
           example: john.doe@example.com
+        avatarId:
+          type: integer
+          example: 465
         avatarBase64String:
           type: string
           example: base64 image string
@@ -530,6 +528,15 @@ components:
           type: string
           example: en
       description: if user's own info, then send everything, otherwise - only requried
+    apiusersuserId_avatar:
+      type: object
+      properties:
+        oldId:
+          type: integer
+          example: 4568
+        base64:
+          type: string
+          example: some base 64
     body_4:
       required:
         - oldPassword
@@ -547,16 +554,12 @@ components:
         lastname:
           type: string
           example: Doe
-        language:
-          type: string
-          example: en
-        avatarBase64String:
-          type: string
-          example: 'base 64 string'
+        avatar:
+          $ref: "#/components/schemas/apiusersuserId_avatar"
         oldPassword:
           type: string
           example: old password
-        password:
+        newPassword:
           type: string
           example: jane88ssssss
         confirmPassword:
@@ -568,7 +571,7 @@ components:
         movies:
           type: array
           items:
-            $ref: '#/components/schemas/inline_response_200_2_movies'
+            $ref: "#/components/schemas/inline_response_200_2_movies"
     inline_response_200_3:
       type: object
       properties:
@@ -616,20 +619,26 @@ components:
           items:
             type: string
         subtitles:
-          $ref: '#/components/schemas/inline_response_200_4_subtitles'
+          $ref: "#/components/schemas/inline_response_200_4_subtitles"
+        hash:
+          type: string
         downloaded:
           type: boolean
+          example: "EEE9193BA9BACEF6F14F2D59B4F528AA239B9DE7"
         watched:
           type: boolean
         comments:
           type: array
           items:
-            $ref: '#/components/schemas/inline_response_200_4_comments'
+            $ref: "#/components/schemas/inline_response_200_4_comments"
 
     body_5:
       type: object
       properties:
-        comment:
+        userId:
+          type: integer
+          example: 465
+        message:
           type: string
           example: new comment
     ErrorResponse400_details:
@@ -694,39 +703,39 @@ components:
           type: string
           example: amazing
   responses:
-    '500ApiError':
+    "500ApiError":
       description: Internal Server Error.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorResponse401-500'
-    '409ApiError':
+            $ref: "#/components/schemas/ErrorResponse401-500"
+    "409ApiError":
       description: Conflict.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorResponse401-500'
-    '404ApiError':
+            $ref: "#/components/schemas/ErrorResponse401-500"
+    "404ApiError":
       description: Not Found.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorResponse401-500'
-    '403ApiError':
+            $ref: "#/components/schemas/ErrorResponse401-500"
+    "403ApiError":
       description: Forbidden.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorResponse401-500'
-    '401ApiError':
+            $ref: "#/components/schemas/ErrorResponse401-500"
+    "401ApiError":
       description: Unauthorized.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorResponse401-500'
-    '400ApiError':
+            $ref: "#/components/schemas/ErrorResponse401-500"
+    "400ApiError":
       description: Bad Request.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorResponse400'
+            $ref: "#/components/schemas/ErrorResponse400"
