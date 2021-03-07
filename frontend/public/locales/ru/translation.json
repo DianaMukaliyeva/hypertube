@@ -26,12 +26,10 @@
     "update": "Обновить"
   },
   "movie": {
-    "rating": "рейтинг"
+    "rating": "рейтинг",
+    "watched": "Просмотренный фильм"
   },
   "filter": {
-    "s": "-ые",
-    "earlier": "ранее",
-    "yearLabel": "ГОД",
     "searchLabel": "Поиск фильма",
     "ratingLabel": "IMDb РЕЙТИНГ",
     "genreLabel": "ЖАНР",
@@ -63,5 +61,8 @@
     "musical": "Мюзикл",
     "sport": "Спорт",
     "war": "Война"
+  },
+  "gallery": {
+    "noMovies": "Фильмов не найдено"
   }
 }
