@@ -71,6 +71,7 @@ const MovieCard = ({ movie }) => {
             alt={movie.title}
             image={movie.thumbnail}
             title={movie.title}
+            onError={(e) => (e.target.src = '/logo512.png')} // TO DO: add default image
           />
           <CardContent className={classes.cardContent}>
             {movie.watched && <VisibilityIcon className={classes.watchedIcon} />}
