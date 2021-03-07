@@ -3,22 +3,29 @@ import axios from 'axios';
 // eslint-disable-next-line no-undef
 const baseUrl = process.env.REACT_APP_BACKEND_URL + '/api/movies';
 
-const generateQueryParams = (filter) => {
-  const params = Object.keys(filter).reduce((result, key) => {
+const generateQueryParams = (filter, search) => {
+  let params = Object.keys(filter).reduce((result, key) => {
     if (key === 'sort' && filter[key]) {
       const sorts = filter[key].split(' ');
       result += `&sort_by=${sorts[0]}&order_by=${sorts[1]}`;
     } else {
       result += filter[key] ? `&${key}=${filter[key]}` : '';
     }
+
     return result;
   }, '');
+  if (!filter.sort) {
+    params += search ? '&sort_by=title&order_by=asc' : '&sort_by=rating&order_by=desc';
+  }
+  params += search ? `&search=${search}` : '';
+
   return params;
 };
 
 const getMovies = async (page, filter, search) => {
-  const params = generateQueryParams(filter);
-  const res = await axios.get(baseUrl + `?page=${page}&search=${search}${params}`);
+  const params = generateQueryParams(filter, search);
+  const res = await axios.get(baseUrl + `?page=${page}${params}`);
+
   return res.data;
 };
 
