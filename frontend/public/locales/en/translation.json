@@ -29,12 +29,10 @@
     "updatePassword": "Update Password"
   },
   "movie": {
-    "rating": "rating"
+    "rating": "rating",
+    "watched": "watched movie"
   },
   "filter": {
-    "s": "'s",
-    "earlier": "earlier's",
-    "yearLabel": "YEAR",
     "searchLabel": "Search for a Movie",
     "ratingLabel": "IMDb RATING",
     "genreLabel": "GENRE",
@@ -66,5 +64,8 @@
     "musical": "Musical",
     "sport": "Sport",
     "war": "War"
+  },
+  "gallery": {
+    "noMovies": "No movies found"
   }
 }
