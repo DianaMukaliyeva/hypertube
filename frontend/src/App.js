@@ -28,7 +28,7 @@ function App() {
     const checkToken = async () => {
       let token = localStorage.getItem('token');
 
-      if (location.search.startsWith('?auth=')) {
+      if (!token && location.search.startsWith('?auth=')) {
         const key = location.search.substr(6);
         try {
           token = await authService.getToken(key);
