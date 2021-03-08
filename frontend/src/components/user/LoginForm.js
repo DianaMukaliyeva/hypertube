@@ -82,13 +82,21 @@ const LoginForm = ({ setUser }) => {
   };
 
   const handleGoogleSignIn = async () => {
-    const url = await authService.googleUrl();
-    window.location = url;
+		try {
+			const data = await authService.googleUrl();
+			window.location = data.url;
+		} catch (e) {
+			console.log(e);
+		}
   };
 
   const handle42SignIn = async () => {
-    const url = await authService.fortytwoUrl();
-    window.location = url;
+		try {
+			const data = await authService.fortytwoUrl();
+			window.location = data.url;
+		} catch (e) {
+			console.log(e);
+		}
   };
 
   const classes = useStyles();

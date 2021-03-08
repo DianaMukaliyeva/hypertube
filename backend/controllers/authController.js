@@ -63,7 +63,7 @@ const recoveryEmail = async (req, res) => {
 };
 
 const googleURL = (req, res) => {
-  res.send(google.getGoogleAuthURL());
+  res.json({ url: google.getGoogleAuthURL() });
 };
 
 const findOrCreateUser = async (user) => {
@@ -99,7 +99,7 @@ const googleCallback = async (req, res) => {
 };
 
 const fortytwoURL = (req, res) => {
-  res.send(fortytwo.get42URL());
+  res.json({ url: fortytwo.get42URL() });
 };
 
 const fortytwoCallback = async (req, res) => {
