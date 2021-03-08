@@ -8,7 +8,7 @@ import sendResetEmail from '../utilities/email.js';
 import google from '../utilities/google.js';
 import fortytwo from '../utilities/42.js';
 
-let userToken = {};
+const userToken = {};
 
 const setUserToken = (id, lang) => {
   const userForToken = { id, lang };
