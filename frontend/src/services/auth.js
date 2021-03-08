@@ -26,10 +26,11 @@ const fortytwoUrl = async () => {
 	return res.data;
 };
 
-const getToken = async () => {
-	const res = await axios.get(baseUrl + '/token');
-	localStorage.setItem('token', res.data.token);
-	return res.data;
+const getToken = async (key) => {
+	const res = await axios.get(baseUrl + `/token?key=${key}`);
+	if (res.status === 200 && res.data.token)
+		localStorage.setItem('token', res.data.token);
+	return res.data.token;
 };
 
 export default { login, recoveryLink, getToken, googleUrl, fortytwoUrl };

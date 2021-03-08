@@ -26,21 +26,24 @@ function App() {
 
   useEffect(() => {
     const checkToken = async () => {
-      const getOmniauthToken = async () => {
+      let token = localStorage.getItem('token');
+
+      if (location.search.startsWith('?auth=')) {
+        const key = location.search.substr(6);
         try {
-          await authService.getToken();
+          token = await authService.getToken(key);
         } catch (e) {
-          console.log(e);
+          console.log('');
         }
-      };
-
-      if (location.search === '?auth=token') await getOmniauthToken();
-
-      const token = localStorage.getItem('token');
+      }
 
       if (token) {
-        const decoded = jwt_decode(token);
-        setUser({ userId: decoded.id, lang: decoded.lang });
+        try {
+          const decoded = jwt_decode(token);
+          setUser({ userId: decoded.id, lang: decoded.lang });
+        } catch (e) {
+          console.log('');
+        }
       }
 
       setAuthToken(token);
