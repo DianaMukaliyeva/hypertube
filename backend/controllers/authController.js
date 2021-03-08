@@ -20,13 +20,13 @@ const setUserToken = (id, lang) => {
 };
 
 const getUserToken = (req, res) => {
-  if (!req.query.key) res.status(400);
+  if (!req.params.key) res.status(400);
 
-  const token = userToken[req.query.key];
+  const token = userToken[req.params.key];
 
   if (!token) res.status(400);
 
-  userToken[req.query.key] = null;
+  userToken[req.params.key] = null;
 
   res.json({ token });
 };

@@ -27,7 +27,7 @@ const fortytwoUrl = async () => {
 };
 
 const getToken = async (key) => {
-	const res = await axios.get(baseUrl + `/token?key=${key}`);
+	const res = await axios.get(baseUrl + `/token/${key}`);
 	if (res.status === 200 && res.data.token)
 		localStorage.setItem('token', res.data.token);
 	return res.data.token;
