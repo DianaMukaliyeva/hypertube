@@ -73,6 +73,11 @@ const MyProfile = ({ user, setUser }) => {
     message: '',
     severity: '',
   });
+  const [passwordAlert, setPasswordAlert] = useState({
+    show: false,
+    message: '',
+    severity: '',
+  });
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -127,17 +132,87 @@ const MyProfile = ({ user, setUser }) => {
       setAvatar(userData.avatarBase64String);
   }, [userData]);
 
+  const resetAlerts = () => {
+    const noAlert = {
+      show: false,
+      message: '',
+      severity: '',
+    };
+
+    setPasswordAlert(noAlert);
+    setAlert(noAlert);
+  };
+
+  const alertSuccess = (alert) => {
+    alert({
+      show: true,
+      message: 'Account successfully updated',
+      severity: 'success',
+    });
+  };
+
+  const handleErrorResponse = (data, alert) => {
+    switch (data.statusCode) {
+      case 400:
+        sharedFunctions.showErrors(data.details, {
+          username,
+          firstName,
+          lastName,
+          email,
+          oldPassword,
+          password,
+          confirmPassword,
+        });
+        break;
+      case 500:
+        alert({
+          show: true,
+          message: 'Server error',
+          severity: 'error',
+        });
+        break;
+      default:
+        alert({
+          show: true,
+          message: 'Oops.. somthing went completely wrong',
+          severity: 'error',
+        });
+        break;
+    }
+  };
+
+  const handlePasswordUpdate = async (event) => {
+    event.preventDefault();
+
+    if (!oldPassword.value || !password.value || !confirmPassword.value) return;
+
+    resetAlerts();
+
+    try {
+      const data = {
+        oldPassword: oldPassword.value,
+        password: password.value,
+        confirmPassword: confirmPassword.value,
+      };
+
+      await userService.update(user.userId, data);
+
+      setUserData({ ...userData, ...data });
+      alertSuccess(setPasswordAlert);
+    } catch (err) {
+      handleErrorResponse(err.response.data, setPasswordAlert);
+    }
+  };
+
   const handleUpdate = async (event) => {
     event.preventDefault();
+    resetAlerts();
     try {
       const data = {};
       if (username.value) data.username = username.value;
       if (email.value) data.email = email.value;
       if (firstName.value) data.firstname = firstName.value;
       if (lastName.value) data.lastname = lastName.value;
-      if (oldPassword.value) data.oldPassword = oldPassword.value;
-      if (password.value) data.password = password.value;
-      if (confirmPassword.value) data.confirmPassword = confirmPassword.value;
       if (lang) data.language = lang.code;
       if (userData.avatarBase64String !== avatar)
         data.avatarBase64String = avatar;
@@ -146,39 +221,9 @@ const MyProfile = ({ user, setUser }) => {
       if (lang) setUser({ ...user, lang: lang });
 
       setUserData({ ...userData, ...data, avatarBase64String: avatar });
-      setAlert({
-        show: true,
-        message: 'Account successfully updated',
-        severity: 'success',
-      });
+      alertSuccess(setAlert);
     } catch (err) {
-      switch (err.response.data.statusCode) {
-        case 400:
-          sharedFunctions.showErrors(err.response.data.details, {
-            username,
-            firstName,
-            lastName,
-            email,
-            oldPassword,
-            password,
-            confirmPassword,
-          });
-          break;
-        case 500:
-          setAlert({
-            show: true,
-            message: 'Server error',
-            severity: 'error',
-          });
-          break;
-        default:
-          setAlert({
-            show: true,
-            message: 'Oops.. somthing went completely wrong',
-            severity: 'error',
-          });
-          break;
-      }
+      handleErrorResponse(err.response.data, setAlert);
     }
   };
 
@@ -240,11 +285,22 @@ const MyProfile = ({ user, setUser }) => {
                   />
                 )}
               />
+
+              {alert.show && (
+                <Alert
+                  className={classes.alert}
+                  severity={alert.severity}
+                  onClose={() => setAlert({ ...alert, show: false })}
+                >
+                  {alert.message}
+                </Alert>
+              )}
               <FormButton
                 handleClick={handleUpdate}
                 name={t('myProfile.update')}
               />
             </form>
+
             <form className={classes.form} noValidate>
               <InputField
                 values={oldPassword}
@@ -262,20 +318,21 @@ const MyProfile = ({ user, setUser }) => {
                 label={t('form.confirmPassword')}
                 autocomplete="new-pwd"
               />
+
+              {passwordAlert.show && (
+                <Alert
+                  className={classes.alert}
+                  severity={passwordAlert.severity}
+                  onClose={() => setAlert({ ...passwordAlert, show: false })}
+                >
+                  {passwordAlert.message}
+                </Alert>
+              )}
               <FormButton
-                handleClick={handleUpdate}
+                handleClick={handlePasswordUpdate}
                 name={t('myProfile.updatePassword')}
               />
             </form>
-            {alert.show && (
-              <Alert
-                className={classes.alert}
-                severity={alert.severity}
-                onClose={() => setAlert({ ...alert, show: false })}
-              >
-                {alert.message}
-              </Alert>
-            )}
           </Grid>
         </Grid>
         <CustomModal {...userProfileModal} />
