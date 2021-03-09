@@ -84,7 +84,7 @@ const MyProfile = ({ user, setUser }) => {
   ];
 
   // todo: remove when done
-  const userProfileModal = useModal(<UserProfile userId={user.userId} />);
+  const userProfileModal = useModal(<UserProfile user={userData} />);
 
   useEffect(() => {
     userService
