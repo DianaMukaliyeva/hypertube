@@ -49,7 +49,7 @@ const authRequired = async (req, res, next) => {
   if (req.user) {
     return next();
   }
-  return res.json({ error: 'Unauthorized user!' });
+  return res.status(401).json({ error: 'Unauthorized user!' });
 };
 
 export default {

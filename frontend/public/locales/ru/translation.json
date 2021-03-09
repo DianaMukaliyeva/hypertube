@@ -26,6 +26,43 @@
     "update": "Обновить"
   },
   "movie": {
-    "rating": "рейтинг"
+    "rating": "рейтинг",
+    "watched": "Просмотренный фильм"
+  },
+  "filter": {
+    "searchLabel": "Поиск фильма",
+    "ratingLabel": "IMDb РЕЙТИНГ",
+    "genreLabel": "ЖАНР",
+    "sortLabel": "СОРТИРОВАТЬ ПО",
+    "mostPopular": "Наиболее Популярные",
+    "leastPopular": "Наименее Популярные",
+    "newest": "Новые",
+    "oldest": "Старые"
+  },
+  "genres": {
+    "comedy": "Комедия",
+    "sci-fi": "Sci-Fi",
+    "horror": "Ужасы",
+    "romance": "Romance",
+    "action": "Боевик",
+    "thriller": "Триллер",
+    "drama": "Драма",
+    "documentary": "Документальный",
+    "mystery": "Мистика",
+    "crime": "Криминал",
+    "animation": "Анимация",
+    "adventure": "Приключения",
+    "fantasy": "Фэнтэзи",
+    "superhero": "Супергерои",
+    "biography": "Биографический",
+    "family": "Семейный",
+    "history": "Исторический",
+    "film-noir": "Нуар",
+    "musical": "Мюзикл",
+    "sport": "Спорт",
+    "war": "Война"
+  },
+  "gallery": {
+    "noMovies": "Фильмов не найдено"
   }
 }

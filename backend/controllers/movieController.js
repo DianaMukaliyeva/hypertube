@@ -1,32 +1,39 @@
 import movieListUtils from '../utilities/movieAPIUtilities.js';
 import Movie from '../models/Movie.js';
-
+import User from '../models/User.js';
 import { detailedError } from '../utilities/errors.js';
 
-const getMovieList = async (req, res, next) => { // todo: add parameters
-  try {
-    const page = req.query.page || 1;
-    res.json(await movieListUtils.fetchYTSMovieList(page));
-  } catch (err) { next(err); }
-};
+const getMovieList = async (req, res) => {
+  const userId = req.user;
+  const filters = req.query;
+  const movies = await movieListUtils.fetchYTSMovieList(filters);
+  const user = await User.findById(userId);
 
-const addMovieToDb = async (req, res, next) => {
-  try {
-    const newMovie = new Movie({
-      serverLocation: req.body.location,
+  movies.movies = movies.movies.map((movie) => {
+    const tempMovie = { ...movie };
+    user.watched.forEach((watched) => {
+      if (watched.movieId === movie.imdbCode) {
+        tempMovie.watched = true;
+      }
     });
-    await newMovie.save();
-    res.sendStatus(201);
-  } catch (err) { next(err); }
+    return tempMovie;
+  });
+  res.json(movies);
 };
 
-const getMovieEntry = async (req, res, next) => {
-  try {
-    const imdbCode = req.params.imdb_code;
-    const torrentData = await movieListUtils.fetchTorrentData(imdbCode);
-    const movieInfo = await movieListUtils.fetchMovieInfo(imdbCode);
-    res.json(movieListUtils.parseMovieResponse(movieInfo, torrentData));
-  } catch (err) { next(err); }
+const addMovieToDb = async (req, res) => {
+  const newMovie = new Movie({
+    serverLocation: req.body.location,
+  });
+  await newMovie.save();
+  res.sendStatus(201);
+};
+
+const getMovieEntry = async (req, res) => {
+  const imdbCode = req.params.imdb_code;
+  const torrentData = await movieListUtils.fetchTorrentData(imdbCode);
+  const movieInfo = await movieListUtils.fetchMovieInfo(imdbCode);
+  res.json(movieListUtils.parseMovieResponse(movieInfo, torrentData));
 };
 
 const addComment = async (req, res) => {
@@ -38,13 +45,16 @@ const addComment = async (req, res) => {
 
   if (!newComment.comment) throw detailedError();
 
-  const movie = await Movie.findOneAndUpdate({
-    imdbCode,
-  }, {
-    $addToSet: {
-      comments: newComment,
+  const movie = await Movie.findOneAndUpdate(
+    {
+      imdbCode,
     },
-  });
+    {
+      $addToSet: {
+        comments: newComment,
+      },
+    },
+  );
 
   if (movie === null) {
     const newMovieInDB = new Movie({

@@ -10,6 +10,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Tooltip from '@material-ui/core/Tooltip';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
 import useModal from '../../hooks/useModal';
@@ -71,9 +72,14 @@ const MovieCard = ({ movie }) => {
             alt={movie.title}
             image={movie.thumbnail}
             title={movie.title}
+            onError={(e) => (e.target.src = '/logo512.png')} // TO DO: add default image
           />
           <CardContent className={classes.cardContent}>
-            {movie.watched && <VisibilityIcon className={classes.watchedIcon} />}
+            {movie.watched && (
+              <Tooltip title="watched movie">
+                <VisibilityIcon className={classes.watchedIcon} />
+              </Tooltip>
+            )}
             <Typography
               color={movie.watched ? 'textSecondary' : 'textPrimary'}
               variant="h6"
@@ -82,7 +88,7 @@ const MovieCard = ({ movie }) => {
             </Typography>
             <Box justifyContent="space-between" display="flex">
               <Typography color="textSecondary">
-                IMDB {t('movie.rating')}: {movie.imdbRating}
+                IMDb {t('movie.rating')}: {movie.imdbRating}
               </Typography>
               <Typography color="textSecondary">{movie.year}</Typography>
             </Box>
