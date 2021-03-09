@@ -1,4 +1,7 @@
 import axios from 'axios';
+import Movie from '../models/Movie.js';
+import User from '../models/User.js';
+import { notFoundError } from './errors.js';
 
 const requestError = new Error('Could not fetch movie data'); // todo: specify these more explicitly in a separate file
 requestError.code = 'movieRequest';
@@ -45,13 +48,24 @@ const fetchMovieInfo = async (imdbCode) => {
   return res.data;
 };
 
-const parseMovieResponse = (movieInfo, torrentData) => (
+const fetchComments = async (imdbCode) => {
+  const res = await Movie.findOne({
+    imdbCode,
+  }).populate('comments.userId', {
+    username: 1,
+    firstname: 1,
+    lastname: 1,
+    avatar: 1,
+  });
 
+  return (!res) ? false : res.comments;
+};
+
+const parseMovieResponse = (movieInfo, torrentData, comments) => (
   /* storing magnet link components here for now as we might need them in movie routes later, sry.
   also todo: add tracker listing into a config file
  const { hash } = torrentData.movies[0].torrents[0];
  `magnet:?xt=urn:btih:${hash}&dn=${movieInfo.Title}&tr=[PLACEHOLDER_FOR_TRACKER]`; */
-
   {
     title: movieInfo.Title,
     imdbRating: torrentData.movies[0].rating,
@@ -60,15 +74,17 @@ const parseMovieResponse = (movieInfo, torrentData) => (
     description: movieInfo.Plot,
     length: parseInt(movieInfo.Runtime, 10),
     director: movieInfo.Director,
-    cast: movieInfo.Actors.split(', '),
+    cast: movieInfo.Actors,
     subtitles: [{ en: 'placeholder subtitle object' }], // todo: investigate API for this
     downloaded: false, // if movie is already downloaded to server, identified with imdbCode
     watched: false, // to see if user has already watched the movie, identified with imdbCode
-    comments: [{ userId: 123, username: 'Nina Lustig', message: 'Placeholder comment' }], // todo: add functionality
+    comments,
   });
+
 export default {
   fetchYTSMovieList,
   fetchTorrentData,
   fetchMovieInfo,
   parseMovieResponse,
+  fetchComments,
 };
