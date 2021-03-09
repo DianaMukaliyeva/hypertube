@@ -1,7 +1,5 @@
 import axios from 'axios';
 import Movie from '../models/Movie.js';
-import User from '../models/User.js';
-import { notFoundError } from './errors.js';
 
 const requestError = new Error('Could not fetch movie data'); // todo: specify these more explicitly in a separate file
 requestError.code = 'movieRequest';
