@@ -14,6 +14,7 @@ import { Alert } from '@material-ui/lab';
 
 import InputField from './InputField';
 import FormButton from './FormButton';
+import OmniAuthLogin from './OmniAuthLogin';
 
 // TO DO move to styles
 const useStyles = makeStyles((theme) => ({
@@ -124,6 +125,9 @@ const CreateAccountForm = () => {
             {alert.message}
           </Alert>
         )}
+
+        <OmniAuthLogin />
+
         <form className={classes.form} noValidate>
           <InputField values={username} label="Username" required={true} />
           <InputField values={firstName} label="First name" required={true} />
