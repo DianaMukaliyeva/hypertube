@@ -13,7 +13,7 @@ authRoute.get('/google', authController.googleURL);
 
 authRoute.get('/google/callback', authController.googleCallback);
 
-authRoute.get('/token', authController.getUserToken);
+authRoute.get('/token/:key', authController.getUserToken);
 
 authRoute.get('/42', authController.fortytwoURL);
 

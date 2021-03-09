@@ -51,13 +51,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse401-500'
-  /api/auth/gmail:
+  /api/auth/google:
     get:
       tags:
         - Auth
-      summary: login with gmail
-      operationId: gmailLogin
+      summary: login with Google
+      operationId: googleLogin
       responses:
+        '200':
+          description: url for Google authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_5_google'
         '500':
           description: Internal Server Error.
           content:
@@ -71,6 +77,47 @@ paths:
       summary: login with 42 account
       operationId: 42Login
       responses:
+        '200':
+          description: url for 42 authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_5_42'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+  /api/auth/token/{key}:
+    get:
+      tags:
+        - Auth
+      summary: get authorization token by key
+      parameters:
+        - in: path
+          name: key
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: a3016883-22ee-4c56-b680-2394862974ca
+          required: true
+          description: uuid key of the token to get
+      operationId: omniAuthToken
+      responses:
+        '200':
+          description: authorization token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_5_token'
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse400'
         '500':
           description: Internal Server Error.
           content:
@@ -693,6 +740,24 @@ components:
         message:
           type: string
           example: amazing
+    inline_response_200_5_google:
+      type: object
+      properties:
+        url:
+          type: string
+          example: https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent&scope=something&response_type=code&client_id=something&redirect_uri=something
+    inline_response_200_5_42:
+      type: object
+      properties:
+        url:
+          type: string
+          example: https://api.intra.42.fr/oauth/authorize?client_id=something&redirect_uri=something&state=something&response_type=code
+    inline_response_200_5_token:
+      type: object
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsmxhbmciOiJlbiIsImlhInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNDVmZDczZDNlYTRlMDAyZmNkOGI3NiIsIdCI6MTYxNTIwNDY5OH0.J3LxM4soiYaXC0XGoHzFDXVp9lpbVgAm5pB4daZjciE
   responses:
     '500ApiError':
       description: Internal Server Error.

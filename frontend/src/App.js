@@ -25,27 +25,32 @@ function App() {
   const history = useHistory();
 
   useEffect(() => {
-    const setUserFromToken = (token) => {
-      const decoded = jwt_decode(token);
-      setUser({ userId: decoded.id, lang: decoded.lang });
-			setAuthToken(token);
-    };
-
     const checkToken = async () => {
-      try {
-        const { token } = await authService.getToken();
-        setUserFromToken(token);
-				history.push('/');
-      } catch (e) {
-        console.log(e);
+      let token = localStorage.getItem('token');
+
+      if (!token && location.search.startsWith('?auth=')) {
+        const key = location.search.substr(6);
+        try {
+          token = await authService.getToken(key);
+        } catch (e) {
+          console.log('');
+        }
       }
+
+      if (token) {
+        try {
+          const decoded = jwt_decode(token);
+          setUser({ userId: decoded.id, lang: decoded.lang });
+        } catch (e) {
+          console.log('');
+        }
+      }
+
+      setAuthToken(token);
+      history.push('/');
     };
 
-    if (location.search === '?auth=token') {
-      checkToken();
-    } else if (localStorage.getItem('token')) {
-      setUserFromToken(localStorage.getItem('token'));
-    } else setAuthToken(null);
+    checkToken();
   }, []);
 
   return (

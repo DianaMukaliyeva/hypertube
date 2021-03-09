@@ -14,10 +14,10 @@ import InputField from './InputField';
 import RecoveryLinkForm from '../user/RecoveryLinkForm';
 import CustomModal from '../common/CustomModal';
 import FormButton from './FormButton';
+import OmniAuthLogin from './OmniAuthLogin';
 
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Alert } from '@material-ui/lab';
@@ -81,16 +81,6 @@ const LoginForm = ({ setUser }) => {
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    const url = await authService.googleUrl();
-    window.location = url;
-  };
-
-  const handle42SignIn = async () => {
-    const url = await authService.fortytwoUrl();
-    window.location = url;
-  };
-
   const classes = useStyles();
 
   return (
@@ -98,7 +88,7 @@ const LoginForm = ({ setUser }) => {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Sign in
+          Login
         </Typography>
         {alert.show && (
           <Alert
@@ -108,17 +98,8 @@ const LoginForm = ({ setUser }) => {
             {alert.message}
           </Alert>
         )}
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <FormButton
-              handleClick={handleGoogleSignIn}
-              name="Sign in with Google"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <FormButton handleClick={handle42SignIn} name="Sign in with 42" />
-          </Grid>
-        </Grid>
+
+        <OmniAuthLogin />
 
         <form className={classes.form} noValidate>
           <InputField values={email} label="email" required={true} />
@@ -128,7 +109,7 @@ const LoginForm = ({ setUser }) => {
             autocomplete="current-password"
             required={true}
           />
-          <FormButton handleClick={handleLogin} name="Sign In" />
+          <FormButton handleClick={handleLogin} name="Login" />
           <Box>
             <Link href="#" onClick={recoveryLinkModal.handleClickOpen}>
               Forgot Password?

@@ -1,22 +1,34 @@
 /* eslint-disable no-underscore-dangle */
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import { v4 as uuid } from 'uuid';
 
 import User from '../models/User.js';
 import sendResetEmail from '../utilities/email.js';
 import google from '../utilities/google.js';
 import fortytwo from '../utilities/42.js';
 
-let userToken = null;
+const userToken = {};
 
 const setUserToken = (id, lang) => {
   const userForToken = { id, lang };
+  const key = uuid();
 
-  userToken = jwt.sign(userForToken, process.env.SECRET);
+  userToken[key] = jwt.sign(userForToken, process.env.SECRET);
+
+  return key;
 };
 
 const getUserToken = (req, res) => {
-  res.json({ token: userToken });
+  if (!req.params.key) res.status(400);
+
+  const token = userToken[req.params.key];
+
+  if (!token) res.status(400);
+
+  userToken[req.params.key] = null;
+
+  res.json({ token });
 };
 
 const login = async (req, res) => {
@@ -51,7 +63,7 @@ const recoveryEmail = async (req, res) => {
 };
 
 const googleURL = (req, res) => {
-  res.send(google.getGoogleAuthURL());
+  res.json({ url: google.getGoogleAuthURL() });
 };
 
 const findOrCreateUser = async (user) => {
@@ -81,13 +93,13 @@ const googleCallback = async (req, res) => {
 
   const userFromDB = await findOrCreateUser(userToDB);
 
-  setUserToken(userFromDB._id, userFromDB.language);
+  const key = setUserToken(userFromDB._id, userFromDB.language);
 
-  res.redirect(`${process.env.FRONTEND_URL_DEV}?auth=token`);
+  return res.redirect(`${process.env.FRONTEND_URL_DEV}?auth=${key}`);
 };
 
 const fortytwoURL = (req, res) => {
-  res.send(fortytwo.get42URL());
+  res.json({ url: fortytwo.get42URL() });
 };
 
 const fortytwoCallback = async (req, res) => {
@@ -103,9 +115,9 @@ const fortytwoCallback = async (req, res) => {
 
   const userFromDB = await findOrCreateUser(userToDB);
 
-  setUserToken(userFromDB._id, userFromDB.language);
+  const key = setUserToken(userFromDB._id, userFromDB.language);
 
-  return res.redirect(`${process.env.FRONTEND_URL_DEV}?auth=token`);
+  return res.redirect(`${process.env.FRONTEND_URL_DEV}?auth=${key}`);
 };
 
 export default {
