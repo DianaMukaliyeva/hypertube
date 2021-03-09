@@ -174,10 +174,13 @@ const validateUserUpdation = async (req, res, next) => {
   errors.push(userIdError);
 
   if (!userIdError) {
-    if (!oldPassword) {
-      errors.push(createDetail('oldPassword', '', 'required'));
-    } else if (!(await isPasswordValid(oldPassword, userId))) {
-      errors.push(createDetail('oldPassword', '******', 'wrong password'));
+		if (password || confirmPassword) {
+			if (!oldPassword) {
+				errors.push(createDetail('oldPassword', '', 'required'));
+			} else if (!(await isPasswordValid(oldPassword, userId))) {
+				errors.push(createDetail('oldPassword', '******', 'wrong password'));
+			}
+      errors.push(validatePasswords(password, confirmPassword));
     }
     if (username) {
       errors.push(await validateField(username, 'username'));
@@ -190,9 +193,6 @@ const validateUserUpdation = async (req, res, next) => {
     }
     if (firstname) {
       errors.push(await validateField(firstname, 'firstname'));
-    }
-    if (password || confirmPassword) {
-      errors.push(validatePasswords(password, confirmPassword));
     }
     if (language) {
       errors.push(await validateField(language, 'language'));
