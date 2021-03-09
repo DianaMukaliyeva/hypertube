@@ -174,12 +174,12 @@ const validateUserUpdation = async (req, res, next) => {
   errors.push(userIdError);
 
   if (!userIdError) {
-		if (password || confirmPassword) {
-			if (!oldPassword) {
-				errors.push(createDetail('oldPassword', '', 'required'));
-			} else if (!(await isPasswordValid(oldPassword, userId))) {
-				errors.push(createDetail('oldPassword', '******', 'wrong password'));
-			}
+    if (password || confirmPassword) {
+      if (!oldPassword) {
+        errors.push(createDetail('oldPassword', '', 'required'));
+      } else if (!(await isPasswordValid(oldPassword, userId))) {
+        errors.push(createDetail('oldPassword', '******', 'wrong password'));
+      }
       errors.push(validatePasswords(password, confirmPassword));
     }
     if (username) {
