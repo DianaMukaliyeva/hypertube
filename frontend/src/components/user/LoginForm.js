@@ -91,10 +91,7 @@ const LoginForm = ({ setUser }) => {
           Login
         </Typography>
         {alert.show && (
-          <Alert
-            severity={alert.severity}
-            onClose={() => setAlert({ ...alert, show: false })}
-          >
+          <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
             {alert.message}
           </Alert>
         )}
