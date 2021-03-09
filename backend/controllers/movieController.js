@@ -1,6 +1,7 @@
 import movieListUtils from '../utilities/movieAPIUtilities.js';
 import Movie from '../models/Movie.js';
 import User from '../models/User.js';
+import { detailedError } from '../utilities/errors.js';
 
 const getMovieList = async (req, res) => {
   const userId = req.user;
