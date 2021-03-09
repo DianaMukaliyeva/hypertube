@@ -30,6 +30,7 @@ const getUserToken = (req, res) => {
 
   res.json({ token });
 };
+import subtitlesUtils from '../utilities/subtitlesAPI.js';
 
 const login = async (req, res) => {
   const { email } = req.body;
@@ -42,6 +43,9 @@ const login = async (req, res) => {
   };
 
   const token = jwt.sign(userForToken, process.env.SECRET);
+
+  const subtitles = await subtitlesUtils.getSubtitles('tt0322259');
+  console.log('Subtitles', subtitles);
 
   res.json({ token });
 };
