@@ -7,7 +7,7 @@ import { Alert } from '@material-ui/lab';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import emptyAvatar from '../../images/emptyAvatar.png';
+import emptyAvatar from '../../../images/emptyAvatar.png';
 
 const useStyles = makeStyles(() => ({
   imageContainer: {
