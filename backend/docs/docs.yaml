@@ -610,6 +610,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/inline_response_200_2_movies'
+        hasMore:
+          type: boolean
+          example: true
     inline_response_200_3:
       type: object
       properties:
