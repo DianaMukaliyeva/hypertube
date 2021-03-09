@@ -219,22 +219,6 @@ const MyProfile = ({ user, setUser }) => {
                 label={`${t('form.lastName')}: ${userData.lastname}`}
               />
               <InputField values={email} label={`Email: ${userData.email}`} />
-              <InputField
-                values={oldPassword}
-                label={t('form.currentPassword')}
-                autocomplete="old-pwd"
-                required={true}
-              />
-              <InputField
-                values={password}
-                label={t('form.newPassword')}
-                autocomplete="new-pwd"
-              />
-              <InputField
-                values={confirmPassword}
-                label={t('form.confirmPassword')}
-                autocomplete="new-pwd"
-              />
               <Autocomplete
                 id="language"
                 value={lang}
@@ -256,20 +240,42 @@ const MyProfile = ({ user, setUser }) => {
                   />
                 )}
               />
-              {alert.show && (
-                <Alert
-                  className={classes.alert}
-                  severity={alert.severity}
-                  onClose={() => setAlert({ ...alert, show: false })}
-                >
-                  {alert.message}
-                </Alert>
-              )}
               <FormButton
                 handleClick={handleUpdate}
                 name={t('myProfile.update')}
               />
             </form>
+            <form className={classes.form} noValidate>
+              <InputField
+                values={oldPassword}
+                label={t('form.currentPassword')}
+                autocomplete="old-pwd"
+                required={true}
+              />
+              <InputField
+                values={password}
+                label={t('form.newPassword')}
+                autocomplete="new-pwd"
+              />
+              <InputField
+                values={confirmPassword}
+                label={t('form.confirmPassword')}
+                autocomplete="new-pwd"
+              />
+              <FormButton
+                handleClick={handleUpdate}
+                name={t('myProfile.updatePassword')}
+              />
+            </form>
+            {alert.show && (
+              <Alert
+                className={classes.alert}
+                severity={alert.severity}
+                onClose={() => setAlert({ ...alert, show: false })}
+              >
+                {alert.message}
+              </Alert>
+            )}
           </Grid>
         </Grid>
         <CustomModal {...userProfileModal} />
