@@ -49,10 +49,7 @@ const fetchYTSMovieList = async (filters) => {
       );
     }
   } catch (e) {
-    if (e && e.statusCode === 404) {
-      return { movies: [], hasMore: false };
-    }
-    throw e;
+    return { movies: [], hasMore: false };
   }
   return { movies, hasMore };
 };
