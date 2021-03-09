@@ -60,8 +60,22 @@ const UserProfile = ({ user }) => {
   ) : null;
 };
 
+UserProfile.defaultProps = {
+	user: PropTypes.shape({
+		username: '',
+		firstname: '',
+		lastname: '',
+		avatarBase64String: null,
+	})
+};
+
 UserProfile.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.shape({
+		username: PropTypes.string,
+		firstname: PropTypes.string,
+		lastname: PropTypes.string,
+		avatarBase64String: PropTypes.string,
+	})
 };
 
 export default UserProfile;
