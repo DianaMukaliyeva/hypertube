@@ -70,7 +70,7 @@ const MyProfile = ({ user, setUser }) => {
   const { t } = useTranslation();
 
   // todo: remove when done
-  const userProfileModal = useModal(<UserProfile userId={user.userId} />);
+  const userProfileModal = useModal(<UserProfile user={userData} />);
 
   const handleErrorResponse = (data, showAlert) => {
     switch (data.statusCode) {

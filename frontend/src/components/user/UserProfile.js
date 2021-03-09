@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import userService from '../../services/user';
 import emptyAvatar from '../../images/emptyAvatar.png';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,41 +35,47 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserProfile = ({ userId }) => {
-  const [user, setUser] = useState(null);
+const UserProfile = ({ user }) => {
   const classes = useStyles();
 
-  useEffect(async () => {
-    const userFromDb = await userService.get(userId);
-    if (userFromDb) setUser(userFromDb);
-  }, [userId]);
+  return user ? (
+    <Container component="main" className={classes.paper} maxWidth="xs">
+      <CssBaseline />
+      <Typography component="h2" variant="h5" gutterBottom>
+        Profile
+      </Typography>
+      <Box className={classes.imageContainer}>
+        <img
+          className={classes.image}
+          src={user.avatarBase64String || emptyAvatar}
+          alt={user.username}
+        />
+      </Box>
 
-  return (
-    user && (
-      <Container component="main" className={classes.paper} maxWidth="xs">
-        <CssBaseline />
-        <Typography component="h2" variant="h5" gutterBottom>
-          Profile
-        </Typography>
-        <Box className={classes.imageContainer}>
-          <img
-            className={classes.image}
-            src={user.avatarBase64String || emptyAvatar}
-            alt={user.username}
-          />
-        </Box>
+      <Typography variant="body1" className={classes.username}>
+        {user.firstname} {user.lastname}
+      </Typography>
+      <Typography variant="body1">{user.username}</Typography>
+    </Container>
+  ) : null;
+};
 
-        <Typography variant="body1" className={classes.username}>
-          {user.firstname} {user.lastname}
-        </Typography>
-        <Typography variant="body1">{user && user.username}</Typography>
-      </Container>
-    )
-  );
+UserProfile.defaultProps = {
+	user: PropTypes.shape({
+		username: '',
+		firstname: '',
+		lastname: '',
+		avatarBase64String: null,
+	})
 };
 
 UserProfile.propTypes = {
-  userId: PropTypes.string.isRequired,
+  user: PropTypes.shape({
+		username: PropTypes.string,
+		firstname: PropTypes.string,
+		lastname: PropTypes.string,
+		avatarBase64String: PropTypes.string,
+	})
 };
 
 export default UserProfile;
