@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import userService from '../../services/user';
-import emptyAvatar from './emptyAvatar.png';
+import emptyAvatar from '../../images/emptyAvatar.png';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
