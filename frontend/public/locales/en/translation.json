@@ -25,7 +25,8 @@
   },
   "myProfile": {
     "title": "My Profile",
-    "update": "Update"
+    "update": "Update Information",
+    "updatePassword": "Update Password"
   },
   "movie": {
     "rating": "rating"
