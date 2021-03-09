@@ -3,6 +3,27 @@ import fs from 'fs';
 import movieListUtils from './movieAPIUtilities.js';
 import Movie from '../models/Movie.js';
 
+const startFileStream = async (req, res, next) => {
+  // should check for file format first and convert to .mp4
+  const filePath = `./movies/${req.params.imdbCode}/${req.serverLocation}`;
+  const fileSize = fs.statSync(filePath).size;
+  const { range } = req.headers;
+  // const CHUNK_SIZE = 5e+6; // we have option to chunk the response into smaller chunks
+  const start = range ? Number(range.replace(/\D/g, '')) : 0;
+  const end = fileSize - 1;
+  const contentLength = end - start + 1;
+
+  const headers = {
+    'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+    'Accept-Ranges': 'bytes',
+    'Content-Length': contentLength,
+    'Content-Type': 'video/mp4',
+  };
+  res.writeHead(206, headers);
+  const readStream = await fs.createReadStream(filePath, { start, end });
+  readStream.pipe(res);
+};
+
 const downloadMovie = async (req, res, next) => {
   // download should prioritize the start time from the request
   // and start the filestream from that byte
@@ -37,7 +58,11 @@ const downloadMovie = async (req, res, next) => {
       }
     });
   });
-  engine.on('download', () => console.log('i am downloading!', engine.files.length));
+  engine.on('download', () => {
+    console.log('i am downloading!', engine.files.length);
+    req.serverLocation = filePath;
+    if (fs.existsSync(`./movies/${req.params.imdbCode}/${req.serverLocation}`)) startFileStream(req, res, next);
+  });
 
   engine.on('idle', async () => {
     console.log('i am ready!');
@@ -49,14 +74,6 @@ const downloadMovie = async (req, res, next) => {
       });
       await newMovie.save();
     }
-  });
-};
-
-const startFileStream = async (req, res, next) => {
-  const readStream = await fs.createReadStream(`./movies/${req.params.imdbCode}/${req.serverLocation}`);
-  readStream.on('open', () => {
-    // pipe should be here
-    console.log('filestream open');
   });
 };
 
