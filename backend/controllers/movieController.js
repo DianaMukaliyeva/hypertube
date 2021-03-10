@@ -25,7 +25,9 @@ const getMovieEntry = async (req, res, next) => {
     const imdbCode = req.params.imdb_code;
     const torrentData = await movieListUtils.fetchTorrentData(imdbCode);
     const movieInfo = await movieListUtils.fetchMovieInfo(imdbCode);
-    res.json(movieListUtils.parseMovieResponse(movieInfo, torrentData));
+    const comments = await movieListUtils.fetchComments(imdbCode);
+
+    res.json(movieListUtils.parseMovieResponse(movieInfo, torrentData, comments));
   } catch (err) { next(err); }
 };
 
@@ -50,10 +52,7 @@ const addComment = async (req, res) => {
     const newMovieInDB = new Movie({
       imdbCode,
       comments: [
-        {
-          userId: req.body.userId,
-          comment: req.body.comment,
-        },
+        newComment,
       ],
     });
     await newMovieInDB.save();
