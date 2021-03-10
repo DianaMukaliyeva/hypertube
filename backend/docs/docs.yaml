@@ -666,6 +666,11 @@ components:
           type: boolean
         watched:
           type: boolean
+        availableSubtitles:
+          type: array
+          example:
+            - en
+            - fi
         comments:
           type: array
           items:
