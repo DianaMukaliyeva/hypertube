@@ -10,7 +10,6 @@ const OpenSubtitles = new OpenSubtitlesApi({
 });
 
 function downloadSubtitles(url, dest) {
-  console.log('url', url);
   var file = fs.createWriteStream(dest);
 
   return new Promise((resolve, reject) => {
@@ -64,30 +63,24 @@ const getSubtitles = async (imdbId) => {
       },
     ];
 
-    if (fs.existsSync(dir)) {
-      console.log('Directory exists!');
-    } else {
+    let subtitles = [];
+
+    if (!fs.existsSync(dir)) {
       fs.mkdirSync(`./subtitles/${imdbId}`);
       options.map((elem) => {
         if (res[elem.lang] && res[elem.lang][0] && res[elem.lang][0].vtt) {
           fs.mkdirSync(elem.dir);
           let path = res[elem.lang][0].vtt;
           path = !path.charAt(4).localeCompare('s') ? path.slice(0, 4) + path.slice(5) : path;
-          downloadSubtitles(path, `${elem.dir}/subtitle.vtt`)
-            .then(() => console.log('downloaded file no issues...'))
-            .catch((e) => console.error('error while downloading', e));
+          downloadSubtitles(path, `${elem.dir}/subtitle.vtt`).then(subtitles.push(elem.lang));
         }
       });
-
-      console.log('Directory not found.');
     }
-
-    // return subtitles;
+    return subtitles;
   } catch (err) {
-    console.log('err fetching subtitles', err);
-    return {};
+    // console.log('err fetching subtitles', err);
+    return [];
   }
-  return '';
 };
 
 export default { getSubtitles };
