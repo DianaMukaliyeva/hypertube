@@ -1,0 +1,136 @@
+{
+  "ratings": [
+    {
+      "title": "9+",
+      "imdb": 9
+    },
+    {
+      "title": "8+",
+      "imdb": 8
+    },
+    {
+      "title": "7+",
+      "imdb": 7
+    },
+    {
+      "title": "6+",
+      "imdb": 6
+    },
+    {
+      "title": "5+",
+      "imdb": 5
+    }
+  ],
+  "sorts": [
+    {
+      "title": "A - Z",
+      "sort": "title asc"
+    },
+    {
+      "title": "Z - A",
+      "sort": "title desc"
+    },
+    {
+      "title": "filter.newest",
+      "sort": "year desc"
+    },
+    {
+      "title": "filter.oldest",
+      "sort": "year asc"
+    },
+    {
+      "title": "filter.mostPopular",
+      "sort": "rating desc"
+    },
+    {
+      "title": "filter.leastPopular",
+      "sort": "rating asc"
+    }
+  ],
+  "genres": [
+    {
+      "title": "genres.comedy",
+      "genre": "comedy"
+    },
+    {
+      "title": "genres.sci-fi",
+      "genre": "sci-fi"
+    },
+    {
+      "title": "genres.horror",
+      "genre": "horror"
+    },
+    {
+      "title": "genres.romance",
+      "genre": "romance"
+    },
+    {
+      "title": "genres.action",
+      "genre": "action"
+    },
+    {
+      "title": "genres.thriller",
+      "genre": "thriller"
+    },
+    {
+      "title": "genres.drama",
+      "genre": "drama"
+    },
+    {
+      "title": "genres.documentary",
+      "genre": "documentary"
+    },
+    {
+      "title": "genres.mystery",
+      "genre": "mystery"
+    },
+    {
+      "title": "genres.crime",
+      "genre": "crime"
+    },
+    {
+      "title": "genres.animation",
+      "genre": "animation"
+    },
+    {
+      "title": "genres.adventure",
+      "genre": "adventure"
+    },
+    {
+      "title": "genres.fantasy",
+      "genre": "fantasy"
+    },
+    {
+      "title": "genres.superhero",
+      "genre": "superhero"
+    },
+    {
+      "title": "genres.biography",
+      "genre": "biography"
+    },
+    {
+      "title": "genres.family",
+      "genre": "family"
+    },
+    {
+      "title": "genres.history",
+      "genre": "history"
+    },
+    {
+      "title": "genres.film-noir",
+      "genre": "film-noir"
+    },
+    {
+      "title": "genres.musical",
+      "genre": "musical"
+    },
+    {
+      "title": "genres.sport",
+      "genre": "sport"
+    },
+    {
+      "title": "genres.war",
+      "genre": "war"
+    }
+  ]
+}

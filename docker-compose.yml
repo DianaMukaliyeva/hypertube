@@ -32,6 +32,7 @@ services:
     env_file: ./.env
     ports:
       - ${BACKEND_PORT_DEV}:5002
+      - 9229:9229
     depends_on:
       - mongo
     command: ['npm', 'run', 'dev']
@@ -47,6 +48,7 @@ services:
       - /app/node_modules
     ports:
       - ${FRONTEND_PORT_DEV}:${FRONTEND_PORT_DEV}
+      - 9222:9222
     depends_on:
       - backend_hyper
     environment:
