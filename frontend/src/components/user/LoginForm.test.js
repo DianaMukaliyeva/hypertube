@@ -23,8 +23,8 @@ describe('all elements are rendered', () => {
     render(<LoginForm setUser={mockSetUser} />);
   });
 
-  test('renders header Sign in', () => {
-    expect(screen.getByRole('heading')).toHaveTextContent(/sign in/i);
+  test('renders header Login', () => {
+    expect(screen.getByRole('heading')).toHaveTextContent(/login/i);
   });
 
   test('renders email field', () => {
@@ -35,8 +35,16 @@ describe('all elements are rendered', () => {
     expect(screen.getByLabelText(/password/i));
   });
 
-  test('renders a button', () => {
-    expect(screen.getByRole('button'));
+  test('renders all three buttons', () => {
+    expect(screen.getAllByRole('button')).toHaveLength(3);
+  });
+
+	test('renders login with google button', () => {
+    expect(screen.getByRole('button', { name: /google/i }));
+  });
+
+	test('renders login with 42 button', () => {
+    expect(screen.getByRole('button', { name: /42/i }));
   });
 
   test('renders Forgot password link', () => {
