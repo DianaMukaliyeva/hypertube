@@ -9,7 +9,7 @@ const OpenSubtitles = new OpenSubtitlesApi({
   ssl: true,
 });
 
-function downloadSubtitles(url, dest) {
+const downloadSubtitles = (url, dest) => {
   var file = fs.createWriteStream(dest);
 
   return new Promise((resolve, reject) => {
@@ -32,7 +32,7 @@ function downloadSubtitles(url, dest) {
       })
       .end();
   });
-}
+};
 
 const getSubtitles = async (imdbId) => {
   try {
@@ -66,6 +66,7 @@ const getSubtitles = async (imdbId) => {
     let subtitles = [];
 
     if (!fs.existsSync(dir)) {
+      console.log('does not exist');
       fs.mkdirSync(`./subtitles/${imdbId}`);
       options.map((elem) => {
         if (res[elem.lang] && res[elem.lang][0] && res[elem.lang][0].vtt) {
@@ -73,12 +74,26 @@ const getSubtitles = async (imdbId) => {
           let path = res[elem.lang][0].vtt;
           path = !path.charAt(4).localeCompare('s') ? path.slice(0, 4) + path.slice(5) : path;
           downloadSubtitles(path, `${elem.dir}/subtitle.vtt`).then(subtitles.push(elem.lang));
+
+          // TO DO remove folder if .vtt file is empty
         }
       });
+
+      if (subtitles.length === 0) {
+        fs.rmdirSync(dir, { recursive: true });
+      }
+    } else {
+      console.log(' exist');
+      subtitles = options.reduce((accum, option) => {
+        if (fs.existsSync(option.dir)) {
+          accum.push(option.lang);
+        }
+        return accum;
+      }, []);
+      console.log('subtitles');
     }
     return subtitles;
   } catch (err) {
-    // console.log('err fetching subtitles', err);
     return [];
   }
 };

@@ -93,11 +93,10 @@ const parseMovieResponse = (movieInfo, torrentData, comments, subtitles) => ({
   length: parseInt(movieInfo.Runtime, 10),
   director: movieInfo.Director,
   cast: movieInfo.Actors,
-  subtitles: [{ en: 'placeholder subtitle object' }], // todo: investigate API for this
   downloaded: false, // if movie is already downloaded to server, identified with imdbCode
   watched: false, // to see if user has already watched the movie, identified with imdbCode
   comments,
-  availableSubtitles: subtitles,
+  subtitles,
 });
 
 export default {
