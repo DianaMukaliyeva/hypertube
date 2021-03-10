@@ -80,25 +80,24 @@ const fetchComments = async (imdbCode) => {
   return !res ? false : res.comments;
 };
 
-const parseMovieResponse = (movieInfo, torrentData, comments) =>
-  /* storing magnet link components here for now as we might need them in movie routes later, sry.
-  also todo: add tracker listing into a config file
- const { hash } = torrentData.movies[0].torrents[0];
- `magnet:?xt=urn:btih:${hash}&dn=${movieInfo.Title}&tr=[PLACEHOLDER_FOR_TRACKER]`; */
-  ({
-    title: movieInfo.Title,
-    imdbRating: torrentData.movies[0].rating,
-    year: movieInfo.Year,
-    genre: movieInfo.Genre, // need to split this if we only want one
-    description: movieInfo.Plot,
-    length: parseInt(movieInfo.Runtime, 10),
-    director: movieInfo.Director,
-    cast: movieInfo.Actors,
-    subtitles: [{ en: 'placeholder subtitle object' }], // todo: investigate API for this
-    downloaded: false, // if movie is already downloaded to server, identified with imdbCode
-    watched: false, // to see if user has already watched the movie, identified with imdbCode
-    comments,
-  });
+/* storing magnet link components here for now as we might need them in movie routes later, sry.
+also todo: add tracker listing into a config file
+const { hash } = torrentData.movies[0].torrents[0];
+`magnet:?xt=urn:btih:${hash}&dn=${movieInfo.Title}&tr=[PLACEHOLDER_FOR_TRACKER]`; */
+const parseMovieResponse = (movieInfo, torrentData, comments) => ({
+  title: movieInfo.Title,
+  imdbRating: torrentData.movies[0].rating,
+  year: movieInfo.Year,
+  genre: movieInfo.Genre, // need to split this if we only want one
+  description: movieInfo.Plot,
+  length: parseInt(movieInfo.Runtime, 10),
+  director: movieInfo.Director,
+  cast: movieInfo.Actors,
+  subtitles: [{ en: 'placeholder subtitle object' }], // todo: investigate API for this
+  downloaded: false, // if movie is already downloaded to server, identified with imdbCode
+  watched: false, // to see if user has already watched the movie, identified with imdbCode
+  comments,
+});
 
 export default {
   fetchYTSMovieList,
