@@ -14,6 +14,7 @@ import InputField from './InputField';
 import RecoveryLinkForm from '../user/RecoveryLinkForm';
 import CustomModal from '../common/CustomModal';
 import FormButton from './FormButton';
+import OmniAuthLogin from './OmniAuthLogin';
 
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
@@ -87,7 +88,7 @@ const LoginForm = ({ setUser }) => {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Sign in
+          Login
         </Typography>
         {alert.show && (
           <Alert
@@ -97,6 +98,9 @@ const LoginForm = ({ setUser }) => {
             {alert.message}
           </Alert>
         )}
+
+        <OmniAuthLogin />
+
         <form className={classes.form} noValidate>
           <InputField values={email} label="email" required={true} />
           <InputField
@@ -105,7 +109,7 @@ const LoginForm = ({ setUser }) => {
             autocomplete="current-password"
             required={true}
           />
-          <FormButton handleClick={handleLogin} name="Sign In" />
+          <FormButton handleClick={handleLogin} name="Login" />
           <Box>
             <Link href="#" onClick={recoveryLinkModal.handleClickOpen}>
               Forgot Password?

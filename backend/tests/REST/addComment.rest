@@ -1,0 +1,7 @@
+POST http://localhost:3000/api/movies/2324dsad2242/comments HTTP/1.1
+content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwM2U4YjlmMDBlZGU0MDEyOGNlNDhhZCIsImxhbmciOiJkZSIsImlhdCI6MTYxNDcxMTcyNX0.llVv5Y8RQw7qEBB0F_jvBRSDypHcQ_4M3HyVzlO7cMs
+
+{
+  "comment": "Cool movie!"
+}

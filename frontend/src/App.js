@@ -1,27 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useLocation,
+  useHistory,
+} from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
 import theme from './styles/theme';
-import jwt_decode from 'jwt-decode';
 
 import Hypertube from './components/gallery/Index';
 import Landing from './components/layout/Landing';
 import Navbar from './components/layout/Navbar';
 import setAuthToken from './utils/setAuthToken';
-
-import Box from '@material-ui/core/Box';
-import { Container } from 'react-bootstrap';
+import authService from './services/auth';
 
 function App() {
   const [user, setUser] = useState({ userId: '', lang: '' });
+  const location = useLocation();
+  const history = useHistory();
 
   useEffect(() => {
-    setAuthToken(localStorage.getItem('token'));
-    if (localStorage.getItem('token')) {
-      const decoded = jwt_decode(localStorage.getItem('token'));
-      setUser({ userId: decoded.id, lang: decoded.lang });
-    }
+    const checkToken = async () => {
+      let token = localStorage.getItem('token');
+
+      if (!token && location.search.startsWith('?auth=')) {
+        const key = location.search.substr(6);
+        try {
+          token = await authService.getToken(key);
+        } catch (e) {
+          console.log('');
+        }
+      }
+
+      if (token) {
+        try {
+          const decoded = jwt_decode(token);
+          setUser({ userId: decoded.id, lang: decoded.lang });
+        } catch (e) {
+          console.log('');
+        }
+      }
+
+      setAuthToken(token);
+      history.push('/');
+    };
+
+    checkToken();
   }, []);
 
   return (
@@ -32,7 +61,11 @@ function App() {
           {user.userId && <Navbar user={user} setUser={setUser} />}
           <Box mt={10}>
             <Route exact path="/">
-              {user.userId ? <Hypertube user={user} /> : <Landing user={user} setUser={setUser} />}
+              {user.userId ? (
+                <Hypertube user={user} />
+              ) : (
+                <Landing user={user} setUser={setUser} />
+              )}
             </Route>
             <Switch>
               <Route path="/recoverylink">
