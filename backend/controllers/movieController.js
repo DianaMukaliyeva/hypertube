@@ -11,11 +11,7 @@ const getMovieList = async (req, res) => {
 
   movies.movies = movies.movies.map((movie) => {
     const tempMovie = { ...movie };
-    user.watched.forEach((watched) => {
-      if (watched.movieId === movie.imdbCode) {
-        tempMovie.watched = true;
-      }
-    });
+    tempMovie.watched = user.watched.some((elem) => elem.movieId === movie.imdbCode);
     return tempMovie;
   });
   res.json(movies);

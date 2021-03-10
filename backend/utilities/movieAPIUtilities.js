@@ -7,6 +7,15 @@ const requestError = new Error('Could not fetch movie data'); // todo: specify t
 requestError.code = 'movieRequest';
 requestError.name = 'Request failed';
 
+const filteredMovieData = (movie) => ({
+  title: movie.title,
+  imdbCode: movie.imdb_code,
+  imdbRating: movie.rating,
+  year: movie.year,
+  thumbnail: movie.thumbnail,
+  hash: movie.torrents[0].hash,
+});
+
 const fetchYTSMovieList = async (filters) => {
   let movies = [];
   let hasMore = true;
@@ -35,19 +44,10 @@ const fetchYTSMovieList = async (filters) => {
       await Promise.all(
         movieList.map(async (movie) => {
           res = await axios.get(`http://www.omdbapi.com/?i=${movie.imdb_code}&apikey=${OMDB_KEY}`);
-          movies = [
-            ...movies,
-            {
-              title: movie.title,
-              imdbCode: movie.imdb_code,
-              imdbRating: movie.rating,
-              year: movie.year,
-              thumbnail: res.data.Poster,
-              hash: movie.torrents[0].hash,
-            },
-          ];
+          movie.thumbnail = res.data.Poster; // eslint-disable-line no-param-reassign
         }),
       );
+      movies = movieList.map((movie) => filteredMovieData(movie));
     }
   } catch (e) {
     return { movies: [], hasMore: false };
