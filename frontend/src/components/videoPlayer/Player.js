@@ -3,9 +3,7 @@ import React from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 
-const Player = ({ imdbCode, subsTracks }) => {
-  console.log('imdb Code', imdbCode, subsTracks); // TO DO use this code to get subtitles
-
+const Player = ({ subsTracks }) => {
   const streamUrl = process.env.REACT_APP_BACKEND_URL + '/api/auth/stream';
 
   const handlePlay = () => {
@@ -37,7 +35,6 @@ const Player = ({ imdbCode, subsTracks }) => {
 };
 
 Player.propTypes = {
-  imdbCode: PropTypes.string.isRequired,
   subsTracks: PropTypes.array.isRequired,
 };
 
