@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
 
+import jwt from 'jsonwebtoken';
 import { detailedError, createDetail } from './errors.js';
 import User from '../models/User.js';
-import jwt from 'jsonwebtoken';
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -247,10 +247,12 @@ const validateToken = async (req, res, next) => {
           return next();
         }
       }
+      return res.status(401).json({ error: 'Unauthorized user!' });
     });
   } else {
     return res.status(401).json({ error: 'Unauthorized user!' });
   }
+  return;
 };
 
 export default {

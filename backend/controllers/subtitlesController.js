@@ -5,16 +5,16 @@ const getSubtiles = async (req, res) => {
 
   const filename = `./subtitles/${imdbCode}/${lang}/subtitle.vtt`;
 
-  let readStream = fs.createReadStream(filename);
+  const readStream = fs.createReadStream(filename);
 
-  readStream.on('open', function () {
+  readStream.on('open', () => {
     const head = {
       'Content-Type': 'text/vtt',
     };
     res.writeHead(200, head);
     readStream.pipe(res);
   });
-  readStream.on('error', function (err) {
+  readStream.on('error', (err) => {
     res.end(err);
   });
 };

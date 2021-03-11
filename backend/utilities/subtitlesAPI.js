@@ -10,10 +10,10 @@ const OpenSubtitles = new OpenSubtitlesApi({
 });
 
 const downloadSubtitles = (url, dest) => {
-  var file = fs.createWriteStream(dest);
+  const file = fs.createWriteStream(dest);
 
   return new Promise((resolve, reject) => {
-    var responseSent = false; // flag to make sure that response is sent only once.
+    let responseSent = false; // flag to make sure that response is sent only once.
     http
       .get(url, (response) => {
         response.pipe(file);
@@ -67,7 +67,7 @@ const getSubtitles = async (imdbId) => {
 
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(`./subtitles/${imdbId}`);
-      options.map((elem) => {
+      options.forEach((elem) => {
         if (res[elem.lang] && res[elem.lang][0] && res[elem.lang][0].vtt) {
           fs.mkdirSync(elem.dir);
           let path = res[elem.lang][0].vtt;
