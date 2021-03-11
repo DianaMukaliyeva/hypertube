@@ -2,6 +2,7 @@ import fs from 'fs';
 
 const getSubtiles = async (req, res) => {
   const { imdbCode, lang } = req.params;
+
   const filename = `./subtitles/${imdbCode}/${lang}/subtitle.vtt`;
 
   let readStream = fs.createReadStream(filename);

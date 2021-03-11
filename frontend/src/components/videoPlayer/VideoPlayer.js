@@ -38,11 +38,14 @@ const buildTracks = (imdbCode, subsAvailableIn) => {
   const subsLables = { en: 'English', de: 'German', fi: 'Finnish', ru: 'Russian' };
   const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
+  const token = localStorage.getItem('token');
+
   const tracks = subsAvailableIn.reduce((accum, lang) => {
     accum.push({
       label: subsLables[lang],
       kind: 'subtitles',
-      src: baseUrl + `/api/movies/${imdbCode}/subtitles/${lang}`,
+      // src: baseUrl + `/api/movies/${imdbCode}/subtitles/${lang}`,
+      src: baseUrl + `/api/movies/${imdbCode}/subtitles/${lang}/${token}`,
       srcLang: lang,
     });
     return accum;
@@ -113,7 +116,7 @@ const VideoPlayer = (data) => {
         )}
         <CardContent>
           <TitleBanner movie={movie} />
-          <Player imdbCode={data.movie.imdbCode} subsTracks={subsTracks} />
+          <Player subsTracks={subsTracks} />
           <MovieDetails movie={movie} />
           <AddComment data={data} />
           <Comments />

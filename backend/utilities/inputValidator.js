@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 
 import { detailedError, createDetail } from './errors.js';
 import User from '../models/User.js';
+import jwt from 'jsonwebtoken';
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -82,9 +83,7 @@ const validateResetToken = async (token, userId) => {
 };
 
 const validateUserCreation = async (req, res, next) => {
-  const {
-    username, email, firstname, language, lastname, password, confirmPassword,
-  } = req.body;
+  const { username, email, firstname, language, lastname, password, confirmPassword } = req.body;
   let errors = [];
 
   errors.push(await validateField(username, 'username'));
@@ -103,9 +102,7 @@ const validateUserCreation = async (req, res, next) => {
 };
 
 const validatePasswordReset = async (req, res, next) => {
-  const {
-    password, confirmPassword, resetToken, userId,
-  } = req.body;
+  const { password, confirmPassword, resetToken, userId } = req.body;
   let errors = [];
 
   const userIdError = await validateField(userId, 'userId');
@@ -240,10 +237,27 @@ const validateEmail = async (req, res, next) => {
   next();
 };
 
+const validateToken = async (req, res, next) => {
+  const { token } = req.params;
+  if (token) {
+    jwt.verify(token, process.env.SECRET, async (err, decode) => {
+      if (!err) {
+        const user = await User.findById(decode.id);
+        if (user) {
+          return next();
+        }
+      }
+    });
+  } else {
+    return res.status(401).json({ error: 'Unauthorized user!' });
+  }
+};
+
 export default {
   validateUserCreation,
   validateUserUpdation,
   validatePasswordReset,
   validateLogin,
   validateEmail,
+  validateToken,
 };

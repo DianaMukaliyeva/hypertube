@@ -66,7 +66,6 @@ const getSubtitles = async (imdbId) => {
     let subtitles = [];
 
     if (!fs.existsSync(dir)) {
-      console.log('does not exist');
       fs.mkdirSync(`./subtitles/${imdbId}`);
       options.map((elem) => {
         if (res[elem.lang] && res[elem.lang][0] && res[elem.lang][0].vtt) {
@@ -83,14 +82,12 @@ const getSubtitles = async (imdbId) => {
         fs.rmdirSync(dir, { recursive: true });
       }
     } else {
-      console.log(' exist');
       subtitles = options.reduce((accum, option) => {
         if (fs.existsSync(option.dir)) {
           accum.push(option.lang);
         }
         return accum;
       }, []);
-      console.log('subtitles');
     }
     return subtitles;
   } catch (err) {
