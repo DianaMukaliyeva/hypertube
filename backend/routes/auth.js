@@ -1,10 +1,8 @@
 import express from 'express';
 
+import fs from 'fs';
 import authController from '../controllers/authController.js';
 import inputValidator from '../utilities/inputValidator.js';
-
-// to remove
-import fs from 'fs';
 
 const authRoute = express.Router();
 
@@ -21,14 +19,14 @@ authRoute.get('/token/:key', authController.getUserToken);
 authRoute.get('/42', authController.fortytwoURL);
 
 authRoute.get('/42/callback', authController.fortytwoCallback);
-// TO DO  remove when real movie stream is done
-// TO DO  also delete ./subtitles/sample.mp4
 
+// TO DO
+// THIS WILL BE REMOVED !!! this is test streamer
 authRoute.get('/stream', (req, res) => {
   const path = './subtitles/sample.mp4';
   const stat = fs.statSync(path);
   const fileSize = stat.size;
-  const range = req.headers.range;
+  const { range } = req.headers;
   if (range) {
     const parts = range.replace(/bytes=/, '').split('-');
     const start = parseInt(parts[0], 10);
@@ -52,5 +50,6 @@ authRoute.get('/stream', (req, res) => {
     fs.createReadStream(path).pipe(res);
   }
 });
+// *******
 
 export default authRoute;
