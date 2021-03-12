@@ -157,7 +157,7 @@ const validateEmailFormat = (email) => {
   return '';
 };
 
-const validateUserUpdation = async (req, res, next) => {
+const validateUserUpdate = async (req, res, next) => {
   const {
     username,
     lastname,
@@ -242,7 +242,7 @@ const validateEmail = async (req, res, next) => {
 
 export default {
   validateUserCreation,
-  validateUserUpdation,
+  validateUserUpdate,
   validatePasswordReset,
   validateLogin,
   validateEmail,
