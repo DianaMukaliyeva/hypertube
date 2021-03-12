@@ -5,6 +5,22 @@ import '@testing-library/jest-dom';
 // learn more: https://github.com/testing-library/jest-dom
 // const originalConsoleError = global.console.error;
 
+
+jest.mock('react-i18next', () => ({
+  // this mock makes sure any components using the translate hook
+  // can use it without a warning being shown
+  useTranslation: () => {
+    return {
+      t: (str) => str,
+      i18n: {
+        // eslint-disable-next-line no-empty-function
+        changeLanguage: () => new Promise(() => {}),
+      },
+    };
+  },
+}));
+
+
 beforeEach(() => {
   /* throw error when prop types fail
   global.console.error = (...args) => {
