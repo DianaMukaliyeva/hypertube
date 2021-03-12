@@ -35,6 +35,7 @@ const getUserInfo = async (req, res) => {
     email: user.email,
     avatarBase64String: user.avatar,
     language: user.language,
+    hasPw: user.hasPw,
   });
 };
 
@@ -54,13 +55,7 @@ const addUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const {
-    username,
-    lastname,
-    language,
-    firstname,
-    email,
-    password,
-    avatarBase64String,
+    username, lastname, language, firstname, email, password, avatarBase64String,
   } = req.body;
   const { userId } = req.params;
   const user = await User.findById(userId);
@@ -98,13 +93,11 @@ const updateUser = async (req, res) => {
 const updatePassword = async (req, res) => {
   const { password, userId } = req.body;
 
-  const user = await User.findById(userId);
-  if (!user) {
-    throw notFoundError();
-  }
-
-  user.password = bcrypt.hashSync(password, salt);
-  await user.save();
+  await User.findByIdAndUpdate(userId, {
+    hasPw: true,
+    password: bcrypt.hashSync(password, salt),
+    token: '',
+  });
 
   res.sendStatus(200);
 };
