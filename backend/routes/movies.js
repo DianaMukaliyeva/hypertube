@@ -22,7 +22,7 @@ movieRoute.post('/:imdb_code/comments', middleware.authRequired, movieController
 movieRoute.get(
   '/:imdbCode/subtitles/:lang/:token',
   inputValidator.validateToken,
-  subtitlesController.getSubtiles,
+  subtitlesController.getSubtitles,
 );
 
 export default movieRoute;
