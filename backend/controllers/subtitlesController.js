@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-const getSubtiles = async (req, res) => {
+const getSubtitles = async (req, res) => {
   const { imdbCode, lang } = req.params;
 
   const filename = `./subtitles/${imdbCode}/${lang}/subtitle.vtt`;
@@ -20,5 +20,5 @@ const getSubtiles = async (req, res) => {
 };
 
 export default {
-  getSubtiles,
+  getSubtitles,
 };
