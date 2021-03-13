@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -9,7 +9,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,9 +33,10 @@ const Comments = ({ movie }) => {
   if (!movie || !movie.comments) return <div></div>;
 
   return (
+    <>
     <div className={classes.root}>
       <List>
-      {movie.comments.map((e) => {
+      {movie.comments.map((e) => (
       <ListItem key={e.id} alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt={e.userId.firstname} src={e.userId.avatar} />
@@ -55,9 +55,10 @@ const Comments = ({ movie }) => {
           }
         />
         </ListItem>
-        ;})}
+      ))}
       </List>
     </div>
+    </>
   );
 };
 
