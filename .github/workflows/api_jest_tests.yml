@@ -24,6 +24,9 @@ jobs:
           echo OMDB_KEY=2c600c89 >> .env
           echo FRONTEND_PORT_DEV=3001 >> .env
           echo SECRET=some_json_secret >> .env
+          echo OPENSUBTITLES_MY_USER_AGENT=hyper2021 >> .env
+          echo OPENSUBTITLES_USERNAME=hyper2021 >> .env
+          echo OPENSUBTITLES_PASSWORD=hyper1324 >> .env
           cat .env
           
       - name: Build and Start Docker Containers
