@@ -1,6 +1,6 @@
 import OpenSubtitlesApi from 'opensubtitles-api';
 import fs from 'fs';
-import http from 'http';
+import axios from 'axios';
 
 const OpenSubtitles = new OpenSubtitlesApi({
   useragent: process.env.OPENSUBTITLES_MY_USER_AGENT,
@@ -9,85 +9,74 @@ const OpenSubtitles = new OpenSubtitlesApi({
   ssl: true,
 });
 
-const downloadSubtitles = (url, dest) => {
-  const file = fs.createWriteStream(dest);
-
-  return new Promise((resolve, reject) => {
-    let responseSent = false; // flag to make sure that response is sent only once.
-    http
-      .get(url, (response) => {
-        response.pipe(file);
-        file.on('finish', () => {
-          file.close(() => {
-            if (responseSent) return;
-            responseSent = true;
-            resolve();
-          });
-        });
-      })
-      .on('error', (err) => {
-        if (responseSent) return;
-        responseSent = true;
-        reject(err);
-      })
-      .end();
-  });
-};
+const downloadSubtitles = (subtitlesUrl, option) => new Promise((resolve) => {
+  axios
+    .get(subtitlesUrl, { responseType: 'stream' })
+    .then((response) => {
+      fs.mkdirSync(option.dir, { recursive: true });
+      const file = fs.createWriteStream(`${option.dir}/subtitle.vtt`);
+      response.data.pipe(file);
+      file.on('finish', () => {
+        resolve(option.lang);
+      });
+    })
+    .catch(() => {
+      resolve();
+    });
+});
 
 const getSubtitles = async (imdbId) => {
   try {
-    const res = await OpenSubtitles.search({
-      sublanguageid: 'eng, fin, ger, rus',
-      extensions: ['srt', 'vtt'],
-      imdbid: imdbId,
-      limit: 1,
-    });
-    const dir = `./subtitles/${imdbId}`;
+    const parentDir = `./subtitles/${imdbId}`;
 
     const options = [
       {
         lang: 'en',
-        dir: `./subtitles/${imdbId}/en`,
+        dir: `${parentDir}/en`,
       },
       {
         lang: 'de',
-        dir: `./subtitles/${imdbId}/de`,
+        dir: `${parentDir}/de`,
       },
       {
         lang: 'fi',
-        dir: `./subtitles/${imdbId}/fi`,
+        dir: `.${parentDir}/fi`,
       },
       {
         lang: 'ru',
-        dir: `./subtitles/${imdbId}/ru`,
+        dir: `${parentDir}/ru`,
       },
     ];
 
     let subtitles = [];
 
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(`./subtitles/${imdbId}`);
-      options.forEach((elem) => {
-        if (res[elem.lang] && res[elem.lang][0] && res[elem.lang][0].vtt) {
-          fs.mkdirSync(elem.dir);
-          let path = res[elem.lang][0].vtt;
-          path = !path.charAt(4).localeCompare('s') ? path.slice(0, 4) + path.slice(5) : path;
-          downloadSubtitles(path, `${elem.dir}/subtitle.vtt`).then(subtitles.push(elem.lang));
-
-          // TO DO remove folder if .vtt file is empty
-        }
-      });
-
-      if (subtitles.length === 0) {
-        fs.rmdirSync(dir, { recursive: true });
-      }
-    } else {
+    if (fs.existsSync(parentDir)) {
       subtitles = options.reduce((accum, option) => {
         if (fs.existsSync(option.dir)) {
           accum.push(option.lang);
         }
         return accum;
       }, []);
+    } else {
+      const searchResult = await OpenSubtitles.search({
+        sublanguageid: 'eng, fin, ger, rus',
+        extensions: ['srt', 'vtt'],
+        imdbid: imdbId,
+        limit: 1,
+      });
+      const promises = [];
+      options.forEach((option) => {
+        if (
+          searchResult[option.lang]
+          && searchResult[option.lang][0]
+          && searchResult[option.lang][0].vtt
+        ) {
+          const subtitlesUrl = searchResult[option.lang][0].vtt;
+          promises.push(downloadSubtitles(subtitlesUrl, option));
+        }
+      });
+      const result = await Promise.all(promises);
+      subtitles = result.filter((r) => !!r);
     }
     return subtitles;
   } catch (err) {
