@@ -12,6 +12,30 @@ import options from './options.json';
 const Filter = ({ filter, setFilter, setSearch }) => {
   const { t } = useTranslation();
   const onKeyDown = (e) => e.key === 'Enter' && setFilter({ ...filter });
+  const selectOptions = [
+    {
+      id: 'movie-imdb',
+      label: 'filter.ratingLabel',
+      options: options.ratings,
+      name: 'imdb',
+    },
+    {
+      id: 'movie-genre',
+      label: 'filter.genreLabel',
+      options: options.genres.map((genre) => {
+        return { title: t(genre.title), genre: genre.genre };
+      }),
+      name: 'genre',
+    },
+    {
+      id: 'movie-sort',
+      label: 'filter.sortLabel',
+      options: options.sorts.map((sort) => {
+        return { title: t(sort.title), sort: sort.sort };
+      }),
+      name: 'sort',
+    },
+  ];
 
   return (
     <Box py={5}>
@@ -26,40 +50,18 @@ const Filter = ({ filter, setFilter, setSearch }) => {
             }}
           />
         </Grid>
-        <Grid item xs={12} sm={4} md={4} lg={3}>
-          <CustomSelect
-            id="movie-rating"
-            label={t('filter.ratingLabel')}
-            options={options.ratings}
-            onChange={(event, value) =>
-              setFilter({ ...filter, imdb: (value && value.rating) || null })
-            }
-          />
-        </Grid>
-        <Grid item xs={12} sm={4} md={4} lg={3}>
-          <CustomSelect
-            id="movie-genre"
-            label={t('filter.genreLabel')}
-            options={options.genres.map((genre) => {
-              return { title: t(genre.title), genre: genre.genre };
-            })}
-            onChange={(event, value) =>
-              setFilter({ ...filter, genre: (value && value.genre) || null })
-            }
-          />
-        </Grid>
-        <Grid item xs={12} sm={4} md={4} lg={3}>
-          <CustomSelect
-            id="movie-sort"
-            label={t('filter.sortLabel')}
-            options={options.sorts.map((sort) => {
-              return { title: t(sort.title), sort: sort.sort };
-            })}
-            onChange={(event, value) =>
-              setFilter({ ...filter, sort: (value && value.sort) || null })
-            }
-          />
-        </Grid>
+        {selectOptions.map((select) => (
+          <Grid key={select.id} item xs={12} sm={4} md={4} lg={3}>
+            <CustomSelect
+              id={select.id}
+              label={t(select.label)}
+              options={select.options}
+              onChange={(event, value) =>
+                setFilter({ ...filter, [select.name]: (value && value[select.name]) || null })
+              }
+            />
+          </Grid>
+        ))}
       </Grid>
     </Box>
   );

@@ -10,8 +10,8 @@ const useStyles = makeStyles(() => ({
   },
   intro: {
     marginBottom: '1rem',
-    marginTop: '1rem'
-  }
+    marginTop: '1rem',
+  },
 }));
 
 const MovieDetails = ({ movie }) => {
@@ -21,7 +21,9 @@ const MovieDetails = ({ movie }) => {
     <div className={classes.root}>
       <Typography variant="subtitle1" className={classes.intro}>
         <strong>Director:</strong> {movie.director} <br></br>
-        <strong>Cast:</strong> {movie.cast}
+        <strong>Cast:</strong> {movie.cast} <br></br>
+        <strong>Subtitles:</strong>{' '}
+        {movie.subtitles.length > 0 ? movie.subtitles.join(' ,') : 'not available'}
       </Typography>
     </div>
   );
@@ -30,6 +32,5 @@ const MovieDetails = ({ movie }) => {
 MovieDetails.propTypes = {
   movie: PropTypes.object.isRequired,
 };
-
 
 export default MovieDetails;

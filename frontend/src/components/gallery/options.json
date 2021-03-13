@@ -2,23 +2,23 @@
   "ratings": [
     {
       "title": "9+",
-      "rating": 9
+      "imdb": 9
     },
     {
       "title": "8+",
-      "rating": 8
+      "imdb": 8
     },
     {
       "title": "7+",
-      "rating": 7
+      "imdb": 7
     },
     {
       "title": "6+",
-      "rating": 6
+      "imdb": 6
     },
     {
       "title": "5+",
-      "rating": 5
+      "imdb": 5
     }
   ],
   "sorts": [

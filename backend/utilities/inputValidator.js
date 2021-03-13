@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 
+import jwt from 'jsonwebtoken';
 import { detailedError, createDetail } from './errors.js';
 import User from '../models/User.js';
 
@@ -157,7 +158,7 @@ const validateEmailFormat = (email) => {
   return '';
 };
 
-const validateUserUpdation = async (req, res, next) => {
+const validateUserUpdate = async (req, res, next) => {
   const {
     username,
     lastname,
@@ -174,10 +175,13 @@ const validateUserUpdation = async (req, res, next) => {
   errors.push(userIdError);
 
   if (!userIdError) {
-    if (!oldPassword) {
-      errors.push(createDetail('oldPassword', '', 'required'));
-    } else if (!(await isPasswordValid(oldPassword, userId))) {
-      errors.push(createDetail('oldPassword', '******', 'wrong password'));
+    if (password || confirmPassword) {
+      if (!oldPassword) {
+        errors.push(createDetail('oldPassword', '', 'required'));
+      } else if (!(await isPasswordValid(oldPassword, userId))) {
+        errors.push(createDetail('oldPassword', '******', 'wrong password'));
+      }
+      errors.push(validatePasswords(password, confirmPassword));
     }
     if (username) {
       errors.push(await validateField(username, 'username'));
@@ -190,9 +194,6 @@ const validateUserUpdation = async (req, res, next) => {
     }
     if (firstname) {
       errors.push(await validateField(firstname, 'firstname'));
-    }
-    if (password || confirmPassword) {
-      errors.push(validatePasswords(password, confirmPassword));
     }
     if (language) {
       errors.push(await validateField(language, 'language'));
@@ -240,10 +241,29 @@ const validateEmail = async (req, res, next) => {
   next();
 };
 
+const validateToken = async (req, res, next) => {
+  const { token } = req.params;
+  if (token) {
+    jwt.verify(token, process.env.SECRET, async (err, decode) => {
+      if (!err) {
+        const user = await User.findById(decode.id);
+        if (user) {
+          return next();
+        }
+      }
+      return res.status(401).json({ error: 'Unauthorized user!' });
+    });
+  } else {
+    return res.status(401).json({ error: 'Unauthorized user!' });
+  }
+  return '';
+};
+
 export default {
   validateUserCreation,
-  validateUserUpdation,
+  validateUserUpdate,
   validatePasswordReset,
   validateLogin,
   validateEmail,
+  validateToken,
 };

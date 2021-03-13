@@ -1,4 +1,5 @@
 import movieListUtils from '../utilities/movieAPIUtilities.js';
+import subtitlesUtils from '../utilities/subtitlesAPI.js';
 import Movie from '../models/Movie.js';
 import User from '../models/User.js';
 import { detailedError } from '../utilities/errors.js';
@@ -11,11 +12,7 @@ const getMovieList = async (req, res) => {
 
   movies.movies = movies.movies.map((movie) => {
     const tempMovie = { ...movie };
-    user.watched.forEach((watched) => {
-      if (watched.movieId === movie.imdbCode) {
-        tempMovie.watched = true;
-      }
-    });
+    tempMovie.watched = user.watched.some((elem) => elem.movieId === movie.imdbCode);
     return tempMovie;
   });
   res.json(movies);
@@ -33,7 +30,9 @@ const getMovieEntry = async (req, res) => {
   const imdbCode = req.params.imdb_code;
   const torrentData = await movieListUtils.fetchTorrentData(imdbCode);
   const movieInfo = await movieListUtils.fetchMovieInfo(imdbCode);
-  res.json(movieListUtils.parseMovieResponse(movieInfo, torrentData));
+  const subtitles = await subtitlesUtils.getSubtitles(imdbCode);
+  const comments = []; // TO DO check with Ilja to add here
+  res.json(movieListUtils.parseMovieResponse(movieInfo, torrentData, comments, subtitles));
 };
 
 const addComment = async (req, res) => {
@@ -59,12 +58,7 @@ const addComment = async (req, res) => {
   if (movie === null) {
     const newMovieInDB = new Movie({
       imdbCode,
-      comments: [
-        {
-          userId: req.body.userId,
-          comment: req.body.comment,
-        },
-      ],
+      comments: [newComment],
     });
     await newMovieInDB.save();
   }
