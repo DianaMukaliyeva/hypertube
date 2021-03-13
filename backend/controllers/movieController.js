@@ -63,23 +63,22 @@ const addComment = async (req, res) => {
     });
     await newMovieInDB.save();
   }
-
   res.sendStatus(201);
 };
 
 const playMovie = async (req, res, next) => {
-  // request params/body should include optional start time
-  // from which to start the eventual filestream from
   // todo: update route docs
   const { imdbCode } = req.params;
-  Movie.findOne({ imdbCode }, (err, obj) => {
-    if (err) throw err;
-    else if (obj && 'serverLocation' in obj) {
-      // adding location as a request param might not be the prettiest approach...
-      req.serverLocation = obj.serverLocation;
-      movieTorrentUtils.startFileStream(req, res, next);
-    } else movieTorrentUtils.downloadMovie(req, res, next);
-  });
+  let obj = await Movie.findOne({ imdbCode });
+  if (!obj || !obj.downloadComplete) {
+    await movieTorrentUtils.downloadMovie(imdbCode);
+    // todo: replace this stupid sleep promise
+    // with actual functional promise that resolves when server has started downloaded enough
+    await new Promise((resolve) => setTimeout(resolve, 10000));
+    obj = await Movie.findOne({ imdbCode });
+  }
+  req.serverLocation = obj.serverLocation;
+  await movieTorrentUtils.startFileStream(req, res, next);
 };
 
 export default {

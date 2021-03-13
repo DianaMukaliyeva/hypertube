@@ -3,14 +3,25 @@ import fs from 'fs';
 import movieListUtils from './movieAPIUtilities.js';
 import Movie from '../models/Movie.js';
 
-const startFileStream = async (req, res, next) => {
-  // should check for file format first and convert to .mp4
+const saveFilePath = async (imdbCode, filePath) => {
+  const movie = await Movie.findOneAndUpdate({ imdbCode }, { serverLocation: filePath });
+  if (movie === null) {
+    const newMovie = new Movie({
+      imdbCode,
+      serverLocation: filePath,
+    });
+    await newMovie.save();
+  }
+};
+
+const startFileStream = async (req, res) => {
+  // todo: per subject should check for file format first and convert to .mp4
   const filePath = `./movies/${req.params.imdbCode}/${req.serverLocation}`;
   const fileSize = fs.statSync(filePath).size;
   const { range } = req.headers;
-  // const CHUNK_SIZE = 5e+6; // we have option to chunk the response into smaller chunks
+  const CHUNK_SIZE = 5e+6; // 5 Mb
   const start = range ? Number(range.replace(/\D/g, '')) : 0;
-  const end = fileSize - 1;
+  const end = Math.min(start + CHUNK_SIZE, fileSize - 1);
   const contentLength = end - start + 1;
 
   const headers = {
@@ -24,14 +35,13 @@ const startFileStream = async (req, res, next) => {
   readStream.pipe(res);
 };
 
-const downloadMovie = async (req, res, next) => {
+const downloadMovie = async (imdbCode) => {
   // download should prioritize the start time from the request
   // and start the filestream from that byte
   let filePath;
-  const { imdbCode } = req.params;
   const torrentData = await movieListUtils.fetchTorrentData(imdbCode);
   // eslint-disable-next-line camelcase
-  const { hash, size_bytes } = torrentData.torrents.reduce((curr, prev) => (
+  const { hash } = torrentData.torrents.reduce((curr, prev) => (
     (prev.size_bytes < curr.size_bytes ? prev : curr)));
 
   const magnet = `magnet:?xt=urn:btih:${hash}&dn=${torrentData.title_long.split(' ').join('+')}`;
@@ -48,7 +58,7 @@ const downloadMovie = async (req, res, next) => {
     ],
     path: `./movies/${imdbCode}`,
   });
-  engine.on('ready', () => {
+  engine.on('ready', async () => {
     engine.files.forEach((file) => {
       if (file.name.endsWith('.mp4')) {
         file.select();
@@ -57,23 +67,17 @@ const downloadMovie = async (req, res, next) => {
         file.deselect();
       }
     });
+    if (filePath) await saveFilePath(imdbCode, filePath);
+    console.log('engine ready on movie', imdbCode);
   });
+
   engine.on('download', () => {
-    console.log('i am downloading!', engine.files.length);
-    req.serverLocation = filePath;
-    if (fs.existsSync(`./movies/${req.params.imdbCode}/${req.serverLocation}`)) startFileStream(req, res, next);
+    console.log('i am downloading movie', imdbCode);
   });
 
   engine.on('idle', async () => {
-    console.log('i am ready!');
-    const movie = await Movie.findOneAndUpdate({ imdbCode }, { serverLocation: filePath });
-    if (movie === null) {
-      const newMovie = new Movie({
-        imdbCode,
-        serverLocation: filePath,
-      });
-      await newMovie.save();
-    }
+    console.log('movie', imdbCode, 'complete');
+    await Movie.findOneAndUpdate({ imdbCode }, { downloadComplete: true });
   });
 };
 
