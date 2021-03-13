@@ -1,4 +1,5 @@
 import movieListUtils from '../utilities/movieAPIUtilities.js';
+import subtitlesUtils from '../utilities/subtitlesAPI.js';
 import Movie from '../models/Movie.js';
 import User from '../models/User.js';
 import { detailedError } from '../utilities/errors.js';
@@ -29,7 +30,9 @@ const getMovieEntry = async (req, res) => {
   const imdbCode = req.params.imdb_code;
   const torrentData = await movieListUtils.fetchTorrentData(imdbCode);
   const movieInfo = await movieListUtils.fetchMovieInfo(imdbCode);
-  res.json(movieListUtils.parseMovieResponse(movieInfo, torrentData));
+  const subtitles = await subtitlesUtils.getSubtitles(imdbCode);
+  const comments = []; // TO DO check with Ilja to add here
+  res.json(movieListUtils.parseMovieResponse(movieInfo, torrentData, comments, subtitles));
 };
 
 const addComment = async (req, res) => {

@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 
+import jwt from 'jsonwebtoken';
 import { detailedError, createDetail } from './errors.js';
 import User from '../models/User.js';
 
@@ -240,10 +241,29 @@ const validateEmail = async (req, res, next) => {
   next();
 };
 
+const validateToken = async (req, res, next) => {
+  const { token } = req.params;
+  if (token) {
+    jwt.verify(token, process.env.SECRET, async (err, decode) => {
+      if (!err) {
+        const user = await User.findById(decode.id);
+        if (user) {
+          return next();
+        }
+      }
+      return res.status(401).json({ error: 'Unauthorized user!' });
+    });
+  } else {
+    return res.status(401).json({ error: 'Unauthorized user!' });
+  }
+  return '';
+};
+
 export default {
   validateUserCreation,
   validateUserUpdate,
   validatePasswordReset,
   validateLogin,
   validateEmail,
+  validateToken,
 };
