@@ -256,6 +256,7 @@ const validateToken = async (req, res, next) => {
   } else {
     return res.status(401).json({ error: 'Unauthorized user!' });
   }
+  return '';
 };
 
 export default {
