@@ -36,6 +36,7 @@ const Loader = () => (
 
 const buildTracks = (imdbCode, subsAvailableIn) => {
   const subsLables = { en: 'English', de: 'German', fi: 'Finnish', ru: 'Russian' };
+  // eslint-disable-next-line no-undef
   const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
   const token = localStorage.getItem('token');
