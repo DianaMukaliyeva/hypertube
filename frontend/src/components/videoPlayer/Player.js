@@ -4,10 +4,11 @@ import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 
 const Player = ({ subsTracks }) => {
-  // eslint-disable-next-line no-undef
-  const streamUrl = process.env.REACT_APP_BACKEND_URL + '/api/auth/stream';
+    // playing only this movie 4 now
+  const streamUrl = process.env.REACT_APP_BACKEND_URL + '/api/movies/tt4154796/play';
 
   const handlePlay = () => {
+    console.log(process.env.REACT_APP_BACKEND_URL);
     console.log('PLAY'); // TO DO make record in db
   };
 
