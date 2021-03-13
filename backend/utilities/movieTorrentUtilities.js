@@ -16,7 +16,7 @@ const saveFilePath = async (imdbCode, filePath) => {
 
 const startFileStream = async (req, res) => {
   // todo: per subject should check for file format first and convert to .mp4
-  const filePath = `./movies/${req.params.imdbCode}/${req.serverLocation}`;
+  const filePath = `./movies/${req.params.imdb_code}/${req.serverLocation}`;
   const fileSize = fs.statSync(filePath).size;
   const { range } = req.headers;
   const CHUNK_SIZE = 5e+6; // 5 Mb
@@ -39,7 +39,7 @@ const downloadMovie = async (imdbCode) => {
   // download should prioritize the start time from the request
   // and start the filestream from that byte
   let filePath;
-  const torrentData = await movieListUtils.fetchTorrentData(imdbCode);
+  const torrentData = (await movieListUtils.fetchTorrentData(imdbCode)).movies[0];
   // eslint-disable-next-line camelcase
   const { hash } = torrentData.torrents.reduce((curr, prev) => (
     (prev.size_bytes < curr.size_bytes ? prev : curr)));
@@ -68,15 +68,15 @@ const downloadMovie = async (imdbCode) => {
       }
     });
     if (filePath) await saveFilePath(imdbCode, filePath);
-    console.log('engine ready on movie', imdbCode);
+    // console.log('engine ready on movie', imdbCode);
   });
 
   engine.on('download', () => {
-    console.log('i am downloading movie', imdbCode);
+    // console.log('i am downloading movie', imdbCode);
   });
 
   engine.on('idle', async () => {
-    console.log('movie', imdbCode, 'complete');
+    // console.log('movie', imdbCode, 'complete');
     await Movie.findOneAndUpdate({ imdbCode }, { downloadComplete: true });
   });
 };

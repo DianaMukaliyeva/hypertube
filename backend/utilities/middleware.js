@@ -6,7 +6,7 @@ import User from '../models/User.js';
 // eslint-disable-next-line no-unused-vars
 const errorHandler = (error, req, res, next) => {
   if (process.env.NODE_ENV === 'development') {
-    console.log('MIDDLEWARE > ERROR HANDLER');
+    console.log('MIDDLEWARE > ERROR HANDLER', error);
   }
   const {
     statusCode = error.statusCode | '500', // eslint-disable-line no-bitwise

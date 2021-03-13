@@ -68,7 +68,7 @@ const addComment = async (req, res) => {
 
 const playMovie = async (req, res, next) => {
   // todo: update route docs
-  const { imdbCode } = req.params;
+  const imdbCode = req.params.imdb_code;
   let obj = await Movie.findOne({ imdbCode });
   if (!obj || !obj.downloadComplete) {
     await movieTorrentUtils.downloadMovie(imdbCode);

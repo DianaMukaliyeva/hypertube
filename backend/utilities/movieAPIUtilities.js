@@ -58,7 +58,7 @@ const fetchYTSMovieList = async (filters) => {
 const fetchTorrentData = async (imdbCode) => {
   const res = await axios.get(`${TORRENT_API}?query_term=${imdbCode}`);
   if (res.status !== 200 || !res.data.data) throw requestError;
-  return res.data.data.movies[0];
+  return res.data.data;
 };
 
 const fetchMovieInfo = async (imdbCode) => {
