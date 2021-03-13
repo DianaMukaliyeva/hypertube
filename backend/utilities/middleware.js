@@ -15,7 +15,7 @@ const errorHandler = (error, req, res, next) => {
   } = error;
 
   if (process.env.NODE_ENV === 'development') {
-    console.log(error);
+    console.log('some error');
   }
 
   return res.status(statusCode).json({
@@ -49,7 +49,7 @@ const authRequired = async (req, res, next) => {
   if (req.user) {
     return next();
   }
-  return res.json({ error: 'Unauthorized user!' });
+  return res.status(401).json({ error: 'Unauthorized user!' });
 };
 
 export default {

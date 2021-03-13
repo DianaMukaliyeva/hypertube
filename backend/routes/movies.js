@@ -1,6 +1,9 @@
 import express from 'express';
+
 import movieController from '../controllers/movieController.js';
+import subtitlesController from '../controllers/subtitlesController.js';
 import middleware from '../utilities/middleware.js';
+import inputValidator from '../utilities/inputValidator.js';
 
 const movieRoute = express.Router();
 
@@ -12,16 +15,18 @@ movieRoute.get('/:imdbCode', async (req, res, next) => {
   await movieController.getMovieEntry(req, res, next);
 });
 
-movieRoute.get('/', async (req, res, next) => {
-  await movieController.getMovieList(req, res, next);
-});
+movieRoute.get('/', middleware.authRequired, movieController.getMovieList);
 
 movieRoute.post('/', async (req, res, next) => {
   await movieController.addMovieToDb(req, res, next);
 });
 
-movieRoute.post('/:imdb_code/comments',
-  middleware.authRequired,
-  movieController.addComment);
+movieRoute.post('/:imdb_code/comments', middleware.authRequired, movieController.addComment);
+
+movieRoute.get(
+  '/:imdbCode/subtitles/:lang/:token',
+  inputValidator.validateToken,
+  subtitlesController.getSubtitles,
+);
 
 export default movieRoute;

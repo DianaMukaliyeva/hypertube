@@ -298,39 +298,33 @@ paths:
         - name: decade
           in: query
           description: decade
-          required: false
-          style: form
-          explode: true
           schema:
             type: string
             example: 1980
         - name: imdb
           in: query
           description: minimum imdb rating
-          required: false
-          style: form
-          explode: true
           schema:
             type: string
             example: 8
         - name: genre
           in: query
           description: genre
-          required: false
-          style: form
-          explode: true
           schema:
             type: string
             example: comedy
-        - name: sort
+        - name: sort_by
           in: query
-          description: sort 'a-z', 'z-a' 'newest', 'oldest', 'most-popular', 'least-popular'
-          required: false
-          style: form
-          explode: true
+          description: sort by 'year', 'title', 'rating'
           schema:
             type: string
-            example: a-z
+            example: rating
+        - name: order_by
+          in: query
+          description: order by 'desc', 'asc'
+          schema:
+            type: string
+            example: desc
         - name: search
           in: query
           description: search by movie's title
@@ -393,6 +387,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse400'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+  /api/movies/{imdbCode}/subtitles/{lang}/{token}:
+    get:
+      tags:
+        - Movies
+      summary: get subtitles
+      operationId: getSubtitles
+      parameters:
+        - name: imdbCode
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: tt1211837
+        - name: lang
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: en
+        - name: token
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNDdkODM3MWIxZTg1MDAxZTllMDk1ZiIsImxhbmciOiJmaSIsImlhdCI6MTYxNTQwMzU2MX0.qZf_Aw8U7dKYIXudIExHhP9vmXfOMJhlx8X9Mra6beQ
+      responses:
+        '200':
+          description: Succesfully fetched
+        '400':
+          description: Bad Request.
         '401':
           description: Unauthorized.
           content:
@@ -576,10 +618,11 @@ components:
         language:
           type: string
           example: en
+        hasPw:
+          type: boolean
+          example: true
       description: if user's own info, then send everything, otherwise - only requried
     body_4:
-      required:
-        - oldPassword
       type: object
       properties:
         username:
@@ -616,6 +659,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/inline_response_200_2_movies'
+        hasMore:
+          type: boolean
+          example: true
     inline_response_200_3:
       type: object
       properties:
@@ -668,6 +714,11 @@ components:
           type: boolean
         watched:
           type: boolean
+        availableSubtitles:
+          type: array
+          example:
+            - en
+            - fi
         comments:
           type: array
           items:
