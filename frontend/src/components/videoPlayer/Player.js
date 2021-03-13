@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 const Player = ({ subsTracks }) => {
     // playing only this movie 4 now
+    // eslint-disable-next-line no-undef
   const streamUrl = process.env.BACKEND_URL + '/api/movies/tt4154796/play';
 
   const handlePlay = () => {
