@@ -5,10 +5,9 @@ import PropTypes from 'prop-types';
 
 const Player = ({ subsTracks }) => {
     // playing only this movie 4 now
-  const streamUrl = process.env.REACT_APP_BACKEND_URL + '/api/movies/tt4154796/play';
+  const streamUrl = process.env.BACKEND_URL + '/api/movies/tt4154796/play';
 
   const handlePlay = () => {
-    console.log(process.env.REACT_APP_BACKEND_URL);
     console.log('PLAY'); // TO DO make record in db
   };
 
