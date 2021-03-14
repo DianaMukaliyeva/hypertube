@@ -117,7 +117,7 @@ const VideoPlayer = (data) => {
         )}
         <CardContent>
           <TitleBanner movie={movie} />
-          <Player subsTracks={subsTracks} />
+          <Player subsTracks={subsTracks} imdbCode={data.movie.imdbCode} />
           <MovieDetails movie={movie} />
           <AddComment data={data} />
           <Comments />
