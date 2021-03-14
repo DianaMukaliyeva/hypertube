@@ -5,7 +5,6 @@ import '@testing-library/jest-dom';
 // learn more: https://github.com/testing-library/jest-dom
 // const originalConsoleError = global.console.error;
 
-
 jest.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook
   // can use it without a warning being shown
@@ -20,6 +19,19 @@ jest.mock('react-i18next', () => ({
   },
 }));
 
+const localStorageMock = {
+  setItem: jest.fn(),
+  clear: jest.fn(),
+};
+// eslint-disable-next-line no-undef
+global.localStorage = localStorageMock;
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
+}));
 
 beforeEach(() => {
   /* throw error when prop types fail
