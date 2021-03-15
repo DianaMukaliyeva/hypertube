@@ -47,10 +47,7 @@ const UpdateInformation = (props) => {
       data.lastname = lastName.value;
     if (lang && lang.code !== userData.language) data.language = lang.code;
 
-    if (Object.keys(data).length !== 0) {
-      console.log('data');
-      await handleUpdate(data, setAlert);
-    }
+    if (Object.keys(data).length !== 0) await handleUpdate(data, setAlert);
   };
 
   return lang ? (
