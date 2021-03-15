@@ -1,6 +1,7 @@
 const sharedFunctions = {};
 
 sharedFunctions.showErrors = (errors, params) => {
+  console.log(errors);
   errors.map((detail) => {
     if (detail.param === 'username') {
       params.username.setValues({
@@ -8,20 +9,24 @@ sharedFunctions.showErrors = (errors, params) => {
         helperText: detail.reason,
         error: true,
       });
-    } else if (detail.param === 'firstName') {
+    } else if (detail.param === 'firstname') {
       params.firstName.setValues({
         ...params.firstName.values,
         helperText: detail.reason,
         error: true,
       });
-    } else if (detail.param === 'lastName') {
+    } else if (detail.param === 'lastname') {
       params.lastName.setValues({
         ...params.lastName.values,
         helperText: detail.reason,
         error: true,
       });
     } else if (detail.param === 'email') {
-      params.email.setValues({ ...params.email.values, helperText: detail.reason, error: true });
+      params.email.setValues({
+        ...params.email.values,
+        helperText: detail.reason,
+        error: true,
+      });
     } else if (detail.param === 'password') {
       params.password.setValues({
         ...params.password.values,
