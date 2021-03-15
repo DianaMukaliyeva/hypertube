@@ -90,11 +90,6 @@ const LoginForm = ({ setUser }) => {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-        {alert.show && (
-          <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
-            {alert.message}
-          </Alert>
-        )}
 
         <OmniAuthLogin />
 
@@ -106,6 +101,14 @@ const LoginForm = ({ setUser }) => {
             autocomplete="current-password"
             required={true}
           />
+          {alert.show && (
+            <Alert
+              severity={alert.severity}
+              onClose={() => setAlert({ ...alert, show: false })}
+            >
+              {alert.message}
+            </Alert>
+          )}
           <FormButton handleClick={handleLogin} name="Login" />
           <Box>
             <Link href="#" onClick={recoveryLinkModal.handleClickOpen}>

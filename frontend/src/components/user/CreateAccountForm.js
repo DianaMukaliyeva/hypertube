@@ -117,14 +117,6 @@ const CreateAccountForm = () => {
         <Typography component="h1" variant="h5">
           Create account
         </Typography>
-        {alert.show && (
-          <Alert
-            severity={alert.severity}
-            onClose={() => setAlert({ ...alert, show: false })}
-          >
-            {alert.message}
-          </Alert>
-        )}
 
         <OmniAuthLogin />
 
@@ -166,6 +158,14 @@ const CreateAccountForm = () => {
             )}
           />
         </form>
+        {alert.show && (
+          <Alert
+            severity={alert.severity}
+            onClose={() => setAlert({ ...alert, show: false })}
+          >
+            {alert.message}
+          </Alert>
+        )}
         <FormButton handleClick={handleCreate} name="Create Account" />
       </div>
     </Container>

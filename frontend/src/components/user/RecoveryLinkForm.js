@@ -80,16 +80,17 @@ const RecoveryLinkForm = () => {
         <Typography component="h1" variant="h5">
           Recovery link
         </Typography>
-        {alert.show && (
-          <Alert
-            severity={alert.severity}
-            onClose={() => setAlert({ ...alert, show: false })}
-          >
-            {alert.message}
-          </Alert>
-        )}
+
         <form className={classes.form} noValidate>
           <InputField values={email} label="email" required={true} />
+          {alert.show && (
+            <Alert
+              severity={alert.severity}
+              onClose={() => setAlert({ ...alert, show: false })}
+            >
+              {alert.message}
+            </Alert>
+          )}
           <FormButton handleClick={handleForgotPwd} name="Send" />
         </form>
         <div>We will send a recover link to your email</div>

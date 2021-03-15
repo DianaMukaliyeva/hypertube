@@ -124,14 +124,6 @@ const PasswordResetForm = () => {
         <Typography component="h1" variant="h5">
           Password Reset
         </Typography>
-        {alert.show && (
-          <Alert
-            severity={alert.severity}
-            onClose={() => setAlert({ ...alert, show: false })}
-          >
-            {alert.message}
-          </Alert>
-        )}
         <form className={classes.form} noValidate>
           <InputField
             values={password}
@@ -145,6 +137,14 @@ const PasswordResetForm = () => {
             autocomplete="confirm-password"
             required={true}
           />
+          {alert.show && (
+            <Alert
+              severity={alert.severity}
+              onClose={() => setAlert({ ...alert, show: false })}
+            >
+              {alert.message}
+            </Alert>
+          )}
           <FormButton handleClick={handleClick} name="Save" />
         </form>
       </div>
