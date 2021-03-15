@@ -23,8 +23,8 @@ const validateField = async (value, fieldName) => {
       if (!/^[a-zA-Z0-9]+$/.test(value)) {
         return createDetail(fieldName, value, 'invalid characters');
       }
-      if (value.length < 3) {
-        return createDetail(fieldName, value, 'minimum length 3 characters');
+      if (value.length < 2) {
+        return createDetail(fieldName, value, 'minimum length 2 characters');
       }
       if (await User.findOne({ username: value })) {
         return createDetail(fieldName, value, 'not unique');
@@ -47,8 +47,8 @@ const validateField = async (value, fieldName) => {
       if (!/^[a-zA-Z0-9 ]+$/.test(value)) {
         return createDetail(fieldName, value, 'invalid characters');
       }
-      if (value.length < 3) {
-        return createDetail(fieldName, value, 'minimum length 3 characters');
+      if (value.length < 2) {
+        return createDetail(fieldName, value, 'minimum length 2 characters');
       }
   }
   return '';
@@ -84,7 +84,13 @@ const validateResetToken = async (token, userId) => {
 
 const validateUserCreation = async (req, res, next) => {
   const {
-    username, email, firstname, language, lastname, password, confirmPassword,
+    username,
+    email,
+    firstname,
+    language,
+    lastname,
+    password,
+    confirmPassword,
   } = req.body;
   let errors = [];
 
@@ -104,9 +110,7 @@ const validateUserCreation = async (req, res, next) => {
 };
 
 const validatePasswordReset = async (req, res, next) => {
-  const {
-    password, confirmPassword, resetToken, userId,
-  } = req.body;
+  const { password, confirmPassword, resetToken, userId } = req.body;
   let errors = [];
 
   const userIdError = await validateField(userId, 'userId');
