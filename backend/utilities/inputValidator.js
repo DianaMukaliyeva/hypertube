@@ -110,7 +110,9 @@ const validateUserCreation = async (req, res, next) => {
 };
 
 const validatePasswordReset = async (req, res, next) => {
-  const { password, confirmPassword, resetToken, userId } = req.body;
+  const {
+    password, confirmPassword, resetToken, userId,
+  } = req.body;
   let errors = [];
 
   const userIdError = await validateField(userId, 'userId');
