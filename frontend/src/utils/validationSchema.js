@@ -14,7 +14,12 @@ const schema = yup.object().shape({
   email: yup.string().email('form.email'),
   password: yup
     .string()
-    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/, 'form.passwordFormat'),
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/,
+      'form.passwordFormat'
+    ),
+  loginEmail: yup.string(),
+  loginPassword: yup.string(),
 });
 
 export default schema;
