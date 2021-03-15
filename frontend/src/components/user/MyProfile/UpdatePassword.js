@@ -9,7 +9,15 @@ import InputField from '../InputField';
 
 
 const UpdatePassword = (props) => {
-	const { classes, oldPassword, password, confirmPassword, alert, setAlert, handleUpdate } = props;
+	const {
+    classes,
+    oldPassword,
+    password,
+    confirmPassword,
+    alert,
+    setAlert,
+    handleUpdate,
+	} = props;
   const { t } = useTranslation();
 
 	const handlePasswordUpdate = async (event) => {
@@ -26,7 +34,7 @@ const UpdatePassword = (props) => {
   };
 
   return (
-    <form className={classes.form} noValidate>
+    <form className={classes.form} onSubmit={handlePasswordUpdate} noValidate>
       <InputField
         values={oldPassword}
         label={t('form.currentPassword')}
@@ -53,10 +61,7 @@ const UpdatePassword = (props) => {
           {alert.message}
         </Alert>
       )}
-      <FormButton
-        handleClick={handlePasswordUpdate}
-        name={t('myProfile.updatePassword')}
-      />
+      <FormButton name={t('myProfile.updatePassword')} />
     </form>
   );
 };

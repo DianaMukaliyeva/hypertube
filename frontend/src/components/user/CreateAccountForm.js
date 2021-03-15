@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
   select: {
     width: '100%',
     marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
 }));
 
@@ -120,7 +121,7 @@ const CreateAccountForm = () => {
 
         <OmniAuthLogin />
 
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleCreate} noValidate>
           <InputField values={username} label="Username" required={true} />
           <InputField values={firstName} label="First name" required={true} />
           <InputField values={lastName} label="Last name" required={true} />
@@ -157,16 +158,17 @@ const CreateAccountForm = () => {
               />
             )}
           />
+
+          {alert.show && (
+            <Alert
+              severity={alert.severity}
+              onClose={() => setAlert({ ...alert, show: false })}
+            >
+              {alert.message}
+            </Alert>
+          )}
+          <FormButton name="Create Account" />
         </form>
-        {alert.show && (
-          <Alert
-            severity={alert.severity}
-            onClose={() => setAlert({ ...alert, show: false })}
-          >
-            {alert.message}
-          </Alert>
-        )}
-        <FormButton handleClick={handleCreate} name="Create Account" />
       </div>
     </Container>
   );

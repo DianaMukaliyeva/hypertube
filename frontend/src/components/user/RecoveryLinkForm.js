@@ -81,7 +81,7 @@ const RecoveryLinkForm = () => {
           Recovery link
         </Typography>
 
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleForgotPwd} noValidate>
           <InputField values={email} label="email" required={true} />
           {alert.show && (
             <Alert
@@ -91,7 +91,7 @@ const RecoveryLinkForm = () => {
               {alert.message}
             </Alert>
           )}
-          <FormButton handleClick={handleForgotPwd} name="Send" />
+          <FormButton name="Send" />
         </form>
         <div>We will send a recover link to your email</div>
       </div>

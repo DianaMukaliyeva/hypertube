@@ -124,7 +124,7 @@ const PasswordResetForm = () => {
         <Typography component="h1" variant="h5">
           Password Reset
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleClick} noValidate>
           <InputField
             values={password}
             label="New password"
@@ -145,7 +145,7 @@ const PasswordResetForm = () => {
               {alert.message}
             </Alert>
           )}
-          <FormButton handleClick={handleClick} name="Save" />
+          <FormButton name="Save" />
         </form>
       </div>
     </Container>

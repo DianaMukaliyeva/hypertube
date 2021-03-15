@@ -111,7 +111,7 @@ const LoginForm = ({ setUser }) => {
 
         <OmniAuthLogin />
 
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleLogin} noValidate>
           <InputField values={email} label="email" required={true} />
           <InputField
             values={password}
@@ -127,13 +127,13 @@ const LoginForm = ({ setUser }) => {
               {alert.message}
             </Alert>
           )}
-          <FormButton handleClick={handleLogin} name="Login" />
-          <Box>
-            <Link href="#" onClick={recoveryLinkModal.handleClickOpen}>
-              Forgot Password?
-            </Link>
-          </Box>
+          <FormButton name="Login" />
         </form>
+        <Box>
+          <Link href="#" onClick={recoveryLinkModal.handleClickOpen}>
+            Forgot Password?
+          </Link>
+        </Box>
       </div>
       <CustomModal {...recoveryLinkModal} />
     </Container>
