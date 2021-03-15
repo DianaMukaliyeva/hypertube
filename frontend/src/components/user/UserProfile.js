@@ -47,7 +47,7 @@ const UserProfile = ({ user }) => {
       <Box className={classes.imageContainer}>
         <img
           className={classes.image}
-          src={user.avatarBase64String || emptyAvatar}
+          src={user.avatar || user.avatarBase64String || emptyAvatar}
           alt={user.username}
         />
       </Box>
@@ -75,6 +75,7 @@ UserProfile.propTypes = {
 		firstname: PropTypes.string,
 		lastname: PropTypes.string,
 		avatarBase64String: PropTypes.string,
+    avatar: PropTypes.string,
 	})
 };
 

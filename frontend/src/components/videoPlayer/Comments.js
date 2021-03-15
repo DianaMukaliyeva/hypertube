@@ -1,6 +1,7 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import Profile from './Profile';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -8,7 +9,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,22 +36,22 @@ const Comments = ({ movie }) => {
     <>
     <div className={classes.root}>
       <List>
-      {movie.comments.map((e) => (
-      <ListItem key={e.id} alignItems="flex-start">
+      {movie.comments.map((e, index) => (
+      <ListItem key={index} alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt={e.userId.firstname} src={e.userId.avatar} />
+          <Profile user={e.userId} />
         </ListItemAvatar>
         <ListItemText
           primary={e.userId.username}
           secondary={
-              <Typography
-                component="span"
-                variant="body2"
-                className={classes.inline}
-                color="textPrimary"
-              >
-                {e.comment}
-              </Typography>
+            <Typography
+              component="span"
+              variant="body2"
+              className={classes.inline}
+              color="textPrimary"
+            >
+              {e.comment}
+            </Typography>
           }
         />
         </ListItem>
