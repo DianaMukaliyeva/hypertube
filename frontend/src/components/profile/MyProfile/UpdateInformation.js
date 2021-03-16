@@ -6,8 +6,8 @@ import { Alert } from '@material-ui/lab';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import FormButton from '../FormButton';
-import InputField from '../InputField';
+import FormButton from '../../common/FormButton';
+import InputField from '../../common/InputField';
 
 const UpdateInformation = (props) => {
   const {

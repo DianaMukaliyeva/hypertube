@@ -2,14 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-import FormButton from '../FormButton';
+import FormButton from '../../common/FormButton';
+import InputField from '../../common/InputField';
 import { Alert } from '@material-ui/lab';
 
-import InputField from '../InputField';
-
-
 const UpdatePassword = (props) => {
-	const {
+  const {
     classes,
     oldPassword,
     password,
@@ -17,20 +15,20 @@ const UpdatePassword = (props) => {
     alert,
     setAlert,
     handleUpdate,
-	} = props;
+  } = props;
   const { t } = useTranslation();
 
-	const handlePasswordUpdate = async (event) => {
+  const handlePasswordUpdate = async (event) => {
     event.preventDefault();
 
     if (!oldPassword.value || !password.value || !confirmPassword.value) return;
-		const data = {
-			oldPassword: oldPassword.value,
-			password: password.value,
-			confirmPassword: confirmPassword.value,
-		};
+    const data = {
+      oldPassword: oldPassword.value,
+      password: password.value,
+      confirmPassword: confirmPassword.value,
+    };
 
-		await handleUpdate(data, setAlert);
+    await handleUpdate(data, setAlert);
   };
 
   return (
@@ -67,13 +65,13 @@ const UpdatePassword = (props) => {
 };
 
 UpdatePassword.propTypes = {
-	classes: PropTypes.object.isRequired,
-	oldPassword: PropTypes.object.isRequired,
-	password: PropTypes.object.isRequired,
-	confirmPassword: PropTypes.object.isRequired,
-	alert: PropTypes.object.isRequired,
-	setAlert: PropTypes.func.isRequired,
-	handleUpdate: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
+  oldPassword: PropTypes.object.isRequired,
+  password: PropTypes.object.isRequired,
+  confirmPassword: PropTypes.object.isRequired,
+  alert: PropTypes.object.isRequired,
+  setAlert: PropTypes.func.isRequired,
+  handleUpdate: PropTypes.func.isRequired,
 };
 
 export default UpdatePassword;

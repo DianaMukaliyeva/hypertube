@@ -8,8 +8,8 @@ import useField from '../../hooks/useField';
 import userService from '../../services/user';
 import sharedFunctions from '../../utils/sharedFunctions';
 
-import InputField from './InputField';
-import FormButton from './FormButton';
+import InputField from '../common/InputField';
+import FormButton from '../common/FormButton';
 
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';

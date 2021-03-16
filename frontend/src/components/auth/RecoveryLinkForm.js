@@ -5,8 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import authService from '../../services/auth';
 import useField from '../../hooks/useField';
 
-import InputField from './InputField';
-import FormButton from './FormButton';
+import InputField from '../common/InputField';
+import FormButton from '../common/FormButton';
 import sharedFunctions from '../../utils/sharedFunctions';
 
 import Typography from '@material-ui/core/Typography';

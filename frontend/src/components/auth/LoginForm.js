@@ -9,10 +9,10 @@ import useField from '../../hooks/useField';
 import useModal from '../../hooks/useModal';
 import authService from '../../services/auth';
 
-import InputField from './InputField';
-import RecoveryLinkForm from '../user/RecoveryLinkForm';
+import InputField from '../common/InputField';
+import RecoveryLinkForm from './RecoveryLinkForm';
 import CustomModal from '../common/CustomModal';
-import FormButton from './FormButton';
+import FormButton from '../common/FormButton';
 import OmniAuthLogin from './OmniAuthLogin';
 
 import Link from '@material-ui/core/Link';

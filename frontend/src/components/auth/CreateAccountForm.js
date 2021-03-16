@@ -12,8 +12,8 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Alert } from '@material-ui/lab';
 
-import InputField from './InputField';
-import FormButton from './FormButton';
+import InputField from '../common/InputField';
+import FormButton from '../common/FormButton';
 import OmniAuthLogin from './OmniAuthLogin';
 
 // TO DO move to styles

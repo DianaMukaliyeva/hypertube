@@ -11,9 +11,9 @@ import Typography from '@material-ui/core/Typography';
 
 import useModal from '../../hooks/useModal';
 import CustomModal from '../common/CustomModal';
-import LoginForm from '../user/LoginForm';
-import CreateAccountForm from '../user/CreateAccountForm';
-import PasswordResetForm from '../user/PasswordResetForm';
+import LoginForm from '../auth/LoginForm';
+import CreateAccountForm from '../auth/CreateAccountForm';
+import PasswordResetForm from '../auth/PasswordResetForm';
 
 // TO DO move to styles
 const useStyles = makeStyles((theme) => ({
@@ -58,14 +58,20 @@ const Landing = ({ user, setUser }) => {
       <Typography variant="h1">HYPERTUBE</Typography>
       {!user.userId && (
         <>
-          <Box mt={5} display="flex" justifyContent="center" className={classes.box}>
+          <Box
+            mt={5}
+            display="flex"
+            justifyContent="center"
+            className={classes.box}
+          >
             <Box m={3}>
               <Button
                 className={classes.button}
                 type="submit"
                 variant="outlined"
                 color="primary"
-                onClick={loginModal.handleClickOpen}>
+                onClick={loginModal.handleClickOpen}
+              >
                 Login
               </Button>
             </Box>
@@ -75,7 +81,8 @@ const Landing = ({ user, setUser }) => {
                 type="submit"
                 variant="outlined"
                 color="secondary"
-                onClick={createAccountModal.handleClickOpen}>
+                onClick={createAccountModal.handleClickOpen}
+              >
                 Create Account
               </Button>
             </Box>
