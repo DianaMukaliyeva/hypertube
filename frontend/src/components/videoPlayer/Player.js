@@ -4,9 +4,8 @@ import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 
 const Player = ({ subsTracks, imdbCode }) => {
-    // playing only this movie 4 now
-    // eslint-disable-next-line no-undef
   const token = localStorage.getItem('token');
+    // eslint-disable-next-line no-undef
   const streamUrl = process.env.REACT_APP_BACKEND_URL + `/api/movies/${imdbCode}/play/${token}`;
 
   const handlePlay = () => {
