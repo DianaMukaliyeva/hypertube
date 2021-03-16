@@ -5,8 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import authService from '../../services/auth';
 import useField from '../../hooks/useField';
 
-import InputField from './InputField';
-import FormButton from './FormButton';
+import InputField from '../common/InputField';
+import FormButton from '../common/FormButton';
 import sharedFunctions from '../../utils/sharedFunctions';
 
 import Typography from '@material-ui/core/Typography';
@@ -80,17 +80,18 @@ const RecoveryLinkForm = () => {
         <Typography component="h1" variant="h5">
           Recovery link
         </Typography>
-        {alert.show && (
-          <Alert
-            severity={alert.severity}
-            onClose={() => setAlert({ ...alert, show: false })}
-          >
-            {alert.message}
-          </Alert>
-        )}
-        <form className={classes.form} noValidate>
+
+        <form className={classes.form} onSubmit={handleForgotPwd} noValidate>
           <InputField values={email} label="email" required={true} />
-          <FormButton handleClick={handleForgotPwd} name="Send" />
+          {alert.show && (
+            <Alert
+              severity={alert.severity}
+              onClose={() => setAlert({ ...alert, show: false })}
+            >
+              {alert.message}
+            </Alert>
+          )}
+          <FormButton name="Send" />
         </form>
         <div>We will send a recover link to your email</div>
       </div>
