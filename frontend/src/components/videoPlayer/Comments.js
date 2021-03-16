@@ -30,19 +30,19 @@ const useStyles = makeStyles((theme) => ({
 const Comments = ({ movie }) => {
   const classes = useStyles();
 
-  if (!movie || !movie.comments) return <div></div>;
+  if (!movie || !movie.user) return <div></div>;
 
   return (
     <>
     <div className={classes.root}>
       <List>
-      {movie.comments.map((e, index) => (
-      <ListItem key={index} alignItems="flex-start">
+      {movie.map((c) => (
+      <ListItem key={c._id} alignItems="flex-start">
         <ListItemAvatar>
-          <Profile user={e.userId} />
+          <Profile user={c.user} />
         </ListItemAvatar>
         <ListItemText
-          primary={e.userId.username}
+          primary={c.user.username}
           secondary={
             <Typography
               component="span"
@@ -50,7 +50,7 @@ const Comments = ({ movie }) => {
               className={classes.inline}
               color="textPrimary"
             >
-              {e.comment}
+              {c.comment}
             </Typography>
           }
         />
@@ -63,7 +63,7 @@ const Comments = ({ movie }) => {
 };
 
 Comments.propTypes = {
-  movie: PropTypes.object.isRequired,
+  movie: PropTypes.array,
 };
 
 export default Comments;

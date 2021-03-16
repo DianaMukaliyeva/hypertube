@@ -37,7 +37,7 @@ const getMovieEntry = async (req, res) => {
 
 const addComment = async (req, res) => {
   const newComment = {
-    userId: req.user,
+    user: req.user,
     comment: req.body.comment,
   };
   const imdbCode = req.params.imdb_code;

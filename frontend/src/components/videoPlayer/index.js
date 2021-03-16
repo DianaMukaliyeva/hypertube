@@ -120,7 +120,7 @@ const VideoPlayer = (data) => {
           <Player subsTracks={subsTracks} />
           <MovieDetails movie={movie} />
           <AddComment data={data} />
-          <Comments movie={movie} />
+          <Comments movie={movie.comments} />
         </CardContent>
       </Card>
     </Container>
