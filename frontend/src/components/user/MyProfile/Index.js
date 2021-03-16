@@ -11,14 +11,8 @@ import useField from '../../../hooks/useField';
 import userService from '../../../services/user';
 import sharedFunctions from '../../../utils/sharedFunctions';
 import UpdatePhoto from './UpdatePhoto';
-import UserProfile from '../UserProfile';
 import UpdatePassword from './UpdatePassword';
 import UpdateInformation from './UpdateInformation';
-
-// todo remove when done
-import Button from '@material-ui/core/Button';
-import CustomModal from '../../common/CustomModal';
-import useModal from '../../../hooks/useModal';
 
 // TO DO move to styles
 const useStyles = makeStyles((theme) => ({
@@ -69,9 +63,6 @@ const MyProfile = ({ user, setUser }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  // todo: remove when done
-  const userProfileModal = useModal(<UserProfile user={userData} />);
-
   const handleErrorResponse = (data, showAlert) => {
     switch (data.statusCode) {
       case 401:
@@ -110,7 +101,7 @@ const MyProfile = ({ user, setUser }) => {
   };
 
   const handleUpdate = async (data, showAlert) => {
-		setPasswordAlert(noAlert);
+    setPasswordAlert(noAlert);
     setAlert(noAlert);
 
     if (userData.avatarBase64String !== avatar)
@@ -121,11 +112,11 @@ const MyProfile = ({ user, setUser }) => {
       setUserData({ ...userData, ...data, avatarBase64String: avatar });
       if (data.language) setUser({ ...user, lang: data.language });
 
-			showAlert({
-				show: true,
-				message: 'Account successfully updated',
-				severity: 'success',
-			});
+      showAlert({
+        show: true,
+        message: 'Account successfully updated',
+        severity: 'success',
+      });
     } catch (err) {
       handleErrorResponse(err.response.data, showAlert);
     }
@@ -180,23 +171,12 @@ const MyProfile = ({ user, setUser }) => {
       <Grid container spacing={6}>
         <Grid item xs={12} sm={5} className={classes.column}>
           <UpdatePhoto avatar={avatar} setAvatar={setAvatar} />
-
-          <Button
-            type="submit"
-            variant="outlined"
-            color="primary"
-            onClick={userProfileModal.handleClickOpen}
-          >
-            User Profile
-          </Button>
-          <p>(this button will be removed)</p>
         </Grid>
         <Grid item xs={12} sm={7} className={classes.column}>
           <UpdateInformation {...updateInformationProps} />
           <UpdatePassword {...updatePasswordProps} />
         </Grid>
       </Grid>
-      <CustomModal {...userProfileModal} />
     </Container>
   ) : null;
 };
