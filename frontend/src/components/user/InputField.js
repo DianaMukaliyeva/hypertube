@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 
 /* eslint-disable react/prop-types */
-const InputField = ({ values, label = '', required }) => {
+const InputField = ({ values, label = '', required, autocomplete = 'off' }) => {
   const { error, value, onChange, helperText, type, id } = values;
   return (
     <TextField
@@ -18,7 +18,7 @@ const InputField = ({ values, label = '', required }) => {
       label={label}
       helperText={helperText}
       autoFocus
-      autoComplete="current-password"
+      autoComplete={autocomplete}
       type={type}
     />
   );
