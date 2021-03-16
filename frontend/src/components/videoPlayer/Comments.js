@@ -29,13 +29,14 @@ const useStyles = makeStyles((theme) => ({
 
 const Comments = ({ movie }) => {
   const classes = useStyles();
-
-  if (!movie || !movie.user) return <div></div>;
+  console.log('TEST', movie);
+  if (!movie) return <div></div>;
 
   return (
     <>
     <div className={classes.root}>
       <List>
+      {console.log('TEST INSIDE', movie)}
       {movie.map((c) => (
       <ListItem key={c._id} alignItems="flex-start">
         <ListItemAvatar>
