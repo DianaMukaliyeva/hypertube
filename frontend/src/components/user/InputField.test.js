@@ -18,6 +18,8 @@ const validUsernameHelperText = 'form.correct';
 const invalidUsername = '$@//*<<<>>>>';
 const invalidUsernameHelperText = 'form.nameFormat';
 
+const minLenHelperText = 'form.minLen';
+
 test('input value changes when typed', async () => {
   const { result } = renderHook(() =>
     useField(usernameField.type, usernameField.label, usernameField.id)
@@ -165,5 +167,5 @@ test('empty input has the right helper text', async () => {
     />
   );
 
-  screen.getByText(invalidUsernameHelperText);
+  screen.getByText(minLenHelperText);
 });
