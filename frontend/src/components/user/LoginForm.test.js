@@ -1,6 +1,11 @@
 import React from 'react';
 import jwt from 'jsonwebtoken';
-import { render, screen, act } from '@testing-library/react';
+import {
+  render,
+  screen,
+  act,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import LoginForm from './LoginForm';
 import authService from '../../services/auth';
@@ -119,5 +124,24 @@ describe('form is submitted', () => {
       lang: userForToken.lang,
       userId: userForToken.id,
     });
+  });
+});
+
+describe('forgot password modal', () => {
+  beforeEach(() => {
+    const mockSetUser = jest.fn((u) => u);
+    render(<LoginForm setUser={mockSetUser} />);
+  });
+
+  it('opens when link is clicked', () => {
+    userEvent.click(screen.getByText(/forgot password/i));
+    expect(screen.getByText(/recovery link/i));
+  });
+
+  it('closes when close button is clicked', async () => {
+    userEvent.click(screen.getByText(/forgot password/i));
+    expect(screen.getByText(/recovery link/i));
+    userEvent.click(screen.getByRole('button', { name: 'close' }));
+    await waitForElementToBeRemoved(screen.getByText(/recovery link/i));
   });
 });
