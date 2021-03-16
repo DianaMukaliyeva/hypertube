@@ -9,10 +9,10 @@ import useField from '../../hooks/useField';
 import useModal from '../../hooks/useModal';
 import authService from '../../services/auth';
 
-import InputField from './InputField';
-import RecoveryLinkForm from '../user/RecoveryLinkForm';
+import InputField from '../common/InputField';
+import RecoveryLinkForm from './RecoveryLinkForm';
 import CustomModal from '../common/CustomModal';
-import FormButton from './FormButton';
+import FormButton from '../common/FormButton';
 import OmniAuthLogin from './OmniAuthLogin';
 
 import Link from '@material-ui/core/Link';
@@ -108,18 +108,10 @@ const LoginForm = ({ setUser }) => {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-        {alert.show && (
-          <Alert
-            severity={alert.severity}
-            onClose={() => setAlert({ ...alert, show: false })}
-          >
-            {alert.message}
-          </Alert>
-        )}
 
         <OmniAuthLogin />
 
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleLogin} noValidate>
           <InputField values={email} label="email" required={true} />
           <InputField
             values={password}
@@ -127,13 +119,21 @@ const LoginForm = ({ setUser }) => {
             autocomplete="current-password"
             required={true}
           />
-          <FormButton handleClick={handleLogin} name="Login" />
-          <Box>
-            <Link href="#" onClick={recoveryLinkModal.handleClickOpen}>
-              Forgot Password?
-            </Link>
-          </Box>
+          {alert.show && (
+            <Alert
+              severity={alert.severity}
+              onClose={() => setAlert({ ...alert, show: false })}
+            >
+              {alert.message}
+            </Alert>
+          )}
+          <FormButton name="Login" />
         </form>
+        <Box>
+          <Link href="#" onClick={recoveryLinkModal.handleClickOpen}>
+            Forgot Password?
+          </Link>
+        </Box>
       </div>
       <CustomModal {...recoveryLinkModal} />
     </Container>

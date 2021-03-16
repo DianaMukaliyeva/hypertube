@@ -6,8 +6,8 @@ import { Alert } from '@material-ui/lab';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import FormButton from '../FormButton';
-import InputField from '../InputField';
+import FormButton from '../../common/FormButton';
+import InputField from '../../common/InputField';
 
 const UpdateInformation = (props) => {
   const {
@@ -51,7 +51,11 @@ const UpdateInformation = (props) => {
   };
 
   return lang ? (
-    <form className={classes.form} noValidate>
+    <form
+      className={classes.form}
+      onSubmit={handleInformationUpdate}
+      noValidate
+    >
       <InputField
         values={username}
         label={`${t('form.username')}: ${userData.username}`}
@@ -94,10 +98,7 @@ const UpdateInformation = (props) => {
           {alert.message}
         </Alert>
       )}
-      <FormButton
-        handleClick={handleInformationUpdate}
-        name={t('myProfile.update')}
-      />
+      <FormButton name={t('myProfile.update')} />
     </form>
   ) : null;
 };
