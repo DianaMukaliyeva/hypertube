@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 const Player = ({ subsTracks, imdbCode }) => {
     // playing only this movie 4 now
     // eslint-disable-next-line no-undef
-  const streamUrl = process.env.REACT_APP_BACKEND_URL + `/api/movies/${imdbCode}/play`;
+  const token = localStorage.getItem('token');
+  const streamUrl = process.env.REACT_APP_BACKEND_URL + `/api/movies/${imdbCode}/play/${token}`;
 
   const handlePlay = () => {
     console.log('PLAY'); // TO DO make record in db
@@ -38,6 +39,7 @@ const Player = ({ subsTracks, imdbCode }) => {
 
 Player.propTypes = {
   subsTracks: PropTypes.array.isRequired,
+  imdbCode: PropTypes.string.isRequired
 };
 
 export default Player;
