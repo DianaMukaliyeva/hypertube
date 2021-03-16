@@ -30,21 +30,24 @@ const UpdateInformation = (props) => {
     { label: 'Russian', code: 'ru' },
   ];
 
-	useEffect(() => {
-		setLang(langOptions.find((lang) => lang.code === userData.language));
-	}, [userData.language]);
+  useEffect(() => {
+    setLang(langOptions.find((lang) => lang.code === userData.language));
+  }, [userData.language]);
 
   const handleInformationUpdate = async (event) => {
     event.preventDefault();
 
     const data = {};
-    if (username.value) data.username = username.value;
-    if (email.value) data.email = email.value;
-    if (firstName.value) data.firstname = firstName.value;
-    if (lastName.value) data.lastname = lastName.value;
-    if (lang) data.language = lang.code;
+    if (username.value && username.value !== userData.username)
+      data.username = username.value;
+    if (email.value && email.value !== userData.email) data.email = email.value;
+    if (firstName.value && firstName.value !== userData.firstName)
+      data.firstname = firstName.value;
+    if (lastName.value && lastName.value !== userData.lastName)
+      data.lastname = lastName.value;
+    if (lang && lang.code !== userData.language) data.language = lang.code;
 
-    await handleUpdate(data, setAlert);
+    if (Object.keys(data).length !== 0) await handleUpdate(data, setAlert);
   };
 
   return lang ? (
@@ -100,15 +103,15 @@ const UpdateInformation = (props) => {
 };
 
 UpdateInformation.propTypes = {
-	classes: PropTypes.object.isRequired,
-	userData: PropTypes.object.isRequired,
-	username: PropTypes.object.isRequired,
-	firstName: PropTypes.object.isRequired,
-	lastName: PropTypes.object.isRequired,
-	email: PropTypes.object.isRequired,
-	alert: PropTypes.object.isRequired,
-	setAlert: PropTypes.func.isRequired,
-	handleUpdate: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
+  userData: PropTypes.object.isRequired,
+  username: PropTypes.object.isRequired,
+  firstName: PropTypes.object.isRequired,
+  lastName: PropTypes.object.isRequired,
+  email: PropTypes.object.isRequired,
+  alert: PropTypes.object.isRequired,
+  setAlert: PropTypes.func.isRequired,
+  handleUpdate: PropTypes.func.isRequired,
 };
 
 export default UpdateInformation;

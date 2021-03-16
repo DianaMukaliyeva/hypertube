@@ -8,7 +8,6 @@ import { useHistory } from 'react-router-dom';
 import useField from '../../hooks/useField';
 import useModal from '../../hooks/useModal';
 import authService from '../../services/auth';
-import sharedFunctions from '../../utils/sharedFunctions';
 
 import InputField from './InputField';
 import RecoveryLinkForm from '../user/RecoveryLinkForm';
@@ -38,8 +37,8 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginForm = ({ setUser }) => {
   const history = useHistory();
-  const email = useField('email', 'email', 'login-email');
-  const password = useField('password', 'password', 'login-password');
+  const email = useField('email', 'loginEmail', 'login-email');
+  const password = useField('password', 'loginPassword', 'login-password');
   const [alert, setAlert] = useState({
     show: false,
     message: '',
@@ -50,6 +49,24 @@ const LoginForm = ({ setUser }) => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    if (email.value === '') {
+      email.setValues({
+        ...email.values,
+        helperText: 'required',
+        error: true,
+      });
+      return;
+    }
+
+    if (password.value === '') {
+      password.setValues({
+        ...password.values,
+        helperText: 'required',
+        error: true,
+      });
+      return;
+    }
+
     try {
       await authService.login(email.value, password.value);
       const decoded = jwt_decode(localStorage.getItem('token'));
@@ -58,9 +75,10 @@ const LoginForm = ({ setUser }) => {
     } catch (err) {
       switch (err.response.data.statusCode) {
         case 400:
-          sharedFunctions.showErrors(err.response.data.details, {
-            email,
-            password,
+          setAlert({
+            show: true,
+            message: 'Invalid email or password',
+            severity: 'error',
           });
           break;
         case 500:
@@ -91,7 +109,10 @@ const LoginForm = ({ setUser }) => {
           Login
         </Typography>
         {alert.show && (
-          <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
+          <Alert
+            severity={alert.severity}
+            onClose={() => setAlert({ ...alert, show: false })}
+          >
             {alert.message}
           </Alert>
         )}
