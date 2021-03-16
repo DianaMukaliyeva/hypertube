@@ -31,13 +31,13 @@ const getMovieEntry = async (req, res) => {
   const torrentData = await movieListUtils.fetchTorrentData(imdbCode);
   const movieInfo = await movieListUtils.fetchMovieInfo(imdbCode);
   const subtitles = await subtitlesUtils.getSubtitles(imdbCode);
-  const comments = []; // TO DO check with Ilja to add here
+  const comments = await movieListUtils.fetchComments(imdbCode);
   res.json(movieListUtils.parseMovieResponse(movieInfo, torrentData, comments, subtitles));
 };
 
 const addComment = async (req, res) => {
   const newComment = {
-    userId: req.user,
+    user: req.user,
     comment: req.body.comment,
   };
   const imdbCode = req.params.imdb_code;
