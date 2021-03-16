@@ -51,9 +51,9 @@ const useStyles = makeStyles((theme) => ({
 const MyProfile = ({ user, setUser }) => {
   const [userData, setUserData] = useState({ language: '' });
 
-  const username = useField('text', 'username', 'update-username');
-  const firstName = useField('text', 'name', 'update-firsname');
-  const lastName = useField('text', 'name', 'update-lastname');
+  const username = useField('text', 'updateUsername', 'update-username');
+  const firstName = useField('text', 'updateName', 'update-firstname');
+  const lastName = useField('text', 'updateName', 'update-lastname');
   const email = useField('email', 'email', 'update-email');
   const oldPassword = useField('password', 'password', 'update-old-password');
   const password = useField('password', 'password', 'update-password');

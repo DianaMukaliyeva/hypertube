@@ -8,8 +8,8 @@ import useField from '../../hooks/useField';
 import userService from '../../services/user';
 import sharedFunctions from '../../utils/sharedFunctions';
 
-import InputField from './InputField';
-import FormButton from './FormButton';
+import InputField from '../common/InputField';
+import FormButton from '../common/FormButton';
 
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
@@ -124,15 +124,7 @@ const PasswordResetForm = () => {
         <Typography component="h1" variant="h5">
           Password Reset
         </Typography>
-        {alert.show && (
-          <Alert
-            severity={alert.severity}
-            onClose={() => setAlert({ ...alert, show: false })}
-          >
-            {alert.message}
-          </Alert>
-        )}
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleClick} noValidate>
           <InputField
             values={password}
             label="New password"
@@ -145,7 +137,15 @@ const PasswordResetForm = () => {
             autocomplete="confirm-password"
             required={true}
           />
-          <FormButton handleClick={handleClick} name="Save" />
+          {alert.show && (
+            <Alert
+              severity={alert.severity}
+              onClose={() => setAlert({ ...alert, show: false })}
+            >
+              {alert.message}
+            </Alert>
+          )}
+          <FormButton name="Save" />
         </form>
       </div>
     </Container>

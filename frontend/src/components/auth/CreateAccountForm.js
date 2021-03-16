@@ -12,8 +12,8 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Alert } from '@material-ui/lab';
 
-import InputField from './InputField';
-import FormButton from './FormButton';
+import InputField from '../common/InputField';
+import FormButton from '../common/FormButton';
 import OmniAuthLogin from './OmniAuthLogin';
 
 // TO DO move to styles
@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
   select: {
     width: '100%',
     marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
 }));
 
@@ -117,18 +118,10 @@ const CreateAccountForm = () => {
         <Typography component="h1" variant="h5">
           Create account
         </Typography>
-        {alert.show && (
-          <Alert
-            severity={alert.severity}
-            onClose={() => setAlert({ ...alert, show: false })}
-          >
-            {alert.message}
-          </Alert>
-        )}
 
         <OmniAuthLogin />
 
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleCreate} noValidate>
           <InputField values={username} label="Username" required={true} />
           <InputField values={firstName} label="First name" required={true} />
           <InputField values={lastName} label="Last name" required={true} />
@@ -165,8 +158,17 @@ const CreateAccountForm = () => {
               />
             )}
           />
+
+          {alert.show && (
+            <Alert
+              severity={alert.severity}
+              onClose={() => setAlert({ ...alert, show: false })}
+            >
+              {alert.message}
+            </Alert>
+          )}
+          <FormButton name="Create Account" />
         </form>
-        <FormButton handleClick={handleCreate} name="Create Account" />
       </div>
     </Container>
   );
