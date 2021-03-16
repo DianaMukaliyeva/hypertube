@@ -47,7 +47,7 @@ const UserProfile = ({ user }) => {
       <Box className={classes.imageContainer}>
         <img
           className={classes.image}
-          src={user.avatarBase64String || emptyAvatar}
+          src={user.avatar || emptyAvatar}
           alt={user.username}
         />
       </Box>
@@ -61,21 +61,21 @@ const UserProfile = ({ user }) => {
 };
 
 UserProfile.defaultProps = {
-	user: PropTypes.shape({
-		username: '',
-		firstname: '',
-		lastname: '',
-		avatarBase64String: null,
-	})
+  user: PropTypes.shape({
+    username: '',
+    firstname: '',
+    lastname: '',
+    avatar: null,
+  }),
 };
 
 UserProfile.propTypes = {
   user: PropTypes.shape({
-		username: PropTypes.string,
-		firstname: PropTypes.string,
-		lastname: PropTypes.string,
-		avatarBase64String: PropTypes.string,
-	})
+    username: PropTypes.string,
+    firstname: PropTypes.string,
+    lastname: PropTypes.string,
+    avatar: PropTypes.string,
+  }),
 };
 
 export default UserProfile;
