@@ -3,9 +3,6 @@ import Movie from '../models/Movie.js';
 import { notFoundError } from './errors.js';
 
 const { OMDB_KEY, TORRENT_API } = process.env;
-const requestError = new Error('Could not fetch movie data'); // todo: specify these more explicitly in a separate file
-requestError.code = 'movieRequest';
-requestError.name = 'Request failed';
 
 const filteredMovieData = (movie) => ({
   title: movie.title,
@@ -57,14 +54,16 @@ const fetchYTSMovieList = async (filters) => {
 
 const fetchTorrentData = async (imdbCode) => {
   const res = await axios.get(`${TORRENT_API}?query_term=${imdbCode}`);
-  if (res.status !== 200 || !res.data.data) throw requestError;
-  return res.data.data;
+  const movieData = res.data.data;
+  if (res.status !== 200 || movieData.movie_count === 0) throw notFoundError();
+  return movieData;
 };
 
 const fetchMovieInfo = async (imdbCode) => {
   const res = await axios.get(`http://www.omdbapi.com/?i=${imdbCode}&apikey=${OMDB_KEY}`);
-  if (res.status !== 200) throw requestError;
-  return res.data;
+  const movieData = res.data;
+  if (res.status !== 200 || movieData.Response === 'False') throw notFoundError(); // omdbapi is not very restful
+  return movieData;
 };
 
 const fetchComments = async (imdbCode) => {
