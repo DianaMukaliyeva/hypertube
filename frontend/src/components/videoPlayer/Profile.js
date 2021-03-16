@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import useModal from '../../hooks/useModal';
-import UserProfile from '../user/UserProfile';
+import UserProfile from '../profile/UserProfile';
 import CustomModal from '../common/CustomModal';
 
 import Avatar from '@material-ui/core/Avatar';
