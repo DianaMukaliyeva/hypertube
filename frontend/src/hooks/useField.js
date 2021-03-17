@@ -34,6 +34,10 @@ const useField = (type, field, id) => {
       });
   };
 
+  const setError = (text) => {
+    setValues({ ...values, helperText: t(text), error: true });
+  };
+
   return {
     type,
     onChange,
@@ -43,6 +47,7 @@ const useField = (type, field, id) => {
     values,
     setValues,
     id,
+    setError,
   };
 };
 
