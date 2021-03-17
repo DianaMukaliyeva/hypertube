@@ -43,6 +43,16 @@
     "login": "Kirjaudu",
     "forgotPw": "Unohtuiko salasana?"
   },
+  "pwRecovery": {
+    "title": "Palauta salasana",
+    "send": "Lähetä",
+    "helper": "Lähetämme palautuslinkin sähköpostiisi",
+    "checkEmail": "Löydät jatko-ohjeet sähköpostistasi",
+    "invalidLink": "Viallinen linkki, yritä uudestaan",
+    "success": "Salasanan päivitys onnistui",
+    "pwResetTitle": "Päivitä salasana",
+    "save": "Tallenna"
+  },
   "createAccount": {
     "title": "Luo tili",
     "success": "Käyttäjätilin luominen onnistui",

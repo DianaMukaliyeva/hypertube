@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 // import PropTypes from 'prop-types';
@@ -31,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PasswordResetForm = () => {
+  const { t } = useTranslation();
   const history = useHistory();
   const password = useField('password', 'password', 'reset-password');
   const confirmPassword = useField(
@@ -57,7 +59,7 @@ const PasswordResetForm = () => {
       } catch (err) {
         setAlert({
           show: true,
-          message: 'Invalid link, please try again',
+          message: t('pwRecovery.invalidLink'),
           severity: 'error',
         });
       }
@@ -76,7 +78,7 @@ const PasswordResetForm = () => {
       await userService.pwdUpdate(data);
       setAlert({
         show: true,
-        message: 'Your password was successfully updated',
+        message: t('pwRecovery.success'),
         severity: 'success',
       });
     } catch (err) {
@@ -90,7 +92,7 @@ const PasswordResetForm = () => {
             if (detail.param === 'userId' || detail.param === 'resetToken') {
               setAlert({
                 show: true,
-                message: 'Error in reset link, please try again',
+                message: t('pwRecovery.invalidLink'),
                 severity: 'error',
               });
             }
@@ -100,14 +102,14 @@ const PasswordResetForm = () => {
         case 500:
           setAlert({
             show: true,
-            message: 'Server error',
+            message: t('error.server'),
             severity: 'error',
           });
           break;
         default:
           setAlert({
             show: true,
-            message: 'Oops.. somthing went completely wrong',
+            message: t('error.unexpected'),
             severity: 'error',
           });
           break;
@@ -122,18 +124,18 @@ const PasswordResetForm = () => {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Password Reset
+          {t('pwRecovery.pwResetTitle')}
         </Typography>
         <form className={classes.form} onSubmit={handleClick} noValidate>
           <InputField
             values={password}
-            label="New password"
+            label={t('form.newPassword')}
             autocomplete="new-password"
             required={true}
           />
           <InputField
             values={confirmPassword}
-            label="Confirm password"
+            label={t('form.confirmPassword')}
             autocomplete="confirm-password"
             required={true}
           />
@@ -145,7 +147,7 @@ const PasswordResetForm = () => {
               {alert.message}
             </Alert>
           )}
-          <FormButton name="Save" />
+          <FormButton name={t('pwRecovery.save')} />
         </form>
       </div>
     </Container>

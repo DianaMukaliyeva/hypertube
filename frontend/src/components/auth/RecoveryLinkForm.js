@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RecoveryLinkForm = () => {
+  const { t } = useTranslation();
   const email = useField('email', 'email', 'forgot-email');
   const [alert, setAlert] = useState({
     show: false,
@@ -42,11 +44,10 @@ const RecoveryLinkForm = () => {
       await authService.recoveryLink(email.value);
       setAlert({
         show: true,
-        message: 'Check your email for further instructions',
+        message: t('pwRecovery.checkEmail'),
         severity: 'success',
       });
     } catch (err) {
-      // console.log('err', err.response.data);
       switch (err.response.data.statusCode) {
         case 400:
           sharedFunctions.showErrors(err.response.data.details, {
@@ -56,14 +57,14 @@ const RecoveryLinkForm = () => {
         case 500:
           setAlert({
             show: true,
-            message: 'Server error',
+            message: t('error.server'),
             severity: 'error',
           });
           break;
         default:
           setAlert({
             show: true,
-            message: 'Oops.. somthing went completely wrong',
+            message: t('error.unexpected'),
             severity: 'error',
           });
           break;
@@ -78,11 +79,11 @@ const RecoveryLinkForm = () => {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Recovery link
+          {t('pwRecovery.title')}
         </Typography>
 
         <form className={classes.form} onSubmit={handleForgotPwd} noValidate>
-          <InputField values={email} label="email" required={true} />
+          <InputField values={email} label={t('form.email')} required={true} />
           {alert.show && (
             <Alert
               severity={alert.severity}
@@ -91,9 +92,9 @@ const RecoveryLinkForm = () => {
               {alert.message}
             </Alert>
           )}
-          <FormButton name="Send" />
+          <FormButton name={t('pwRecovery.send')} />
         </form>
-        <div>We will send a recover link to your email</div>
+        <div>{t('pwRecovery.helper')}</div>
       </div>
     </Container>
   );
