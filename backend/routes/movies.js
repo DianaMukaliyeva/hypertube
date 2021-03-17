@@ -13,9 +13,12 @@ movieRoute.get('/:imdb_code', async (req, res, next) => {
 
 movieRoute.get('/', middleware.authRequired, movieController.getMovieList);
 
+// TO DO do we need this route?
 movieRoute.post('/', async (req, res, next) => {
   await movieController.addMovieToDb(req, res, next);
 });
+
+movieRoute.patch('/:imdbCode', middleware.authRequired, movieController.setWatched);
 
 movieRoute.post('/:imdb_code/comments', middleware.authRequired, movieController.addComment);
 

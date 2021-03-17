@@ -4,11 +4,12 @@ import uniqueValidator from 'mongoose-unique-validator';
 const movieSchema = new mongoose.Schema({
   serverLocation: { type: String, unique: true, sparse: true },
   imdbCode: { type: String, unique: true, required: true },
+  lastWatched: { type: Date },
   comments: [
     {
       comment: { type: String, required: true },
       user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-      time: { type: Date, default: Date.now },
+      time: { type: Date, default: Date.now() },
     },
   ],
 });

@@ -399,6 +399,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse401-500'
+    patch:
+      tags:
+        - Movies
+      summary: set Movie watched
+      operationId: setWatched
+      parameters:
+        - name: imdbCode
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: tt1211837
+      responses:
+        '200':
+          description: Success.
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
   /api/movies/{imdbCode}/subtitles/{lang}/{token}:
     get:
       tags:
