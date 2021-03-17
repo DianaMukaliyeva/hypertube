@@ -22,7 +22,7 @@ const useField = (type, field, id) => {
         setValues({
           value: newValue,
           error: false,
-          helperText: newValue ? t('form.correct') : '',
+          helperText: newValue ? t('formValidation.correct') : '',
         });
       })
       .catch((err) => {
