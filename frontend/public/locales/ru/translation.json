@@ -69,9 +69,9 @@
   },
   "filter": {
     "searchLabel": "Поиск фильма",
-    "ratingLabel": "IMDb РЕЙТИНГ",
-    "genreLabel": "ЖАНР",
-    "sortLabel": "СОРТИРОВАТЬ ПО",
+    "ratingLabel": "IMDb рейтинг",
+    "genreLabel": "Жанр",
+    "sortLabel": "Сортировать",
     "mostPopular": "Наиболее Популярные",
     "leastPopular": "Наименее Популярные",
     "newest": "Новые",
