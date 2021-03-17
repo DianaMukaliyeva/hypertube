@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import useField from '../../hooks/useField';
+import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
+import useField from '../../hooks/useField';
 
 import userService from '../../services/user';
 import sharedFunctions from '../../utils/sharedFunctions';
@@ -113,6 +114,16 @@ const CreateAccountForm = () => {
     }
   };
 
+  const handleLangChange = (event, value) => {
+    if (value !== null) {
+      i18next.changeLanguage(value.code, (err) => {
+        if (err)
+          return console.log('something went wrong loading language', err);
+      });
+      setLang({ ...value, label: t(`form.${value.code}`) });
+    }
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -160,9 +171,7 @@ const CreateAccountForm = () => {
             getOptionLabel={(option) => option.label}
             getOptionSelected={(option, value) => option.value === value.value}
             className={classes.select}
-            onChange={(event, value) => {
-              if (value !== null) setLang(value);
-            }}
+            onChange={handleLangChange}
             renderInput={(params) => (
               <TextField
                 required
