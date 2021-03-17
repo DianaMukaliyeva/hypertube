@@ -6,6 +6,7 @@
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
+    "@testing-library/react-hooks": "^5.1.0",
     "@testing-library/user-event": "^12.6.2",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
@@ -22,6 +23,7 @@
     "react-dom": "^17.0.1",
     "react-i18next": "^11.8.5",
     "react-infinite-scroll-component": "^6.0.0",
+    "react-player": "^2.9.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-video-js-player": "^1.1.1",
@@ -56,10 +58,11 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.3",
+    "@testing-library/react": "^11.2.5",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.19.0",
     "eslint-plugin-react": "^7.22.0",
+    "jsonwebtoken": "^8.5.1",
     "prettier": "^2.2.1"
   }
 }

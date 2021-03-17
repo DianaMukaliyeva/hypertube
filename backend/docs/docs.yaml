@@ -399,6 +399,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse401-500'
+  /api/movies/{imdbCode}/subtitles/{lang}/{token}:
+    get:
+      tags:
+        - Movies
+      summary: get subtitles
+      operationId: getSubtitles
+      parameters:
+        - name: imdbCode
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: tt1211837
+        - name: lang
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: en
+        - name: token
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNDdkODM3MWIxZTg1MDAxZTllMDk1ZiIsImxhbmciOiJmaSIsImlhdCI6MTYxNTQwMzU2MX0.qZf_Aw8U7dKYIXudIExHhP9vmXfOMJhlx8X9Mra6beQ
+      responses:
+        '200':
+          description: Succesfully fetched
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
   /api/movies/{imdbCode}/comments:
     post:
       tags:
@@ -570,10 +618,11 @@ components:
         language:
           type: string
           example: en
+        hasPw:
+          type: boolean
+          example: true
       description: if user's own info, then send everything, otherwise - only requried
     body_4:
-      required:
-        - oldPassword
       type: object
       properties:
         username:
@@ -665,6 +714,11 @@ components:
           type: boolean
         watched:
           type: boolean
+        availableSubtitles:
+          type: array
+          example:
+            - en
+            - fi
         comments:
           type: array
           items:

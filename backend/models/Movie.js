@@ -6,8 +6,8 @@ const movieSchema = new mongoose.Schema({
   imdbCode: { type: String, unique: true, required: true },
   comments: [
     {
-      userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
       comment: { type: String, required: true },
+      user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
       time: { type: Date, default: Date.now },
     },
   ],

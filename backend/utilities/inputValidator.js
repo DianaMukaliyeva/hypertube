@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 
+import jwt from 'jsonwebtoken';
 import { detailedError, createDetail } from './errors.js';
 import User from '../models/User.js';
 
@@ -22,8 +23,8 @@ const validateField = async (value, fieldName) => {
       if (!/^[a-zA-Z0-9]+$/.test(value)) {
         return createDetail(fieldName, value, 'invalid characters');
       }
-      if (value.length < 3) {
-        return createDetail(fieldName, value, 'minimum length 3 characters');
+      if (value.length < 2) {
+        return createDetail(fieldName, value, 'minimum length 2 characters');
       }
       if (await User.findOne({ username: value })) {
         return createDetail(fieldName, value, 'not unique');
@@ -46,8 +47,8 @@ const validateField = async (value, fieldName) => {
       if (!/^[a-zA-Z0-9 ]+$/.test(value)) {
         return createDetail(fieldName, value, 'invalid characters');
       }
-      if (value.length < 3) {
-        return createDetail(fieldName, value, 'minimum length 3 characters');
+      if (value.length < 2) {
+        return createDetail(fieldName, value, 'minimum length 2 characters');
       }
   }
   return '';
@@ -83,7 +84,13 @@ const validateResetToken = async (token, userId) => {
 
 const validateUserCreation = async (req, res, next) => {
   const {
-    username, email, firstname, language, lastname, password, confirmPassword,
+    username,
+    email,
+    firstname,
+    language,
+    lastname,
+    password,
+    confirmPassword,
   } = req.body;
   let errors = [];
 
@@ -157,7 +164,7 @@ const validateEmailFormat = (email) => {
   return '';
 };
 
-const validateUserUpdation = async (req, res, next) => {
+const validateUserUpdate = async (req, res, next) => {
   const {
     username,
     lastname,
@@ -240,10 +247,29 @@ const validateEmail = async (req, res, next) => {
   next();
 };
 
+const validateToken = async (req, res, next) => {
+  const { token } = req.params;
+  if (token) {
+    jwt.verify(token, process.env.SECRET, async (err, decode) => {
+      if (!err) {
+        const user = await User.findById(decode.id);
+        if (user) {
+          return next();
+        }
+      }
+      return res.status(401).json({ error: 'Unauthorized user!' });
+    });
+  } else {
+    return res.status(401).json({ error: 'Unauthorized user!' });
+  }
+  return '';
+};
+
 export default {
   validateUserCreation,
-  validateUserUpdation,
+  validateUserUpdate,
   validatePasswordReset,
   validateLogin,
   validateEmail,
+  validateToken,
 };

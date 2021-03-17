@@ -70,21 +70,23 @@ const fetchMovieInfo = async (imdbCode) => {
 const fetchComments = async (imdbCode) => {
   const res = await Movie.findOne({
     imdbCode,
-  }).populate('comments.userId', {
+  }).populate('comments.user', {
     username: 1,
     firstname: 1,
     lastname: 1,
     avatar: 1,
   });
 
-  return !res ? false : res.comments;
+  if (!res) return;
+  // eslint-disable-next-line consistent-return
+  return res.comments;
 };
 
 /* storing magnet link components here for now as we might need them in movie routes later, sry.
 also todo: add tracker listing into a config file
 const { hash } = torrentData.movies[0].torrents[0];
 `magnet:?xt=urn:btih:${hash}&dn=${movieInfo.Title}&tr=[PLACEHOLDER_FOR_TRACKER]`; */
-const parseMovieResponse = (movieInfo, torrentData, comments) => ({
+const parseMovieResponse = (movieInfo, torrentData, comments, subtitles) => ({
   title: movieInfo.Title,
   imdbRating: torrentData.movies[0].rating,
   year: movieInfo.Year,
@@ -93,10 +95,10 @@ const parseMovieResponse = (movieInfo, torrentData, comments) => ({
   length: parseInt(movieInfo.Runtime, 10),
   director: movieInfo.Director,
   cast: movieInfo.Actors,
-  subtitles: [{ en: 'placeholder subtitle object' }], // todo: investigate API for this
   downloaded: false, // if movie is already downloaded to server, identified with imdbCode
   watched: false, // to see if user has already watched the movie, identified with imdbCode
   comments,
+  subtitles,
 });
 
 export default {

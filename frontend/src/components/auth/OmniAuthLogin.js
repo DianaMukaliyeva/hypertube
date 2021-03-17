@@ -1,12 +1,12 @@
 import React from 'react';
 
 import authService from '../../services/auth';
-import LogoButton from './LogoButton';
+import LogoButton from '../common/LogoButton';
 import GoogleLogo from '../../images/google-logo.png';
 import FortyTwoLogo from '../../images/42-logo.png';
 
 const OmniAuthLogin = () => {
-	const handleGoogleSignIn = async () => {
+  const handleGoogleSignIn = async () => {
     try {
       const data = await authService.googleUrl();
       window.location = data.url;
@@ -39,6 +39,5 @@ const OmniAuthLogin = () => {
     </>
   );
 };
-
 
 export default OmniAuthLogin;
