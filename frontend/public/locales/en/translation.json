@@ -18,12 +18,18 @@
     "selectLanguage": "Select language"
   },
   "formValidation": {
-    "required": "required field",
-    "minLen": "must be at least 2 characters",
-    "maxLen": "must be max 45 characters",
-    "nameFormat": "must contain only letters and numbers",
-    "passwordFormat": "must contain at least 1 upper case, 1 lower case, 1 number",
-    "email": "must be valid email",
+    "required": "Required field",
+    "unique": "Not unique",
+    "minLen": "Must be at least 2 characters",
+    "maxLen": "Must be max 45 characters",
+    "nameFormat": "Must contain only letters and numbers",
+    "passwordFormat": "Must contain at least 1 upper case, 1 lower case, 1 number",
+    "emailFormat": "Must be valid email",
+    "pwNoMatch": "Passwords don't match",
+    "wrongPw": "Wrong password",
+    "invalidCredentials": "Invalid credentials",
+    "notFound": "Not found",
+    "notValid": "Not valid",
     "correct": "ok"
   },
   "myProfile": {
@@ -73,5 +79,10 @@
   },
   "gallery": {
     "noMovies": "No movies found"
+  },
+  "error": {
+    "unauthorized": "Unauthorized",
+    "server": "Server error",
+    "unexpected": "Unexpected error"
   }
 }

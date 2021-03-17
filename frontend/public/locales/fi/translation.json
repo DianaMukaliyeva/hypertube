@@ -19,11 +19,17 @@
   },
   "formValidation": {
     "required": "Pakollinen kenttä",
+    "unique": "Ei uniikki",
     "minLen": "Vähintään kaksi merkkiä",
     "maxLen": "Enintään 45 merkkiä",
     "nameFormat": "Vain kirjaimet ja numerot on sallittu",
     "passwordFormat": "Vähintään yksi iso ja pieni kirjain sekä yksi numero vaaditaan",
     "emailFormat": "Toimiva email osoite vaaditaan",
+    "pwNoMatch": "Salasanat eivät täsmää",
+    "wrongPw": "Väärä salasana",
+    "invalidCredentials": "Virhe kirjautumistiedoissa",
+    "notFound": "Ei löydy",
+    "notValid": "Virheellinen tieto",
     "correct": "Tämä ok"
   },
   "myProfile": {
