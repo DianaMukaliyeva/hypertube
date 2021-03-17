@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch, useLocation, useHistory } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useLocation,
+  useHistory,
+} from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
+import i18next from 'i18next';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
@@ -46,6 +53,15 @@ function App() {
 
     checkToken();
   }, []);
+
+  useEffect(() => {
+    if (user.lang) {
+      i18next.changeLanguage(user.lang, (err) => {
+        if (err)
+          return console.log('something went wrong loading language', err);
+      });
+    }
+  }, [user]);
 
   return (
     <ThemeProvider theme={theme}>
