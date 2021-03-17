@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 import User from '../models/User.js';
 import { notFoundError } from '../utilities/errors.js';
@@ -87,7 +88,15 @@ const updateUser = async (req, res) => {
 
   await user.save();
 
-  res.sendStatus(200);
+  if (language) {
+    const userForToken = {
+      id: userId,
+      lang: language,
+    };
+    user.token = jwt.sign(userForToken, process.env.SECRET);
+  }
+
+  res.json(user);
 };
 
 const updatePassword = async (req, res) => {
