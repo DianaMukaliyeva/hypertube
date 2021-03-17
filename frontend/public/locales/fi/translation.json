@@ -37,8 +37,11 @@
     "correct": "Tämä ok"
   },
   "login": {
+    "title": "Kirjaudu sisään",
     "google": "Kirjaudu Google-tilillä",
-    "42": "Kirjaudu 42-tilillä"
+    "42": "Kirjaudu 42-tilillä",
+    "login": "Kirjaudu",
+    "forgotPw": "Unohtuiko salasana?"
   },
   "createAccount": {
     "title": "Luo tili",

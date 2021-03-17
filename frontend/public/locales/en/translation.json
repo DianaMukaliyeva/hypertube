@@ -37,8 +37,11 @@
     "correct": "ok"
   },
   "login": {
+    "title": "Login",
     "google": "Login with Google",
-    "42": "Login with 42"
+    "42": "Login with 42",
+    "login": "Login",
+    "forgotPw": "Forgot password?"
   },
   "createAccount": {
     "title": "Create Account",
