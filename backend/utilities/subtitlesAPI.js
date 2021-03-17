@@ -40,7 +40,7 @@ const getSubtitles = async (imdbId) => {
       },
       {
         lang: 'fi',
-        dir: `.${parentDir}/fi`,
+        dir: `${parentDir}/fi`,
       },
       {
         lang: 'ru',
