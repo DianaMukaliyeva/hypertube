@@ -43,6 +43,16 @@
     "login": "Login",
     "forgotPw": "Forgot password?"
   },
+  "pwRecovery": {
+    "title": "Recover password",
+    "send": "Send",
+    "helper": "Recovery link will be send to your email",
+    "checkEmail": "Check your email for further instructions",
+    "invalidLink": "Invalid link, please try again",
+    "success": "Password was successfully updated",
+    "pwResetTitle": "Reset Password",
+    "save": "Save"
+  },
   "createAccount": {
     "title": "Create Account",
     "success": "Account created successfully",
