@@ -12,6 +12,12 @@ const createComment = async (comment, imdbCode) => {
   return res.data;
 };
 
+const setWatched = async (imdbCode) => {
+  const res = await axios.patch(`${baseUrl}/${imdbCode}`);
+
+  return res.data;
+};
+
 const getMovieData = async (imdbCode) => {
   const res = await axios.get(`${baseUrl}/${imdbCode}`);
 
@@ -21,4 +27,5 @@ const getMovieData = async (imdbCode) => {
 export default {
   createComment,
   getMovieData,
- };
+  setWatched,
+};
