@@ -77,7 +77,7 @@ const MyProfile = ({ user, setUser }) => {
       case 401:
         showAlert({
           show: true,
-          message: 'Unauthorized access',
+          message: t('error.unauthorized'),
           severity: 'error',
         });
         break;
@@ -95,14 +95,14 @@ const MyProfile = ({ user, setUser }) => {
       case 500:
         showAlert({
           show: true,
-          message: 'Server error',
+          message: t('error.server'),
           severity: 'error',
         });
         break;
       default:
         showAlert({
           show: true,
-          message: 'Oops.. somthing went completely wrong',
+          message: t('error.unexpected'),
           severity: 'error',
         });
         break;
@@ -110,7 +110,7 @@ const MyProfile = ({ user, setUser }) => {
   };
 
   const handleUpdate = async (data, showAlert) => {
-		setPasswordAlert(noAlert);
+    setPasswordAlert(noAlert);
     setAlert(noAlert);
 
     if (userData.avatarBase64String !== avatar)
@@ -121,11 +121,11 @@ const MyProfile = ({ user, setUser }) => {
       setUserData({ ...userData, ...data, avatarBase64String: avatar });
       if (data.language) setUser({ ...user, lang: data.language });
 
-			showAlert({
-				show: true,
-				message: 'Account successfully updated',
-				severity: 'success',
-			});
+      showAlert({
+        show: true,
+        message: 'Account successfully updated',
+        severity: 'success',
+      });
     } catch (err) {
       handleErrorResponse(err.response.data, showAlert);
     }

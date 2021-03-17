@@ -10,23 +10,29 @@
     "username": "Käyttäjänimi",
     "firstName": "Etunimi",
     "lastName": "Sukunimi",
+    "email": "Email",
     "password": "Salasana",
     "currentPassword": "Nykyinen salasana",
     "newPassword": "Uusi salasana",
     "confirmPassword": "Vahvista salasana",
-    "required": "Pakollinen kenttä",
-    "minLen": "Vähintään 2 merkkiä",
-    "maxLen": "Enintään 45 merkkiä",
-    "nameFormat": "Vain kirjaimet ja numerot on sallittu",
-    "passwordFormat": "Vähintään 1 iso ja 1 pieni kirjain sekä 1 numero vaaditaan",
-    "email": "Toimiva email osoite vaaditaan",
-    "correct": "Tämä ok",
     "selectLanguage": "Valitse kieli"
   },
+  "formValidation": {
+    "required": "Pakollinen kenttä",
+    "minLen": "Vähintään kaksi merkkiä",
+    "maxLen": "Enintään 45 merkkiä",
+    "nameFormat": "Vain kirjaimet ja numerot on sallittu",
+    "passwordFormat": "Vähintään yksi iso ja pieni kirjain sekä yksi numero vaaditaan",
+    "emailFormat": "Toimiva email osoite vaaditaan",
+    "correct": "Tämä ok"
+  },
   "myProfile": {
-    "title": "Profiilini",
+    "title": "Minun profiilini",
     "update": "Päivitä tiedot",
     "updatePassword": "Päivitä salasana"
+  },
+  "profile": {
+    "title": "Profiili"
   },
   "movie": {
     "rating": "Arvio",
@@ -67,5 +73,10 @@
   },
   "gallery": {
     "noMovies": "Elokuvia ei löytynyt"
+  },
+  "error": {
+    "unauthorized": "Sisältö vaatii kirjautumisen",
+    "server": "Palvelinvirhe",
+    "unexpected": "Odottamaton virhe"
   }
 }
