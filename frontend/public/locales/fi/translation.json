@@ -1,68 +1,71 @@
 {
   "btn": {
-    "send": "Send"
+    "send": "Lähetä"
   },
   "navbar": {
-    "profile": "Profile",
-    "logout": "Logout"
+    "profile": "Profiili",
+    "logout": "Kirjaudu ulos"
   },
   "form": {
-    "username": "Username",
-    "firstName": "First name",
-    "lastName": "Last name",
-    "password": "Password",
-    "currentPassword": "Current password",
-    "newPassword": "New password",
-    "confirmPassword": "Confirm password",
-    "required": "required field",
-    "minLen": "must be at least {{number}} characters",
-    "maxLen": "must be max {{number}} characters",
-    "nameFormat": "must contain only letters and numbers",
-    "email": "must be valid email",
-    "correct": "correct"
+    "username": "Käyttäjänimi",
+    "firstName": "Etunimi",
+    "lastName": "Sukunimi",
+    "password": "Salasana",
+    "currentPassword": "Nykyinen salasana",
+    "newPassword": "Uusi salasana",
+    "confirmPassword": "Vahvista salasana",
+    "required": "Pakollinen kenttä",
+    "minLen": "Vähintään 2 merkkiä",
+    "maxLen": "Enintään 45 merkkiä",
+    "nameFormat": "Vain kirjaimet ja numerot on sallittu",
+    "passwordFormat": "Vähintään 1 iso ja 1 pieni kirjain sekä 1 numero vaaditaan",
+    "email": "Toimiva email osoite vaaditaan",
+    "correct": "Tämä ok",
+    "selectLanguage": "Valitse kieli"
   },
   "myProfile": {
-    "title": "My Profile",
-    "update": "Update"
+    "title": "Profiilini",
+    "update": "Päivitä tiedot",
+    "updatePassword": "Päivitä salasana"
   },
   "movie": {
-    "rating": "luokitus",
-    "watched": "watched movie"
+    "rating": "Arvio",
+    "watched": "Nähty"
   },
   "filter": {
-    "searchLabel": "Search for a Movie",
-    "ratingLabel": "IMDb RATING",
+    "searchLabel": "Etsi elokuvaa",
+    "ratingLabel": "IMDb ARVIO",
     "genreLabel": "GENRE",
-    "sortLabel": "SORT BY",
-    "mostPopular": "Most Popular",
-    "leastPopular": "Least Popular",
-    "newest": "Newest",
-    "oldest": "Oldest"
+    "sortLabel": "LAJITTELE",
+    "mostPopular": "Suosituin",
+    "leastPopular": "Vähiten suosittu",
+    "newest": "Uusin",
+    "oldest": "Vanhin"
   },
   "genres": {
-    "comedy": "Comedy",
-    "sci-fi": "Sci-Fi",
-    "horror": "Horror",
-    "romance": "Romance",
-    "action": "Action",
-    "thriller": "Thriller",
-    "drama": "Drama",
-    "documentary": "Documentary",
-    "mystery": "Mystery",
-    "crime": "Crime",
-    "animation": "Animation",
-    "adventure": "Adventure",
-    "fantasy": "Fantasy",
-    "superhero": "Superhero",
-    "biography": "Biography",
-    "family": "Family",
-    "history": "History",
+    "comedy": "Komedia",
+    "sci-fi": "Scifi",
+    "horror": "Kauhu",
+    "romance": "Romantiikka",
+    "action": "Toiminta",
+    "thriller": "Trilleri",
+    "drama": "Draama",
+    "documentary": "Documentti",
+    "mystery": "Mysteeri",
+    "crime": "Rikos",
+    "animation": "Animaatio",
+    "adventure": "Seikkailu",
+    "fantasy": "Fantasia",
+    "superhero": "Supersankari",
+    "biography": "Elämänkerta",
+    "family": "Perhe",
+    "history": "Historia",
     "film-noir": "Film Noir",
-    "musical": "Musical",
-    "sport": "Sport",
-    "war": "War"
+    "musical": "Musikaali",
+    "sport": "Urheilu",
+    "war": "Sota"
   },
   "gallery": {
-    "noMovies": "No movies found"
+    "noMovies": "Elokuvia ei löytynyt"
   }
 }
