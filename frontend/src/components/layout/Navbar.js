@@ -3,12 +3,14 @@ import { useTranslation } from 'react-i18next';
 
 import { withRouter } from 'react-router-dom';
 
-import IconButton from '@material-ui/core/IconButton';
+// import IconButton from '@material-ui/core/IconButton';
+import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import VideocamIcon from '@material-ui/icons/Videocam';
-import Typography from '@material-ui/core/Typography';
+// import VideocamIcon from '@material-ui/icons/Videocam';
+// import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -25,6 +27,7 @@ const NavBar = ({ user, setUser }) => {
   const handleClick = () => {
     // TO DO reset hypertube gallery
   };
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     setUser({ userId: '', lang: '' });
@@ -39,46 +42,37 @@ const NavBar = ({ user, setUser }) => {
         <div style={{ width: '100%' }}>
           <Box display="flex">
             <Box p={1} flexGrow={1}>
-              <IconButton
+              <Button
+                startIcon={<PlayCircleFilledWhiteIcon />}
                 variant="button"
                 size="small"
                 color="inherit"
                 key="hypertube"
-                onClick={() => handleClick()}
-              >
-                <Typography style={{ color: 'white' }}>
-                  <VideocamIcon />
-                  Hypertube
-                </Typography>
-              </IconButton>
+                onClick={() => handleClick()}>
+                Hypertube
+              </Button>
             </Box>
             <Box p={1}>
-              <IconButton
+              <Button
+                startIcon={<AccountCircle />}
                 variant="button"
                 color="inherit"
                 size="small"
                 key="profile"
-                onClick={profile.handleClickOpen}
-              >
-                <Typography style={{ color: 'white' }}>
-                  <AccountCircle />
-                  {t('navbar.profile')}
-                </Typography>
-              </IconButton>
+                onClick={profile.handleClickOpen}>
+                {t('navbar.profile')}
+              </Button>
             </Box>
             <Box p={1}>
-              <IconButton
+              <Button
+                startIcon={<ExitToAppIcon />}
                 variant="button"
                 size="small"
                 color="inherit"
                 key="logout"
-                onClick={() => handleLogout()}
-              >
-                <Typography style={{ color: 'white' }}>
-                  <ExitToAppIcon />
-                  {t('navbar.logout')}
-                </Typography>
-              </IconButton>
+                onClick={() => handleLogout()}>
+                {t('navbar.logout')}
+              </Button>
             </Box>
           </Box>
         </div>
