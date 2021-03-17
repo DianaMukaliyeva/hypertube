@@ -15,7 +15,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 
 import useModal from '../../hooks/useModal';
 import CustomModal from '../common/CustomModal';
-import VideoPlayer from '../videoPlayer/VideoPlayer';
+import VideoPlayer from '../videoPlayer/index';
 
 const useStyles = makeStyles((theme) => ({
   root: {
