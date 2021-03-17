@@ -15,7 +15,11 @@
     "currentPassword": "Nykyinen salasana",
     "newPassword": "Uusi salasana",
     "confirmPassword": "Vahvista salasana",
-    "selectLanguage": "Valitse kieli"
+    "selectLanguage": "Valitse kieli",
+    "en": "Englanti",
+    "de": "Saksa",
+    "ru": "Venäjä",
+    "fi": "Suomi"
   },
   "formValidation": {
     "required": "Pakollinen kenttä",
@@ -31,6 +35,15 @@
     "notFound": "Ei löydy",
     "notValid": "Virheellinen tieto",
     "correct": "Tämä ok"
+  },
+  "login": {
+    "google": "Kirjaudu Google-tilillä",
+    "42": "Kirjaudu 42-tilillä"
+  },
+  "createAccount": {
+    "title": "Luo tili",
+    "success": "Käyttäjätilin luominen onnistui",
+    "create": "Luo tili"
   },
   "myProfile": {
     "title": "Minun profiilini",

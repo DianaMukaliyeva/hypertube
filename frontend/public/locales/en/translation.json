@@ -15,7 +15,11 @@
     "currentPassword": "Current password",
     "newPassword": "New password",
     "confirmPassword": "Confirm password",
-    "selectLanguage": "Select language"
+    "selectLanguage": "Select language",
+    "en": "English",
+    "de": "German",
+    "ru": "Russian",
+    "fi": "Finnish"
   },
   "formValidation": {
     "required": "Required field",
@@ -31,6 +35,15 @@
     "notFound": "Not found",
     "notValid": "Not valid",
     "correct": "ok"
+  },
+  "login": {
+    "google": "Login with Google",
+    "42": "Login with 42"
+  },
+  "createAccount": {
+    "title": "Create Account",
+    "success": "Account created successfully",
+    "create": "Create account"
   },
   "myProfile": {
     "title": "My Profile",

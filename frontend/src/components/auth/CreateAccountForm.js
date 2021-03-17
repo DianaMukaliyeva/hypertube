@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import useField from '../../hooks/useField';
+import { useTranslation } from 'react-i18next';
 
 import userService from '../../services/user';
 import sharedFunctions from '../../utils/sharedFunctions';
@@ -37,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateAccountForm = () => {
+  const classes = useStyles();
+  const { t } = useTranslation();
+
   const username = useField('text', 'username', 'create-username');
   const firstName = useField('text', 'name', 'create-firstname');
   const lastName = useField('text', 'name', 'create-lastname');
@@ -55,13 +59,11 @@ const CreateAccountForm = () => {
   });
 
   const langOptions = [
-    { label: 'English', code: 'en' },
-    { label: 'German', code: 'de' },
-    { label: 'Finnish', code: 'fi' },
-    { label: 'Russian', code: 'ru' },
+    { label: t('form.en'), code: 'en' },
+    { label: t('form.de'), code: 'de' },
+    { label: t('form.fi'), code: 'fi' },
+    { label: t('form.ru'), code: 'ru' },
   ];
-
-  const classes = useStyles();
 
   const handleCreate = async (event) => {
     event.preventDefault();
@@ -78,7 +80,7 @@ const CreateAccountForm = () => {
       await userService.create(data);
       setAlert({
         show: true,
-        message: 'Account successfully created',
+        message: t('createAccount.success'),
         severity: 'success',
       });
     } catch (err) {
@@ -96,14 +98,14 @@ const CreateAccountForm = () => {
         case 500:
           setAlert({
             show: true,
-            message: 'Server error',
+            message: t('error.server'),
             severity: 'error',
           });
           break;
         default:
           setAlert({
             show: true,
-            message: 'Oops.. somthing went completely wrong',
+            message: t('error.unexpected'),
             severity: 'error',
           });
           break;
@@ -116,25 +118,37 @@ const CreateAccountForm = () => {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Create account
+          {t('createAccount.title')}
         </Typography>
 
         <OmniAuthLogin />
 
         <form className={classes.form} onSubmit={handleCreate} noValidate>
-          <InputField values={username} label="Username" required={true} />
-          <InputField values={firstName} label="First name" required={true} />
-          <InputField values={lastName} label="Last name" required={true} />
-          <InputField values={email} label="email" required={true} />
+          <InputField
+            values={username}
+            label={t('form.username')}
+            required={true}
+          />
+          <InputField
+            values={firstName}
+            label={t('form.firstName')}
+            required={true}
+          />
+          <InputField
+            values={lastName}
+            label={t('form.lastName')}
+            required={true}
+          />
+          <InputField values={email} label={t('form.email')} required={true} />
           <InputField
             values={password}
-            label="Password"
+            label={t('form.password')}
             autocomplete="new-password"
             required={true}
           />
           <InputField
             values={confirmPassword}
-            label="Confirm password"
+            label={t('form.confirmPassword')}
             autocomplete="new-password"
             required={true}
           />
@@ -153,7 +167,7 @@ const CreateAccountForm = () => {
               <TextField
                 required
                 {...params}
-                label="Select language"
+                label={t('form.selectLanguage')}
                 variant="outlined"
               />
             )}
@@ -167,7 +181,7 @@ const CreateAccountForm = () => {
               {alert.message}
             </Alert>
           )}
-          <FormButton name="Create Account" />
+          <FormButton name={t('createAccount.create')} />
         </form>
       </div>
     </Container>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import authService from '../../services/auth';
 import LogoButton from '../common/LogoButton';
@@ -6,6 +7,7 @@ import GoogleLogo from '../../images/google-logo.png';
 import FortyTwoLogo from '../../images/42-logo.png';
 
 const OmniAuthLogin = () => {
+  const { t } = useTranslation();
   const handleGoogleSignIn = async () => {
     try {
       const data = await authService.googleUrl();
@@ -28,12 +30,12 @@ const OmniAuthLogin = () => {
     <>
       <LogoButton
         handleClick={handleGoogleSignIn}
-        name="Login with Google"
+        name={t('login.google')}
         logo={GoogleLogo}
       />
       <LogoButton
         handleClick={handle42SignIn}
-        name="Login with 42"
+        name={t('login.42')}
         logo={FortyTwoLogo}
       />
     </>
