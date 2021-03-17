@@ -7,15 +7,15 @@ import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import CardMedia from '@material-ui/core/CardMedia';
+import Iframe from 'react-iframe';
 
 import useModal from '../../hooks/useModal';
 import CustomModal from '../common/CustomModal';
 import LoginForm from '../auth/LoginForm';
 import CreateAccountForm from '../auth/CreateAccountForm';
 import PasswordResetForm from '../auth/PasswordResetForm';
-import sample from './sample.mp4';
+
+import hyper from './hyper.mp4';
 
 // TO DO move to styles
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +25,9 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.up('sm')]: {
       width: '300px',
+      top: '60em',
     },
+    zIndex: '1',
   },
   box: {
     [theme.breakpoints.up('xs')]: {
@@ -34,6 +36,45 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('md')]: {
       flexDirection: 'row',
     },
+  },
+  video: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    pointerEvents: 'none',
+  },
+  cover: {
+    background:
+      'url(https://images.unsplash.com/photo-1519373344801-14c1f9539c9c?w=1920&h=1080&fit=crop&crop=bottom) no-repeat center',
+    backgroundSize: 'cover',
+    position: 'fixed',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    zIndex: '-1',
+  },
+  text: {
+    position: 'absolute',
+    top: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    fontSize: 'calc(5px + 13vw + 0.8vh)',
+    // fontSize: 'calc(10px + 13vw + 2.5vh)',
+    fontWeight: 900,
+    letterSpacing: '0.15em',
+    margin: 'auto',
+    textTransform: 'uppercase',
+    userSelect: 'none',
+    backgroundColor: '#060629',
+    border: '1px red',
+    color: '#fff',
+    mixBlendMode: 'multiply',
   },
 }));
 
@@ -52,125 +93,50 @@ const Landing = ({ user, setUser }) => {
   const loginModal = useModal(<LoginForm setUser={setUser} />);
   const createAccountModal = useModal(<CreateAccountForm setUser={setUser} />);
 
-  const Hyper = () => {
-    return (
-      <div
-        style={{
-          position: 'absolute',
-          width: '100%',
-          height: '100vh',
-          overflow: 'hidden',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <video
-          autoPlay
-          muted
-          loop
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-          }}>
-          <source src={sample} type="video/mp4"></source>
-        </video>
-        <h2
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            background: '#fff',
-            fontSize: '70vh',
-            textAlign: 'center',
-            textTransform: 'uppercase',
-            color: '#000',
-            lineHeight: '100vh',
-            mixBlendMode: 'screen',
-          }}>
-          Hyper
-        </h2>
-      </div>
-    );
-  };
-
-  const clouds =
-    'https://www.youtube.com/embed/bog4VzMWP20?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&mute=1&playlist=bog4VzMWP20';
-
   return (
-    <div style={{ marginTop: '25%', textAlign: 'center' }}>
-      <Typography variant="h1">HYPERTUBE</Typography>
-      {!user.userId && (
-        <>
-          <Box mt={5} display="flex" justifyContent="center" className={classes.box}>
-            <Box m={3}>
-              <Button
-                className={classes.button}
-                type="submit"
-                variant="outlined"
-                color="primary"
-                onClick={loginModal.handleClickOpen}>
-                {t('login.login')}
-              </Button>
-            </Box>
-            <Box m={3}>
-              <Button
-                className={classes.button}
-                type="submit"
-                variant="outlined"
-                color="secondary"
-                onClick={createAccountModal.handleClickOpen}>
-                {t('createAccount.create')}
-              </Button>
-            </Box>
-          </Box>
-        </>
-      )}
+    <div>
+      <div className={classes.cover}>
+        <div className={classes.video}>
+          <Iframe
+            url="https://www.youtube.com/embed/y2TET3G0sJ4?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&mute=1&playlist=y2TET3G0sJ4"
+            // url={hyper}
+            width="100%"
+            height="100%"
+            id="myId"
+            display="initial"
+            position="relative"
+          />
+          {/* <div className={classes.text}></div> */}
+          <h1 className={classes.text}>HYPERTUBE</h1>
+        </div>
+      </div>
+      <Box mt={5} display="flex" justifyContent="center" className={classes.box}>
+        <Box m={3} style={{ alignSelf: 'center' }}>
+          <Button
+            className={classes.button}
+            type="submit"
+            variant="outlined"
+            color="primary"
+            onClick={loginModal.handleClickOpen}>
+            Login
+          </Button>
+        </Box>
+        <Box m={3} style={{ alignSelf: 'center' }}>
+          <Button
+            className={classes.button}
+            type="submit"
+            variant="outlined"
+            color="secondary"
+            onClick={createAccountModal.handleClickOpen}>
+            Create Account
+          </Button>
+        </Box>
+      </Box>
       <CustomModal {...loginModal} />
       <CustomModal {...createAccountModal} />
       <CustomModal {...passwordResetModal} />
     </div>
   );
-
-  // return (
-  //   <div style={{ marginTop: '25%', textAlign: 'center' }}>
-  //     <Typography variant="h1">HYPERTUBE</Typography>
-  //     {!user.userId && (
-  //       <>
-  //         <Box mt={5} display="flex" justifyContent="center" className={classes.box}>
-  //           <Box m={3}>
-  //             <Button
-  //               className={classes.button}
-  //               type="submit"
-  //               variant="outlined"
-  //               color="primary"
-  //               onClick={loginModal.handleClickOpen}>
-  //               Login
-  //             </Button>
-  //           </Box>
-  //           <Box m={3}>
-  //             <Button
-  //               className={classes.button}
-  //               type="submit"
-  //               variant="outlined"
-  //               color="secondary"
-  //               onClick={createAccountModal.handleClickOpen}>
-  //               Create Account
-  //             </Button>
-  //           </Box>
-  //         </Box>
-  //       </>
-  //     )}
-  //     <CustomModal {...loginModal} />
-  //     <CustomModal {...createAccountModal} />
-  //     <CustomModal {...passwordResetModal} />
-  //   </div>
-  // );
 };
 
 Landing.propTypes = {
