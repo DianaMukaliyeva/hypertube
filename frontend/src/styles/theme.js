@@ -1,7 +1,8 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
 const dark1 = '#060629';
-const dark2 = '#1b1d2f';
+const dark2 = '#121421';
+// const dark2 = '#1b1d2f';
 const light1 = '#ffffff';
 const light2 = '#707281';
 const pink1 = '#fb3b64';
