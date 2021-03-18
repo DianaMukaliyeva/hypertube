@@ -1,26 +1,29 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import './style.css';
 
 import movieService from '../../services/movie';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+// import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Alert } from '@material-ui/lab';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 
 const useStyles = makeStyles(() => ({
-  root: {
-    marginTop: '2rem',
-  },
-  intro: {
-    marginBottom: '1rem',
-    marginTop: '1rem',
+  title: {
+    marginBottom: '2rem',
   },
   buttonStyle: {
     marginTop: '2rem',
     width: '15%',
+    borderColor: '#292b3c',
+    padding: '0.7rem',
+  },
+  input: {
+    '&.MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+      borderColor: '#292b3c',
+    },
   },
 }));
 
@@ -82,34 +85,34 @@ const AddComment = ({ data }) => {
   };
 
   return (
-    <div className={classes.root}>
-      <Typography variant="h5" className={classes.intro}>
-        Comments
+    <div>
+      <Typography variant="h5" className={classes.title}>
+        Leave a Comment
       </Typography>
       {alert.show && (
-          <Alert
-            severity={alert.severity}
-            onClose={() => setAlert({ ...alert, show: false })}
-          >
-            {alert.message}
-          </Alert>
-        )}
-      <TextField
-        color="primary"
+        <Alert
+          className={classes.title}
+          severity={alert.severity}
+          onClose={() => setAlert({ ...alert, show: false })}>
+          {alert.message}
+        </Alert>
+      )}
+      <OutlinedInput
         fullWidth
-        id="standard-basic"
         multiline
         rows="7"
-        label="Add comment"
+        label="Leave your comment here"
         values={comment}
+        className={classes.input}
         onChange={onChangeComment}
       />
       <Button
         onClick={handleComment}
         variant="outlined"
         color="secondary"
+        size="small"
         className={classes.buttonStyle}>
-        Send
+        Post comment
       </Button>
     </div>
   );

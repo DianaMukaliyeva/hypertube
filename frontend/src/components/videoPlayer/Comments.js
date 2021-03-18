@@ -10,20 +10,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     marginTop: '2rem',
-  },
-  dividerStyle: {
-    background: '#fb3b64',
-  },
-  inline: {
-    display: 'inline',
-  },
-  large: {
-    width: theme.spacing(6),
-    height: theme.spacing(6),
-    marginRight: '1rem'
   },
 }));
 
@@ -34,31 +23,30 @@ const Comments = ({ movie }) => {
 
   return (
     <>
-    <div className={classes.root}>
-      <List>
-      {console.log('TEST INSIDE', movie)}
-      {movie.map((c) => (
-      <ListItem key={c._id} alignItems="flex-start">
-        <ListItemAvatar>
-          <Profile user={c.user} />
-        </ListItemAvatar>
-        <ListItemText
-          primary={c.user.username}
-          secondary={
-            <Typography
-              component="span"
-              variant="body2"
-              className={classes.inline}
-              color="textPrimary"
-            >
-              {c.comment}
-            </Typography>
-          }
-        />
-        </ListItem>
-      ))}
-      </List>
-    </div>
+      <div className={classes.root}>
+        <List>
+          {console.log('TEST INSIDE', movie)}
+          {movie.map((c) => (
+            <ListItem key={c._id} alignItems="flex-start">
+              <ListItemAvatar>
+                <Profile user={c.user} />
+              </ListItemAvatar>
+              <ListItemText
+                primary={c.user.username}
+                secondary={
+                  <Typography
+                    component="span"
+                    variant="body1"
+                    className={classes.inline}
+                    color="textSecondary">
+                    {c.comment}
+                  </Typography>
+                }
+              />
+            </ListItem>
+          ))}
+        </List>
+      </div>
     </>
   );
 };
