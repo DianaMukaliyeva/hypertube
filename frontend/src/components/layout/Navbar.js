@@ -43,7 +43,7 @@ const NavBar = ({ user, setUser }) => {
     setUser({ userId: '', lang: '' });
   };
 
-  const profile = useModal(<MyProfile user={user} setUser={setUser} />);
+  const profile = useModal(<MyProfile user={user} setUser={setUser} />, 'sm');
 
   const options = [
     { icon: <PlayCircleFilledWhiteIcon />, onClick: handleClick, text: 'Hypertube' },

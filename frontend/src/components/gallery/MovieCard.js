@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MovieCard = ({ movie }) => {
-  const movieModal = useModal(<VideoPlayer movie={movie} />, false);
+  const movieModal = useModal(<VideoPlayer movie={movie} />, 'lg');
   const classes = useStyles();
   // const { t } = useTranslation();
 
