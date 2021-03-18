@@ -41,14 +41,13 @@ function App() {
       if (token) {
         try {
           const decoded = jwt_decode(token);
+          setAuthToken(token);
           setUser({ userId: decoded.id, lang: decoded.lang });
+          history.push('/');
         } catch (e) {
           console.log('');
         }
       }
-
-      setAuthToken(token);
-      history.push('/');
     };
 
     checkToken();
