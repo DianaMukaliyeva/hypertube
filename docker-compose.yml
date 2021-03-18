@@ -15,7 +15,6 @@ services:
     restart: unless-stopped
     volumes:
       - mongodb:/data/db
-      - mongodb_config:/data/configdb
 
   backend_hyper:
     build:
@@ -59,4 +58,3 @@ services:
 
 volumes:
   mongodb:
-  mongodb_config:
