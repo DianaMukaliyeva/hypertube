@@ -74,10 +74,10 @@
     "ratingLabel": "IMDb рейтинг",
     "genreLabel": "Жанры",
     "sortLabel": "Сортировать",
-    "mostPopular": "От популярных до не популярных",
-    "leastPopular": "От не популярных до популярных",
-    "newest": "От новых до старых",
-    "oldest": "От старых до новых"
+    "mostPopular": "Популярные",
+    "leastPopular": "Не популярные",
+    "newest": "Новинки",
+    "oldest": "Старье"
   },
   "genres": {
     "comedy": "Комедия",
