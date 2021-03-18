@@ -24,7 +24,7 @@ describe('calling onChange changes value and helper text', () => {
     });
 
     await waitFor(() => expect(result.current.value).toBe(validEmail));
-    expect(result.current.helperText).toBe('form.correct');
+    expect(result.current.helperText).toBe('formValidation.correct');
   });
 
   it('invalid email shows error helper text', async () => {
@@ -43,7 +43,7 @@ describe('calling onChange changes value and helper text', () => {
     });
 
     await waitFor(() => expect(result.current.value).toBe(invalidEmail));
-    expect(result.current.helperText).toContain('form.email');
+    expect(result.current.helperText).toContain('formValidation.emailFormat');
   });
 
   it('invalid email shows error helper text', async () => {
@@ -62,6 +62,6 @@ describe('calling onChange changes value and helper text', () => {
     });
 
     await waitFor(() => expect(result.current.value).toBe(invalidEmail2));
-    expect(result.current.helperText).toContain('form.email');
+    expect(result.current.helperText).toContain('formValidation.emailFormat');
   });
 });

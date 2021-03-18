@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
@@ -36,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LoginForm = ({ setUser }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const email = useField('email', 'loginEmail', 'login-email');
   const password = useField('password', 'loginPassword', 'login-password');
@@ -52,7 +54,7 @@ const LoginForm = ({ setUser }) => {
     if (email.value === '') {
       email.setValues({
         ...email.values,
-        helperText: 'required',
+        helperText: t('formValidation.required'),
         error: true,
       });
       return;
@@ -61,7 +63,7 @@ const LoginForm = ({ setUser }) => {
     if (password.value === '') {
       password.setValues({
         ...password.values,
-        helperText: 'required',
+        helperText: t('formValidation.required'),
         error: true,
       });
       return;
@@ -77,21 +79,21 @@ const LoginForm = ({ setUser }) => {
         case 400:
           setAlert({
             show: true,
-            message: 'Invalid email or password',
+            message: t('formValidation.invalidCredentials'),
             severity: 'error',
           });
           break;
         case 500:
           setAlert({
             show: true,
-            message: 'Server error',
+            message: t('formValidation.server'),
             severity: 'error',
           });
           break;
         default:
           setAlert({
             show: true,
-            message: 'Oops.. somthing went completely wrong',
+            message: t('formValidation.unexpected'),
             severity: 'error',
           });
           break;
@@ -106,16 +108,16 @@ const LoginForm = ({ setUser }) => {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Login
+          {t('login.title')}
         </Typography>
 
         <OmniAuthLogin />
 
         <form className={classes.form} onSubmit={handleLogin} noValidate>
-          <InputField values={email} label="email" required={true} />
+          <InputField values={email} label={t('form.email')} required={true} />
           <InputField
             values={password}
-            label="Password"
+            label={t('form.password')}
             autocomplete="current-password"
             required={true}
           />
@@ -127,11 +129,11 @@ const LoginForm = ({ setUser }) => {
               {alert.message}
             </Alert>
           )}
-          <FormButton name="Login" />
+          <FormButton name={t('login.login')} />
         </form>
         <Box>
           <Link href="#" onClick={recoveryLinkModal.handleClickOpen}>
-            Forgot Password?
+            {t('login.forgotPw')}
           </Link>
         </Box>
       </div>

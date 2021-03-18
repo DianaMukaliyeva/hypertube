@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-// import i18n from '../../i18n';
-// import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -36,15 +35,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Landing = ({ user, setUser }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const classes = useStyles();
-  // const changeLanguage = (lang) => {
-  //   i18n.changeLanguage(lang);
-  // };
-  // const { t } = useTranslation();
+
   const passwordResetModal = useModal(<PasswordResetForm />);
   useEffect(() => {
-    // changeLanguage('en');
     if (/^(\/recoverylink)+/.test(history.location.pathname)) {
       passwordResetModal.handleClickOpen(true);
     }
@@ -72,7 +68,7 @@ const Landing = ({ user, setUser }) => {
                 color="primary"
                 onClick={loginModal.handleClickOpen}
               >
-                Login
+                {t('login.login')}
               </Button>
             </Box>
             <Box m={3}>
@@ -83,7 +79,7 @@ const Landing = ({ user, setUser }) => {
                 color="secondary"
                 onClick={createAccountModal.handleClickOpen}
               >
-                Create Account
+                {t('createAccount.create')}
               </Button>
             </Box>
           </Box>
