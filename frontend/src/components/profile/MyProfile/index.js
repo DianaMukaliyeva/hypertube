@@ -107,6 +107,8 @@ const MyProfile = ({ user, setUser }) => {
     if (userData.avatarBase64String !== avatar)
       data.avatarBase64String = avatar;
 
+    if (Object.keys(data).length === 0) return;
+
     try {
       await userService.update(user.userId, data);
       setUserData({ ...userData, ...data, avatarBase64String: avatar });
