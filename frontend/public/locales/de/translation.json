@@ -1,7 +1,4 @@
 {
-  "btn": {
-    "send": "Send"
-  },
   "navbar": {
     "profile": "Profile",
     "logout": "Logout"
@@ -10,20 +7,61 @@
     "username": "Username",
     "firstName": "First name",
     "lastName": "Last name",
+    "email": "Email",
     "password": "Password",
     "currentPassword": "Current password",
     "newPassword": "New password",
     "confirmPassword": "Confirm password",
-    "required": "required field",
-    "minLen": "must be at least {{number}} characters",
-    "maxLen": "must be max {{number}} characters",
-    "nameFormat": "must contain only letters and numbers",
-    "email": "must be valid email",
-    "correct": "correct"
+    "selectLanguage": "Select language",
+    "en": "English",
+    "de": "German",
+    "ru": "Russian",
+    "fi": "Finnish"
+  },
+  "formValidation": {
+    "required": "Required field",
+    "unique": "Not unique",
+    "minLen": "Must be at least 2 characters",
+    "maxLen": "Must be max 45 characters",
+    "nameFormat": "Must contain only letters and numbers",
+    "passwordFormat": "Must contain at least 1 upper case, 1 lower case, 1 number",
+    "emailFormat": "Must be valid email",
+    "pwNoMatch": "Passwords don't match",
+    "wrongPw": "Wrong password",
+    "invalidCredentials": "Invalid credentials",
+    "notFound": "Not found",
+    "notValid": "Not valid",
+    "correct": "ok"
+  },
+  "login": {
+    "title": "Login",
+    "google": "Login with Google",
+    "42": "Login with 42",
+    "login": "Login",
+    "forgotPw": "Forgot password?"
+  },
+  "pwRecovery": {
+    "title": "Recover password",
+    "send": "Send",
+    "helper": "Recovery link will be send to your email",
+    "checkEmail": "Check your email for further instructions",
+    "invalidLink": "Invalid link, please try again",
+    "success": "Password was successfully updated",
+    "pwResetTitle": "Reset Password",
+    "save": "Save"
+  },
+  "createAccount": {
+    "title": "Create Account",
+    "success": "Account created successfully",
+    "create": "Create Account"
   },
   "myProfile": {
     "title": "My Profile",
-    "update": "Update"
+    "update": "Update Information",
+    "updatePassword": "Update Password"
+  },
+  "profile": {
+    "title": "Profile"
   },
   "movie": {
     "rating": "rating",
@@ -64,5 +102,10 @@
   },
   "gallery": {
     "noMovies": "No movies found"
+  },
+  "error": {
+    "unauthorized": "Unauthorized",
+    "server": "Server error",
+    "unexpected": "Unexpected error"
   }
 }
