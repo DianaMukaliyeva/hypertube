@@ -1,4 +1,5 @@
 import User from '../../models/User';
+
 const invalidUpdates = [
   {
     email: 'peter@mailcom',
