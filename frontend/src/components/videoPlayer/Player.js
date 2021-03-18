@@ -3,6 +3,8 @@ import React from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 
+import img from '../../images/video-banner.png';
+
 const Player = ({ subsTracks }) => {
   // eslint-disable-next-line no-undef
   const streamUrl = process.env.REACT_APP_BACKEND_URL + '/api/auth/stream';
@@ -21,7 +23,8 @@ const Player = ({ subsTracks }) => {
         url={streamUrl}
         onPlay={handlePlay}
         width="100%"
-        height="100%"
+        // height="360px"
+        light={img}
         config={{
           file: {
             attributes: {

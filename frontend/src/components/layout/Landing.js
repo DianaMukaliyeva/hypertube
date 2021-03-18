@@ -4,9 +4,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import Iframe from 'react-iframe';
 
 import useModal from '../../hooks/useModal';
@@ -15,19 +17,22 @@ import LoginForm from '../auth/LoginForm';
 import CreateAccountForm from '../auth/CreateAccountForm';
 import PasswordResetForm from '../auth/PasswordResetForm';
 
-import hyper from './hyper.mp4';
-
 // TO DO move to styles
 const useStyles = makeStyles((theme) => ({
   button: {
     [theme.breakpoints.up('xs')]: {
-      width: '250px',
+      width: '240px',
     },
     [theme.breakpoints.up('sm')]: {
       width: '300px',
-      top: '60em',
+      top: '60vh',
     },
+    top: '20vh',
     zIndex: '1',
+  },
+  titleMobile: {
+    fontWeight: 600,
+    marginTop: '20vh',
   },
   box: {
     [theme.breakpoints.up('xs')]: {
@@ -82,6 +87,7 @@ const Landing = ({ user, setUser }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const classes = useStyles();
+  const isMobile = useMediaQuery('(max-width:600px)');
 
   const passwordResetModal = useModal(<PasswordResetForm />);
   useEffect(() => {
@@ -95,21 +101,26 @@ const Landing = ({ user, setUser }) => {
 
   return (
     <div>
-      <div className={classes.cover}>
-        <div className={classes.video}>
-          <Iframe
-            url="https://www.youtube.com/embed/y2TET3G0sJ4?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&mute=1&playlist=y2TET3G0sJ4"
-            // url={hyper}
-            width="100%"
-            height="100%"
-            id="myId"
-            display="initial"
-            position="relative"
-          />
-          {/* <div className={classes.text}></div> */}
-          <h1 className={classes.text}>HYPERTUBE</h1>
+      {isMobile ? (
+        <Typography variant="h3" className={classes.titleMobile} align="center">
+          HYPERTUBE
+        </Typography>
+      ) : (
+        <div className={classes.cover}>
+          <div className={classes.video}>
+            <Iframe
+              url="https://www.youtube.com/embed/y2TET3G0sJ4?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&mute=1&playlist=y2TET3G0sJ4"
+              width="100%"
+              height="100%"
+              id="myId"
+              display="initial"
+              position="relative"
+            />
+            <h1 className={classes.text}>HYPERTUBE</h1>
+          </div>
         </div>
-      </div>
+      )}
+
       <Box mt={5} display="flex" justifyContent="center" className={classes.box}>
         <Box m={3} style={{ alignSelf: 'center' }}>
           <Button
