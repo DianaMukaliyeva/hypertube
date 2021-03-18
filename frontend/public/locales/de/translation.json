@@ -68,6 +68,8 @@
     "watched": "watched movie"
   },
   "filter": {
+    "A-Z": "A - Z",
+    "Z-A": "A - Z",
     "searchLabel": "Search for a Movie",
     "ratingLabel": "IMDb RATING",
     "genreLabel": "GENRE",

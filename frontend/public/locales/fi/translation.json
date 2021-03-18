@@ -68,6 +68,8 @@
     "watched": "Nähty"
   },
   "filter": {
+    "A-Z": "A - Z",
+    "Z-A": "A - Z",
     "searchLabel": "Etsi elokuvaa",
     "ratingLabel": "IMDb ARVIO",
     "genreLabel": "GENRE",
