@@ -16,7 +16,8 @@
     "en": "English",
     "de": "German",
     "ru": "Russian",
-    "fi": "Finnish"
+    "fi": "Finnish",
+    "or": "or"
   },
   "formValidation": {
     "required": "Required field",

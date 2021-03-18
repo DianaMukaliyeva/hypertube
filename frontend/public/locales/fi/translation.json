@@ -16,7 +16,8 @@
     "en": "Englanti",
     "de": "Saksa",
     "ru": "Venäjä",
-    "fi": "Suomi"
+    "fi": "Suomi",
+    "or": "or"
   },
   "formValidation": {
     "required": "Pakollinen kenttä",
