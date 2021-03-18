@@ -13,12 +13,12 @@ const usernameField = {
 };
 
 const validUsername = 'ulla';
-const validUsernameHelperText = 'form.correct';
+const validUsernameHelperText = 'formValidation.correct';
 
 const invalidUsername = '$@//*<<<>>>>';
-const invalidUsernameHelperText = 'form.nameFormat';
+const invalidUsernameHelperText = 'formValidation.nameFormat';
 
-const minLenHelperText = 'form.minLen';
+const minLenHelperText = 'formValidation.minLen';
 
 test('input value changes when typed', async () => {
   const { result } = renderHook(() =>

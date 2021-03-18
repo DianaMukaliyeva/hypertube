@@ -41,7 +41,7 @@ describe('all elements are rendered', () => {
   });
 
   it('renders Forgot password link', () => {
-    expect(screen.getByText(/forgot password/i));
+    expect(screen.getByText(/forgot/i)).toBeEnabled();
   });
 
   it('does not render alert', () => {
@@ -133,14 +133,14 @@ describe('forgot password modal', () => {
   });
 
   it('opens when link is clicked', () => {
-    userEvent.click(screen.getByText(/forgot password/i));
-    expect(screen.getByText(/recovery link/i));
+    userEvent.click(screen.getByText(/forgot/i));
+    expect(screen.getByText(/pwRecovery.helper/i));
   });
 
   it('closes when close button is clicked', async () => {
-    userEvent.click(screen.getByText(/forgot password/i));
-    expect(screen.getByText(/recovery link/i));
+    userEvent.click(screen.getByText(/forgot/i));
+    expect(screen.getByText(/pwRecovery.helper/i));
     userEvent.click(screen.getByRole('button', { name: 'close' }));
-    await waitForElementToBeRemoved(screen.getByText(/recovery link/i));
+    await waitForElementToBeRemoved(screen.getByText(/pwRecovery.helper/i));
   });
 });

@@ -24,10 +24,10 @@ const UpdateInformation = (props) => {
   const { t } = useTranslation();
   const [lang, setLang] = useState({ label: '', code: '' });
   const langOptions = [
-    { label: 'English', code: 'en' },
-    { label: 'German', code: 'de' },
-    { label: 'Finnish', code: 'fi' },
-    { label: 'Russian', code: 'ru' },
+    { label: t('form.en'), code: 'en' },
+    { label: t('form.de'), code: 'de' },
+    { label: t('form.fi'), code: 'fi' },
+    { label: t('form.ru'), code: 'ru' },
   ];
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const UpdateInformation = (props) => {
       data.lastname = lastName.value;
     if (lang && lang.code !== userData.language) data.language = lang.code;
 
-    if (Object.keys(data).length !== 0) await handleUpdate(data, setAlert);
+    await handleUpdate(data, setAlert);
   };
 
   return lang ? (

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 import useField from '../../hooks/useField';
 
 import userService from '../../services/user';
@@ -37,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateAccountForm = () => {
+  const classes = useStyles();
+  const { t } = useTranslation();
+
   const username = useField('text', 'username', 'create-username');
   const firstName = useField('text', 'name', 'create-firstname');
   const lastName = useField('text', 'name', 'create-lastname');
@@ -55,13 +60,11 @@ const CreateAccountForm = () => {
   });
 
   const langOptions = [
-    { label: 'English', code: 'en' },
-    { label: 'German', code: 'de' },
-    { label: 'Finnish', code: 'fi' },
-    { label: 'Russian', code: 'ru' },
+    { label: t('form.en'), code: 'en' },
+    { label: t('form.de'), code: 'de' },
+    { label: t('form.fi'), code: 'fi' },
+    { label: t('form.ru'), code: 'ru' },
   ];
-
-  const classes = useStyles();
 
   const handleCreate = async (event) => {
     event.preventDefault();
@@ -78,7 +81,7 @@ const CreateAccountForm = () => {
       await userService.create(data);
       setAlert({
         show: true,
-        message: 'Account successfully created',
+        message: t('createAccount.success'),
         severity: 'success',
       });
     } catch (err) {
@@ -96,18 +99,28 @@ const CreateAccountForm = () => {
         case 500:
           setAlert({
             show: true,
-            message: 'Server error',
+            message: t('error.server'),
             severity: 'error',
           });
           break;
         default:
           setAlert({
             show: true,
-            message: 'Oops.. somthing went completely wrong',
+            message: t('error.unexpected'),
             severity: 'error',
           });
           break;
       }
+    }
+  };
+
+  const handleLangChange = (event, value) => {
+    if (value !== null) {
+      i18next.changeLanguage(value.code, (err) => {
+        if (err)
+          return console.log('something went wrong loading language', err);
+      });
+      setLang({ ...value, label: t(`form.${value.code}`) });
     }
   };
 
@@ -116,25 +129,37 @@ const CreateAccountForm = () => {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Create account
+          {t('createAccount.title')}
         </Typography>
 
         <OmniAuthLogin />
 
         <form className={classes.form} onSubmit={handleCreate} noValidate>
-          <InputField values={username} label="Username" required={true} />
-          <InputField values={firstName} label="First name" required={true} />
-          <InputField values={lastName} label="Last name" required={true} />
-          <InputField values={email} label="email" required={true} />
+          <InputField
+            values={username}
+            label={t('form.username')}
+            required={true}
+          />
+          <InputField
+            values={firstName}
+            label={t('form.firstName')}
+            required={true}
+          />
+          <InputField
+            values={lastName}
+            label={t('form.lastName')}
+            required={true}
+          />
+          <InputField values={email} label={t('form.email')} required={true} />
           <InputField
             values={password}
-            label="Password"
+            label={t('form.password')}
             autocomplete="new-password"
             required={true}
           />
           <InputField
             values={confirmPassword}
-            label="Confirm password"
+            label={t('form.confirmPassword')}
             autocomplete="new-password"
             required={true}
           />
@@ -146,14 +171,12 @@ const CreateAccountForm = () => {
             getOptionLabel={(option) => option.label}
             getOptionSelected={(option, value) => option.value === value.value}
             className={classes.select}
-            onChange={(event, value) => {
-              if (value !== null) setLang(value);
-            }}
+            onChange={handleLangChange}
             renderInput={(params) => (
               <TextField
                 required
                 {...params}
-                label="Select language"
+                label={t('form.selectLanguage')}
                 variant="outlined"
               />
             )}
@@ -167,7 +190,7 @@ const CreateAccountForm = () => {
               {alert.message}
             </Alert>
           )}
-          <FormButton name="Create Account" />
+          <FormButton name={t('createAccount.create')} />
         </form>
       </div>
     </Container>

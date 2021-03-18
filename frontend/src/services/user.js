@@ -15,6 +15,9 @@ const create = async (data) => {
 
 const update = async (userId, data) => {
   const res = await axios.patch(baseUrl + `/${userId}`, data);
+  if (res.data.token) {
+    localStorage.setItem('token', res.data.token);
+  }
   return res.data;
 };
 

@@ -8,47 +8,47 @@ const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@
 
 const validateField = async (value, fieldName) => {
   if (!value) {
-    return createDetail(fieldName, value, 'required');
+    return createDetail(fieldName, value, 'formValidation.required');
   }
   switch (fieldName) {
     case 'email':
       if (!emailRegex.test(value)) {
-        return createDetail(fieldName, value, 'invalid format');
+        return createDetail(fieldName, value, 'formValidation.emailFormat');
       }
       if (await User.findOne({ email: value })) {
-        return createDetail(fieldName, value, 'not unique');
+        return createDetail(fieldName, value, 'formValidation.unique');
       }
       break;
     case 'username':
       if (!/^[a-zA-Z0-9]+$/.test(value)) {
-        return createDetail(fieldName, value, 'invalid characters');
+        return createDetail(fieldName, value, 'formValidation.nameFormat');
       }
       if (value.length < 2) {
-        return createDetail(fieldName, value, 'minimum length 2 characters');
+        return createDetail(fieldName, value, 'formValidation.minLen');
       }
       if (await User.findOne({ username: value })) {
-        return createDetail(fieldName, value, 'not unique');
+        return createDetail(fieldName, value, 'formValidation.unique');
       }
       break;
     case 'language':
       if (!['en', 'fi', 'ru', 'de'].includes(value)) {
-        return createDetail(fieldName, value, 'not exists');
+        return createDetail(fieldName, value, 'formValidation.notFound');
       }
       break;
     case 'userId':
       if (!/^[0-9a-fA-F]{24}$/.test(value)) {
-        return createDetail(fieldName, value, 'not valid');
+        return createDetail(fieldName, value, 'formValidation.notValid');
       }
       if (!(await User.findById(value))) {
-        return createDetail(fieldName, value, 'not found');
+        return createDetail(fieldName, value, 'formValidation.notFound');
       }
       break;
     default:
       if (!/^[a-zA-Z0-9 ]+$/.test(value)) {
-        return createDetail(fieldName, value, 'invalid characters');
+        return createDetail(fieldName, value, 'formValidation.nameFormat');
       }
       if (value.length < 2) {
-        return createDetail(fieldName, value, 'minimum length 2 characters');
+        return createDetail(fieldName, value, 'formValidation.minLen');
       }
   }
   return '';
@@ -56,28 +56,28 @@ const validateField = async (value, fieldName) => {
 
 const validatePasswords = (password, confirmPassword) => {
   if (!password) {
-    return createDetail('password', password, 'required');
+    return createDetail('password', password, 'formValidation.required');
   }
   if (!confirmPassword) {
-    return createDetail('confirmPassword', confirmPassword, 'required');
+    return createDetail('confirmPassword', confirmPassword, 'formValidation.required');
   }
   if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/.test(password)) {
-    return createDetail('password', '********', 'invalid format');
+    return createDetail('password', '********', 'formValidation.passwordFormat');
   }
   if (password !== confirmPassword) {
-    return createDetail('confirmPassword', '*******', 'do not match');
+    return createDetail('confirmPassword', '*******', 'formValidation.pwNoMatch');
   }
   return '';
 };
 
 const validateResetToken = async (token, userId) => {
   if (!token) {
-    return createDetail('resetToken', token, 'required');
+    return createDetail('resetToken', token, 'formValidation.required');
   }
 
   const user = await User.findById(userId);
   if (user.token !== token) {
-    return createDetail('resetToken', token, 'not valid');
+    return createDetail('resetToken', token, 'formValidation.notValid');
   }
   return '';
 };
@@ -139,27 +139,27 @@ const isPasswordValid = async (password, userId) => {
 
 const validatePasswordAndEmail = async (email, password) => {
   if (!password) {
-    return createDetail('password', password, 'required');
+    return createDetail('password', password, 'formValidation.required');
   }
   if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/.test(password)) {
-    return createDetail('password', '********', 'invalid format');
+    return createDetail('password', '********', 'formValidation.passwordFormat');
   }
   const user = await User.findOne({ email: email.toLowerCase() });
   if (!user) {
-    return createDetail('email', email, 'does not exist');
+    return createDetail('email', email, 'formValidation.invalidCredentials');
   }
   if (!(await bcrypt.compare(password, user.password))) {
-    return createDetail('password', '********', 'wrong password');
+    return createDetail('password', '********', 'formValidation.invalidCredentials');
   }
   return '';
 };
 
 const validateEmailFormat = (email) => {
   if (!email) {
-    return createDetail('email', email, 'required');
+    return createDetail('email', email, 'formValidation.required');
   }
   if (!emailRegex.test(email)) {
-    return createDetail('email', email, 'invalid format');
+    return createDetail('email', email, 'formValidation.emailFormat');
   }
   return '';
 };
@@ -183,9 +183,9 @@ const validateUserUpdate = async (req, res, next) => {
   if (!userIdError) {
     if (password || confirmPassword) {
       if (!oldPassword) {
-        errors.push(createDetail('oldPassword', '', 'required'));
+        errors.push(createDetail('oldPassword', '', 'formValidation.required'));
       } else if (!(await isPasswordValid(oldPassword, userId))) {
-        errors.push(createDetail('oldPassword', '******', 'wrong password'));
+        errors.push(createDetail('oldPassword', '******', 'formValidation.wrongPw'));
       }
       errors.push(validatePasswords(password, confirmPassword));
     }
@@ -236,7 +236,7 @@ const validateEmail = async (req, res, next) => {
   errors.push(validateEmailFormat(email));
 
   if (!(await User.findOne({ email }))) {
-    const notFound = createDetail('email', email, 'not found');
+    const notFound = createDetail('email', email, 'formValidation.notFound');
     errors.push(notFound);
   }
   errors = errors.filter((error) => error);
