@@ -16,7 +16,7 @@ const validUsername = 'ulla';
 const validUsernameHelperText = 'formValidation.correct';
 
 const invalidUsername = '$@//*<<<>>>>';
-const invalidUsernameHelperText = 'form.nameFormat';
+const invalidUsernameHelperText = 'formValidation.nameFormat';
 
 const minLenHelperText = 'formValidation.minLen';
 
