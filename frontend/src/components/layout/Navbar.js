@@ -1,14 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { makeStyles } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { withRouter } from 'react-router-dom';
 
-// import IconButton from '@material-ui/core/IconButton';
 import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-// import VideocamIcon from '@material-ui/icons/Videocam';
-// import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 
@@ -21,8 +20,19 @@ import CustomModal from '../common/CustomModal';
 
 import PropTypes from 'prop-types';
 
+const useStyles = makeStyles(() => ({
+  button: {
+    '&:hover': {
+      background: 'inherit',
+      color: '#fb3b64',
+    },
+  },
+}));
+
 const NavBar = ({ user, setUser }) => {
   const { t } = useTranslation();
+  const classes = useStyles();
+  const isMobile = useMediaQuery('(max-width:600px)');
 
   const handleClick = () => {
     // TO DO reset hypertube gallery
@@ -33,47 +43,37 @@ const NavBar = ({ user, setUser }) => {
     setUser({ userId: '', lang: '' });
   };
 
-  // TO DO add responsiveness: move navbar to bottom, center icons
   const profile = useModal(<MyProfile user={user} setUser={setUser} />);
+
+  const options = [
+    { icon: <PlayCircleFilledWhiteIcon />, onClick: handleClick, text: 'Hypertube' },
+    { icon: <AccountCircle />, onClick: profile.handleClickOpen, text: t('navbar.profile') },
+    { icon: <ExitToAppIcon />, onClick: handleLogout, text: t('navbar.logout') },
+  ];
 
   return (
     <AppBar style={{ padding: 0, backgroundColor: '#1b1d2f' }}>
       <Toolbar>
         <div style={{ width: '100%' }}>
           <Box display="flex">
-            <Box p={1} flexGrow={1}>
-              <Button
-                startIcon={<PlayCircleFilledWhiteIcon />}
-                variant="button"
-                size="small"
-                color="inherit"
-                key="hypertube"
-                onClick={() => handleClick()}>
-                Hypertube
-              </Button>
-            </Box>
-            <Box p={1}>
-              <Button
-                startIcon={<AccountCircle />}
-                variant="button"
-                color="inherit"
-                size="small"
-                key="profile"
-                onClick={profile.handleClickOpen}>
-                {t('navbar.profile')}
-              </Button>
-            </Box>
-            <Box p={1}>
-              <Button
-                startIcon={<ExitToAppIcon />}
-                variant="button"
-                size="small"
-                color="inherit"
-                key="logout"
-                onClick={() => handleLogout()}>
-                {t('navbar.logout')}
-              </Button>
-            </Box>
+            {options.map((option, index) => {
+              return (
+                <Box
+                  key={`nav-${index}`}
+                  p={1}
+                  m={isMobile ? 'auto' : ''}
+                  flexGrow={!isMobile && index === 0 ? 1 : ''}>
+                  <Button
+                    startIcon={option.icon}
+                    size={isMobile ? 'large' : 'small'}
+                    color="inherit"
+                    className={classes.button}
+                    onClick={option.onClick}>
+                    {isMobile ? '' : option.text}
+                  </Button>
+                </Box>
+              );
+            })}
           </Box>
         </div>
       </Toolbar>
