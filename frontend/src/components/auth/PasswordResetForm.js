@@ -14,7 +14,7 @@ import FormButton from '../common/FormButton';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Alert } from '@material-ui/lab';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PasswordResetForm = () => {
-  const history = useHistory();
+  const location = useLocation();
   const password = useField('password', 'password', 'reset-password');
   const confirmPassword = useField(
     'password',
@@ -46,7 +46,7 @@ const PasswordResetForm = () => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    const token = history.location.search.split('=')[1];
+    const token = location.search.split('=')[1];
     if (token) {
       try {
         const decoded = jwt_decode(token);
