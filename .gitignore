@@ -20,3 +20,4 @@ yarn-error.log*
 .eslintcache
 /.vscode
 requests
+*/subtitles/
