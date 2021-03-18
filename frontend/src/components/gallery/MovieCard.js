@@ -16,6 +16,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import useModal from '../../hooks/useModal';
 import CustomModal from '../common/CustomModal';
 import VideoPlayer from '../videoPlayer/index';
+import emptyThumbnail from '../../images/emptyThumbnail.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,7 +73,7 @@ const MovieCard = ({ movie }) => {
             alt={movie.title}
             image={movie.thumbnail}
             title={movie.title}
-            onError={(e) => (e.target.src = '/logo512.png')} // TO DO: add default image
+            onError={(e) => (e.target.src = emptyThumbnail)}
           />
           <CardContent className={classes.cardContent}>
             {movie.watched && (
