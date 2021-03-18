@@ -93,10 +93,10 @@ const updateUser = async (req, res) => {
       id: userId,
       lang: language,
     };
-    res.json({ token: jwt.sign(userForToken, process.env.SECRET) });
+    return res.json({ token: jwt.sign(userForToken, process.env.SECRET) });
   }
 
-  res.sendStatus(200);
+  return res.sendStatus(200);
 };
 
 const updatePassword = async (req, res) => {
