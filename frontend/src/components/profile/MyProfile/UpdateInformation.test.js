@@ -1,17 +1,12 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
+import {
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import UpdateInformation from './UpdateInformation';
-import useField from '../../../hooks/useField';
-
-const username = renderHook(() =>
-  useField('text', 'username', 'update-username')
-);
-const firstName = renderHook(() =>
-  useField('text', 'name', 'update-firstname')
-);
-const lastName = renderHook(() => useField('text', 'name', 'update-lastname'));
-const email = renderHook(() => useField('email', 'email', 'update-email'));
 
 const userData = {
   username: 'jens',
@@ -21,6 +16,9 @@ const userData = {
   language: 'en',
 };
 
+const validUsername = 'jans';
+const invalidUsername = '@@@@k';
+
 const props = {
   classes: {
     form: 'form',
@@ -28,10 +26,6 @@ const props = {
     alert: 'alert',
   },
   userData,
-  username: username.result.current,
-  firstName: firstName.result.current,
-  lastName: lastName.result.current,
-  email: email.result.current,
   alert: {
     show: false,
     message: '',
@@ -39,6 +33,13 @@ const props = {
   },
   setAlert: jest.fn(),
   handleUpdate: jest.fn(),
+};
+
+const hasHelperText = (field, text) => {
+  const helperId = field.getAttribute('aria-describedby');
+  const helperText = document.getElementById(helperId);
+  if (!text && !helperText) return;
+  expect(helperText).toHaveTextContent(text);
 };
 
 describe('all components are rendered', () => {
@@ -70,5 +71,66 @@ describe('all components are rendered', () => {
   it('renders update information button', () => {
     render(<UpdateInformation {...props} />);
     screen.getByRole('button', { name: /update/i });
+  });
+});
+
+describe('form is submitted', () => {
+  it('handles update with valid username', async () => {
+    render(<UpdateInformation {...props} />);
+
+    userEvent.paste(screen.getByLabelText(/username/i), validUsername);
+    await screen.findByDisplayValue(validUsername);
+
+    userEvent.click(screen.getByRole('button', { name: /update/i }));
+    waitFor(() => {
+      expect(props.handleUpdate).toHaveBeenCalled();
+    });
+    expect(props.handleUpdate).toHaveBeenCalledWith(
+      { username: validUsername },
+      expect.anything(),
+      expect.anything()
+    );
+  });
+
+  it('handles update with invalid username', async () => {
+    render(<UpdateInformation {...props} />);
+
+    userEvent.paste(screen.getByLabelText(/username/i), invalidUsername);
+    await screen.findByDisplayValue(invalidUsername);
+
+    hasHelperText(screen.getByLabelText(/username/i), /nameformat/i);
+
+    userEvent.click(screen.getByRole('button', { name: /update/i }));
+    waitFor(() => {
+      expect(props.handleUpdate).toHaveBeenCalled();
+    });
+    expect(props.handleUpdate).toHaveBeenCalledWith(
+      { username: invalidUsername },
+      expect.anything(),
+      expect.anything()
+    );
+  });
+
+  it('handles update with empty username', async () => {
+    render(<UpdateInformation {...props} />);
+
+    userEvent.paste(screen.getByLabelText(/username/i), 'h');
+    await screen.findByDisplayValue('h');
+    hasHelperText(screen.getByLabelText(/username/i), /minlen/i);
+
+    userEvent.clear(screen.getByLabelText(/username/i));
+    await waitForElementToBeRemoved(screen.getByText(/minlen/i));
+
+    hasHelperText(screen.getByLabelText(/username/i), '');
+
+    userEvent.click(screen.getByRole('button', { name: /update/i }));
+    waitFor(() => {
+      expect(props.handleUpdate).toHaveBeenCalled();
+    });
+    expect(props.handleUpdate).toHaveBeenCalledWith(
+      {},
+      expect.anything(),
+      expect.anything()
+    );
   });
 });
