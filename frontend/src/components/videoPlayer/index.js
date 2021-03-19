@@ -84,6 +84,7 @@ const VideoPlayer = (data) => {
   const getComments = async () => {
     try {
       const res = await movieService.getComments(data.movie.imdbCode);
+      if (!mountedRef.current) return null;
       setMovie({ ...movie, comments: res.comments });
       setRefresh(false);
     } catch (err) {
