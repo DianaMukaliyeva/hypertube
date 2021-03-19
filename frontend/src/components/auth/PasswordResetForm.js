@@ -15,7 +15,7 @@ import FormButton from '../common/FormButton';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Alert } from '@material-ui/lab';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PasswordResetForm = () => {
+  const location = useLocation();
   const { t } = useTranslation();
-  const history = useHistory();
   const password = useField('password', 'password', 'reset-password');
   const confirmPassword = useField(
     'password',
@@ -48,21 +48,26 @@ const PasswordResetForm = () => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    const token = history.location.search.split('=')[1];
-    if (token) {
-      try {
-        const decoded = jwt_decode(token);
-        setUser({
-          userId: decoded.id,
-          resetToken: token,
-        });
-      } catch (err) {
-        setAlert({
-          show: true,
-          message: t('pwRecovery.invalidLink'),
-          severity: 'error',
-        });
-      }
+    const token = location.search.split('=')[1];
+    if (!token)
+      return setAlert({
+        show: true,
+        message: t('pwRecovery.invalidLink'),
+        severity: 'error',
+      });
+
+    try {
+      const decoded = jwt_decode(token);
+      setUser({
+        userId: decoded.id,
+        resetToken: token,
+      });
+    } catch (err) {
+      setAlert({
+        show: true,
+        message: t('pwRecovery.invalidLink'),
+        severity: 'error',
+      });
     }
   }, []);
 

@@ -10,7 +10,6 @@ import userEvent from '@testing-library/user-event';
 import LoginForm from './LoginForm';
 import authService from '../../services/auth';
 
-// eslint-disable-next-line no-undef
 const validUser = { email: 'kalle@kalle.fi', password: 'kallenSalasana1' };
 const userForToken = { id: 'fjah4327842379fdjks', lang: 'en' };
 const token = jwt.sign(userForToken, 'Salainen');
