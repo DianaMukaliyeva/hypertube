@@ -67,6 +67,9 @@ test-back:	##@Development Install package on backend
 	docker-compose -f docker-compose.yml -p hypertube exec backend_hyper /bin/sh -c "npm test"
 
 test-front:	##@Development Install package on frontend
+	docker-compose -f docker-compose.yml -p hypertube exec frontend_hyper /bin/sh -c "npm test $(t)"
+
+test-front-quite: ##@Development Install package on frontend
 	docker-compose -f docker-compose.yml -p hypertube exec frontend_hyper /bin/sh -c "npm test -- --watchAll=false $(t)"
 
 lint-back:
