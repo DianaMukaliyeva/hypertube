@@ -2,7 +2,7 @@ import React from 'react';
 import jwt from 'jsonwebtoken';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
-import { render, screen, waitFor, within } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import PasswordResetForm from './PasswordResetForm';
 import userService from '../../services/user';
@@ -65,7 +65,7 @@ describe('all elements are rendered when token is correct', () => {
 describe('renders correctly when token is invalid', () => {
   it('handles missing token', async () => {
     const history = createMemoryHistory();
-    history.push(`/recoverylink?token=`);
+    history.push('/recoverylink?token=');
     render(
       <Router history={history}>
         <PasswordResetForm />
@@ -78,7 +78,7 @@ describe('renders correctly when token is invalid', () => {
 
   it('handles invalid token', async () => {
     const history = createMemoryHistory();
-    history.push(`/recoverylink?token=jwefjsfdkldasf`);
+    history.push('/recoverylink?token=jwefjsfdkldasf');
     render(
       <Router history={history}>
         <PasswordResetForm />
