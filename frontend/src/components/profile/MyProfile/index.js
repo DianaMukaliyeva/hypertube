@@ -7,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import { CssBaseline, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import useField from '../../../hooks/useField';
 import userService from '../../../services/user';
 import sharedFunctions from '../../../utils/sharedFunctions';
 import UpdatePhoto from './UpdatePhoto';
@@ -45,17 +44,6 @@ const useStyles = makeStyles((theme) => ({
 const MyProfile = ({ user, setUser }) => {
   const [userData, setUserData] = useState({ language: '' });
 
-  const username = useField('text', 'updateUsername', 'update-username');
-  const firstName = useField('text', 'updateName', 'update-firstname');
-  const lastName = useField('text', 'updateName', 'update-lastname');
-  const email = useField('email', 'email', 'update-email');
-  const oldPassword = useField('password', 'password', 'update-old-password');
-  const password = useField('password', 'password', 'update-password');
-  const confirmPassword = useField(
-    'password',
-    'confirmPassword',
-    'update-confirm-pw'
-  );
   const [avatar, setAvatar] = useState(null);
   const noAlert = { show: false, message: '', severity: '' };
   const [alert, setAlert] = useState(noAlert);
@@ -63,7 +51,7 @@ const MyProfile = ({ user, setUser }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const handleErrorResponse = (data, showAlert) => {
+  const handleErrorResponse = (data, showAlert, params) => {
     switch (data.statusCode) {
       case 401:
         showAlert({
@@ -73,15 +61,7 @@ const MyProfile = ({ user, setUser }) => {
         });
         break;
       case 400:
-        sharedFunctions.showErrors(data.details, {
-          username,
-          firstName,
-          lastName,
-          email,
-          oldPassword,
-          password,
-          confirmPassword,
-        });
+        sharedFunctions.showErrors(data.details, params);
         break;
       case 500:
         showAlert({
@@ -100,7 +80,7 @@ const MyProfile = ({ user, setUser }) => {
     }
   };
 
-  const handleUpdate = async (data, showAlert) => {
+  const handleUpdate = async (data, showAlert, params) => {
     setPasswordAlert(noAlert);
     setAlert(noAlert);
 
@@ -120,17 +100,13 @@ const MyProfile = ({ user, setUser }) => {
         severity: 'success',
       });
     } catch (err) {
-      handleErrorResponse(err.response.data, showAlert);
+      handleErrorResponse(err.response.data, showAlert, params);
     }
   };
 
   const updateInformationProps = {
     classes,
     userData,
-    username,
-    firstName,
-    lastName,
-    email,
     alert,
     setAlert,
     handleUpdate,
@@ -138,9 +114,6 @@ const MyProfile = ({ user, setUser }) => {
 
   const updatePasswordProps = {
     classes,
-    oldPassword,
-    password,
-    confirmPassword,
     alert: passwordAlert,
     setAlert: setPasswordAlert,
     handleUpdate,
@@ -153,7 +126,7 @@ const MyProfile = ({ user, setUser }) => {
         setUserData(res);
       })
       .catch((err) => {
-        handleErrorResponse(err.response.data, setAlert);
+        handleErrorResponse(err.response.data, setAlert, {});
       });
   }, []);
 

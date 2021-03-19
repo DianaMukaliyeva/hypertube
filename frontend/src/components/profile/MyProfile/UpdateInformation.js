@@ -8,20 +8,15 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import FormButton from '../../common/FormButton';
 import InputField from '../../common/InputField';
+import useField from '../../../hooks/useField';
 
 const UpdateInformation = (props) => {
-  const {
-    classes,
-    userData,
-    username,
-    firstName,
-    lastName,
-    email,
-    alert,
-    setAlert,
-    handleUpdate,
-  } = props;
+  const { classes, userData, alert, setAlert, handleUpdate } = props;
   const { t } = useTranslation();
+  const username = useField('text', 'updateUsername', 'update-username');
+  const firstName = useField('text', 'updateName', 'update-firstname');
+  const lastName = useField('text', 'updateName', 'update-lastname');
+  const email = useField('email', 'email', 'update-email');
   const [lang, setLang] = useState({ label: '', code: '' });
   const langOptions = [
     { label: t('form.en'), code: 'en' },
@@ -47,7 +42,12 @@ const UpdateInformation = (props) => {
       data.lastname = lastName.value;
     if (lang && lang.code !== userData.language) data.language = lang.code;
 
-    await handleUpdate(data, setAlert);
+    await handleUpdate(data, setAlert, {
+      username,
+      firstName,
+      lastName,
+      email,
+    });
   };
 
   return lang ? (
@@ -106,10 +106,6 @@ const UpdateInformation = (props) => {
 UpdateInformation.propTypes = {
   classes: PropTypes.object.isRequired,
   userData: PropTypes.object.isRequired,
-  username: PropTypes.object.isRequired,
-  firstName: PropTypes.object.isRequired,
-  lastName: PropTypes.object.isRequired,
-  email: PropTypes.object.isRequired,
   alert: PropTypes.object.isRequired,
   setAlert: PropTypes.func.isRequired,
   handleUpdate: PropTypes.func.isRequired,

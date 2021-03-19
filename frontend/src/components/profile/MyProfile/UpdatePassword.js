@@ -4,19 +4,20 @@ import { useTranslation } from 'react-i18next';
 
 import FormButton from '../../common/FormButton';
 import InputField from '../../common/InputField';
+import useField from '../../../hooks/useField';
+
 import { Alert } from '@material-ui/lab';
 
 const UpdatePassword = (props) => {
-  const {
-    classes,
-    oldPassword,
-    password,
-    confirmPassword,
-    alert,
-    setAlert,
-    handleUpdate,
-  } = props;
+  const { classes, alert, setAlert, handleUpdate } = props;
   const { t } = useTranslation();
+  const oldPassword = useField('password', 'password', 'update-old-password');
+  const password = useField('password', 'password', 'update-password');
+  const confirmPassword = useField(
+    'password',
+    'confirmPassword',
+    'update-confirm-pw'
+  );
 
   const handlePasswordUpdate = async (event) => {
     event.preventDefault();
@@ -28,7 +29,11 @@ const UpdatePassword = (props) => {
       confirmPassword: confirmPassword.value,
     };
 
-    await handleUpdate(data, setAlert);
+    await handleUpdate(data, setAlert, {
+      oldPassword,
+      password,
+      confirmPassword,
+    });
   };
 
   return (
@@ -66,9 +71,6 @@ const UpdatePassword = (props) => {
 
 UpdatePassword.propTypes = {
   classes: PropTypes.object.isRequired,
-  oldPassword: PropTypes.object.isRequired,
-  password: PropTypes.object.isRequired,
-  confirmPassword: PropTypes.object.isRequired,
   alert: PropTypes.object.isRequired,
   setAlert: PropTypes.func.isRequired,
   handleUpdate: PropTypes.func.isRequired,
