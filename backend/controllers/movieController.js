@@ -68,16 +68,17 @@ const addComment = async (req, res) => {
 
 const playMovie = async (req, res, next) => {
   // todo: update route docs
-  const imdbCode = req.params.imdb_code;
-  let obj = await Movie.findOne({ imdbCode });
-  if (!obj || !obj.downloadComplete) {
-    await movieTorrentUtils.downloadMovie(imdbCode);
-    // todo: replace this stupid sleep promise
-    // with actual functional promise that resolves when server has started downloaded enough
-    await new Promise((resolve) => setTimeout(resolve, 10000));
-    obj = await Movie.findOne({ imdbCode });
+  const { imdbCode } = req.params;
+  let movie = await Movie.findOne({ imdbCode });
+  if (!movie || !movie.downloadComplete) {
+    if (!movie) {
+      movie = { imdbCode };
+    }
+    if (!movie.magnet) movie.magnet = await movieTorrentUtils.getMagnet(imdbCode);
+    await movieTorrentUtils.downloadMovie(movie);
+    movie = await Movie.findOne({ imdbCode });
   }
-  req.serverLocation = obj.serverLocation;
+  req.serverLocation = movie.serverLocation;
   await movieTorrentUtils.startFileStream(req, res, next);
 };
 

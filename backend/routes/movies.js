@@ -7,13 +7,9 @@ import inputValidator from '../utilities/inputValidator.js';
 
 const movieRoute = express.Router();
 
-movieRoute.get('/:imdb_code/play/:token',
-  inputValidator.validateToken,
-  movieController.playMovie);
+movieRoute.get('/:imdbCode/play/:token', inputValidator.validateToken, movieController.playMovie);
 
-movieRoute.get('/:imdb_code',
-  middleware.authRequired,
-  movieController.getMovieEntry);
+movieRoute.get('/:imdb_code', middleware.authRequired, movieController.getMovieEntry);
 
 movieRoute.get('/', middleware.authRequired, movieController.getMovieList);
 
