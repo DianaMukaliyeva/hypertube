@@ -1,0 +1,9 @@
+PATCH http://localhost:5003/api/users/6053a74b83b1f103b6262406 HTTP/1.1
+content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTNhNzRiODNiMWYxMDNiNjI2MjQwNiIsImxhbmciOiJkZSIsImlhdCI6MTYxNjA5NTA2Mn0.-V1ikLR5E_kINSoiza1jPuLVoysk0Dao_SNatJ5hPCg
+
+{
+  "oldPassword": "Nena",
+  "password": "Peter123",
+  "confirmPassword": "Peter123"
+}
