@@ -35,16 +35,11 @@ const AddComment = ({ imdbCode, setRefresh }) => {
   const alert = useAlert();
   const { t } = useTranslation();
 
-  const onChangeComment = (e) => {
-    const comment = e.target.value;
-    setComment(comment);
-  };
-
-  const handleComment = async (e) => {
-    e.preventDefault();
+  const handleComment = async () => {
     try {
       setBtnDisabled(true);
-      await movieService.createComment(comment, imdbCode);
+      await movieService.createComment({ comment }, imdbCode);
+      setComment('');
       setRefresh(true);
       alert.showSuccess(t('comment.success'), 5000);
     } catch (err) {
@@ -86,9 +81,9 @@ const AddComment = ({ imdbCode, setRefresh }) => {
         multiline
         rows="7"
         label="Leave your comment here"
-        values={comment}
+        value={comment}
         className={classes.input}
-        onChange={onChangeComment}
+        onChange={(e) => setComment(e.target.value)}
       />
       <Button
         onClick={handleComment}
