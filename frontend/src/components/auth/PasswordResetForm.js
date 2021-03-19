@@ -50,7 +50,7 @@ const PasswordResetForm = () => {
   useEffect(() => {
     const token = location.search.split('=')[1];
     if (!token)
-      setAlert({
+      return setAlert({
         show: true,
         message: t('pwRecovery.invalidLink'),
         severity: 'error',
