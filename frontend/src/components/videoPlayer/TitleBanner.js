@@ -1,25 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import StarRateIcon from '@material-ui/icons/StarRate';
-import StyleIcon from '@material-ui/icons/Style';
-import EventIcon from '@material-ui/icons/Event';
-import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    marginBottom: '1rem',
+  imdb: {
+    color: theme.palette.primary.main,
+    marginRight: '1rem',
   },
-  icon: {
-    marginLeft: '62rem',
-    color: theme.palette.grey[500],
+  year: {
+    marginRight: '1rem',
   },
-  iconStar: {
-    color: '#fb3b64',
-    marginRight: '4.6px',
+  genre: {
+    marginRight: '1rem',
   },
-  intro: {
+  description: {
+    color: theme.palette.text.secondary,
+    [theme.breakpoints.up('xs')]: {
+      marginBottom: '3rem',
+      marginTop: '1rem',
+    },
     marginBottom: '1rem',
     marginTop: '1rem',
   },
@@ -27,15 +29,26 @@ const useStyles = makeStyles((theme) => ({
 
 const TitleBanner = ({ movie }) => {
   const classes = useStyles();
+  const isMobile = useMediaQuery('(max-width:600px)');
 
   return (
-    <div className={classes.root}>
-      <h2>{movie.title}</h2>
-      {movie.imdbRating} <StarRateIcon className={classes.iconStar} />
-      {movie.genre} <StyleIcon className={classes.iconStar} />
-      {movie.year} <EventIcon className={classes.iconStar} />
-      {movie.length} min. <HourglassEmptyIcon className={classes.iconStar} />
-      <Typography variant="subtitle1" className={classes.intro}>
+    <div>
+      <Typography variant={isMobile ? 'h5' : 'h2'}>{movie.title}</Typography>
+      <Box mt={3} display="flex" flexDirection={isMobile ? 'column' : 'row'}>
+        {movie.imdbRating && (
+          <Typography variant="subtitle2" className={classes.imdb}>
+            IMDb {movie.imdbRating}
+          </Typography>
+        )}
+        <Typography variant="subtitle2" className={classes.genre}>
+          {movie.genre}
+        </Typography>
+        <Typography variant="subtitle2" className={classes.year}>
+          {movie.year}
+        </Typography>
+        {movie.length && <Typography variant="subtitle2">{movie.length} min</Typography>}
+      </Box>
+      <Typography variant="subtitle1" className={classes.description}>
         {movie.description}
       </Typography>
     </div>

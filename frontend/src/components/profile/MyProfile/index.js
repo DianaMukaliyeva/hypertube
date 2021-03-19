@@ -14,7 +14,6 @@ import UpdatePhoto from './UpdatePhoto';
 import UpdatePassword from './UpdatePassword';
 import UpdateInformation from './UpdateInformation';
 
-// TO DO move to styles
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(6),
@@ -51,11 +50,7 @@ const MyProfile = ({ user, setUser }) => {
   const email = useField('email', 'email', 'update-email');
   const oldPassword = useField('password', 'password', 'update-old-password');
   const password = useField('password', 'password', 'update-password');
-  const confirmPassword = useField(
-    'password',
-    'confirmPassword',
-    'update-confirm-pw'
-  );
+  const confirmPassword = useField('password', 'confirmPassword', 'update-confirm-pw');
   const [avatar, setAvatar] = useState(null);
   const noAlert = { show: false, message: '', severity: '' };
   const [alert, setAlert] = useState(noAlert);
@@ -104,8 +99,7 @@ const MyProfile = ({ user, setUser }) => {
     setPasswordAlert(noAlert);
     setAlert(noAlert);
 
-    if (userData.avatarBase64String !== avatar)
-      data.avatarBase64String = avatar;
+    if (userData.avatarBase64String !== avatar) data.avatarBase64String = avatar;
 
     if (Object.keys(data).length === 0) return;
 
@@ -158,9 +152,7 @@ const MyProfile = ({ user, setUser }) => {
   }, []);
 
   useEffect(() => {
-    userData &&
-      userData.avatarBase64String &&
-      setAvatar(userData.avatarBase64String);
+    userData && userData.avatarBase64String && setAvatar(userData.avatarBase64String);
   }, [userData]);
 
   return userData ? (

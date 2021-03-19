@@ -110,9 +110,8 @@ const LoginForm = ({ setUser }) => {
         <Typography component="h1" variant="h5">
           {t('login.title')}
         </Typography>
-
         <OmniAuthLogin />
-
+        <Box mt={3}>{t('form.or')}</Box>
         <form className={classes.form} onSubmit={handleLogin} noValidate>
           <InputField values={email} label={t('form.email')} required={true} />
           <InputField
@@ -122,10 +121,7 @@ const LoginForm = ({ setUser }) => {
             required={true}
           />
           {alert.show && (
-            <Alert
-              severity={alert.severity}
-              onClose={() => setAlert({ ...alert, show: false })}
-            >
+            <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
               {alert.message}
             </Alert>
           )}

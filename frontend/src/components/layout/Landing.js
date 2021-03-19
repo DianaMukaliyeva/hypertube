@@ -1,12 +1,15 @@
+/*eslint-disable */
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+import Iframe from 'react-iframe';
 
 import useModal from '../../hooks/useModal';
 import CustomModal from '../common/CustomModal';
@@ -18,11 +21,18 @@ import PasswordResetForm from '../auth/PasswordResetForm';
 const useStyles = makeStyles((theme) => ({
   button: {
     [theme.breakpoints.up('xs')]: {
-      width: '250px',
+      width: '240px',
     },
     [theme.breakpoints.up('sm')]: {
       width: '300px',
+      top: '60vh',
     },
+    top: '20vh',
+    zIndex: '1',
+  },
+  titleMobile: {
+    fontWeight: 600,
+    marginTop: '20vh',
   },
   box: {
     [theme.breakpoints.up('xs')]: {
@@ -32,12 +42,52 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: 'row',
     },
   },
+  video: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    pointerEvents: 'none',
+  },
+  cover: {
+    background:
+      'url(https://images.unsplash.com/photo-1519373344801-14c1f9539c9c?w=1920&h=1080&fit=crop&crop=bottom) no-repeat center',
+    backgroundSize: 'cover',
+    position: 'fixed',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    zIndex: '-1',
+  },
+  text: {
+    position: 'absolute',
+    top: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    fontSize: 'calc(5px + 13vw + 0.8vh)',
+    // fontSize: 'calc(10px + 13vw + 2.5vh)',
+    fontWeight: 900,
+    letterSpacing: '0.15em',
+    margin: 'auto',
+    textTransform: 'uppercase',
+    userSelect: 'none',
+    backgroundColor: '#060629',
+    border: '1px red',
+    color: '#fff',
+    mixBlendMode: 'multiply',
+  },
 }));
 
 const Landing = ({ user, setUser }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const classes = useStyles();
+  const isMobile = useMediaQuery('(max-width:600px)');
 
   const passwordResetModal = useModal(<PasswordResetForm />);
   useEffect(() => {
@@ -50,41 +100,49 @@ const Landing = ({ user, setUser }) => {
   const createAccountModal = useModal(<CreateAccountForm setUser={setUser} />);
 
   return (
-    <div style={{ marginTop: '25%', textAlign: 'center' }}>
-      <Typography variant="h1">HYPERTUBE</Typography>
-      {!user.userId && (
-        <>
-          <Box
-            mt={5}
-            display="flex"
-            justifyContent="center"
-            className={classes.box}
-          >
-            <Box m={3}>
-              <Button
-                className={classes.button}
-                type="submit"
-                variant="outlined"
-                color="primary"
-                onClick={loginModal.handleClickOpen}
-              >
-                {t('login.login')}
-              </Button>
-            </Box>
-            <Box m={3}>
-              <Button
-                className={classes.button}
-                type="submit"
-                variant="outlined"
-                color="secondary"
-                onClick={createAccountModal.handleClickOpen}
-              >
-                {t('createAccount.create')}
-              </Button>
-            </Box>
-          </Box>
-        </>
+    <div>
+      {isMobile ? (
+        <Typography variant="h3" className={classes.titleMobile} align="center">
+          HYPERTUBE
+        </Typography>
+      ) : (
+        <div className={classes.cover}>
+          <div className={classes.video}>
+            <Iframe
+              url="https://www.youtube.com/embed/y2TET3G0sJ4?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&mute=1&playlist=y2TET3G0sJ4"
+              width="100%"
+              height="100%"
+              id="myId"
+              display="initial"
+              position="relative"
+            />
+            <h1 className={classes.text}>HYPERTUBE</h1>
+          </div>
+        </div>
       )}
+
+      <Box mt={5} display="flex" justifyContent="center" className={classes.box}>
+        <Box m={3} style={{ alignSelf: 'center' }}>
+          <Button
+            className={classes.button}
+            type="submit"
+            variant="outlined"
+            color="primary"
+            onClick={loginModal.handleClickOpen}>
+            Login
+          </Button>
+        </Box>
+        <Box m={3} style={{ alignSelf: 'center' }}>
+          <Button
+            className={classes.button}
+            type="submit"
+            variant="outlined"
+            color="secondary"
+            onClick={createAccountModal.handleClickOpen}>
+            Create Account
+          </Button>
+        </Box>
+      </Box>
       <CustomModal {...loginModal} />
       <CustomModal {...createAccountModal} />
       <CustomModal {...passwordResetModal} />
