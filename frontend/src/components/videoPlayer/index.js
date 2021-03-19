@@ -12,6 +12,7 @@ import AddComment from './AddComment';
 import Comments from './Comments';
 import Player from './Player';
 import movieService from '../../services/movie';
+import useAlert from '../../hooks/useAlert';
 
 const Loader = () => (
   <Box p={3} textAlign="center">
@@ -19,8 +20,8 @@ const Loader = () => (
   </Box>
 );
 
-const buildTracks = (imdbCode, subsAvailableIn) => {
-  const subsLables = { en: 'English', de: 'German', fi: 'Finnish', ru: 'Russian' };
+const buildTracks = (imdbCode, subsAvailableIn, t) => {
+  const subsLables = { en: t('form.en'), de: t('form.de'), fi: t('form.fi'), ru: t('form.ru') };
   // eslint-disable-next-line no-undef
   const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -41,49 +42,39 @@ const buildTracks = (imdbCode, subsAvailableIn) => {
 const VideoPlayer = (data) => {
   const [movie, setMovie] = useState({});
   const [subsTracks, setSubsTracks] = useState([]);
-  const [alert, setAlert] = useState({
-    show: false,
-    message: '',
-    severity: '',
-  });
+  const alert = useAlert();
   const [loading, setLoading] = useState(true);
   const isMobile = useMediaQuery('(max-width:600px)');
   const { t } = useTranslation();
+  const [refresh, setRefresh] = useState(false);
 
-  useEffect(async () => {
-    await movieService
-      .getMovieData(data.movie.imdbCode)
-      .then((res) => {
-        setMovie(res);
-        setSubsTracks(buildTracks(data.movie.imdbCode, res.subtitles));
-        setLoading(false);
-      })
-      .catch((err) => {
+  const getMovieData = async () => {
+    try {
+      const res = await movieService.getMovieData(data.movie.imdbCode);
+      setMovie(res);
+      setSubsTracks(buildTracks(data.movie.imdbCode, res.subtitles, t));
+      setLoading(false);
+      setRefresh(false);
+    } catch (err) {
+      if (err.response && err.response.data) {
         switch (err.response.data.statusCode) {
           case 401:
-            setAlert({
-              show: true,
-              message: t('error.unauthorized'),
-              severity: 'error',
-            });
+            alert.showError(t('error.unauthorized'), 5000);
             break;
           case 500:
-            setAlert({
-              show: true,
-              message: t('error.server'),
-              severity: 'error',
-            });
+            alert.showError(t('error.server'), 5000);
             break;
           default:
-            setAlert({
-              show: true,
-              message: t('error.unexpected'),
-              severity: 'error',
-            });
+            alert.showError(t('error.unexpected'), 5000);
             break;
         }
-      });
-  }, []);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getMovieData();
+  }, [refresh]);
 
   if (loading) {
     return <Loader />;
@@ -91,16 +82,18 @@ const VideoPlayer = (data) => {
 
   return (
     <Box m={isMobile ? 1 : 7}>
-      {alert.show && (
-        <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
-          {alert.message}
+      {alert.values.show && (
+        <Alert severity={alert.values.severity} onClose={alert.closeAlert}>
+          {alert.values.message}
         </Alert>
       )}
       <TitleBanner movie={movie} />
       <Player subsTracks={subsTracks} imdbCode={data.movie.imdbCode} />
       <MovieDetails movie={movie} />
-      <AddComment data={data} />
-      <Comments movie={movie.comments} />
+      {data.movie && data.movie.imdbCode && (
+        <AddComment imdbCode={data.movie.imdbCode} setRefresh={setRefresh} />
+      )}
+      {movie.comments && <Comments comments={movie.comments} />}
     </Box>
   );
 };
