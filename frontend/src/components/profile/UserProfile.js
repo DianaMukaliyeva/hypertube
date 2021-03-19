@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -37,17 +38,18 @@ const useStyles = makeStyles((theme) => ({
 
 const UserProfile = ({ user }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return user ? (
     <Container component="main" className={classes.paper} maxWidth="xs">
       <CssBaseline />
       <Typography component="h2" variant="h5" gutterBottom>
-        Profile
+        {t('profile.title')}
       </Typography>
       <Box className={classes.imageContainer}>
         <img
           className={classes.image}
-          src={user.avatar || user.avatarBase64String || emptyAvatar}
+          src={user.avatar || emptyAvatar}
           alt={user.username}
         />
       </Box>
@@ -74,7 +76,6 @@ UserProfile.propTypes = {
     username: PropTypes.string,
     firstname: PropTypes.string,
     lastname: PropTypes.string,
-    avatarBase64String: PropTypes.string,
     avatar: PropTypes.string,
   }),
 };

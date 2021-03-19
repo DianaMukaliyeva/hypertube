@@ -3,12 +3,15 @@ import React from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 
-const Player = ({ subsTracks }) => {
+import movieService from '../../services/movie';
+
+const Player = ({ subsTracks, imdbCode }) => {
   // eslint-disable-next-line no-undef
   const streamUrl = process.env.REACT_APP_BACKEND_URL + '/api/auth/stream';
 
   const handlePlay = () => {
-    console.log('PLAY'); // TO DO make record in db
+    // TO DO do we set movie watched when user just click play?
+    movieService.setWatched(imdbCode);
   };
 
   return (
@@ -37,6 +40,7 @@ const Player = ({ subsTracks }) => {
 
 Player.propTypes = {
   subsTracks: PropTypes.array.isRequired,
+  imdbCode: PropTypes.string.isRequired,
 };
 
 export default Player;

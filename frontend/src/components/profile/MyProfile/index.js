@@ -68,7 +68,7 @@ const MyProfile = ({ user, setUser }) => {
       case 401:
         showAlert({
           show: true,
-          message: 'Unauthorized access',
+          message: t('error.unauthorized'),
           severity: 'error',
         });
         break;
@@ -86,14 +86,14 @@ const MyProfile = ({ user, setUser }) => {
       case 500:
         showAlert({
           show: true,
-          message: 'Server error',
+          message: t('error.server'),
           severity: 'error',
         });
         break;
       default:
         showAlert({
           show: true,
-          message: 'Oops.. somthing went completely wrong',
+          message: t('error.unexpected'),
           severity: 'error',
         });
         break;
@@ -106,6 +106,8 @@ const MyProfile = ({ user, setUser }) => {
 
     if (userData.avatarBase64String !== avatar)
       data.avatarBase64String = avatar;
+
+    if (Object.keys(data).length === 0) return;
 
     try {
       await userService.update(user.userId, data);
@@ -174,7 +176,7 @@ const MyProfile = ({ user, setUser }) => {
         </Grid>
         <Grid item xs={12} sm={7} className={classes.column}>
           <UpdateInformation {...updateInformationProps} />
-          <UpdatePassword {...updatePasswordProps} />
+          {userData.hasPw && <UpdatePassword {...updatePasswordProps} />}
         </Grid>
       </Grid>
     </Container>
