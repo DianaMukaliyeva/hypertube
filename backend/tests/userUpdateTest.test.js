@@ -21,13 +21,10 @@ beforeAll(async () => {
   await request.post('/api/users/').send(userUtils.newValidUser);
 
   user = await updateUtils.userInDb();
+  token = await request.post('/api/auth/login').send(userUtils.validLogInUser).expect(200);
 });
 
-describe('Login User API Tests', () => {
-  test('login user success - expect 200', async () => {
-    token = await request.post('/api/auth/login').send(userUtils.validLogInUser).expect(200);
-  });
-
+describe('Update User API Tests', () => {
   test('invalid update / email invalid - expect 400', async () => {
     await request.patch(`/api/users/${user[0]._id}`)
       .set('Authorization', `Bearer ${token.body.token}`)
