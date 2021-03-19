@@ -10,6 +10,7 @@ import authRoute from './routes/auth.js';
 import middleware from './utilities/middleware.js';
 import database from './utilities/database.js';
 import swaggerDocs from './utilities/swagger.js';
+import job from './utilities/cron.js';
 
 const app = express();
 
@@ -32,5 +33,6 @@ app.use('/docs', swaggerDocs);
 
 app.use(middleware.errorHandler);
 app.use(middleware.unknownEndpoint);
+job.start();
 
 export default app;

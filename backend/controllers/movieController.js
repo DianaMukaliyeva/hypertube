@@ -66,9 +66,41 @@ const addComment = async (req, res) => {
   res.sendStatus(201);
 };
 
+const setWatched = async (req, res) => {
+  const userId = req.user;
+  const { imdbCode } = req.params;
+
+  const movie = await Movie.findOneAndUpdate(
+    {
+      imdbCode,
+    },
+    {
+      lastWatched: Date.now(),
+    },
+  );
+
+  if (movie === null) {
+    const newMovieInDB = new Movie({
+      imdbCode,
+      lastWatched: Date.now(),
+    });
+    newMovieInDB.save();
+  }
+
+  // TO DO where should we put this and what time should we save
+  await User.findByIdAndUpdate(userId, {
+    $addToSet: {
+      watched: { movieId: imdbCode, time: Date.now() },
+    },
+  });
+
+  res.sendStatus(201);
+};
+
 export default {
   getMovieList,
   addMovieToDb,
   getMovieEntry,
   addComment,
+  setWatched,
 };
