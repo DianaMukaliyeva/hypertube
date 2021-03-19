@@ -47,10 +47,12 @@ const VideoPlayer = (data) => {
   const isMobile = useMediaQuery('(max-width:600px)');
   const { t } = useTranslation();
   const [refresh, setRefresh] = useState(false);
+  const mountedRef = React.useRef(true);
 
   const getMovieData = async () => {
     try {
       const res = await movieService.getMovieData(data.movie.imdbCode);
+      if (!mountedRef.current) return null;
       setMovie(res);
       setSubsTracks(buildTracks(data.movie.imdbCode, res.subtitles, t));
       setLoading(false);
@@ -74,6 +76,35 @@ const VideoPlayer = (data) => {
 
   useEffect(() => {
     getMovieData();
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
+  const getComments = async () => {
+    try {
+      const res = await movieService.getComments(data.movie.imdbCode);
+      setMovie({ ...movie, comments: res.comments });
+      setRefresh(false);
+    } catch (err) {
+      if (err.response && err.response.data) {
+        switch (err.response.data.statusCode) {
+          case 401:
+            alert.showError(t('error.unauthorized'), 5000);
+            break;
+          case 500:
+            alert.showError(t('error.server'), 5000);
+            break;
+          default:
+            alert.showError(t('error.unexpected'), 5000);
+            break;
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    getComments();
   }, [refresh]);
 
   if (loading) {
