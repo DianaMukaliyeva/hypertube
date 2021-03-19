@@ -26,13 +26,27 @@ const addMovieToDb = async (req, res) => {
   res.sendStatus(201);
 };
 
+const fetchComments = async (imdbCode) => {
+  const res = await Movie.findOne({
+    imdbCode,
+  }).populate('comments.user', {
+    username: 1,
+    firstname: 1,
+    lastname: 1,
+    avatar: 1,
+  });
+
+  if (!res) return;
+  // eslint-disable-next-line consistent-return
+  return res.comments;
+};
+
 const getMovieEntry = async (req, res) => {
   const imdbCode = req.params.imdb_code;
-  const torrentData = await movieListUtils.fetchTorrentData(imdbCode);
   const movieInfo = await movieListUtils.fetchMovieInfo(imdbCode);
   const subtitles = await subtitlesUtils.getSubtitles(imdbCode);
-  const comments = await movieListUtils.fetchComments(imdbCode);
-  res.json(movieListUtils.parseMovieResponse(movieInfo, torrentData, comments, subtitles));
+  const comments = await fetchComments(imdbCode);
+  res.json(movieListUtils.parseMovieResponse(movieInfo, comments, subtitles));
 };
 
 const addComment = async (req, res) => {
@@ -40,7 +54,7 @@ const addComment = async (req, res) => {
     user: req.user,
     comment: req.body.comment,
   };
-  const imdbCode = req.params.imdb_code;
+  const { imdbCode } = req.params;
 
   if (!newComment.comment) throw detailedError();
 
@@ -64,6 +78,20 @@ const addComment = async (req, res) => {
   }
 
   res.sendStatus(201);
+};
+
+const getComment = async (req, res) => {
+  const { imdbCode } = req.params;
+
+  const data = await Movie.findOne({
+    imdbCode,
+  }).populate('comments.user', {
+    username: 1,
+    firstname: 1,
+    lastname: 1,
+    avatar: 1,
+  });
+  res.json({ comments: data && data.comments ? data.comments : [] });
 };
 
 const setWatched = async (req, res) => {
@@ -102,5 +130,6 @@ export default {
   addMovieToDb,
   getMovieEntry,
   addComment,
+  getComment,
   setWatched,
 };
