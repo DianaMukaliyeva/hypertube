@@ -13,6 +13,11 @@ jest.mock('react-i18next', () => ({
   },
 }));
 
+jest.mock('i18next', () => ({
+  // eslint-disable-next-line no-empty-function
+  changeLanguage: () => new Promise(() => {}),
+}));
+
 const localStorageMock = {
   getItem: jest.fn,
   setItem: jest.fn(),
