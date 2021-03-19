@@ -37,6 +37,6 @@ jobs:
       - name: Run backend tests
         run:  docker-compose -f docker-compose.yml -p hypertube exec -T backend_hyper /bin/sh -c "npm test"  
         
-#      - name: Run frontend tests
-#        run:  docker-compose -f docker-compose.yml -p hypertube exec -T frontend_hyper /bin/sh -c "npm test"   
+      - name: Run frontend tests
+        run:  docker-compose -f docker-compose.yml -p hypertube exec -T frontend_hyper /bin/sh -c "npm test -- --watchAll=false"   
           
