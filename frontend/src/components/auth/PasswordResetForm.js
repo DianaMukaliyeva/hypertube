@@ -49,20 +49,25 @@ const PasswordResetForm = () => {
 
   useEffect(() => {
     const token = location.search.split('=')[1];
-    if (token) {
-      try {
-        const decoded = jwt_decode(token);
-        setUser({
-          userId: decoded.id,
-          resetToken: token,
-        });
-      } catch (err) {
-        setAlert({
-          show: true,
-          message: t('pwRecovery.invalidLink'),
-          severity: 'error',
-        });
-      }
+    if (!token)
+      setAlert({
+        show: true,
+        message: t('pwRecovery.invalidLink'),
+        severity: 'error',
+      });
+
+    try {
+      const decoded = jwt_decode(token);
+      setUser({
+        userId: decoded.id,
+        resetToken: token,
+      });
+    } catch (err) {
+      setAlert({
+        show: true,
+        message: t('pwRecovery.invalidLink'),
+        severity: 'error',
+      });
     }
   }, []);
 
