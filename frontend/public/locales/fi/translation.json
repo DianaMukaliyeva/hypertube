@@ -66,7 +66,11 @@
   },
   "movie": {
     "rating": "Arvio",
-    "watched": "Nähty"
+    "watched": "Nähty",
+    "notAvailable": "not available",
+    "subtitles": "Subtitles",
+    "director": "Director",
+    "cast": "Cast"
   },
   "filter": {
     "A-Z": "A - Z",
@@ -110,5 +114,11 @@
     "unauthorized": "Sisältö vaatii kirjautumisen",
     "server": "Palvelinvirhe",
     "unexpected": "Odottamaton virhe"
+  },
+  "comment": {
+    "invalidFormat": "Wrong format",
+    "success": "Thanks for the comment!",
+    "post": "post comment",
+    "leaveComment": "Leave your comment here"
   }
 }
