@@ -1,32 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import './style.css';
+import { useTranslation } from 'react-i18next';
 
-import movieService from '../../services/movie';
-
-import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { Alert } from '@material-ui/lab';
-import Card from '@material-ui/core/Card';
 import Box from '@material-ui/core/Box';
-import CardContent from '@material-ui/core/CardContent';
-import Container from '@material-ui/core/Container';
-// import axios from 'axios';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import TitleBanner from './TitleBanner';
 import MovieDetails from './MovieDetails';
 import AddComment from './AddComment';
 import Comments from './Comments';
 import Player from './Player';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-const useStyles = makeStyles(() => ({
-  root: {
-    minWidth: 100,
-    background: 'rgba(27,29,47,0.4)',
-  },
-  icon: {
-    marginLeft: '62rem',
-  },
-}));
+import movieService from '../../services/movie';
 
 const Loader = () => (
   <Box p={3} textAlign="center">
@@ -45,7 +30,6 @@ const buildTracks = (imdbCode, subsAvailableIn) => {
     accum.push({
       label: subsLables[lang],
       kind: 'subtitles',
-      // src: baseUrl + `/api/movies/${imdbCode}/subtitles/${lang}`,
       src: baseUrl + `/api/movies/${imdbCode}/subtitles/${lang}/${token}`,
       srcLang: lang,
     });
@@ -57,13 +41,14 @@ const buildTracks = (imdbCode, subsAvailableIn) => {
 const VideoPlayer = (data) => {
   const [movie, setMovie] = useState({});
   const [subsTracks, setSubsTracks] = useState([]);
-  const classes = useStyles();
   const [alert, setAlert] = useState({
     show: false,
     message: '',
     severity: '',
   });
   const [loading, setLoading] = useState(true);
+  const isMobile = useMediaQuery('(max-width:600px)');
+  const { t } = useTranslation();
 
   useEffect(async () => {
     await movieService
@@ -78,21 +63,21 @@ const VideoPlayer = (data) => {
           case 401:
             setAlert({
               show: true,
-              message: 'Unauthorized access',
+              message: t('error.unauthorized'),
               severity: 'error',
             });
             break;
           case 500:
             setAlert({
               show: true,
-              message: 'Server error',
+              message: t('error.server'),
               severity: 'error',
             });
             break;
           default:
             setAlert({
               show: true,
-              message: 'Oops.. something went completely wrong',
+              message: t('error.unexpected'),
               severity: 'error',
             });
             break;
@@ -105,25 +90,18 @@ const VideoPlayer = (data) => {
   }
 
   return (
-    <Container maxWidth="lg">
-      <Card className={classes.root}>
-        {alert.show && (
-          <Alert
-            className={classes.alert}
-            severity={alert.severity}
-            onClose={() => setAlert({ ...alert, show: false })}>
-            {alert.message}
-          </Alert>
-        )}
-        <CardContent>
-          <TitleBanner movie={movie} />
-          <Player subsTracks={subsTracks} imdbCode={data.movie.imdbCode} />
-          <MovieDetails movie={movie} />
-          <AddComment data={data} />
-          <Comments movie={movie.comments} />
-        </CardContent>
-      </Card>
-    </Container>
+    <Box m={isMobile ? 1 : 7}>
+      {alert.show && (
+        <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
+          {alert.message}
+        </Alert>
+      )}
+      <TitleBanner movie={movie} />
+      <Player subsTracks={subsTracks} imdbCode={data.movie.imdbCode} />
+      <MovieDetails movie={movie} />
+      <AddComment data={data} />
+      <Comments movie={movie.comments} />
+    </Box>
   );
 };
 

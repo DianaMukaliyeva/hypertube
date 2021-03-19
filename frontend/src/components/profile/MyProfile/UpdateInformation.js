@@ -33,13 +33,10 @@ const UpdateInformation = (props) => {
     event.preventDefault();
 
     const data = {};
-    if (username.value && username.value !== userData.username)
-      data.username = username.value;
+    if (username.value && username.value !== userData.username) data.username = username.value;
     if (email.value && email.value !== userData.email) data.email = email.value;
-    if (firstName.value && firstName.value !== userData.firstName)
-      data.firstname = firstName.value;
-    if (lastName.value && lastName.value !== userData.lastName)
-      data.lastname = lastName.value;
+    if (firstName.value && firstName.value !== userData.firstName) data.firstname = firstName.value;
+    if (lastName.value && lastName.value !== userData.lastName) data.lastname = lastName.value;
     if (lang && lang.code !== userData.language) data.language = lang.code;
 
     await handleUpdate(data, setAlert, {
@@ -51,24 +48,11 @@ const UpdateInformation = (props) => {
   };
 
   return lang ? (
-    <form
-      className={classes.form}
-      onSubmit={handleInformationUpdate}
-      noValidate
-    >
-      <InputField
-        values={username}
-        label={`${t('form.username')}: ${userData.username}`}
-      />
-      <InputField
-        values={firstName}
-        label={`${t('form.firstName')}: ${userData.firstname}`}
-      />
-      <InputField
-        values={lastName}
-        label={`${t('form.lastName')}: ${userData.lastname}`}
-      />
-      <InputField values={email} label={`Email: ${userData.email}`} />
+    <form className={classes.form} onSubmit={handleInformationUpdate} noValidate>
+      <InputField values={username} label={`${t('form.username')}: ${userData.username}`} />
+      <InputField values={firstName} label={`${t('form.firstName')}: ${userData.firstname}`} />
+      <InputField values={lastName} label={`${t('form.lastName')}: ${userData.lastname}`} />
+      <InputField values={email} label={`${t('form.email')}: ${userData.email}`} />
       <Autocomplete
         id="language"
         value={lang}
@@ -80,12 +64,7 @@ const UpdateInformation = (props) => {
           if (value !== null) setLang(value);
         }}
         renderInput={(params) => (
-          <TextField
-            required
-            {...params}
-            label={t('form.selectLanguage')}
-            variant="outlined"
-          />
+          <TextField required {...params} label={t('form.selectLanguage')} variant="outlined" />
         )}
       />
 
@@ -93,8 +72,7 @@ const UpdateInformation = (props) => {
         <Alert
           className={classes.alert}
           severity={alert.severity}
-          onClose={() => setAlert({ ...alert, show: false })}
-        >
+          onClose={() => setAlert({ ...alert, show: false })}>
           {alert.message}
         </Alert>
       )}

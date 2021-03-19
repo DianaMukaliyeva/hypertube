@@ -13,7 +13,6 @@ import UpdatePhoto from './UpdatePhoto';
 import UpdatePassword from './UpdatePassword';
 import UpdateInformation from './UpdateInformation';
 
-// TO DO move to styles
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(6),

@@ -16,7 +16,8 @@
     "en": "English",
     "de": "German",
     "ru": "Russian",
-    "fi": "Finnish"
+    "fi": "Finnish",
+    "or": "or"
   },
   "formValidation": {
     "required": "Required field",
@@ -68,10 +69,12 @@
     "watched": "watched movie"
   },
   "filter": {
-    "searchLabel": "Search for a Movie",
-    "ratingLabel": "IMDb RATING",
-    "genreLabel": "GENRE",
-    "sortLabel": "SORT BY",
+    "A-Z": "",
+    "Z-A": "",
+    "searchLabel": "Search",
+    "ratingLabel": "IMDb rating",
+    "genreLabel": "Genre",
+    "sortLabel": "Sort by",
     "mostPopular": "Most Popular",
     "leastPopular": "Least Popular",
     "newest": "Newest",

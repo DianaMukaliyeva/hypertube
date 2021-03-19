@@ -45,8 +45,8 @@ const CustomModal = (props) => {
   return (
     <div>
       <Dialog
-        fullScreen={props.fullScreen ? true : false}
-        maxWidth="md"
+        fullWidth
+        maxWidth={props.maxWidth}
         onClose={props.handleClose}
         aria-labelledby="customized-dialog-title"
         open={props.open}>
@@ -63,7 +63,7 @@ CustomModal.propTypes = {
   setOpen: PropTypes.func.isRequired,
   handleClickOpen: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
-  fullScreen: PropTypes.bool,
+  maxWidth: PropTypes.string,
 };
 
 export default CustomModal;

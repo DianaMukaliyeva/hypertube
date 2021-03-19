@@ -3,6 +3,7 @@ import React from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 
+import img from '../../images/video-banner.png';
 import movieService from '../../services/movie';
 
 const Player = ({ subsTracks, imdbCode }) => {
@@ -24,7 +25,8 @@ const Player = ({ subsTracks, imdbCode }) => {
         url={streamUrl}
         onPlay={handlePlay}
         width="100%"
-        height="100%"
+        // height="360px"
+        light={img}
         config={{
           file: {
             attributes: {

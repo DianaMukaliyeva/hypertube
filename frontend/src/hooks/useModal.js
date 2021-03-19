@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useModal = (component, fullScreen) => {
+const useModal = (component, maxWidth) => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -15,7 +15,7 @@ const useModal = (component, fullScreen) => {
     setOpen,
     handleClickOpen,
     handleClose,
-    fullScreen,
+    maxWidth,
   };
 };
 

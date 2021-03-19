@@ -16,7 +16,8 @@
     "en": "Englanti",
     "de": "Saksa",
     "ru": "Venäjä",
-    "fi": "Suomi"
+    "fi": "Suomi",
+    "or": "or"
   },
   "formValidation": {
     "required": "Pakollinen kenttä",
@@ -68,10 +69,12 @@
     "watched": "Nähty"
   },
   "filter": {
+    "A-Z": "A - Z",
+    "Z-A": "A - Z",
     "searchLabel": "Etsi elokuvaa",
-    "ratingLabel": "IMDb ARVIO",
-    "genreLabel": "GENRE",
-    "sortLabel": "LAJITTELE",
+    "ratingLabel": "IMDb arvio",
+    "genreLabel": "Genre",
+    "sortLabel": "Lajittele",
     "mostPopular": "Suosituin",
     "leastPopular": "Vähiten suosittu",
     "newest": "Uusin",

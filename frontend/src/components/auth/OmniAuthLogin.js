@@ -28,16 +28,8 @@ const OmniAuthLogin = () => {
 
   return (
     <>
-      <LogoButton
-        handleClick={handleGoogleSignIn}
-        name={t('login.google')}
-        logo={GoogleLogo}
-      />
-      <LogoButton
-        handleClick={handle42SignIn}
-        name={t('login.42')}
-        logo={FortyTwoLogo}
-      />
+      <LogoButton handleClick={handleGoogleSignIn} name={t('login.google')} logo={GoogleLogo} />
+      <LogoButton handleClick={handle42SignIn} name={t('login.42')} logo={FortyTwoLogo} />
     </>
   );
 };
