@@ -80,6 +80,7 @@ const UpdatePhoto = ({ avatar, setAvatar }) => {
           accept="image/*"
           className={classes.input}
           id="upload-input"
+          data-testid="upload-input"
           type="file"
           onChange={handleUpload}
         />
@@ -100,8 +101,9 @@ const UpdatePhoto = ({ avatar, setAvatar }) => {
           color="inherit"
           key="logout"
           onClick={handleDelete}
+          title="delete"
         >
-          <DeleteIcon />
+          <DeleteIcon title="trash can" />
         </IconButton>
       )}
 

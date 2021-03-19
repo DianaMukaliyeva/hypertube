@@ -49,7 +49,7 @@ const UserProfile = ({ user }) => {
       <Box className={classes.imageContainer}>
         <img
           className={classes.image}
-          src={user.avatar || user.avatarBase64String || emptyAvatar}
+          src={user.avatar || emptyAvatar}
           alt={user.username}
         />
       </Box>
@@ -67,7 +67,7 @@ UserProfile.defaultProps = {
     username: '',
     firstname: '',
     lastname: '',
-    avatarBase64String: null,
+    avatar: null,
   }),
 };
 
@@ -76,7 +76,6 @@ UserProfile.propTypes = {
     username: PropTypes.string,
     firstname: PropTypes.string,
     lastname: PropTypes.string,
-    avatarBase64String: PropTypes.string,
     avatar: PropTypes.string,
   }),
 };
