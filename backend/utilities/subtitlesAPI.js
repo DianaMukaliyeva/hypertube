@@ -1,6 +1,6 @@
-import OpenSubtitlesApi from 'opensubtitles-api';
 import fs from 'fs';
 import axios from 'axios';
+import OpenSubtitlesApi from 'opensubtitles-api';
 
 const OpenSubtitles = new OpenSubtitlesApi({
   useragent: process.env.OPENSUBTITLES_MY_USER_AGENT,

@@ -65,15 +65,11 @@ const fetchMovieInfo = async (imdbCode) => {
   return movieData;
 };
 
-/* storing magnet link components here for now as we might need them in movie routes later, sry.
-also todo: add tracker listing into a config file
-const { hash } = torrentData.movies[0].torrents[0];
-`magnet:?xt=urn:btih:${hash}&dn=${movieInfo.Title}&tr=[PLACEHOLDER_FOR_TRACKER]`; */
 const parseMovieResponse = (movieInfo, comments, subtitles) => ({
   title: movieInfo.Title,
   imdbRating: movieInfo.imdbRating,
   year: movieInfo.Year,
-  genre: movieInfo.Genre, // need to split this if we only want one
+  genre: movieInfo.Genre,
   description: movieInfo.Plot,
   length: parseInt(movieInfo.Runtime, 10),
   director: movieInfo.Director,

@@ -19,14 +19,6 @@ const getMovieList = async (req, res) => {
   res.json(movies);
 };
 
-const addMovieToDb = async (req, res) => {
-  const newMovie = new Movie({
-    serverLocation: req.body.location,
-  });
-  await newMovie.save();
-  res.sendStatus(201);
-};
-
 const fetchComments = async (imdbCode) => {
   const res = await Movie.findOne({
     imdbCode,
@@ -146,7 +138,6 @@ const setWatched = async (req, res) => {
     newMovieInDB.save();
   }
 
-  // TO DO where should we put this and what time should we save
   await User.findByIdAndUpdate(userId, {
     $addToSet: {
       watched: { movieId: imdbCode, time: Date.now() },
@@ -158,7 +149,6 @@ const setWatched = async (req, res) => {
 
 export default {
   getMovieList,
-  addMovieToDb,
   getMovieEntry,
   playMovie,
   addComment,

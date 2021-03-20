@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
-
 import jwt from 'jsonwebtoken';
+
 import { detailedError, createDetail } from './errors.js';
 import User from '../models/User.js';
 
