@@ -3,12 +3,13 @@ import fs from 'fs';
 import movieListUtils from './movieAPIUtilities.js';
 import Movie from '../models/Movie.js';
 
-const saveFilePath = async (imdbCode, filePath) => {
+const saveFilePath = async ({ imdbCode, magnet }, filePath) => {
   const movie = await Movie.findOneAndUpdate({ imdbCode }, { serverLocation: filePath });
   if (movie === null) {
     const newMovie = new Movie({
       imdbCode,
       serverLocation: filePath,
+      magnet,
     });
     await newMovie.save();
   }
@@ -16,7 +17,7 @@ const saveFilePath = async (imdbCode, filePath) => {
 
 const startFileStream = async (req, res) => {
   // todo: per subject should check for file format first and convert to .mp4
-  const filePath = `./movies/${req.params.imdb_code}/${req.serverLocation}`;
+  const filePath = `./movies/${req.params.imdbCode}/${req.serverLocation}`;
   const fileSize = fs.statSync(filePath).size;
   const { range } = req.headers;
   const CHUNK_SIZE = 5e+6; // 5 Mb
@@ -35,17 +36,18 @@ const startFileStream = async (req, res) => {
   readStream.pipe(res);
 };
 
-const downloadMovie = async (imdbCode) => {
+const getMagnet = async (imdbCode) => {
+  const torrentData = (await movieListUtils.fetchTorrentData(imdbCode)).movies[0];
+  // eslint-disable-next-line
+  const { hash } = torrentData.torrents.reduce((curr, prev) => (prev.size_bytes < curr.size_bytes ? prev : curr));
+  return `magnet:?xt=urn:btih:${hash}&dn=${torrentData.title_long.split(' ').join('+')}`;
+};
+
+const downloadMovie = async (movie) => new Promise((resolve) => {
   // download should prioritize the start time from the request
   // and start the filestream from that byte
   let filePath;
-  const torrentData = (await movieListUtils.fetchTorrentData(imdbCode)).movies[0];
-  // eslint-disable-next-line camelcase
-  const { hash } = torrentData.torrents.reduce((curr, prev) => (
-    (prev.size_bytes < curr.size_bytes ? prev : curr)));
-
-  const magnet = `magnet:?xt=urn:btih:${hash}&dn=${torrentData.title_long.split(' ').join('+')}`;
-  const engine = torrentStream(magnet, {
+  const engine = torrentStream(movie.magnet, {
     trackers: [
       'udp://open.demonii.com:1337/announce',
       'udp://tracker.openbittorrent.com:80',
@@ -56,9 +58,9 @@ const downloadMovie = async (imdbCode) => {
       'udp://p4p.arenabg.com:1337',
       'udp://tracker.leechers-paradise.org:6969',
     ],
-    path: `./movies/${imdbCode}`,
+    path: `./movies/${movie.imdbCode}`,
   });
-  engine.on('ready', async () => {
+  engine.on('torrent', () => {
     engine.files.forEach((file) => {
       if (file.name.endsWith('.mp4')) {
         file.select();
@@ -67,21 +69,29 @@ const downloadMovie = async (imdbCode) => {
         file.deselect();
       }
     });
-    if (filePath) await saveFilePath(imdbCode, filePath);
-    // console.log('engine ready on movie', imdbCode);
+    if (filePath && movie.serverLocation !== filePath) saveFilePath(movie, filePath);
+    // console.log('engine ready on movie', movie.imdbCode);
   });
 
   engine.on('download', () => {
-    // console.log('i am downloading movie', imdbCode);
+    const moviePath = `./movies/${movie.imdbCode}/${filePath}`;
+    if (fs.existsSync(moviePath)) {
+      if (fs.statSync(moviePath).size / (1024 * 1024) > 20) {
+        // console.log('resolved', fs.statSync(moviePath).size / (1024 * 1024), movie.imdbCode);
+        resolve();
+      }
+    }
+    // console.log('i am downloading movie', movie.imdbCode, p);
   });
 
-  engine.on('idle', async () => {
-    // console.log('movie', imdbCode, 'complete');
-    await Movie.findOneAndUpdate({ imdbCode }, { downloadComplete: true });
+  engine.on('idle', () => {
+    // console.log('movie', movie.imdbCode, 'complete');
+    Movie.findOneAndUpdate({ imdbCode: movie.imdbCode }, { downloadComplete: true });
   });
-};
+});
 
 export default {
   downloadMovie,
   startFileStream,
+  getMagnet,
 };

@@ -5,6 +5,7 @@ const movieSchema = new mongoose.Schema({
   serverLocation: { type: String, unique: true, sparse: true },
   imdbCode: { type: String, unique: true, required: true },
   downloadComplete: { type: Boolean, default: false },
+  magnet: { type: String },
   comments: [
     {
       userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
