@@ -1,5 +1,6 @@
 import torrentStream from 'torrent-stream';
 import fs from 'fs';
+import ffmpeg from 'fluent-ffmpeg';
 import movieListUtils from './movieAPIUtilities.js';
 import Movie from '../models/Movie.js';
 
@@ -16,11 +17,11 @@ const saveFilePath = async ({ imdbCode, magnet }, filePath) => {
 };
 
 const startFileStream = async (req, res) => {
-  // todo: per subject should check for file format first and convert to .mp4
   const filePath = `./movies/${req.params.imdbCode}/${req.serverLocation}`;
+  const isMp4 = filePath.endsWith('mp4');
   const fileSize = fs.statSync(filePath).size;
   const { range } = req.headers;
-  const CHUNK_SIZE = 5e+6; // 5 Mb
+  const CHUNK_SIZE = 20e+6; // 20 Mb
   const start = range ? Number(range.replace(/\D/g, '')) : 0;
   const end = Math.min(start + CHUNK_SIZE, fileSize - 1);
   const contentLength = end - start + 1;
@@ -29,11 +30,17 @@ const startFileStream = async (req, res) => {
     'Content-Range': `bytes ${start}-${end}/${fileSize}`,
     'Accept-Ranges': 'bytes',
     'Content-Length': contentLength,
-    'Content-Type': 'video/mp4',
+    'Content-Type': isMp4 ? 'video/mp4' : 'video/webm',
   };
   res.writeHead(206, headers);
   const readStream = await fs.createReadStream(filePath, { start, end });
-  readStream.pipe(res);
+  if (isMp4) readStream.pipe(res);
+  else {
+    ffmpeg(readStream)
+      .format('webm')
+      .on('error', () => { })
+      .pipe(res);
+  }
 };
 
 const getMagnet = async (imdbCode) => {
@@ -43,9 +50,29 @@ const getMagnet = async (imdbCode) => {
   return `magnet:?xt=urn:btih:${hash}&dn=${torrentData.title_long.split(' ').join('+')}`;
 };
 
+// not in use as it is way too slow
+// const convertMovieToMp4 = (movie) => {
+//   const { imdbCode } = movie;
+//   const moviePath = `./movies/${imdbCode}/${movie.serverLocation}`;
+//   const savePath = path.parse(movie.serverLocation);
+//   const fileLocation = `${savePath.dir}/${savePath.name}.mp4`;
+//   ffmpeg(moviePath)
+//     .format('mp4')
+//     .on('end', async () => {
+//       Movie.findOneAndUpdate({ imdbCode }, { serverLocation: fileLocation });
+//     })
+//     .on('error', () => {})
+//     .save(`./movies/${imdbCode}/${fileLocation}`);
+// };
+
+const setMovieAsCompleted = async (imdbCode) => {
+  await Movie.findOneAndUpdate({ imdbCode }, { downloadComplete: true },
+    { new: true });
+  // we could convert the completed file in the background but it is very cpu intensive
+  // if (movie.serverLocation.endsWith('.mkv')) convertMovieToMp4(movie);
+};
+
 const downloadMovie = async (movie) => new Promise((resolve) => {
-  // download should prioritize the start time from the request
-  // and start the filestream from that byte
   let filePath;
   const engine = torrentStream(movie.magnet, {
     trackers: [
@@ -62,7 +89,7 @@ const downloadMovie = async (movie) => new Promise((resolve) => {
   });
   engine.on('torrent', () => {
     engine.files.forEach((file) => {
-      if (file.name.endsWith('.mp4')) {
+      if (file.name.endsWith('.mp4') || file.name.endsWith('.mkv')) {
         file.select();
         filePath = file.path;
       } else {
@@ -85,8 +112,7 @@ const downloadMovie = async (movie) => new Promise((resolve) => {
   });
 
   engine.on('idle', () => {
-    // console.log('movie', movie.imdbCode, 'complete');
-    Movie.findOneAndUpdate({ imdbCode: movie.imdbCode }, { downloadComplete: true });
+    setMovieAsCompleted(movie.imdbCode);
   });
 });
 

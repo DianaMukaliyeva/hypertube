@@ -9,7 +9,7 @@
     "test": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --verbose --runInBand --detectOpenHandles",
     "lint": "eslint . --ignore-path .gitignore --max-warnings 0",
     "lint:fix": "eslint --fix --ext .js,.jsx ."
-  }, 
+  },
   "author": "",
   "type": "module",
   "license": "ISC",
@@ -21,6 +21,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
+    "fluent-ffmpeg": "^2.1.2",
     "fs": "^0.0.1-security",
     "googleapis": "^67.1.1",
     "http": "^0.0.1-security",
@@ -34,7 +35,6 @@
     "path": "^0.12.7",
     "swagger-ui-express": "^4.1.6",
     "torrent-stream": "^1.2.1",
-    "swagger-ui-express": "^4.1.6",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
