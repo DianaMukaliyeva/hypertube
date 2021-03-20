@@ -60,7 +60,7 @@ const downloadMovie = async (movie) => new Promise((resolve) => {
     ],
     path: `./movies/${movie.imdbCode}`,
   });
-  engine.on('ready', () => {
+  engine.on('torrent', () => {
     engine.files.forEach((file) => {
       if (file.name.endsWith('.mp4')) {
         file.select();
