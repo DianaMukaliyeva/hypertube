@@ -399,6 +399,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse401-500'
+  /api/movies/{imdbCode}/play/{token}:
+    get:
+      tags:
+        - Movies
+      summary: start movie download and playback
+      operationId: playMovie
+      parameters:
+        - name: imdbCode
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: tt1211837
+        - name: token
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNDdkODM3MWIxZTg1MDAxZTllMDk1ZiIsImxhbmciOiJmaSIsImlhdCI6MTYxNTQwMzU2MX0.qZf_Aw8U7dKYIXudIExHhP9vmXfOMJhlx8X9Mra6beQ
+      responses:
+        '206':
+          description: movie filestream in .mp4 format, 20mb chunks
+          content:
+            video/mp4:
+              schema:
+                type: binary
+                example: ftypisomisomiso2avc1mp41S8smoovlmvhd2h3b4\4w5q5�5�6/6j7K7[...]2h3b4\4w5q5�5�6/6j7K7
+
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse400'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse401-500'
     patch:
       tags:
         - Movies

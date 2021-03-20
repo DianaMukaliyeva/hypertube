@@ -2,7 +2,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 const dark1 = '#060629';
 const dark2 = '#121421';
-// const dark2 = '#1b1d2f';
+const dark3 = '#1b1d2f';
 const light1 = '#ffffff';
 const light2 = '#707281';
 const pink1 = '#fb3b64';
@@ -96,6 +96,17 @@ const theme = createMuiTheme({
           background: 'linear-gradient(90deg, #fb3b64 30%, #ba01e2 70%)',
           borderColor: pink1,
         },
+      },
+    },
+    MuiAutocomplete: {
+      listbox: {
+        backgroundColor: dark3,
+      },
+      option: {
+        backgroundColor: dark3,
+      },
+      noOptions: {
+        backgroundColor: dark3,
       },
     },
     MuiIconButton: {

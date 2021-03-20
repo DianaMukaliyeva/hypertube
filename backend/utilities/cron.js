@@ -1,12 +1,12 @@
-import { CronJob } from 'cron';
 import fs from 'fs';
+import { CronJob } from 'cron';
 
 import Movie from '../models/Movie.js';
 
 const removeMovie = async (movie) => {
   const subtitlesPath = `./subtitles/${movie.imdbCode}`;
-  // TO DO check serverLocation is working or not
-  const moviePath = movie.serverLocation || `./movies/${movie.imdbCode}`;
+  const moviePath = `./movies/${movie.imdbCode}`;
+
   if (fs.existsSync(moviePath)) {
     fs.rmdirSync(moviePath, { recursive: true });
   }
@@ -28,8 +28,6 @@ const getDateMonthAgo = () => {
   return date;
 };
 
-// TO DO line below for test purposes, remove later
-// const job = new CronJob('*/10 * * * * *', async () => {
 const job = new CronJob('00 00 00 * * *', async () => {
   const dateMonthAgo = getDateMonthAgo();
   const movies = await Movie.find({ lastWatched: { $lte: dateMonthAgo } });

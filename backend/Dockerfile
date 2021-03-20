@@ -5,6 +5,9 @@ ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /app
 
+# Install ffmpeg for video conversion
+RUN apk add ffmpeg
+
 # Install app dependencies
 COPY package*.json ./
 RUN npm install

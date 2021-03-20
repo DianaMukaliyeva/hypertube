@@ -21,7 +21,9 @@ undefined
 .env
 user_photo/
 images/
+movies/
+subtitles/
 
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
+yarn-error.log*movies/

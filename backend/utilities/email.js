@@ -17,7 +17,6 @@ const transporter = nodemailer.createTransport({
 const getRootUrl = () => {
   if (url) return url;
   return url;
-  // return req.protocol + '://' + req.get('host');
 };
 
 const sendMail = (recipient, subject, content) => {

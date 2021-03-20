@@ -22,6 +22,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
+    "fluent-ffmpeg": "^2.1.2",
     "fs": "^0.0.1-security",
     "googleapis": "^67.1.1",
     "http": "^0.0.1-security",
@@ -34,6 +35,7 @@
     "opensubtitles-api": "^5.1.2",
     "path": "^0.12.7",
     "swagger-ui-express": "^4.1.6",
+    "torrent-stream": "^1.2.1",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

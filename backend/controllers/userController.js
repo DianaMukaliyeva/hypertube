@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -6,12 +5,6 @@ import User from '../models/User.js';
 import { notFoundError } from '../utilities/errors.js';
 
 const salt = bcrypt.genSaltSync(10);
-
-const getUsers = async (req, res) => {
-  // TO DO: // THIS ROUTE DOES NOT COMPLY WITH API SPECS, HERE FOR COMPATIBILITY, WILL BE DEPRECATED
-  const users = await User.find();
-  res.json({ users });
-};
 
 const getUserInfo = async (req, res) => {
   const { userId } = req.params;
@@ -113,7 +106,6 @@ const updatePassword = async (req, res) => {
 
 export default {
   addUser,
-  getUsers,
   getUserInfo,
   updateUser,
   updatePassword,

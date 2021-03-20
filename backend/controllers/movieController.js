@@ -1,5 +1,6 @@
 import movieListUtils from '../utilities/movieAPIUtilities.js';
 import subtitlesUtils from '../utilities/subtitlesAPI.js';
+import movieTorrentUtils from '../utilities/movieTorrentUtilities.js';
 import Movie from '../models/Movie.js';
 import User from '../models/User.js';
 import { detailedError } from '../utilities/errors.js';
@@ -16,14 +17,6 @@ const getMovieList = async (req, res) => {
     return tempMovie;
   });
   res.json(movies);
-};
-
-const addMovieToDb = async (req, res) => {
-  const newMovie = new Movie({
-    serverLocation: req.body.location,
-  });
-  await newMovie.save();
-  res.sendStatus(201);
 };
 
 const fetchComments = async (imdbCode) => {
@@ -76,8 +69,38 @@ const addComment = async (req, res) => {
     });
     await newMovieInDB.save();
   }
-
   res.sendStatus(201);
+};
+
+const playMovie = async (req, res, next) => {
+  const { imdbCode } = req.params;
+  let movie = await Movie.findOne({ imdbCode });
+  if (!movie || !movie.downloadComplete) {
+    if (!movie) {
+      movie = { imdbCode };
+    }
+    if (!movie.magnet) movie.magnet = await movieTorrentUtils.getMagnet(imdbCode);
+    await movieTorrentUtils.downloadMovie(movie);
+    movie = await Movie.findOne({ imdbCode });
+  }
+  req.serverLocation = movie.serverLocation;
+  await movieTorrentUtils.startFileStream(req, res, next);
+};
+
+// a controller to demonstrate mkv conversion
+const streamMkv = async (req, res, next) => {
+  const imdbCode = 'MKV_SAMPLE';
+  const magnet = process.env.MKV_MAGNET_LINK;
+  const movie = await Movie.findOne({ imdbCode });
+  if (!movie) {
+    const newMovie = new Movie({
+      imdbCode,
+      magnet,
+    });
+    await newMovie.save();
+  }
+  req.params = { imdbCode };
+  await playMovie(req, res, next);
 };
 
 const getComment = async (req, res) => {
@@ -115,7 +138,6 @@ const setWatched = async (req, res) => {
     newMovieInDB.save();
   }
 
-  // TO DO where should we put this and what time should we save
   await User.findByIdAndUpdate(userId, {
     $addToSet: {
       watched: { movieId: imdbCode, time: Date.now() },
@@ -127,9 +149,10 @@ const setWatched = async (req, res) => {
 
 export default {
   getMovieList,
-  addMovieToDb,
   getMovieEntry,
+  playMovie,
   addComment,
+  streamMkv,
   getComment,
   setWatched,
 };

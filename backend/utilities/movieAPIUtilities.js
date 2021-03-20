@@ -2,9 +2,6 @@ import axios from 'axios';
 import { notFoundError } from './errors.js';
 
 const { OMDB_KEY, TORRENT_API } = process.env;
-const requestError = new Error('Could not fetch movie data'); // todo: specify these more explicitly in a separate file
-requestError.code = 'movieRequest';
-requestError.name = 'Request failed';
 
 const filteredMovieData = (movie) => ({
   title: movie.title,
@@ -56,25 +53,23 @@ const fetchYTSMovieList = async (filters) => {
 
 const fetchTorrentData = async (imdbCode) => {
   const res = await axios.get(`${TORRENT_API}?query_term=${imdbCode}`);
-  if (res.status !== 200 || !res.data.data) throw requestError;
-  return res.data.data;
+  const movieData = res.data.data;
+  if (res.status !== 200 || movieData.movie_count === 0) throw notFoundError();
+  return movieData;
 };
 
 const fetchMovieInfo = async (imdbCode) => {
   const res = await axios.get(`http://www.omdbapi.com/?i=${imdbCode}&apikey=${OMDB_KEY}`);
-  if (res.status !== 200) throw requestError;
-  return res.data;
+  const movieData = res.data;
+  if (res.status !== 200 || movieData.Response === 'False') throw notFoundError(); // omdbapi is not very restful
+  return movieData;
 };
 
-/* storing magnet link components here for now as we might need them in movie routes later, sry.
-also todo: add tracker listing into a config file
-const { hash } = torrentData.movies[0].torrents[0];
-`magnet:?xt=urn:btih:${hash}&dn=${movieInfo.Title}&tr=[PLACEHOLDER_FOR_TRACKER]`; */
 const parseMovieResponse = (movieInfo, comments, subtitles) => ({
   title: movieInfo.Title,
   imdbRating: movieInfo.imdbRating,
   year: movieInfo.Year,
-  genre: movieInfo.Genre, // need to split this if we only want one
+  genre: movieInfo.Genre,
   description: movieInfo.Plot,
   length: parseInt(movieInfo.Runtime, 10),
   director: movieInfo.Director,

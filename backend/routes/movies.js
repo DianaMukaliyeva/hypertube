@@ -7,16 +7,17 @@ import inputValidator from '../utilities/inputValidator.js';
 
 const movieRoute = express.Router();
 
-movieRoute.get('/:imdb_code', async (req, res, next) => {
-  await movieController.getMovieEntry(req, res, next);
-});
+// special route to prove mkv backend .mkv file conversion capabilities
+if (process.env.NODE_ENV === 'development') {
+  movieRoute.get('/streamMkv',
+    movieController.streamMkv);
+}
+
+movieRoute.get('/:imdbCode/play/:token', inputValidator.validateToken, movieController.playMovie);
+
+movieRoute.get('/:imdb_code', middleware.authRequired, movieController.getMovieEntry);
 
 movieRoute.get('/', middleware.authRequired, movieController.getMovieList);
-
-// TO DO do we need this route?
-movieRoute.post('/', async (req, res, next) => {
-  await movieController.addMovieToDb(req, res, next);
-});
 
 movieRoute.patch('/:imdbCode', middleware.authRequired, movieController.setWatched);
 
