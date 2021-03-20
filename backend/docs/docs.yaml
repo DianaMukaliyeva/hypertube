@@ -399,7 +399,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse401-500'
-  /api/movies/{imdbCode}/play:
+  /api/movies/{imdbCode}/play/{token}:
     get:
       tags:
         - Movies
@@ -414,9 +414,17 @@ paths:
           schema:
             type: string
             example: tt1211837
+        - name: token
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNDdkODM3MWIxZTg1MDAxZTllMDk1ZiIsImxhbmciOiJmaSIsImlhdCI6MTYxNTQwMzU2MX0.qZf_Aw8U7dKYIXudIExHhP9vmXfOMJhlx8X9Mra6beQ
       responses:
         '206':
-          description: movie filestream in .mp4 format, 5mb chunks
+          description: movie filestream in .mp4 format, 20mb chunks
           content:
             video/mp4:
               schema:
