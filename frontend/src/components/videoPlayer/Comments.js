@@ -14,37 +14,37 @@ const useStyles = makeStyles(() => ({
   root: {
     marginTop: '2rem',
   },
+  comment: {
+    paddingLeft: 0,
+  },
 }));
 
-const Comments = ({ movie }) => {
+const Comments = ({ comments }) => {
   const classes = useStyles();
-  console.log('TEST', movie);
-  if (!movie) return <div></div>;
+
+  if (!comments) return <div></div>;
 
   return (
     <>
       <div className={classes.root}>
         <List>
-          {console.log('TEST INSIDE', movie)}
-          {movie.map((c) => (
-            <ListItem key={c._id} alignItems="flex-start">
-              <ListItemAvatar>
-                <Profile user={c.user} />
-              </ListItemAvatar>
-              <ListItemText
-                primary={c.user.username}
-                secondary={
-                  <Typography
-                    component="span"
-                    variant="body1"
-                    className={classes.inline}
-                    color="textSecondary">
-                    {c.comment}
-                  </Typography>
-                }
-              />
-            </ListItem>
-          ))}
+          {comments.map((comment) => {
+            return (
+              <ListItem key={comment._id} alignItems="flex-start" className={classes.comment}>
+                <ListItemAvatar>
+                  <Profile user={comment.user} />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={comment.user.username}
+                  secondary={
+                    <Typography component="span" variant="body2" color="textSecondary">
+                      {comment.comment}
+                    </Typography>
+                  }
+                />
+              </ListItem>
+            );
+          })}
         </List>
       </div>
     </>
@@ -52,7 +52,7 @@ const Comments = ({ movie }) => {
 };
 
 Comments.propTypes = {
-  movie: PropTypes.array,
+  comments: PropTypes.array,
 };
 
 export default Comments;

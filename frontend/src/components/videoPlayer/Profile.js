@@ -8,21 +8,23 @@ import CustomModal from '../common/CustomModal';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 
+import defaultAvatar from '../../images/emptyAvatar.png';
+
 const Profile = ({ user }) => {
   const userProfileModal = useModal(<UserProfile user={user} />);
 
   return (
-  <div>
-    <Button onClick={userProfileModal.handleClickOpen}>
-      <Avatar alt={user.username} src={user.avatar} />
-    </Button>
-    <CustomModal {...userProfileModal} />
-  </div>
-    );
+    <div>
+      <Button onClick={userProfileModal.handleClickOpen}>
+        <Avatar alt={user.username} src={user.avatar ? user.avatar : defaultAvatar} />
+      </Button>
+      <CustomModal {...userProfileModal} />
+    </div>
+  );
 };
 
 Profile.propTypes = {
-    user: PropTypes.object.isRequired,
-  };
+  user: PropTypes.object.isRequired,
+};
 
 export default Profile;

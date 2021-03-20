@@ -50,7 +50,6 @@ const Gallery = ({ setUser }) => {
   };
 
   React.useEffect(() => {
-    getMovies();
     return () => {
       mountedRef.current = false;
     };

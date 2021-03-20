@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -22,13 +23,16 @@ const useStyles = makeStyles((theme) => ({
 
 const MovieDetails = ({ movie }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const details = [
-    { text: movie.director ? `Director: ${movie.director}` : '' },
-    { text: movie.cast ? `Cast: ${movie.cast}` : '' },
+    { text: movie.director ? `${t('movie.director')}: ${movie.director}` : '' },
+    { text: movie.cast ? `${t('movie.cast')}: ${movie.cast}` : '' },
     {
-      text: `Subtitles: ${
-        movie.subtitles.length > 0 ? movie.subtitles.join(' ,') : 'not available'
+      text: `${t('movie.subtitles')}: ${
+        movie.subtitles.length > 0
+          ? movie.subtitles.map((s) => t(`form.${s}`)).join(', ')
+          : t('movie.notAvailable')
       }`,
     },
   ];

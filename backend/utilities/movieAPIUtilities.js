@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Movie from '../models/Movie.js';
 import { notFoundError } from './errors.js';
 
 const { OMDB_KEY, TORRENT_API } = process.env;
@@ -66,36 +65,19 @@ const fetchMovieInfo = async (imdbCode) => {
   return movieData;
 };
 
-const fetchComments = async (imdbCode) => {
-  const res = await Movie.findOne({
-    imdbCode,
-  }).populate('comments.user', {
-    username: 1,
-    firstname: 1,
-    lastname: 1,
-    avatar: 1,
-  });
-
-  if (!res) return;
-  // eslint-disable-next-line consistent-return
-  return res.comments;
-};
-
 /* storing magnet link components here for now as we might need them in movie routes later, sry.
 also todo: add tracker listing into a config file
 const { hash } = torrentData.movies[0].torrents[0];
 `magnet:?xt=urn:btih:${hash}&dn=${movieInfo.Title}&tr=[PLACEHOLDER_FOR_TRACKER]`; */
-const parseMovieResponse = (movieInfo, torrentData, comments, subtitles) => ({
+const parseMovieResponse = (movieInfo, comments, subtitles) => ({
   title: movieInfo.Title,
-  imdbRating: torrentData.movies[0].rating,
+  imdbRating: movieInfo.imdbRating,
   year: movieInfo.Year,
   genre: movieInfo.Genre, // need to split this if we only want one
   description: movieInfo.Plot,
   length: parseInt(movieInfo.Runtime, 10),
   director: movieInfo.Director,
   cast: movieInfo.Actors,
-  downloaded: false, // if movie is already downloaded to server, identified with imdbCode
-  watched: false, // to see if user has already watched the movie, identified with imdbCode
   comments,
   subtitles,
 });
@@ -105,5 +87,4 @@ export default {
   fetchTorrentData,
   fetchMovieInfo,
   parseMovieResponse,
-  fetchComments,
 };
