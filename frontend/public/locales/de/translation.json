@@ -66,7 +66,11 @@
   },
   "movie": {
     "rating": "rating",
-    "watched": "watched movie"
+    "watched": "watched movie",
+    "notAvailable": "not available",
+    "subtitles": "Subtitles",
+    "director": "Director",
+    "cast": "Cast"
   },
   "filter": {
     "A-Z": "A - Z",
@@ -110,5 +114,11 @@
     "unauthorized": "Unauthorized",
     "server": "Server error",
     "unexpected": "Unexpected error"
+  },
+  "comment": {
+    "invalidFormat": "Wrong format",
+    "success": "Thanks for the comment!",
+    "post": "post comment",
+    "leaveComment": "Leave your comment here"
   }
 }

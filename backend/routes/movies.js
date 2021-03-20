@@ -20,7 +20,9 @@ movieRoute.post('/', async (req, res, next) => {
 
 movieRoute.patch('/:imdbCode', middleware.authRequired, movieController.setWatched);
 
-movieRoute.post('/:imdb_code/comments', middleware.authRequired, movieController.addComment);
+movieRoute.post('/:imdbCode/comments', middleware.authRequired, movieController.addComment);
+
+movieRoute.get('/:imdbCode/comments', middleware.authRequired, movieController.getComment);
 
 movieRoute.get(
   '/:imdbCode/subtitles/:lang/:token',
