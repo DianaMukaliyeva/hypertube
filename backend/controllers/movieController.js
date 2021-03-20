@@ -109,6 +109,7 @@ const streamMkv = async (req, res, next) => {
   }
   req.params = { imdbCode };
   await playMovie(req, res, next);
+};
 
 const getComment = async (req, res) => {
   const { imdbCode } = req.params;
