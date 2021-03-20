@@ -1,0 +1,2 @@
+GET http://localhost:5003/api/auth/google HTTP/1.1
+content-Type: application/json

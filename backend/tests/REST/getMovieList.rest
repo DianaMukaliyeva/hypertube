@@ -1,0 +1,3 @@
+GET http://localhost:5003/api/movies/ HTTP/1.1
+content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTYzODBkZTVlMThmMDA0Yjk0ZDUwYyIsImxhbmciOiJkZSIsImlhdCI6MTYxNjI2MzUxNH0.34Swx9lOM22ZYT88eOMFVURKW72YVyeEpAU83TloBiA

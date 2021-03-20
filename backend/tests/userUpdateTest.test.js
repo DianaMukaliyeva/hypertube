@@ -21,7 +21,7 @@ beforeAll(async () => {
   await request.post('/api/users/').send(userUtils.newValidUser);
 
   user = await updateUtils.userInDb();
-  token = await request.post('/api/auth/login').send(userUtils.validLogInUser).expect(200);
+  token = await request.post('/api/auth/login').send(userUtils.validLogInUser);
 });
 
 describe('Update User API Tests', () => {
@@ -142,6 +142,13 @@ describe('Update User API Tests', () => {
       .set('Authorization', `Bearer ${token.body.token}`)
       .send(updateUtils.validUpdates[7])
       .expect(200);
+  });
+
+  test('API endpoint test valid | GET /api/users/{userId} expect 200', async () => {
+    await request.get(`/api/users/${user[0]._id}`)
+      .set('Authorization', `Bearer ${token.body.token}`)
+      .expect(200)
+      .expect('Content-Type', /application\/json/);
   });
 });
 
