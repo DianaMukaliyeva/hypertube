@@ -69,14 +69,16 @@ const fetchMovieInfo = async (imdbCode) => {
 const fetchComments = async (imdbCode) => {
   const res = await Movie.findOne({
     imdbCode,
-  }).populate('comments.userId', {
+  }).populate('comments.user', {
     username: 1,
     firstname: 1,
     lastname: 1,
     avatar: 1,
   });
 
-  return !res ? false : res.comments;
+  if (!res) return;
+  // eslint-disable-next-line consistent-return
+  return res.comments;
 };
 
 /* storing magnet link components here for now as we might need them in movie routes later, sry.

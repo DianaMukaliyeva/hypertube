@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 // import PropTypes from 'prop-types';
@@ -8,13 +9,13 @@ import useField from '../../hooks/useField';
 import userService from '../../services/user';
 import sharedFunctions from '../../utils/sharedFunctions';
 
-import InputField from './InputField';
-import FormButton from './FormButton';
+import InputField from '../common/InputField';
+import FormButton from '../common/FormButton';
 
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Alert } from '@material-ui/lab';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PasswordResetForm = () => {
-  const history = useHistory();
+  const location = useLocation();
+  const { t } = useTranslation();
   const password = useField('password', 'password', 'reset-password');
   const confirmPassword = useField(
     'password',
@@ -46,21 +48,26 @@ const PasswordResetForm = () => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    const token = history.location.search.split('=')[1];
-    if (token) {
-      try {
-        const decoded = jwt_decode(token);
-        setUser({
-          userId: decoded.id,
-          resetToken: token,
-        });
-      } catch (err) {
-        setAlert({
-          show: true,
-          message: 'Invalid link, please try again',
-          severity: 'error',
-        });
-      }
+    const token = location.search.split('=')[1];
+    if (!token)
+      return setAlert({
+        show: true,
+        message: t('pwRecovery.invalidLink'),
+        severity: 'error',
+      });
+
+    try {
+      const decoded = jwt_decode(token);
+      setUser({
+        userId: decoded.id,
+        resetToken: token,
+      });
+    } catch (err) {
+      setAlert({
+        show: true,
+        message: t('pwRecovery.invalidLink'),
+        severity: 'error',
+      });
     }
   }, []);
 
@@ -76,7 +83,7 @@ const PasswordResetForm = () => {
       await userService.pwdUpdate(data);
       setAlert({
         show: true,
-        message: 'Your password was successfully updated',
+        message: t('pwRecovery.success'),
         severity: 'success',
       });
     } catch (err) {
@@ -90,7 +97,7 @@ const PasswordResetForm = () => {
             if (detail.param === 'userId' || detail.param === 'resetToken') {
               setAlert({
                 show: true,
-                message: 'Error in reset link, please try again',
+                message: t('pwRecovery.invalidLink'),
                 severity: 'error',
               });
             }
@@ -100,14 +107,14 @@ const PasswordResetForm = () => {
         case 500:
           setAlert({
             show: true,
-            message: 'Server error',
+            message: t('error.server'),
             severity: 'error',
           });
           break;
         default:
           setAlert({
             show: true,
-            message: 'Oops.. somthing went completely wrong',
+            message: t('error.unexpected'),
             severity: 'error',
           });
           break;
@@ -122,30 +129,30 @@ const PasswordResetForm = () => {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Password Reset
+          {t('pwRecovery.pwResetTitle')}
         </Typography>
-        {alert.show && (
-          <Alert
-            severity={alert.severity}
-            onClose={() => setAlert({ ...alert, show: false })}
-          >
-            {alert.message}
-          </Alert>
-        )}
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleClick} noValidate>
           <InputField
             values={password}
-            label="New password"
+            label={t('form.newPassword')}
             autocomplete="new-password"
             required={true}
           />
           <InputField
             values={confirmPassword}
-            label="Confirm password"
+            label={t('form.confirmPassword')}
             autocomplete="confirm-password"
             required={true}
           />
-          <FormButton handleClick={handleClick} name="Save" />
+          {alert.show && (
+            <Alert
+              severity={alert.severity}
+              onClose={() => setAlert({ ...alert, show: false })}
+            >
+              {alert.message}
+            </Alert>
+          )}
+          <FormButton name={t('pwRecovery.save')} />
         </form>
       </div>
     </Container>

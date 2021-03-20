@@ -6,11 +6,12 @@ const movieSchema = new mongoose.Schema({
   imdbCode: { type: String, unique: true, required: true },
   downloadComplete: { type: Boolean, default: false },
   magnet: { type: String },
+  lastWatched: { type: Date },
   comments: [
     {
-      userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
       comment: { type: String, required: true },
-      time: { type: Date, default: Date.now },
+      user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+      time: { type: Date, default: Date.now() },
     },
   ],
 });

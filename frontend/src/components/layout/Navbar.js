@@ -1,85 +1,79 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { makeStyles } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { withRouter } from 'react-router-dom';
 
-import IconButton from '@material-ui/core/IconButton';
+import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import VideocamIcon from '@material-ui/icons/Videocam';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 
-import MyProfile from '../user/MyProfile/Index';
+import MyProfile from '../profile/MyProfile';
 import useModal from '../../hooks/useModal';
 import CustomModal from '../common/CustomModal';
 
 import PropTypes from 'prop-types';
 
+const useStyles = makeStyles(() => ({
+  button: {
+    '&:hover': {
+      background: 'inherit',
+      color: '#fb3b64',
+    },
+  },
+}));
+
 const NavBar = ({ user, setUser }) => {
   const { t } = useTranslation();
+  const classes = useStyles();
+  const isMobile = useMediaQuery('(max-width:600px)');
 
   const handleClick = () => {
     // TO DO reset hypertube gallery
   };
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     setUser({ userId: '', lang: '' });
   };
 
-  // TO DO add responsiveness: move navbar to bottom, center icons
-  const profile = useModal(<MyProfile user={user} setUser={setUser} />);
+  const profile = useModal(<MyProfile user={user} setUser={setUser} />, 'sm');
+
+  const options = [
+    { icon: <PlayCircleFilledWhiteIcon />, onClick: handleClick, text: 'Hypertube' },
+    { icon: <AccountCircle />, onClick: profile.handleClickOpen, text: t('navbar.profile') },
+    { icon: <ExitToAppIcon />, onClick: handleLogout, text: t('navbar.logout') },
+  ];
 
   return (
     <AppBar style={{ padding: 0, backgroundColor: '#1b1d2f' }}>
       <Toolbar>
         <div style={{ width: '100%' }}>
           <Box display="flex">
-            <Box p={1} flexGrow={1}>
-              <IconButton
-                variant="button"
-                size="small"
-                color="inherit"
-                key="hypertube"
-                onClick={() => handleClick()}
-              >
-                <Typography style={{ color: 'white' }}>
-                  <VideocamIcon />
-                  Hypertube
-                </Typography>
-              </IconButton>
-            </Box>
-            <Box p={1}>
-              <IconButton
-                variant="button"
-                color="inherit"
-                size="small"
-                key="profile"
-                onClick={profile.handleClickOpen}
-              >
-                <Typography style={{ color: 'white' }}>
-                  <AccountCircle />
-                  {t('navbar.profile')}
-                </Typography>
-              </IconButton>
-            </Box>
-            <Box p={1}>
-              <IconButton
-                variant="button"
-                size="small"
-                color="inherit"
-                key="logout"
-                onClick={() => handleLogout()}
-              >
-                <Typography style={{ color: 'white' }}>
-                  <ExitToAppIcon />
-                  {t('navbar.logout')}
-                </Typography>
-              </IconButton>
-            </Box>
+            {options.map((option, index) => {
+              return (
+                <Box
+                  key={`nav-${index}`}
+                  p={1}
+                  m={isMobile ? 'auto' : ''}
+                  flexGrow={!isMobile && index === 0 ? 1 : ''}>
+                  <Button
+                    startIcon={option.icon}
+                    size={isMobile ? 'large' : 'small'}
+                    color="inherit"
+                    className={classes.button}
+                    onClick={option.onClick}>
+                    {isMobile ? '' : option.text}
+                  </Button>
+                </Box>
+              );
+            })}
           </Box>
         </div>
       </Toolbar>

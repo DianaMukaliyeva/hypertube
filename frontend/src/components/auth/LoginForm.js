@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
@@ -8,12 +9,11 @@ import { useHistory } from 'react-router-dom';
 import useField from '../../hooks/useField';
 import useModal from '../../hooks/useModal';
 import authService from '../../services/auth';
-import sharedFunctions from '../../utils/sharedFunctions';
 
-import InputField from './InputField';
-import RecoveryLinkForm from '../user/RecoveryLinkForm';
+import InputField from '../common/InputField';
+import RecoveryLinkForm from './RecoveryLinkForm';
 import CustomModal from '../common/CustomModal';
-import FormButton from './FormButton';
+import FormButton from '../common/FormButton';
 import OmniAuthLogin from './OmniAuthLogin';
 
 import Link from '@material-ui/core/Link';
@@ -37,9 +37,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LoginForm = ({ setUser }) => {
+  const { t } = useTranslation();
   const history = useHistory();
-  const email = useField('email', 'email', 'login-email');
-  const password = useField('password', 'password', 'login-password');
+  const email = useField('email', 'loginEmail', 'login-email');
+  const password = useField('password', 'loginPassword', 'login-password');
   const [alert, setAlert] = useState({
     show: false,
     message: '',
@@ -50,6 +51,24 @@ const LoginForm = ({ setUser }) => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    if (email.value === '') {
+      email.setValues({
+        ...email.values,
+        helperText: t('formValidation.required'),
+        error: true,
+      });
+      return;
+    }
+
+    if (password.value === '') {
+      password.setValues({
+        ...password.values,
+        helperText: t('formValidation.required'),
+        error: true,
+      });
+      return;
+    }
+
     try {
       await authService.login(email.value, password.value);
       const decoded = jwt_decode(localStorage.getItem('token'));
@@ -58,22 +77,23 @@ const LoginForm = ({ setUser }) => {
     } catch (err) {
       switch (err.response.data.statusCode) {
         case 400:
-          sharedFunctions.showErrors(err.response.data.details, {
-            email,
-            password,
+          setAlert({
+            show: true,
+            message: t('formValidation.invalidCredentials'),
+            severity: 'error',
           });
           break;
         case 500:
           setAlert({
             show: true,
-            message: 'Server error',
+            message: t('formValidation.server'),
             severity: 'error',
           });
           break;
         default:
           setAlert({
             show: true,
-            message: 'Oops.. somthing went completely wrong',
+            message: t('formValidation.unexpected'),
             severity: 'error',
           });
           break;
@@ -88,31 +108,30 @@ const LoginForm = ({ setUser }) => {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Login
+          {t('login.title')}
         </Typography>
-        {alert.show && (
-          <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
-            {alert.message}
-          </Alert>
-        )}
-
         <OmniAuthLogin />
-
-        <form className={classes.form} noValidate>
-          <InputField values={email} label="email" required={true} />
+        <Box mt={3}>{t('form.or')}</Box>
+        <form className={classes.form} onSubmit={handleLogin} noValidate>
+          <InputField values={email} label={t('form.email')} required={true} />
           <InputField
             values={password}
-            label="Password"
+            label={t('form.password')}
             autocomplete="current-password"
             required={true}
           />
-          <FormButton handleClick={handleLogin} name="Login" />
-          <Box>
-            <Link href="#" onClick={recoveryLinkModal.handleClickOpen}>
-              Forgot Password?
-            </Link>
-          </Box>
+          {alert.show && (
+            <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
+              {alert.message}
+            </Alert>
+          )}
+          <FormButton name={t('login.login')} />
         </form>
+        <Box>
+          <Link href="#" onClick={recoveryLinkModal.handleClickOpen}>
+            {t('login.forgotPw')}
+          </Link>
+        </Box>
       </div>
       <CustomModal {...recoveryLinkModal} />
     </Container>

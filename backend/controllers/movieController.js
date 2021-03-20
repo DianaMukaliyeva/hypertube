@@ -32,13 +32,13 @@ const getMovieEntry = async (req, res) => {
   const torrentData = await movieListUtils.fetchTorrentData(imdbCode);
   const movieInfo = await movieListUtils.fetchMovieInfo(imdbCode);
   const subtitles = await subtitlesUtils.getSubtitles(imdbCode);
-  const comments = []; // TO DO check with Ilja to add here
+  const comments = await movieListUtils.fetchComments(imdbCode);
   res.json(movieListUtils.parseMovieResponse(movieInfo, torrentData, comments, subtitles));
 };
 
 const addComment = async (req, res) => {
   const newComment = {
-    userId: req.user,
+    user: req.user,
     comment: req.body.comment,
   };
   const imdbCode = req.params.imdb_code;
@@ -67,7 +67,6 @@ const addComment = async (req, res) => {
 };
 
 const playMovie = async (req, res, next) => {
-  // todo: update route docs
   const { imdbCode } = req.params;
   let movie = await Movie.findOne({ imdbCode });
   if (!movie || !movie.downloadComplete) {
@@ -98,6 +97,37 @@ const streamMkv = async (req, res, next) => {
   await playMovie(req, res, next);
 };
 
+const setWatched = async (req, res) => {
+  const userId = req.user;
+  const { imdbCode } = req.params;
+
+  const movie = await Movie.findOneAndUpdate(
+    {
+      imdbCode,
+    },
+    {
+      lastWatched: Date.now(),
+    },
+  );
+
+  if (movie === null) {
+    const newMovieInDB = new Movie({
+      imdbCode,
+      lastWatched: Date.now(),
+    });
+    newMovieInDB.save();
+  }
+
+  // TO DO where should we put this and what time should we save
+  await User.findByIdAndUpdate(userId, {
+    $addToSet: {
+      watched: { movieId: imdbCode, time: Date.now() },
+    },
+  });
+
+  res.sendStatus(201);
+};
+
 export default {
   getMovieList,
   addMovieToDb,
@@ -105,4 +135,5 @@ export default {
   playMovie,
   addComment,
   streamMkv,
+  setWatched,
 };

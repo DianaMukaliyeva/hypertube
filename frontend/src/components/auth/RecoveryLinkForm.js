@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 
 import authService from '../../services/auth';
 import useField from '../../hooks/useField';
 
-import InputField from './InputField';
-import FormButton from './FormButton';
+import InputField from '../common/InputField';
+import FormButton from '../common/FormButton';
 import sharedFunctions from '../../utils/sharedFunctions';
 
 import Typography from '@material-ui/core/Typography';
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RecoveryLinkForm = () => {
+  const { t } = useTranslation();
   const email = useField('email', 'email', 'forgot-email');
   const [alert, setAlert] = useState({
     show: false,
@@ -42,11 +44,10 @@ const RecoveryLinkForm = () => {
       await authService.recoveryLink(email.value);
       setAlert({
         show: true,
-        message: 'Check your email for further instructions',
+        message: t('pwRecovery.checkEmail'),
         severity: 'success',
       });
     } catch (err) {
-      // console.log('err', err.response.data);
       switch (err.response.data.statusCode) {
         case 400:
           sharedFunctions.showErrors(err.response.data.details, {
@@ -56,14 +57,14 @@ const RecoveryLinkForm = () => {
         case 500:
           setAlert({
             show: true,
-            message: 'Server error',
+            message: t('error.server'),
             severity: 'error',
           });
           break;
         default:
           setAlert({
             show: true,
-            message: 'Oops.. somthing went completely wrong',
+            message: t('error.unexpected'),
             severity: 'error',
           });
           break;
@@ -78,21 +79,22 @@ const RecoveryLinkForm = () => {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Recovery link
+          {t('pwRecovery.title')}
         </Typography>
-        {alert.show && (
-          <Alert
-            severity={alert.severity}
-            onClose={() => setAlert({ ...alert, show: false })}
-          >
-            {alert.message}
-          </Alert>
-        )}
-        <form className={classes.form} noValidate>
-          <InputField values={email} label="email" required={true} />
-          <FormButton handleClick={handleForgotPwd} name="Send" />
+
+        <form className={classes.form} onSubmit={handleForgotPwd} noValidate>
+          <InputField values={email} label={t('form.email')} required={true} />
+          {alert.show && (
+            <Alert
+              severity={alert.severity}
+              onClose={() => setAlert({ ...alert, show: false })}
+            >
+              {alert.message}
+            </Alert>
+          )}
+          <FormButton name={t('pwRecovery.send')} />
         </form>
-        <div>We will send a recover link to your email</div>
+        <div>{t('pwRecovery.helper')}</div>
       </div>
     </Container>
   );

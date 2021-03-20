@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 import useField from '../../hooks/useField';
 
 import userService from '../../services/user';
@@ -9,11 +11,12 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
+import Box from '@material-ui/core/Box';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Alert } from '@material-ui/lab';
 
-import InputField from './InputField';
-import FormButton from './FormButton';
+import InputField from '../common/InputField';
+import FormButton from '../common/FormButton';
 import OmniAuthLogin from './OmniAuthLogin';
 
 // TO DO move to styles
@@ -32,20 +35,20 @@ const useStyles = makeStyles((theme) => ({
   select: {
     width: '100%',
     marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
 }));
 
 const CreateAccountForm = () => {
+  const classes = useStyles();
+  const { t } = useTranslation();
+
   const username = useField('text', 'username', 'create-username');
   const firstName = useField('text', 'name', 'create-firstname');
   const lastName = useField('text', 'name', 'create-lastname');
   const email = useField('email', 'email', 'create-email');
   const password = useField('password', 'password', 'create-password');
-  const confirmPassword = useField(
-    'password',
-    'confirmPassword',
-    'create-confirm-password'
-  );
+  const confirmPassword = useField('password', 'confirmPassword', 'create-confirm-password');
   const [lang, setLang] = useState({ label: '', code: '' });
   const [alert, setAlert] = useState({
     show: false,
@@ -54,13 +57,11 @@ const CreateAccountForm = () => {
   });
 
   const langOptions = [
-    { label: 'English', code: 'en' },
-    { label: 'German', code: 'de' },
-    { label: 'Finnish', code: 'fi' },
-    { label: 'Russian', code: 'ru' },
+    { label: t('form.en'), code: 'en' },
+    { label: t('form.de'), code: 'de' },
+    { label: t('form.fi'), code: 'fi' },
+    { label: t('form.ru'), code: 'ru' },
   ];
-
-  const classes = useStyles();
 
   const handleCreate = async (event) => {
     event.preventDefault();
@@ -77,7 +78,7 @@ const CreateAccountForm = () => {
       await userService.create(data);
       setAlert({
         show: true,
-        message: 'Account successfully created',
+        message: t('createAccount.success'),
         severity: 'success',
       });
     } catch (err) {
@@ -95,18 +96,27 @@ const CreateAccountForm = () => {
         case 500:
           setAlert({
             show: true,
-            message: 'Server error',
+            message: t('error.server'),
             severity: 'error',
           });
           break;
         default:
           setAlert({
             show: true,
-            message: 'Oops.. somthing went completely wrong',
+            message: t('error.unexpected'),
             severity: 'error',
           });
           break;
       }
+    }
+  };
+
+  const handleLangChange = (event, value) => {
+    if (value !== null) {
+      i18next.changeLanguage(value.code, (err) => {
+        if (err) return console.log('something went wrong loading language', err);
+      });
+      setLang({ ...value, label: t(`form.${value.code}`) });
     }
   };
 
@@ -115,33 +125,23 @@ const CreateAccountForm = () => {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Create account
+          {t('createAccount.title')}
         </Typography>
-        {alert.show && (
-          <Alert
-            severity={alert.severity}
-            onClose={() => setAlert({ ...alert, show: false })}
-          >
-            {alert.message}
-          </Alert>
-        )}
 
-        <OmniAuthLogin />
-
-        <form className={classes.form} noValidate>
-          <InputField values={username} label="Username" required={true} />
-          <InputField values={firstName} label="First name" required={true} />
-          <InputField values={lastName} label="Last name" required={true} />
-          <InputField values={email} label="email" required={true} />
+        <form className={classes.form} onSubmit={handleCreate} noValidate>
+          <InputField values={username} label={t('form.username')} required={true} />
+          <InputField values={firstName} label={t('form.firstName')} required={true} />
+          <InputField values={lastName} label={t('form.lastName')} required={true} />
+          <InputField values={email} label={t('form.email')} required={true} />
           <InputField
             values={password}
-            label="Password"
+            label={t('form.password')}
             autocomplete="new-password"
             required={true}
           />
           <InputField
             values={confirmPassword}
-            label="Confirm password"
+            label={t('form.confirmPassword')}
             autocomplete="new-password"
             required={true}
           />
@@ -153,20 +153,21 @@ const CreateAccountForm = () => {
             getOptionLabel={(option) => option.label}
             getOptionSelected={(option, value) => option.value === value.value}
             className={classes.select}
-            onChange={(event, value) => {
-              if (value !== null) setLang(value);
-            }}
+            onChange={handleLangChange}
             renderInput={(params) => (
-              <TextField
-                required
-                {...params}
-                label="Select language"
-                variant="outlined"
-              />
+              <TextField required {...params} label={t('form.selectLanguage')} variant="outlined" />
             )}
           />
+
+          {alert.show && (
+            <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
+              {alert.message}
+            </Alert>
+          )}
+          <FormButton name={t('createAccount.create')} />
         </form>
-        <FormButton handleClick={handleCreate} name="Create Account" />
+        <Box mt={3}>{t('form.or')}</Box>
+        <OmniAuthLogin />
       </div>
     </Container>
   );

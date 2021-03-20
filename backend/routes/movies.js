@@ -19,6 +19,8 @@ movieRoute.get('/:imdb_code', middleware.authRequired, movieController.getMovieE
 
 movieRoute.get('/', middleware.authRequired, movieController.getMovieList);
 
+movieRoute.patch('/:imdbCode', middleware.authRequired, movieController.setWatched);
+
 movieRoute.post('/:imdb_code/comments', middleware.authRequired, movieController.addComment);
 
 movieRoute.get(

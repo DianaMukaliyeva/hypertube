@@ -7,20 +7,12 @@ import Grid from '@material-ui/core/Grid';
 import { CssBaseline, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import useField from '../../../hooks/useField';
 import userService from '../../../services/user';
 import sharedFunctions from '../../../utils/sharedFunctions';
 import UpdatePhoto from './UpdatePhoto';
-import UserProfile from '../UserProfile';
 import UpdatePassword from './UpdatePassword';
 import UpdateInformation from './UpdateInformation';
 
-// todo remove when done
-import Button from '@material-ui/core/Button';
-import CustomModal from '../../common/CustomModal';
-import useModal from '../../../hooks/useModal';
-
-// TO DO move to styles
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(6),
@@ -51,17 +43,6 @@ const useStyles = makeStyles((theme) => ({
 const MyProfile = ({ user, setUser }) => {
   const [userData, setUserData] = useState({ language: '' });
 
-  const username = useField('text', 'username', 'update-username');
-  const firstName = useField('text', 'name', 'update-firsname');
-  const lastName = useField('text', 'name', 'update-lastname');
-  const email = useField('email', 'email', 'update-email');
-  const oldPassword = useField('password', 'password', 'update-old-password');
-  const password = useField('password', 'password', 'update-password');
-  const confirmPassword = useField(
-    'password',
-    'confirmPassword',
-    'update-confirm-pw'
-  );
   const [avatar, setAvatar] = useState(null);
   const noAlert = { show: false, message: '', severity: '' };
   const [alert, setAlert] = useState(noAlert);
@@ -69,75 +50,62 @@ const MyProfile = ({ user, setUser }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  // todo: remove when done
-  const userProfileModal = useModal(<UserProfile user={userData} />);
-
-  const handleErrorResponse = (data, showAlert) => {
+  const handleErrorResponse = (data, showAlert, params) => {
     switch (data.statusCode) {
       case 401:
         showAlert({
           show: true,
-          message: 'Unauthorized access',
+          message: t('error.unauthorized'),
           severity: 'error',
         });
         break;
       case 400:
-        sharedFunctions.showErrors(data.details, {
-          username,
-          firstName,
-          lastName,
-          email,
-          oldPassword,
-          password,
-          confirmPassword,
-        });
+        sharedFunctions.showErrors(data.details, params);
         break;
       case 500:
         showAlert({
           show: true,
-          message: 'Server error',
+          message: t('error.server'),
           severity: 'error',
         });
         break;
       default:
         showAlert({
           show: true,
-          message: 'Oops.. somthing went completely wrong',
+          message: t('error.unexpected'),
           severity: 'error',
         });
         break;
     }
   };
 
-  const handleUpdate = async (data, showAlert) => {
-		setPasswordAlert(noAlert);
+  const handleUpdate = async (data, showAlert, params) => {
+    setPasswordAlert(noAlert);
     setAlert(noAlert);
 
     if (userData.avatarBase64String !== avatar)
       data.avatarBase64String = avatar;
+
+    if (Object.keys(data).length === 0) return;
 
     try {
       await userService.update(user.userId, data);
       setUserData({ ...userData, ...data, avatarBase64String: avatar });
       if (data.language) setUser({ ...user, lang: data.language });
 
-			showAlert({
-				show: true,
-				message: 'Account successfully updated',
-				severity: 'success',
-			});
+      showAlert({
+        show: true,
+        message: 'Account successfully updated',
+        severity: 'success',
+      });
     } catch (err) {
-      handleErrorResponse(err.response.data, showAlert);
+      handleErrorResponse(err.response.data, showAlert, params);
     }
   };
 
   const updateInformationProps = {
     classes,
     userData,
-    username,
-    firstName,
-    lastName,
-    email,
     alert,
     setAlert,
     handleUpdate,
@@ -145,9 +113,6 @@ const MyProfile = ({ user, setUser }) => {
 
   const updatePasswordProps = {
     classes,
-    oldPassword,
-    password,
-    confirmPassword,
     alert: passwordAlert,
     setAlert: setPasswordAlert,
     handleUpdate,
@@ -160,7 +125,7 @@ const MyProfile = ({ user, setUser }) => {
         setUserData(res);
       })
       .catch((err) => {
-        handleErrorResponse(err.response.data, setAlert);
+        handleErrorResponse(err.response.data, setAlert, {});
       });
   }, []);
 
@@ -180,23 +145,12 @@ const MyProfile = ({ user, setUser }) => {
       <Grid container spacing={6}>
         <Grid item xs={12} sm={5} className={classes.column}>
           <UpdatePhoto avatar={avatar} setAvatar={setAvatar} />
-
-          <Button
-            type="submit"
-            variant="outlined"
-            color="primary"
-            onClick={userProfileModal.handleClickOpen}
-          >
-            User Profile
-          </Button>
-          <p>(this button will be removed)</p>
         </Grid>
         <Grid item xs={12} sm={7} className={classes.column}>
           <UpdateInformation {...updateInformationProps} />
-          <UpdatePassword {...updatePasswordProps} />
+          {userData.hasPw && <UpdatePassword {...updatePasswordProps} />}
         </Grid>
       </Grid>
-      <CustomModal {...userProfileModal} />
     </Container>
   ) : null;
 };
