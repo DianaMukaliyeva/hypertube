@@ -1,15 +1,18 @@
 import * as yup from 'yup';
 
+// eslint-disable-next-line
+const nameRegex = /^[\w'A-Za-z\u0430-\u044f\\u0080-\\uFFFF -][^_,.!¡?÷¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]+$/;
+
 const schema = yup.object().shape({
   username: yup
     .string()
     .min(2, 'formValidation.minLen')
-    .matches(/^[a-zA-Z0-9]+$/, 'formValidation.nameFormat')
+    .matches(nameRegex, 'formValidation.nameFormat')
     .max(45, 'formValidation.maxLen'),
   name: yup
     .string()
     .min(2, 'formValidation.minLen')
-    .matches(/^[a-zA-Z0-9]+$/, 'formValidation.nameFormat')
+    .matches(nameRegex, 'formValidation.nameFormat')
     .max(45, 'formValidation.maxLen'),
   email: yup.string().email('formValidation.emailFormat'),
   password: yup
@@ -22,7 +25,7 @@ const schema = yup.object().shape({
   loginPassword: yup.string(),
   updateUsername: yup
     .string()
-    .matches(/^[a-zA-Z0-9]*$/, 'formValidation.nameFormat')
+    .matches(nameRegex, 'formValidation.nameFormat')
     .test(
       'empty-or-min-2-chars',
       'formValidation.minLen',
@@ -36,7 +39,7 @@ const schema = yup.object().shape({
       'formValidation.minLen',
       (name) => !name || name.length > 1
     )
-    .matches(/^[a-zA-Z0-9]*$/, 'formValidation.nameFormat')
+    .matches(nameRegex, 'formValidation.nameFormat')
     .max(45, 'formValidation.maxLen'),
 });
 
