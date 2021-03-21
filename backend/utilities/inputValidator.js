@@ -5,7 +5,7 @@ import { detailedError, createDetail } from './errors.js';
 import User from '../models/User.js';
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const nameRegex = /^[\w'A-Za-z\u0430-\u044f\\u0080-\\uFFFF -][^_,.!¡?÷¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]+$/;
+const nameRegex = /^[\w'A-Za-z\u0430-\u044f -][^_,.!¡?÷¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]+$/;
 
 const validateField = async (value, fieldName) => {
   if (!value) {
