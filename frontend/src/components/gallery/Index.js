@@ -45,6 +45,7 @@ const Gallery = ({ setUser }) => {
     } catch (e) {
       if (e.response && e.response.status === 401) {
         setUser({ userId: '', lang: '' });
+        localStorage.removeItem('token');
       }
     }
   };

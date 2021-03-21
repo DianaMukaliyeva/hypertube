@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { v4 as uuid } from 'uuid';
@@ -93,7 +92,7 @@ const googleCallback = async (req, res) => {
 
   const userFromDB = await findOrCreateUser(userToDB);
 
-  const key = setUserToken(userFromDB._id, userFromDB.language);
+  const key = setUserToken(userFromDB.id, userFromDB.language);
 
   return res.redirect(`${process.env.FRONTEND_URL_DEV}?auth=${key}`);
 };
@@ -115,7 +114,7 @@ const fortytwoCallback = async (req, res) => {
 
   const userFromDB = await findOrCreateUser(userToDB);
 
-  const key = setUserToken(userFromDB._id, userFromDB.language);
+  const key = setUserToken(userFromDB.id, userFromDB.language);
 
   return res.redirect(`${process.env.FRONTEND_URL_DEV}?auth=${key}`);
 };
