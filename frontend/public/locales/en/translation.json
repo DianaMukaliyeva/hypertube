@@ -32,7 +32,7 @@
     "invalidCredentials": "Invalid credentials",
     "notFound": "Not found",
     "notValid": "Not valid",
-    "correct": "ok"
+    "correct": "✔️"
   },
   "login": {
     "title": "Login",
