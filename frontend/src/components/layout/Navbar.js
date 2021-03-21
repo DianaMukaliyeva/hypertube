@@ -65,7 +65,7 @@ const NavBar = ({ user, setUser, clearFilter, setClearFilter }) => {
                   flexGrow={!isMobile && index === 0 ? 1 : ''}>
                   <Button
                     startIcon={option.icon}
-                    size={isMobile ? 'large' : 'small'}
+                    size="large"
                     color="inherit"
                     className={classes.button}
                     onClick={option.onClick}>
