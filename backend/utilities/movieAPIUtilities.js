@@ -9,7 +9,7 @@ const filteredMovieData = (movie) => ({
   imdbRating: movie.rating,
   year: movie.year,
   thumbnail: movie.thumbnail,
-  hash: movie.torrents[0].hash,
+  seeds: movie.torrents.reduce((c, p) => (p.size_bytes < c.size_bytes ? p : c)).seeds,
 });
 
 const fetchYTSMovieList = async (filters) => {

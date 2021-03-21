@@ -53,7 +53,8 @@ const VideoPlayer = (data) => {
     try {
       const res = await movieService.getMovieData(data.movie.imdbCode);
       if (!mountedRef.current) return null;
-      setMovie(res);
+      setMovie({ ...res, imdbRating: data.movie.imdbRating });
+      console.log('TO DO seeds are here', data.movie.seeds);
       setSubsTracks(buildTracks(data.movie.imdbCode, res.subtitles, t));
       setLoading(false);
       setRefresh(false);
