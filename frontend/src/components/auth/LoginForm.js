@@ -44,6 +44,7 @@ const LoginForm = ({ setUser }) => {
   const email = useField('email', 'loginEmail', 'login-email');
   const password = useField('password', 'loginPassword', 'login-password');
   const alert = useAlert();
+  const classes = useStyles();
 
   const recoveryLinkModal = useModal(<RecoveryLinkForm />);
 
