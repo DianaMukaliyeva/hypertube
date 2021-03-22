@@ -1,14 +1,15 @@
-// import React, { useEffect, useState } from 'react';
 import React from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
+
+import PlayCircleFilledWhiteOutlined from '@material-ui/icons/PlayCircleFilledWhiteOutlined';
 
 import img from '../../images/video-banner.png';
 import movieService from '../../services/movie';
 
 const Player = ({ subsTracks, imdbCode }) => {
   const token = localStorage.getItem('token');
-    // eslint-disable-next-line no-undef
+  // eslint-disable-next-line no-undef
   const streamUrl = process.env.REACT_APP_BACKEND_URL + `/api/movies/${imdbCode}/play/${token}`;
 
   const handlePlay = () => {
@@ -25,8 +26,8 @@ const Player = ({ subsTracks, imdbCode }) => {
         url={streamUrl}
         onPlay={handlePlay}
         width="100%"
-        // height="360px"
         light={img}
+        playIcon={<PlayCircleFilledWhiteOutlined fontSize="large" />}
         config={{
           file: {
             attributes: {
@@ -42,7 +43,7 @@ const Player = ({ subsTracks, imdbCode }) => {
 
 Player.propTypes = {
   subsTracks: PropTypes.array.isRequired,
-  imdbCode: PropTypes.string.isRequired
+  imdbCode: PropTypes.string.isRequired,
 };
 
 export default Player;
