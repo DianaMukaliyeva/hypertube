@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { useTranslation } from 'react-i18next';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -61,7 +60,6 @@ const useStyles = makeStyles((theme) => ({
 const MovieCard = ({ movie }) => {
   const movieModal = useModal(<VideoPlayer movie={movie} />, 'lg');
   const classes = useStyles();
-  // const { t } = useTranslation();
 
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
