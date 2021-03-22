@@ -62,7 +62,8 @@
     "updatePassword": "Passwort aktualisieren"
   },
   "profile": {
-    "title": "Profil"
+    "title": "Profil",
+    "imgSize": "Max photo size is 350kb"
   },
   "movie": {
     "rating": "Bewertung",

@@ -62,7 +62,8 @@
     "updatePassword": "Päivitä salasana"
   },
   "profile": {
-    "title": "Profiili"
+    "title": "Profiili",
+    "imgSize": "Max photo size is 350kb"
   },
   "movie": {
     "rating": "Arvio",
