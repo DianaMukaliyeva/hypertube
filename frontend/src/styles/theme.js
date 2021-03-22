@@ -109,13 +109,6 @@ const theme = createMuiTheme({
         backgroundColor: dark3,
       },
     },
-    MuiIconButton: {
-      root: {
-        '&:hover': {
-          // backgroundColor: pink1,
-        },
-      },
-    },
   },
 });
 
