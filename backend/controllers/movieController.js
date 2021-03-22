@@ -1,9 +1,12 @@
+import NodeCache from 'node-cache';
 import movieListUtils from '../utilities/movieAPIUtilities.js';
 import subtitlesUtils from '../utilities/subtitlesAPI.js';
 import movieTorrentUtils from '../utilities/movieTorrentUtilities.js';
 import Movie from '../models/Movie.js';
 import User from '../models/User.js';
 import { detailedError } from '../utilities/errors.js';
+
+const downloadCache = new NodeCache({ checkPeriod: 0 });
 
 const getMovieList = async (req, res) => {
   const userId = req.user;
@@ -75,12 +78,13 @@ const addComment = async (req, res) => {
 const playMovie = async (req, res, next) => {
   const { imdbCode } = req.params;
   let movie = await Movie.findOne({ imdbCode });
-  if ((!movie || movie.downloadStatus === 'not downloaded')) {
+  if ((!movie || !movie.downloadCompleted) && !downloadCache.has(imdbCode)) {
     if (!movie) {
       movie = { imdbCode };
     }
+
     if (!movie.magnet) movie.magnet = await movieTorrentUtils.getMagnet(imdbCode);
-    await movieTorrentUtils.downloadMovie(movie);
+    await movieTorrentUtils.downloadMovie(movie, downloadCache);
     movie = await Movie.findOne({ imdbCode });
   }
   req.serverLocation = movie.serverLocation;

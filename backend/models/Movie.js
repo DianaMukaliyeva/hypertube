@@ -4,11 +4,7 @@ import uniqueValidator from 'mongoose-unique-validator';
 const movieSchema = new mongoose.Schema({
   serverLocation: { type: String, unique: true, sparse: true },
   imdbCode: { type: String, unique: true, required: true },
-  downloadStatus: {
-    type: String,
-    enum: ['completed', 'in progress', 'not downloaded'],
-    default: 'not downloaded',
-  },
+  downloadComplete: { type: Boolean, default: false },
   magnet: { type: String },
   lastWatched: { type: Date },
   comments: [
