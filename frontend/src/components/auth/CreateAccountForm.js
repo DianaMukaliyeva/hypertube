@@ -19,7 +19,6 @@ import InputField from '../common/InputField';
 import FormButton from '../common/FormButton';
 import OmniAuthLogin from './OmniAuthLogin';
 
-// TO DO move to styles
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(6),
@@ -137,7 +136,8 @@ const CreateAccountForm = () => {
         <Typography component="h1" variant="h5">
           {t('createAccount.title')}
         </Typography>
-
+        <OmniAuthLogin />
+        <Box mt={3}>{t('form.or')}</Box>
         <form className={classes.form} onSubmit={handleCreate} noValidate>
           <InputField
             values={username}
@@ -197,8 +197,6 @@ const CreateAccountForm = () => {
           )}
           <FormButton name={t('createAccount.create')} />
         </form>
-        <Box mt={3}>{t('form.or')}</Box>
-        <OmniAuthLogin />
       </div>
     </Container>
   );
