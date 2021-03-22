@@ -115,6 +115,7 @@ const Landing = ({ user, setUser }) => {
               id="myId"
               display="initial"
               position="relative"
+              allowFullScreen
             />
             <h1 className={classes.text}>HYPERTUBE</h1>
           </div>

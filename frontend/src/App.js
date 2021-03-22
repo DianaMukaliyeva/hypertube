@@ -13,6 +13,7 @@ import Landing from './components/layout/Landing';
 import Navbar from './components/layout/Navbar';
 import setAuthToken from './utils/setAuthToken';
 import authService from './services/auth';
+import Footer from './components/layout/Footer';
 
 function App() {
   const [user, setUser] = useState({ userId: '', lang: '' });
@@ -84,6 +85,7 @@ function App() {
             </Switch>
           </Box>
         </Container>
+        <Footer />
       </Router>
     </ThemeProvider>
   );
