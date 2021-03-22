@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -12,8 +11,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   button: {
-    color: theme.palette.text.primary,
-    // color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary,
   },
 }));
 
@@ -52,10 +50,8 @@ const Footer = () => {
           pt={4}
           pb={2}
           zIndex="1"
-          bgcolor="secondary.main"
-          //   bgcolor="background.secondary"
-          color="text.primary"
-          //   color="text.secondary"
+          bgcolor="background.secondary"
+          color="text.secondary"
           textAlign="center">
           <Typography variant="body2"> © Copyright 2020 All Rights Reserved. </Typography>
           {authors.map((value, index) => {
