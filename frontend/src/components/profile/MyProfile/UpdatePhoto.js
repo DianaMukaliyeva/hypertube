@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -42,6 +43,7 @@ const UpdatePhoto = ({ avatar, setAvatar }) => {
     message: '',
     severity: '',
   });
+  const { t } = useTranslation();
   const classes = useStyles();
 
   const handleUpload = (e) => {
@@ -55,7 +57,7 @@ const UpdatePhoto = ({ avatar, setAvatar }) => {
     if (file.size > 350000) {
       setAlert({
         show: true,
-        message: 'Max photo size is 350kb',
+        message: t('profile.imgSize'),
         severity: 'error',
       });
       return;
@@ -101,17 +103,13 @@ const UpdatePhoto = ({ avatar, setAvatar }) => {
           color="inherit"
           key="logout"
           onClick={handleDelete}
-          title="delete"
-        >
+          title="delete">
           <DeleteIcon title="trash can" />
         </IconButton>
       )}
 
       {alert.show && (
-        <Alert
-          severity={alert.severity}
-          onClose={() => setAlert({ ...alert, show: false })}
-        >
+        <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
           {alert.message}
         </Alert>
       )}

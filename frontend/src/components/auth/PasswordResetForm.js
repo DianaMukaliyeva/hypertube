@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
-// import PropTypes from 'prop-types';
 import jwt_decode from 'jwt-decode';
 
 import useField from '../../hooks/useField';
@@ -16,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Alert } from '@material-ui/lab';
 import { useLocation } from 'react-router-dom';
+import useAlert from '../../hooks/useAlert';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,26 +35,13 @@ const PasswordResetForm = () => {
   const location = useLocation();
   const { t } = useTranslation();
   const password = useField('password', 'password', 'reset-password');
-  const confirmPassword = useField(
-    'password',
-    'password',
-    'reset-confirm-password'
-  );
-  const [alert, setAlert] = useState({
-    show: false,
-    message: '',
-    severity: '',
-  });
+  const confirmPassword = useField('password', 'password', 'reset-confirm-password');
+  const alert = useAlert();
   const [user, setUser] = useState({});
 
   useEffect(() => {
     const token = location.search.split('=')[1];
-    if (!token)
-      return setAlert({
-        show: true,
-        message: t('pwRecovery.invalidLink'),
-        severity: 'error',
-      });
+    if (!token) return alert.showError(t('pwRecovery.invalidLink'), 5000);
 
     try {
       const decoded = jwt_decode(token);
@@ -63,11 +50,7 @@ const PasswordResetForm = () => {
         resetToken: token,
       });
     } catch (err) {
-      setAlert({
-        show: true,
-        message: t('pwRecovery.invalidLink'),
-        severity: 'error',
-      });
+      alert.showError(t('pwRecovery.invalidLink'), 5000);
     }
   }, []);
 
@@ -81,11 +64,7 @@ const PasswordResetForm = () => {
       };
 
       await userService.pwdUpdate(data);
-      setAlert({
-        show: true,
-        message: t('pwRecovery.success'),
-        severity: 'success',
-      });
+      alert.showSuccess(t('pwRecovery.success'), 5000);
     } catch (err) {
       switch (err.response.data.statusCode) {
         case 400:
@@ -95,28 +74,16 @@ const PasswordResetForm = () => {
           });
           err.response.data.details.map((detail) => {
             if (detail.param === 'userId' || detail.param === 'resetToken') {
-              setAlert({
-                show: true,
-                message: t('pwRecovery.invalidLink'),
-                severity: 'error',
-              });
+              alert.showError(t('pwRecovery.invalidLink'), 5000);
             }
           });
 
           break;
         case 500:
-          setAlert({
-            show: true,
-            message: t('error.server'),
-            severity: 'error',
-          });
+          alert.showError(t('error.server'), 5000);
           break;
         default:
-          setAlert({
-            show: true,
-            message: t('error.unexpected'),
-            severity: 'error',
-          });
+          alert.showError(t('error.unexpected'), 5000);
           break;
       }
     }
@@ -144,12 +111,9 @@ const PasswordResetForm = () => {
             autocomplete="confirm-password"
             required={true}
           />
-          {alert.show && (
-            <Alert
-              severity={alert.severity}
-              onClose={() => setAlert({ ...alert, show: false })}
-            >
-              {alert.message}
+          {alert.values.show && (
+            <Alert severity={alert.values.severity} onClose={alert.closeAlert}>
+              {alert.values.message}
             </Alert>
           )}
           <FormButton name={t('pwRecovery.save')} />
