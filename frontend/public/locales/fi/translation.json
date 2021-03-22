@@ -70,7 +70,8 @@
     "notAvailable": "not available",
     "subtitles": "Subtitles",
     "director": "Director",
-    "cast": "Cast"
+    "cast": "Cast",
+    "noSeeds": "Video unavailable, not enough seeders. Please, come back later"
   },
   "filter": {
     "A-Z": "A - Z",
