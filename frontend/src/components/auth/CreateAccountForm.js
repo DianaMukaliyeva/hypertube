@@ -18,6 +18,7 @@ import { Alert } from '@material-ui/lab';
 import InputField from '../common/InputField';
 import FormButton from '../common/FormButton';
 import OmniAuthLogin from './OmniAuthLogin';
+import useAlert from '../../hooks/useAlert';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -50,11 +51,7 @@ const CreateAccountForm = () => {
   const password = useField('password', 'password', 'create-password');
   const confirmPassword = useField('password', 'confirmPassword', 'create-confirm-password');
   const [lang, setLang] = useState({ label: t('form.en'), code: 'en' });
-  const [alert, setAlert] = useState({
-    show: false,
-    message: '',
-    severity: '',
-  });
+  const alert = useAlert();
 
   const langOptions = [
     { label: t('form.en'), code: 'en' },
@@ -76,11 +73,7 @@ const CreateAccountForm = () => {
         language: lang.code,
       };
       await userService.create(data);
-      setAlert({
-        show: true,
-        message: t('createAccount.success'),
-        severity: 'success',
-      });
+      alert.showSuccess(t('createAccount.success'), 10000);
     } catch (err) {
       switch (err.response.data.statusCode) {
         case 400:
@@ -94,18 +87,10 @@ const CreateAccountForm = () => {
           });
           break;
         case 500:
-          setAlert({
-            show: true,
-            message: t('error.server'),
-            severity: 'error',
-          });
+          alert.showError(t('error.server'), 10000);
           break;
         default:
-          setAlert({
-            show: true,
-            message: t('error.unexpected'),
-            severity: 'error',
-          });
+          alert.showError(t('error.unexpected'), 10000);
           break;
       }
     }
@@ -168,10 +153,9 @@ const CreateAccountForm = () => {
               <TextField required {...params} label={t('form.selectLanguage')} variant="outlined" />
             )}
           />
-
-          {alert.show && (
-            <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
-              {alert.message}
+          {alert.values.show && (
+            <Alert severity={alert.values.severity} onClose={alert.closeAlert}>
+              {alert.values.message}
             </Alert>
           )}
           <FormButton name={t('createAccount.create')} />
