@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 
-/* eslint-disable react/prop-types */
 const InputField = ({ values, label = '', required, autocomplete = 'off' }) => {
   const { error, value, onChange, helperText, type, id } = values;
   return (
@@ -17,11 +17,18 @@ const InputField = ({ values, label = '', required, autocomplete = 'off' }) => {
       name={label}
       label={label}
       helperText={helperText}
-      autoFocus
+      // autoFocus
       autoComplete={autocomplete}
       type={type}
     />
   );
+};
+
+InputField.propTypes = {
+  values: PropTypes.object.isRequired,
+  label: PropTypes.string.isRequired,
+  required: PropTypes.bool.isRequired,
+  autocomplete: PropTypes.string.isRequired,
 };
 
 export default InputField;
