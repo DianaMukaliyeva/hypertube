@@ -23,11 +23,11 @@
   ],
   "sorts": [
     {
-      "title": "filter.A-Z",
+      "title": "A - Z",
       "sort": "title asc"
     },
     {
-      "title": "filter.Z-A",
+      "title": "Z - A",
       "sort": "title desc"
     },
     {

@@ -29,13 +29,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NavBar = ({ user, setUser }) => {
+const NavBar = ({ user, setUser, clearFilter, setClearFilter }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const isMobile = useMediaQuery('(max-width:600px)');
 
   const handleClick = () => {
-    // TO DO reset hypertube gallery
+    setClearFilter(!clearFilter);
   };
 
   const handleLogout = () => {
@@ -65,7 +65,7 @@ const NavBar = ({ user, setUser }) => {
                   flexGrow={!isMobile && index === 0 ? 1 : ''}>
                   <Button
                     startIcon={option.icon}
-                    size={isMobile ? 'large' : 'small'}
+                    size="large"
                     color="inherit"
                     className={classes.button}
                     onClick={option.onClick}>
@@ -85,6 +85,8 @@ const NavBar = ({ user, setUser }) => {
 NavBar.propTypes = {
   user: PropTypes.object.isRequired,
   setUser: PropTypes.func.isRequired,
+  clearFilter: PropTypes.bool.isRequired,
+  setClearFilter: PropTypes.func.isRequired,
 };
 
 export default withRouter(NavBar);

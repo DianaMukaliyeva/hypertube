@@ -17,12 +17,13 @@ const Loader = () => (
   </Box>
 );
 
-const Gallery = ({ setUser }) => {
+const Gallery = ({ setUser, clearFilter }) => {
   const { t } = useTranslation();
   const [movies, setMovies] = React.useState([]);
   const [pageState, setPageState] = React.useState({ page: 0, hasMore: true, loading: true });
   const [search, setSearch] = React.useState('');
   const [filter, setFilter] = React.useState({});
+  const [clearInput, setClearInput] = React.useState(false);
   const mountedRef = React.useRef(true);
   const filterRef = React.useRef(false);
 
@@ -45,6 +46,7 @@ const Gallery = ({ setUser }) => {
     } catch (e) {
       if (e.response && e.response.status === 401) {
         setUser({ userId: '', lang: '' });
+        localStorage.removeItem('token');
       }
     }
   };
@@ -56,6 +58,14 @@ const Gallery = ({ setUser }) => {
   }, []);
 
   React.useEffect(() => {
+    if (Object.values(filter).filter((v) => v).length > 0 || search) {
+      setSearch('');
+      setFilter({});
+      setClearInput(!clearInput);
+    }
+  }, [clearFilter]);
+
+  React.useEffect(() => {
     filterRef.current = true;
     setPageState({ ...pageState, loading: true });
     getMovies();
@@ -63,7 +73,7 @@ const Gallery = ({ setUser }) => {
 
   return (
     <div>
-      <Filter setSearch={setSearch} filter={filter} setFilter={setFilter} />
+      <Filter clearInput={clearInput} setSearch={setSearch} filter={filter} setFilter={setFilter} />
       {pageState.loading ? (
         <Loader />
       ) : (
@@ -91,6 +101,7 @@ const Gallery = ({ setUser }) => {
 
 Gallery.propTypes = {
   setUser: PropTypes.func.isRequired,
+  clearFilter: PropTypes.bool.isRequired,
 };
 
 export default Gallery;

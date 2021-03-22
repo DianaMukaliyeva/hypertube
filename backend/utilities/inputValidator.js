@@ -5,6 +5,7 @@ import { detailedError, createDetail } from './errors.js';
 import User from '../models/User.js';
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const nameRegex = /^[\w'A-Za-z\u0430-\u044f -][^_,.!¡?÷¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]+$/;
 
 const validateField = async (value, fieldName) => {
   if (!value) {
@@ -20,7 +21,7 @@ const validateField = async (value, fieldName) => {
       }
       break;
     case 'username':
-      if (!/^[a-zA-Z0-9]+$/.test(value)) {
+      if (!nameRegex.test(value)) {
         return createDetail(fieldName, value, 'formValidation.nameFormat');
       }
       if (value.length < 2) {
@@ -44,7 +45,7 @@ const validateField = async (value, fieldName) => {
       }
       break;
     default:
-      if (!/^[a-zA-Z0-9 ]+$/.test(value)) {
+      if (!nameRegex.test(value)) {
         return createDetail(fieldName, value, 'formValidation.nameFormat');
       }
       if (value.length < 2) {

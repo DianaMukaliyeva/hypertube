@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useLocation,
-  useHistory,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import i18next from 'i18next';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -24,6 +18,7 @@ function App() {
   const [user, setUser] = useState({ userId: '', lang: '' });
   const location = useLocation();
   const history = useHistory();
+  const [clearFilter, setClearFilter] = useState(false);
 
   useEffect(() => {
     const checkToken = async () => {
@@ -56,8 +51,7 @@ function App() {
   useEffect(() => {
     if (user.lang) {
       i18next.changeLanguage(user.lang, (err) => {
-        if (err)
-          return console.log('something went wrong loading language', err);
+        if (err) return console.log('something went wrong loading language', err);
       });
     }
   }, [user]);
@@ -67,11 +61,18 @@ function App() {
       <CssBaseline />
       <Router>
         <Container>
-          {user.userId && <Navbar user={user} setUser={setUser} />}
+          {user.userId && (
+            <Navbar
+              clearFilter={clearFilter}
+              setClearFilter={setClearFilter}
+              user={user}
+              setUser={setUser}
+            />
+          )}
           <Box mt={10}>
             <Route exact path="/">
               {user.userId ? (
-                <Hypertube user={user} setUser={setUser} />
+                <Hypertube clearFilter={clearFilter} user={user} setUser={setUser} />
               ) : (
                 <Landing user={user} setUser={setUser} />
               )}

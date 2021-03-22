@@ -9,8 +9,9 @@ import CustomSelect from './CustomSelect';
 import CustomSearch from './CustomSearch';
 import options from './options.json';
 
-const Filter = ({ filter, setFilter, setSearch }) => {
+const Filter = ({ clearInput, filter, setFilter, setSearch }) => {
   const { t } = useTranslation();
+  const [key, setKey] = React.useState(false);
   const onKeyDown = (e) => e.key === 'Enter' && setFilter({ ...filter });
   const selectOptions = [
     {
@@ -36,12 +37,16 @@ const Filter = ({ filter, setFilter, setSearch }) => {
       name: 'sort',
     },
   ];
+  React.useEffect(() => {
+    setKey(!key);
+  }, [clearInput]);
 
   return (
     <Box py={5}>
       <Grid container direction="row" spacing={1} justify="space-evenly">
         <Grid item xs={12} sm={12} md={12} lg={3}>
           <CustomSearch
+            key={key}
             onKeyDown={onKeyDown}
             onChange={(e) => setSearch(e.target.value)}
             label={t('filter.searchLabel')}
@@ -53,6 +58,7 @@ const Filter = ({ filter, setFilter, setSearch }) => {
         {selectOptions.map((select) => (
           <Grid key={select.id} item xs={12} sm={4} md={4} lg={3}>
             <CustomSelect
+              key={key}
               id={select.id}
               label={t(select.label)}
               options={select.options}
@@ -68,6 +74,7 @@ const Filter = ({ filter, setFilter, setSearch }) => {
 };
 
 Filter.propTypes = {
+  clearInput: PropTypes.bool.isRequired,
   filter: PropTypes.object.isRequired,
   setFilter: PropTypes.func.isRequired,
   setSearch: PropTypes.func.isRequired,
