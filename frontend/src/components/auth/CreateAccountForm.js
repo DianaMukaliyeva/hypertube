@@ -48,7 +48,7 @@ const CreateAccountForm = () => {
   const email = useField('email', 'email', 'create-email');
   const password = useField('password', 'password', 'create-password');
   const confirmPassword = useField('password', 'confirmPassword', 'create-confirm-password');
-  const [lang, setLang] = useState({ label: '', code: '' });
+  const [lang, setLang] = useState({ label: t('form.en'), code: 'en' });
   const [alert, setAlert] = useState({
     show: false,
     message: '',
