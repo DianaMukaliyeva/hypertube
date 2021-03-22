@@ -98,9 +98,7 @@ const CreateAccountForm = () => {
 
   const handleLangChange = (event, value) => {
     if (value !== null) {
-      i18next.changeLanguage(value.code, (err) => {
-        if (err) return console.log('something went wrong loading language', err);
-      });
+      i18next.changeLanguage(value.code);
       setLang({ ...value, label: t(`form.${value.code}`) });
     }
   };

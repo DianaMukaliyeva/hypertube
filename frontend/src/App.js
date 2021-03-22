@@ -56,9 +56,7 @@ function App() {
 
   useEffect(() => {
     if (user.lang) {
-      i18next.changeLanguage(user.lang, (err) => {
-        if (err) return console.log('something went wrong loading language', err);
-      });
+      i18next.changeLanguage(user.lang);
     }
   }, [user]);
 
