@@ -1,0 +1,6 @@
+POST http://localhost:5003/api/auth/recoverylink HTTP/1.1
+content-Type: application/json
+
+{
+    "email": "o1ddss22@rvemold.com"
+}

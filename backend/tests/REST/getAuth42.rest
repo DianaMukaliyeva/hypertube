@@ -1,0 +1,2 @@
+GET http://localhost:5003/api/auth/42 HTTP/1.1
+content-Type: application/json

@@ -96,6 +96,18 @@ describe('Login User API Tests', () => {
   test('login user success - expect 200', async () => {
     await request.post('/api/auth/login').send(userUtils.validLogInUser).expect(200);
   });
+
+  test('API endpoint test valid | GET /api/auth/google expect 200', async () => {
+    await request.get('/api/auth/google')
+      .expect(200)
+      .expect('Content-Type', /application\/json/);
+  });
+
+  test('API endpoint test valid | GET /api/auth/42 expect 200', async () => {
+    await request.get('/api/auth/42')
+      .expect(200)
+      .expect('Content-Type', /application\/json/);
+  });
 });
 
 afterAll(async () => {

@@ -1,2 +1,3 @@
-GET http://localhost:3000/api/users/ HTTP/1.1
+GET http://localhost:5003/api/users/60550a7cffbb8000f13d4d79 HTTP/1.1
 content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTUwYTdjZmZiYjgwMDBmMTNkNGQ3OSIsImxhbmciOiJkZSIsImlhdCI6MTYxNjE4NTk5MX0.WGKi_400RjHp_StIJlcfu5qZ3a7IeqeH263Y2hBHu4Q
