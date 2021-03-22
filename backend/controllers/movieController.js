@@ -75,7 +75,7 @@ const addComment = async (req, res) => {
 const playMovie = async (req, res, next) => {
   const { imdbCode } = req.params;
   let movie = await Movie.findOne({ imdbCode });
-  if (!movie || !movie.downloadComplete) {
+  if ((!movie || movie.downloadStatus === 'not downloaded')) {
     if (!movie) {
       movie = { imdbCode };
     }

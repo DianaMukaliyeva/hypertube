@@ -66,8 +66,8 @@ const getMagnet = async (imdbCode) => {
 //     .save(`./movies/${imdbCode}/${fileLocation}`);
 // };
 
-const setMovieAsCompleted = async (imdbCode) => {
-  await Movie.findOneAndUpdate({ imdbCode }, { downloadComplete: true },
+const setMovieStatus = async (imdbCode, downloadStatus) => {
+  await Movie.findOneAndUpdate({ imdbCode }, { downloadStatus },
     { new: true });
   // we could convert the completed file in the background but it is very cpu intensive
   // if (movie.serverLocation.endsWith('.mkv')) convertMovieToMp4(movie);
@@ -106,6 +106,7 @@ const downloadMovie = async (movie) => new Promise((resolve) => {
     if (fs.existsSync(moviePath)) {
       if (fs.statSync(moviePath).size / (1024 * 1024) > 20) {
         // console.log('resolved', fs.statSync(moviePath).size / (1024 * 1024), movie.imdbCode);
+        setMovieStatus(movie.imdbCode, 'in progress');
         resolve();
       }
     }
@@ -113,7 +114,8 @@ const downloadMovie = async (movie) => new Promise((resolve) => {
   });
 
   engine.on('idle', () => {
-    setMovieAsCompleted(movie.imdbCode);
+    setMovieStatus(movie.imdbCode, 'completed');
+    engine.destroy();
   });
 });
 
