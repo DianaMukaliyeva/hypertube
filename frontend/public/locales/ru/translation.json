@@ -32,7 +32,7 @@
     "invalidCredentials": "неверные данные",
     "notFound": "не найден",
     "notValid": "не верен",
-    "correct": "верно"
+    "correct": "✔️"
   },
   "login": {
     "title": "Войти",

@@ -32,7 +32,7 @@
     "invalidCredentials": "Virhe kirjautumistiedoissa",
     "notFound": "Ei löydy",
     "notValid": "Virheellinen tieto",
-    "correct": "Tämä ok"
+    "correct": "✔️"
   },
   "login": {
     "title": "Kirjaudu sisään",

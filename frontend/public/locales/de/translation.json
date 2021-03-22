@@ -1,125 +1,124 @@
 {
   "navbar": {
-    "profile": "Profile",
-    "logout": "Logout"
+    "profile": "Profil",
+    "logout": "Abmelden"
   },
   "form": {
-    "username": "Username",
-    "firstName": "First name",
-    "lastName": "Last name",
+    "username": "Benutzername",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
     "email": "Email",
-    "password": "Password",
-    "currentPassword": "Current password",
-    "newPassword": "New password",
-    "confirmPassword": "Confirm password",
-    "selectLanguage": "Select language",
-    "en": "English",
-    "de": "German",
-    "ru": "Russian",
-    "fi": "Finnish",
+    "password": "Passwort",
+    "currentPassword": "Aktueller Passwort",
+    "newPassword": "Neuer Passwort",
+    "confirmPassword": "Bestätige Passwort",
+    "selectLanguage": "Wähle Benutzersprache",
+    "en": "Englisch",
+    "de": "Deutsch",
+    "ru": "Russisch",
+    "fi": "Finnisch",
     "or": "or"
   },
   "formValidation": {
-    "required": "Required field",
-    "unique": "Not unique",
-    "minLen": "Must be at least 2 characters",
-    "maxLen": "Must be max 45 characters",
-    "nameFormat": "Must contain only letters and numbers",
-    "passwordFormat": "Must contain at least 1 upper case, 1 lower case, 1 number",
-    "emailFormat": "Must be valid email",
-    "pwNoMatch": "Passwords don't match",
-    "wrongPw": "Wrong password",
-    "invalidCredentials": "Invalid credentials",
-    "notFound": "Not found",
-    "notValid": "Not valid",
-    "correct": "ok"
+    "required": "Pflichtfeld",
+    "unique": "Vergeben",
+    "minLen": "Mindestens 2 Zeichen notwendig",
+    "maxLen": "Maximal 45 Zeichen zulässig",
+    "nameFormat": "Erlaubt sind nur Buchstaben und Zahlen",
+    "passwordFormat": "Passwort muss mindestens einen Grossbuchstaben, Kleinbuchstaben und Zahl enthalten",
+    "emailFormat": "Email ist nicht gültig",
+    "pwNoMatch": "Die Passwörter stimmen nicht überein",
+    "wrongPw": "Falsches Passwort",
+    "invalidCredentials": "Falsche Anmeldungsdaten",
+    "notFound": "Datei nicht gefunden",
+    "notValid": "Ungültig",
+    "correct": "✔️"
   },
   "login": {
-    "title": "Login",
-    "google": "Login with Google",
-    "42": "Login with 42",
-    "login": "Login",
-    "forgotPw": "Forgot password?"
+    "title": "Anmelden",
+    "google": "Anmelden mit Google",
+    "42": "Anmelden mit 42",
+    "login": "Anmelden",
+    "forgotPw": "Passwort vergessen?"
   },
   "pwRecovery": {
-    "title": "Recover password",
-    "send": "Send",
-    "helper": "Recovery link will be send to your email",
-    "checkEmail": "Check your email for further instructions",
-    "invalidLink": "Invalid link, please try again",
-    "success": "Password was successfully updated",
-    "pwResetTitle": "Reset Password",
-    "save": "Save"
+    "title": "Passwort wiederherstellen",
+    "send": "Senden",
+    "helper": "Der Wiederherstellungslink wird an Ihre angegebene Email versendet",
+    "checkEmail": "Bitte überprüfen Sie ihre Email und folgen Sie den Anweisungen",
+    "invalidLink": "Ungültiger Link, versuchen Sie erneut",
+    "success": "Passwort wurde erfolgreich aktualisiert",
+    "pwResetTitle": "Passwort zurücksetzen",
+    "save": "Speichern"
   },
   "createAccount": {
-    "title": "Create Account",
-    "success": "Account created successfully",
-    "create": "Create Account"
+    "title": "Account erstellen",
+    "success": "Account erfolgreich erstellt",
+    "create": "Account erstellen"
   },
   "myProfile": {
-    "title": "My Profile",
-    "update": "Update Information",
-    "updatePassword": "Update Password"
+    "title": "Mein Profil",
+    "update": "Informationen aktualisieren",
+    "updatePassword": "Passwort aktualisieren"
   },
   "profile": {
-    "title": "Profile"
+    "title": "Profil"
   },
   "movie": {
-    "rating": "rating",
-    "watched": "watched movie",
-    "notAvailable": "not available",
-    "subtitles": "Subtitles",
-    "director": "Director",
-    "cast": "Cast",
-    "noSeeds": "Video unavailable, not enough seeders. Please, come back later"
+    "rating": "Bewertung",
+    "watched": "Film angeschaut",
+    "notAvailable": "Nicht verfügbar",
+    "subtitles": "Untertitel",
+    "director": "Regisseur",
+    "cast": "Filmbesetzung"
   },
   "filter": {
     "A-Z": "A - Z",
     "Z-A": "A - Z",
-    "searchLabel": "Search for a Movie",
-    "ratingLabel": "IMDb RATING",
-    "genreLabel": "GENRE",
-    "sortLabel": "SORT BY",
-    "mostPopular": "Most Popular",
-    "leastPopular": "Least Popular",
-    "newest": "Newest",
-    "oldest": "Oldest"
+    "searchLabel": "Suche nach einen Film",
+    "ratingLabel": "IMDb Bewertung",
+    "genreLabel": "Genre",
+    "sortLabel": "Sortiert nach",
+    "mostPopular": "Beliebteste",
+    "leastPopular": "Unbeliebteste",
+    "newest": "Neueste",
+    "oldest": "Älteste"
   },
   "genres": {
-    "comedy": "Comedy",
+    "comedy": "Komödie",
     "sci-fi": "Sci-Fi",
     "horror": "Horror",
-    "romance": "Romance",
+    "romance": "Romantik",
     "action": "Action",
     "thriller": "Thriller",
     "drama": "Drama",
-    "documentary": "Documentary",
+    "documentary": "Dokumentarfilm",
     "mystery": "Mystery",
-    "crime": "Crime",
+    "crime": "Krimi",
     "animation": "Animation",
-    "adventure": "Adventure",
+    "adventure": "Abenteuer",
     "fantasy": "Fantasy",
-    "superhero": "Superhero",
-    "biography": "Biography",
-    "family": "Family",
-    "history": "History",
+    "superhero": "Superhelden",
+    "biography": "Biographie",
+    "family": "Familie",
+    "history": "Historie",
     "film-noir": "Film Noir",
     "musical": "Musical",
     "sport": "Sport",
-    "war": "War"
+    "war": "Krieg"
   },
   "gallery": {
-    "noMovies": "No movies found"
+    "noMovies": "Keine Filme gefunden"
   },
   "error": {
-    "unauthorized": "Unauthorized",
-    "server": "Server error",
-    "unexpected": "Unexpected error"
+    "unauthorized": "Unbefugt",
+    "server": "Der Server ist nich verfügbar",
+    "unexpected": "Unerwarteter Fehler"
   },
   "comment": {
-    "invalidFormat": "Wrong format",
-    "success": "Thanks for the comment!",
-    "post": "post comment",
-    "leaveComment": "Leave your comment here"
+    "invalidFormat": "Falsches Format",
+    "success": "Vielen Dank für den Kommentar",
+    "post": "Senden",
+    "leaveComment": "Hinterlassen Sie hier Ihr Kommentar"
   }
 }
