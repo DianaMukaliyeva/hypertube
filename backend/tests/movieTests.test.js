@@ -23,6 +23,7 @@ beforeAll(async () => {
 describe('Test Movie API Endpoints', () => {
   test('API endpoint test valid | GET /movies/:imdb_code expect 200', async () => {
     await request.get('/api/movies/tt5463162')
+      .set('Authorization', `Bearer ${token.body.token}`)
       .expect(200)
       .expect('Content-Type', /application\/json/);
   });
