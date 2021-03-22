@@ -17,7 +17,7 @@ const InputField = ({ values, label = '', required, autocomplete = 'off' }) => {
       name={label}
       label={label}
       helperText={helperText}
-      // autoFocus
+      autoFocus
       autoComplete={autocomplete}
       type={type}
       inputRef={inputRef}
@@ -26,10 +26,10 @@ const InputField = ({ values, label = '', required, autocomplete = 'off' }) => {
 };
 
 InputField.propTypes = {
-  values: PropTypes.object.isRequired,
-  label: PropTypes.string.isRequired,
-  required: PropTypes.bool.isRequired,
-  autocomplete: PropTypes.string.isRequired,
+  values: PropTypes.object,
+  label: PropTypes.string,
+  required: PropTypes.bool,
+  autocomplete: PropTypes.string,
 };
 
 export default InputField;
