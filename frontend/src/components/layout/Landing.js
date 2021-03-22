@@ -1,7 +1,5 @@
-/*eslint-disable */
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -17,7 +15,6 @@ import LoginForm from '../auth/LoginForm';
 import CreateAccountForm from '../auth/CreateAccountForm';
 import PasswordResetForm from '../auth/PasswordResetForm';
 
-// TO DO move to styles
 const useStyles = makeStyles((theme) => ({
   button: {
     [theme.breakpoints.up('xs')]: {
@@ -52,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cover: {
     background:
+      // eslint-disable-next-line
       'url(https://images.unsplash.com/photo-1519373344801-14c1f9539c9c?w=1920&h=1080&fit=crop&crop=bottom) no-repeat center',
     backgroundSize: 'cover',
     position: 'fixed',
@@ -62,6 +60,9 @@ const useStyles = makeStyles((theme) => ({
     zIndex: '-1',
   },
   text: {
+    [theme.breakpoints.up('xl')]: {
+      fontSize: 'calc(5px + 9vw + 0.8vh)',
+    },
     position: 'absolute',
     top: 0,
     display: 'flex',
@@ -70,7 +71,6 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '100%',
     fontSize: 'calc(5px + 13vw + 0.8vh)',
-    // fontSize: 'calc(10px + 13vw + 2.5vh)',
     fontWeight: 900,
     letterSpacing: '0.15em',
     margin: 'auto',
@@ -83,8 +83,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Landing = ({ user, setUser }) => {
-  const { t } = useTranslation();
+const Landing = ({ setUser }) => {
   const history = useHistory();
   const classes = useStyles();
   const isMobile = useMediaQuery('(max-width:600px)');
@@ -109,6 +108,7 @@ const Landing = ({ user, setUser }) => {
         <div className={classes.cover}>
           <div className={classes.video}>
             <Iframe
+              // eslint-disable-next-line
               url="https://www.youtube.com/embed/y2TET3G0sJ4?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&mute=1&playlist=y2TET3G0sJ4"
               width="100%"
               height="100%"
