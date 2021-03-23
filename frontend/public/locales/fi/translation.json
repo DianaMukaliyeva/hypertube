@@ -39,7 +39,8 @@
     "google": "Kirjaudu Google-tilillä",
     "42": "Kirjaudu 42-tilillä",
     "login": "Kirjaudu",
-    "forgotPw": "Unohtuiko salasana?"
+    "forgotPw": "Unohtuiko salasana?",
+    "tryAgain": "Something went wrong. Please login again!"
   },
   "pwRecovery": {
     "title": "Palauta salasana",

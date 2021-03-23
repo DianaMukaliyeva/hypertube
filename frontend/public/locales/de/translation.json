@@ -39,7 +39,8 @@
     "google": "Anmelden mit Google",
     "42": "Anmelden mit 42",
     "login": "Anmelden",
-    "forgotPw": "Passwort vergessen?"
+    "forgotPw": "Passwort vergessen?",
+    "tryAgain": "Something went wrong. Please login again!"
   },
   "pwRecovery": {
     "title": "Passwort wiederherstellen",
