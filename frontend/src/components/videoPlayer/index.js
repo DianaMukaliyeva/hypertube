@@ -40,21 +40,24 @@ const buildTracks = (imdbCode, subsAvailableIn, t) => {
 };
 
 const VideoPlayer = (data) => {
+  const { t } = useTranslation();
   const [movie, setMovie] = useState({});
   const [subsTracks, setSubsTracks] = useState([]);
   const alert = useAlert();
   const [loading, setLoading] = useState(true);
   const isMobile = useMediaQuery('(max-width:600px)');
-  const { t } = useTranslation();
   const [refresh, setRefresh] = useState(false);
   const mountedRef = React.useRef(true);
+  const seedersMin = 5;
 
   const getMovieData = async () => {
     try {
       const res = await movieService.getMovieData(data.movie.imdbCode);
       if (!mountedRef.current) return null;
       setMovie({ ...res, imdbRating: data.movie.imdbRating });
-      console.log('TO DO seeds are here', data.movie.seeds);
+      if (data.movie.seeds <= seedersMin) {
+        alert.showError(t('movie.noSeeds'));
+      }
       setSubsTracks(buildTracks(data.movie.imdbCode, res.subtitles, t));
       setLoading(false);
       setRefresh(false);
@@ -116,12 +119,17 @@ const VideoPlayer = (data) => {
   return (
     <Box m={isMobile ? 1 : 7}>
       {alert.values.show && (
-        <Alert severity={alert.values.severity} onClose={alert.closeAlert}>
+        <Alert
+          style={{ marginBottom: '2rem' }}
+          severity={alert.values.severity}
+          onClose={alert.closeAlert}>
           {alert.values.message}
         </Alert>
       )}
       <TitleBanner movie={movie} />
-      <Player subsTracks={subsTracks} imdbCode={data.movie.imdbCode} />
+      {data.movie && data.movie.seeds > seedersMin && (
+        <Player subsTracks={subsTracks} imdbCode={data.movie.imdbCode} seeds={data.movie.seeds} />
+      )}
       <MovieDetails movie={movie} />
       {data.movie && data.movie.imdbCode && (
         <AddComment imdbCode={data.movie.imdbCode} setRefresh={setRefresh} />
