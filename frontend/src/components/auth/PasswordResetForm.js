@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 const PasswordResetForm = () => {
   const location = useLocation();
   const { t } = useTranslation();
+  const focusField = useRef();
   const password = useField('password', 'password', 'reset-password');
   const confirmPassword = useField(
     'password',
@@ -69,6 +70,8 @@ const PasswordResetForm = () => {
         severity: 'error',
       });
     }
+
+    focusField.current && focusField.current.focus();
   }, []);
 
   const handleClick = async (event) => {
@@ -137,6 +140,7 @@ const PasswordResetForm = () => {
             label={t('form.newPassword')}
             autocomplete="new-password"
             required={true}
+            inputRef={focusField}
           />
           <InputField
             values={confirmPassword}

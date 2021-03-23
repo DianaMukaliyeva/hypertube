@@ -39,9 +39,9 @@ const useStyles = makeStyles((theme) => ({
 const LoginForm = ({ setUser }) => {
   const { t } = useTranslation();
   const history = useHistory();
+  const focusField = useRef();
   const email = useField('email', 'loginEmail', 'login-email');
   const password = useField('password', 'loginPassword', 'login-password');
-  const focusField = useRef();
   const [alert, setAlert] = useState({
     show: false,
     message: '',
@@ -103,7 +103,7 @@ const LoginForm = ({ setUser }) => {
   };
 
   useEffect(() => {
-    focusField.current.focus();
+    focusField.current && focusField.current.focus();
   }, []);
 
   const classes = useStyles();
