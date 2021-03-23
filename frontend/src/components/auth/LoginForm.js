@@ -76,13 +76,13 @@ const LoginForm = ({ setUser }) => {
     } catch (err) {
       switch (err.response.data.statusCode) {
         case 400:
-          alert.showError(t('formValidation.invalidCredentials'), 10000);
+          alert.showError(t('formValidation.invalidCredentials'));
           break;
         case 500:
-          alert.showError(t('formValidation.server'), 5000);
+          alert.showError(t('formValidation.server'));
           break;
         default:
-          alert.showError(t('formValidation.unexpected'), 5000);
+          alert.showError(t('formValidation.unexpected'));
           break;
       }
     }

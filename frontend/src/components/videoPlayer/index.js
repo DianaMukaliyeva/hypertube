@@ -65,13 +65,13 @@ const VideoPlayer = (data) => {
       if (err.response && err.response.data) {
         switch (err.response.data.statusCode) {
           case 401:
-            alert.showError(t('error.unauthorized'), 5000);
+            alert.showError(t('error.unauthorized'));
             break;
           case 500:
-            alert.showError(t('error.server'), 5000);
+            alert.showError(t('error.server'));
             break;
           default:
-            alert.showError(t('error.unexpected'), 5000);
+            alert.showError(t('error.unexpected'));
             break;
         }
       }
@@ -95,13 +95,13 @@ const VideoPlayer = (data) => {
       if (err.response && err.response.data) {
         switch (err.response.data.statusCode) {
           case 401:
-            alert.showError(t('error.unauthorized'), 5000);
+            alert.showError(t('error.unauthorized'));
             break;
           case 500:
-            alert.showError(t('error.server'), 5000);
+            alert.showError(t('error.server'));
             break;
           default:
-            alert.showError(t('error.unexpected'), 5000);
+            alert.showError(t('error.unexpected'));
             break;
         }
       }
