@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTranslation } from 'react-i18next';
 
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
@@ -152,6 +153,7 @@ const Landing = ({ setUser, alert }) => {
             color="primary"
             onClick={loginModal.handleClickOpen}>
             Login
+            {t('login.login')}
           </Button>
         </Box>
         <Box m={3} style={{ alignSelf: 'center' }}>
@@ -161,7 +163,7 @@ const Landing = ({ setUser, alert }) => {
             variant="outlined"
             color="secondary"
             onClick={createAccountModal.handleClickOpen}>
-            Create Account
+            {t('createAccount.create')}
           </Button>
         </Box>
       </Box>

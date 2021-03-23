@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
@@ -91,8 +91,6 @@ const LoginForm = ({ setUser }) => {
   useEffect(() => {
     focusField.current && focusField.current.focus();
   }, []);
-
-  const classes = useStyles();
 
   return (
     <Container component="main" maxWidth="xs">
