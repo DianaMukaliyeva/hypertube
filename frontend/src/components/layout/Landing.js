@@ -144,15 +144,20 @@ const Landing = ({ setUser, alert }) => {
         </div>
       )}
 
-      <Box mt={5} display="flex" justifyContent="center" className={classes.box}>
+      <Box
+        mt={5}
+        display="flex"
+        justifyContent="center"
+        className={classes.box}
+      >
         <Box m={3} style={{ alignSelf: 'center' }}>
           <Button
             className={classes.button}
             type="submit"
             variant="outlined"
             color="primary"
-            onClick={loginModal.handleClickOpen}>
-            Login
+            onClick={loginModal.handleClickOpen}
+          >
             {t('login.login')}
           </Button>
         </Box>
@@ -162,7 +167,8 @@ const Landing = ({ setUser, alert }) => {
             type="submit"
             variant="outlined"
             color="secondary"
-            onClick={createAccountModal.handleClickOpen}>
+            onClick={createAccountModal.handleClickOpen}
+          >
             {t('createAccount.create')}
           </Button>
         </Box>
@@ -172,7 +178,8 @@ const Landing = ({ setUser, alert }) => {
           <Alert
             className={classes.alert}
             severity={alert.values.severity}
-            onClose={alert.closeAlert}>
+            onClose={alert.closeAlert}
+          >
             {alert.values.message}
           </Alert>
         </Box>
