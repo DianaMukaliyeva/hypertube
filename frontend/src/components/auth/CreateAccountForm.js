@@ -49,7 +49,11 @@ const CreateAccountForm = () => {
   const lastName = useField('text', 'name', 'create-lastname');
   const email = useField('email', 'email', 'create-email');
   const password = useField('password', 'password', 'create-password');
-  const confirmPassword = useField('password', 'confirmPassword', 'create-confirm-password');
+  const confirmPassword = useField(
+    'password',
+    'confirmPassword',
+    'create-confirm-password'
+  );
   const [lang, setLang] = useState({ label: t('form.en'), code: 'en' });
   const alert = useAlert();
 
@@ -105,7 +109,7 @@ const CreateAccountForm = () => {
 
   useEffect(() => {
     focusField.current && focusField.current.focus();
-  });
+  }, []);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -123,8 +127,16 @@ const CreateAccountForm = () => {
             required={true}
             inputRef={focusField}
           />
-          <InputField values={firstName} label={t('form.firstName')} required={true} />
-          <InputField values={lastName} label={t('form.lastName')} required={true} />
+          <InputField
+            values={firstName}
+            label={t('form.firstName')}
+            required={true}
+          />
+          <InputField
+            values={lastName}
+            label={t('form.lastName')}
+            required={true}
+          />
           <InputField values={email} label={t('form.email')} required={true} />
           <InputField
             values={password}
@@ -148,7 +160,12 @@ const CreateAccountForm = () => {
             className={classes.select}
             onChange={handleLangChange}
             renderInput={(params) => (
-              <TextField required {...params} label={t('form.selectLanguage')} variant="outlined" />
+              <TextField
+                required
+                {...params}
+                label={t('form.selectLanguage')}
+                variant="outlined"
+              />
             )}
           />
           {alert.values.show && (
