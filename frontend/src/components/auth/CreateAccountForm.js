@@ -72,7 +72,7 @@ const CreateAccountForm = () => {
         language: lang.code,
       };
       await userService.create(data);
-      alert.showSuccess(t('createAccount.success'), 10000);
+      alert.showSuccess(t('createAccount.success'));
     } catch (err) {
       switch (err.response.data.statusCode) {
         case 400:
@@ -86,10 +86,10 @@ const CreateAccountForm = () => {
           });
           break;
         case 500:
-          alert.showError(t('error.server'), 10000);
+          alert.showError(t('error.server'));
           break;
         default:
-          alert.showError(t('error.unexpected'), 10000);
+          alert.showError(t('error.unexpected'));
           break;
       }
     }
