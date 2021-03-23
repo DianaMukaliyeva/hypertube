@@ -39,7 +39,8 @@
     "google": "Войти через Google",
     "42": "Войти через 42",
     "login": "Войти",
-    "forgotPw": "Не помню пароль"
+    "forgotPw": "Не помню пароль",
+    "tryAgain": "Something went wrong. Please login again!"
   },
   "pwRecovery": {
     "title": "Восстановить пароль",
@@ -68,10 +69,10 @@
     "rating": "рейтинг",
     "watched": "просмотрено",
     "notAvailable": "недоступны",
-     "subtitles": "Субтитры",
-     "director": "Режиссер",
-     "cast": "В ролях",
-     "noSeeds": "Видео недоступно, недостаточно seeders. Повторите попытку позже"
+    "subtitles": "Субтитры",
+    "director": "Режиссер",
+    "cast": "В ролях",
+    "noSeeds": "Видео недоступно, недостаточно seeders. Повторите попытку позже"
   },
   "filter": {
     "A-Z": "От A до Я",

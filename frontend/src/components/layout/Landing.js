@@ -9,6 +9,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+import { Alert } from '@material-ui/lab';
 import Iframe from 'react-iframe';
 
 import useModal from '../../hooks/useModal';
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   titleMobile: {
     fontWeight: 600,
-    marginTop: '20vh',
+    marginTop: '25vh',
   },
   box: {
     [theme.breakpoints.up('xs')]: {
@@ -81,9 +82,28 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     mixBlendMode: 'multiply',
   },
+  alertContainer: {
+    [theme.breakpoints.up('xs')]: {
+      width: '300px',
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: '400px',
+    },
+    margin: 'auto',
+  },
+  alert: {
+    position: 'absolute',
+    top: '10vh',
+    [theme.breakpoints.up('xs')]: {
+      width: '300px',
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: '400px',
+    },
+  },
 }));
 
-const Landing = ({ user, setUser }) => {
+const Landing = ({ setUser, alert }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const classes = useStyles();
@@ -121,14 +141,20 @@ const Landing = ({ user, setUser }) => {
         </div>
       )}
 
-      <Box mt={5} display="flex" justifyContent="center" className={classes.box}>
+      <Box
+        mt={5}
+        display="flex"
+        justifyContent="center"
+        className={classes.box}
+      >
         <Box m={3} style={{ alignSelf: 'center' }}>
           <Button
             className={classes.button}
             type="submit"
             variant="outlined"
             color="primary"
-            onClick={loginModal.handleClickOpen}>
+            onClick={loginModal.handleClickOpen}
+          >
             Login
           </Button>
         </Box>
@@ -138,11 +164,23 @@ const Landing = ({ user, setUser }) => {
             type="submit"
             variant="outlined"
             color="secondary"
-            onClick={createAccountModal.handleClickOpen}>
+            onClick={createAccountModal.handleClickOpen}
+          >
             Create Account
           </Button>
         </Box>
       </Box>
+      {alert.values.show && (
+        <Box className={classes.alertContainer}>
+          <Alert
+            className={classes.alert}
+            severity={alert.values.severity}
+            onClose={alert.closeAlert}
+          >
+            {alert.values.message}
+          </Alert>
+        </Box>
+      )}
       <CustomModal {...loginModal} />
       <CustomModal {...createAccountModal} />
       <CustomModal {...passwordResetModal} />
@@ -151,8 +189,8 @@ const Landing = ({ user, setUser }) => {
 };
 
 Landing.propTypes = {
-  user: PropTypes.object,
   setUser: PropTypes.func,
+  alert: PropTypes.object,
 };
 
 export default Landing;

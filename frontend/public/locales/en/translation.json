@@ -39,7 +39,8 @@
     "google": "Login with Google",
     "42": "Login with 42",
     "login": "Login",
-    "forgotPw": "Forgot password?"
+    "forgotPw": "Forgot password?",
+    "tryAgain": "Something went wrong. Please login again!"
   },
   "pwRecovery": {
     "title": "Recover password",
