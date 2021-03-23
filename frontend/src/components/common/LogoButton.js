@@ -8,8 +8,6 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 0),
     borderColor: '#1b1d2f',
     background: '#1b1d2f',
-    // borderColor: theme.palette.text.primary,
-    // background: theme.palette.background.default,
   },
   buttonIcon: {
     position: 'absolute',

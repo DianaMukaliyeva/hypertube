@@ -63,7 +63,8 @@
     "updatePassword": "Обновить пароль"
   },
   "profile": {
-    "title": "Профиль"
+    "title": "Профиль",
+    "imgSize": "Макс. размер 350 кб"
   },
   "movie": {
     "rating": "рейтинг",

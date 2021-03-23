@@ -1,10 +1,9 @@
-/*eslint-disable */
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTranslation } from 'react-i18next';
 
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
@@ -18,7 +17,6 @@ import LoginForm from '../auth/LoginForm';
 import CreateAccountForm from '../auth/CreateAccountForm';
 import PasswordResetForm from '../auth/PasswordResetForm';
 
-// TO DO move to styles
 const useStyles = makeStyles((theme) => ({
   button: {
     [theme.breakpoints.up('xs')]: {
@@ -53,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cover: {
     background:
+      // eslint-disable-next-line
       'url(https://images.unsplash.com/photo-1519373344801-14c1f9539c9c?w=1920&h=1080&fit=crop&crop=bottom) no-repeat center',
     backgroundSize: 'cover',
     position: 'fixed',
@@ -63,6 +62,9 @@ const useStyles = makeStyles((theme) => ({
     zIndex: '-1',
   },
   text: {
+    [theme.breakpoints.up('xl')]: {
+      fontSize: 'calc(5px + 9vw + 0.8vh)',
+    },
     position: 'absolute',
     top: 0,
     display: 'flex',
@@ -71,7 +73,6 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '100%',
     fontSize: 'calc(5px + 13vw + 0.8vh)',
-    // fontSize: 'calc(10px + 13vw + 2.5vh)',
     fontWeight: 900,
     letterSpacing: '0.15em',
     margin: 'auto',
@@ -129,12 +130,14 @@ const Landing = ({ setUser, alert }) => {
         <div className={classes.cover}>
           <div className={classes.video}>
             <Iframe
+              // eslint-disable-next-line
               url="https://www.youtube.com/embed/y2TET3G0sJ4?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&mute=1&playlist=y2TET3G0sJ4"
               width="100%"
               height="100%"
               id="myId"
               display="initial"
               position="relative"
+              allowFullScreen
             />
             <h1 className={classes.text}>HYPERTUBE</h1>
           </div>
@@ -155,7 +158,7 @@ const Landing = ({ setUser, alert }) => {
             color="primary"
             onClick={loginModal.handleClickOpen}
           >
-            Login
+            {t('login.login')}
           </Button>
         </Box>
         <Box m={3} style={{ alignSelf: 'center' }}>
@@ -166,7 +169,7 @@ const Landing = ({ setUser, alert }) => {
             color="secondary"
             onClick={createAccountModal.handleClickOpen}
           >
-            Create Account
+            {t('createAccount.create')}
           </Button>
         </Box>
       </Box>

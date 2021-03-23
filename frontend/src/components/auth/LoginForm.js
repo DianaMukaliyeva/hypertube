@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,6 +21,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Alert } from '@material-ui/lab';
+import useAlert from '../../hooks/useAlert';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,11 +43,8 @@ const LoginForm = ({ setUser }) => {
   const focusField = useRef();
   const email = useField('email', 'loginEmail', 'login-email');
   const password = useField('password', 'loginPassword', 'login-password');
-  const [alert, setAlert] = useState({
-    show: false,
-    message: '',
-    severity: '',
-  });
+  const alert = useAlert();
+  const classes = useStyles();
 
   const recoveryLinkModal = useModal(<RecoveryLinkForm />);
 
@@ -78,25 +76,13 @@ const LoginForm = ({ setUser }) => {
     } catch (err) {
       switch (err.response.data.statusCode) {
         case 400:
-          setAlert({
-            show: true,
-            message: t('formValidation.invalidCredentials'),
-            severity: 'error',
-          });
+          alert.showError(t('formValidation.invalidCredentials'));
           break;
         case 500:
-          setAlert({
-            show: true,
-            message: t('formValidation.server'),
-            severity: 'error',
-          });
+          alert.showError(t('formValidation.server'));
           break;
         default:
-          setAlert({
-            show: true,
-            message: t('formValidation.unexpected'),
-            severity: 'error',
-          });
+          alert.showError(t('formValidation.unexpected'));
           break;
       }
     }
@@ -105,8 +91,6 @@ const LoginForm = ({ setUser }) => {
   useEffect(() => {
     focusField.current && focusField.current.focus();
   }, []);
-
-  const classes = useStyles();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -130,12 +114,9 @@ const LoginForm = ({ setUser }) => {
             autocomplete="current-password"
             required={true}
           />
-          {alert.show && (
-            <Alert
-              severity={alert.severity}
-              onClose={() => setAlert({ ...alert, show: false })}
-            >
-              {alert.message}
+          {alert.values.show && (
+            <Alert severity={alert.values.severity} onClose={alert.closeAlert}>
+              {alert.values.message}
             </Alert>
           )}
           <FormButton name={t('login.login')} />

@@ -64,13 +64,15 @@ describe('all elements are rendered', () => {
 
   it('renders language selection', () => {
     const langSelect = screen.getByLabelText(/selectlang/i);
+    expect(langSelect).toHaveAttribute('value', 'form.en');
+
     userEvent.click(langSelect);
     screen.getByText('form.en');
-    screen.getByText('form.fi');
     screen.getByText('form.ru');
     screen.getByText('form.de');
-    userEvent.click(langSelect);
-    expect(screen.queryByText('form.en')).not.toBeInTheDocument();
+
+    userEvent.click(screen.getByText('form.fi'));
+    expect(langSelect).toHaveAttribute('value', 'form.fi');
   });
 
   it('renders submit button', () => {

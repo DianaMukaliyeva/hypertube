@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useLocation,
-  useHistory,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +15,7 @@ import Navbar from './components/layout/Navbar';
 import setAuthToken from './utils/setAuthToken';
 import authService from './services/auth';
 import useAlert from './hooks/useAlert';
+import Footer from './components/layout/Footer';
 
 function App() {
   const [user, setUser] = useState({ userId: '', lang: '' });
@@ -61,10 +56,7 @@ function App() {
 
   useEffect(() => {
     if (user.lang) {
-      i18next.changeLanguage(user.lang, (err) => {
-        if (err)
-          return console.log('something went wrong loading language', err);
-      });
+      i18next.changeLanguage(user.lang);
     }
   }, [user]);
 
@@ -84,11 +76,7 @@ function App() {
           <Box mt={10}>
             <Route exact path="/">
               {user.userId ? (
-                <Hypertube
-                  clearFilter={clearFilter}
-                  user={user}
-                  setUser={setUser}
-                />
+                <Hypertube clearFilter={clearFilter} user={user} setUser={setUser} />
               ) : (
                 <Landing setUser={setUser} alert={alert} />
               )}
@@ -100,6 +88,7 @@ function App() {
             </Switch>
           </Box>
         </Container>
+        <Footer />
       </Router>
     </ThemeProvider>
   );

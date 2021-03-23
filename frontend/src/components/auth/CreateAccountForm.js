@@ -18,8 +18,8 @@ import { Alert } from '@material-ui/lab';
 import InputField from '../common/InputField';
 import FormButton from '../common/FormButton';
 import OmniAuthLogin from './OmniAuthLogin';
+import useAlert from '../../hooks/useAlert';
 
-// TO DO move to styles
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(6),
@@ -49,17 +49,9 @@ const CreateAccountForm = () => {
   const lastName = useField('text', 'name', 'create-lastname');
   const email = useField('email', 'email', 'create-email');
   const password = useField('password', 'password', 'create-password');
-  const confirmPassword = useField(
-    'password',
-    'confirmPassword',
-    'create-confirm-password'
-  );
-  const [lang, setLang] = useState({ label: '', code: '' });
-  const [alert, setAlert] = useState({
-    show: false,
-    message: '',
-    severity: '',
-  });
+  const confirmPassword = useField('password', 'confirmPassword', 'create-confirm-password');
+  const [lang, setLang] = useState({ label: t('form.en'), code: 'en' });
+  const alert = useAlert();
 
   const langOptions = [
     { label: t('form.en'), code: 'en' },
@@ -81,11 +73,7 @@ const CreateAccountForm = () => {
         language: lang.code,
       };
       await userService.create(data);
-      setAlert({
-        show: true,
-        message: t('createAccount.success'),
-        severity: 'success',
-      });
+      alert.showSuccess(t('createAccount.success'));
     } catch (err) {
       switch (err.response.data.statusCode) {
         case 400:
@@ -99,18 +87,10 @@ const CreateAccountForm = () => {
           });
           break;
         case 500:
-          setAlert({
-            show: true,
-            message: t('error.server'),
-            severity: 'error',
-          });
+          alert.showError(t('error.server'));
           break;
         default:
-          setAlert({
-            show: true,
-            message: t('error.unexpected'),
-            severity: 'error',
-          });
+          alert.showError(t('error.unexpected'));
           break;
       }
     }
@@ -118,10 +98,7 @@ const CreateAccountForm = () => {
 
   const handleLangChange = (event, value) => {
     if (value !== null) {
-      i18next.changeLanguage(value.code, (err) => {
-        if (err)
-          return console.log('something went wrong loading language', err);
-      });
+      i18next.changeLanguage(value.code);
       setLang({ ...value, label: t(`form.${value.code}`) });
     }
   };
@@ -137,7 +114,8 @@ const CreateAccountForm = () => {
         <Typography component="h1" variant="h5">
           {t('createAccount.title')}
         </Typography>
-
+        <OmniAuthLogin />
+        <Box mt={3}>{t('form.or')}</Box>
         <form className={classes.form} onSubmit={handleCreate} noValidate>
           <InputField
             values={username}
@@ -145,16 +123,8 @@ const CreateAccountForm = () => {
             required={true}
             inputRef={focusField}
           />
-          <InputField
-            values={firstName}
-            label={t('form.firstName')}
-            required={true}
-          />
-          <InputField
-            values={lastName}
-            label={t('form.lastName')}
-            required={true}
-          />
+          <InputField values={firstName} label={t('form.firstName')} required={true} />
+          <InputField values={lastName} label={t('form.lastName')} required={true} />
           <InputField values={email} label={t('form.email')} required={true} />
           <InputField
             values={password}
@@ -178,27 +148,16 @@ const CreateAccountForm = () => {
             className={classes.select}
             onChange={handleLangChange}
             renderInput={(params) => (
-              <TextField
-                required
-                {...params}
-                label={t('form.selectLanguage')}
-                variant="outlined"
-              />
+              <TextField required {...params} label={t('form.selectLanguage')} variant="outlined" />
             )}
           />
-
-          {alert.show && (
-            <Alert
-              severity={alert.severity}
-              onClose={() => setAlert({ ...alert, show: false })}
-            >
-              {alert.message}
+          {alert.values.show && (
+            <Alert severity={alert.values.severity} onClose={alert.closeAlert}>
+              {alert.values.message}
             </Alert>
           )}
           <FormButton name={t('createAccount.create')} />
         </form>
-        <Box mt={3}>{t('form.or')}</Box>
-        <OmniAuthLogin />
       </div>
     </Container>
   );
