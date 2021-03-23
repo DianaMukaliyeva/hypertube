@@ -42,7 +42,7 @@ const PasswordResetForm = () => {
 
   useEffect(() => {
     const token = location.search.split('=')[1];
-    if (!token) return alert.showError(t('pwRecovery.invalidLink'), 5000);
+    if (!token) return alert.showError(t('pwRecovery.invalidLink'));
 
     try {
       const decoded = jwt_decode(token);
@@ -51,7 +51,7 @@ const PasswordResetForm = () => {
         resetToken: token,
       });
     } catch (err) {
-      alert.showError(t('pwRecovery.invalidLink'), 5000);
+      alert.showError(t('pwRecovery.invalidLink'));
     }
 
     focusField.current && focusField.current.focus();
@@ -67,7 +67,7 @@ const PasswordResetForm = () => {
       };
 
       await userService.pwdUpdate(data);
-      alert.showSuccess(t('pwRecovery.success'), 5000);
+      alert.showSuccess(t('pwRecovery.success'));
     } catch (err) {
       switch (err.response.data.statusCode) {
         case 400:
@@ -77,16 +77,16 @@ const PasswordResetForm = () => {
           });
           err.response.data.details.map((detail) => {
             if (detail.param === 'userId' || detail.param === 'resetToken') {
-              alert.showError(t('pwRecovery.invalidLink'), 5000);
+              alert.showError(t('pwRecovery.invalidLink'));
             }
           });
 
           break;
         case 500:
-          alert.showError(t('error.server'), 5000);
+          alert.showError(t('error.server'));
           break;
         default:
-          alert.showError(t('error.unexpected'), 5000);
+          alert.showError(t('error.unexpected'));
           break;
       }
     }

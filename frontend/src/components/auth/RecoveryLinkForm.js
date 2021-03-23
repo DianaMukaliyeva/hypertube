@@ -39,7 +39,7 @@ const RecoveryLinkForm = () => {
     event.preventDefault();
     try {
       await authService.recoveryLink(email.value);
-      alert.showSuccess(t('pwRecovery.checkEmail'), 5000);
+      alert.showSuccess(t('pwRecovery.checkEmail'));
     } catch (err) {
       switch (err.response.data.statusCode) {
         case 400:
@@ -48,10 +48,10 @@ const RecoveryLinkForm = () => {
           });
           break;
         case 500:
-          alert.showError(t('error.server'), 5000);
+          alert.showError(t('error.server'));
           break;
         default:
-          alert.showError(t('error.unexpected'), 5000);
+          alert.showError(t('error.unexpected'));
           break;
       }
     }
