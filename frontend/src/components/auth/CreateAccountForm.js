@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 import useField from '../../hooks/useField';
@@ -42,13 +42,18 @@ const useStyles = makeStyles((theme) => ({
 const CreateAccountForm = () => {
   const classes = useStyles();
   const { t } = useTranslation();
+  const focusField = useRef();
 
   const username = useField('text', 'username', 'create-username');
   const firstName = useField('text', 'name', 'create-firstname');
   const lastName = useField('text', 'name', 'create-lastname');
   const email = useField('email', 'email', 'create-email');
   const password = useField('password', 'password', 'create-password');
-  const confirmPassword = useField('password', 'confirmPassword', 'create-confirm-password');
+  const confirmPassword = useField(
+    'password',
+    'confirmPassword',
+    'create-confirm-password'
+  );
   const [lang, setLang] = useState({ label: '', code: '' });
   const [alert, setAlert] = useState({
     show: false,
@@ -114,11 +119,16 @@ const CreateAccountForm = () => {
   const handleLangChange = (event, value) => {
     if (value !== null) {
       i18next.changeLanguage(value.code, (err) => {
-        if (err) return console.log('something went wrong loading language', err);
+        if (err)
+          return console.log('something went wrong loading language', err);
       });
       setLang({ ...value, label: t(`form.${value.code}`) });
     }
   };
+
+  useEffect(() => {
+    focusField.current && focusField.current.focus();
+  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -129,9 +139,22 @@ const CreateAccountForm = () => {
         </Typography>
 
         <form className={classes.form} onSubmit={handleCreate} noValidate>
-          <InputField values={username} label={t('form.username')} required={true} />
-          <InputField values={firstName} label={t('form.firstName')} required={true} />
-          <InputField values={lastName} label={t('form.lastName')} required={true} />
+          <InputField
+            values={username}
+            label={t('form.username')}
+            required={true}
+            inputRef={focusField}
+          />
+          <InputField
+            values={firstName}
+            label={t('form.firstName')}
+            required={true}
+          />
+          <InputField
+            values={lastName}
+            label={t('form.lastName')}
+            required={true}
+          />
           <InputField values={email} label={t('form.email')} required={true} />
           <InputField
             values={password}
@@ -155,12 +178,20 @@ const CreateAccountForm = () => {
             className={classes.select}
             onChange={handleLangChange}
             renderInput={(params) => (
-              <TextField required {...params} label={t('form.selectLanguage')} variant="outlined" />
+              <TextField
+                required
+                {...params}
+                label={t('form.selectLanguage')}
+                variant="outlined"
+              />
             )}
           />
 
           {alert.show && (
-            <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
+            <Alert
+              severity={alert.severity}
+              onClose={() => setAlert({ ...alert, show: false })}
+            >
               {alert.message}
             </Alert>
           )}

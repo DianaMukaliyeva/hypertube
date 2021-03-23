@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 const RecoveryLinkForm = () => {
   const { t } = useTranslation();
+  const focusField = useRef();
   const email = useField('email', 'email', 'forgot-email');
   const [alert, setAlert] = useState({
     show: false,
@@ -72,6 +73,10 @@ const RecoveryLinkForm = () => {
     }
   };
 
+  useEffect(() => {
+    focusField.current && focusField.current.focus();
+  }, []);
+
   const classes = useStyles();
 
   return (
@@ -83,7 +88,12 @@ const RecoveryLinkForm = () => {
         </Typography>
 
         <form className={classes.form} onSubmit={handleForgotPwd} noValidate>
-          <InputField values={email} label={t('form.email')} required={true} />
+          <InputField
+            values={email}
+            label={t('form.email')}
+            required={true}
+            inputRef={focusField}
+          />
           {alert.show && (
             <Alert
               severity={alert.severity}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 const LoginForm = ({ setUser }) => {
   const { t } = useTranslation();
   const history = useHistory();
+  const focusField = useRef();
   const email = useField('email', 'loginEmail', 'login-email');
   const password = useField('password', 'loginPassword', 'login-password');
   const [alert, setAlert] = useState({
@@ -101,6 +102,10 @@ const LoginForm = ({ setUser }) => {
     }
   };
 
+  useEffect(() => {
+    focusField.current && focusField.current.focus();
+  }, []);
+
   const classes = useStyles();
 
   return (
@@ -113,7 +118,12 @@ const LoginForm = ({ setUser }) => {
         <OmniAuthLogin />
         <Box mt={3}>{t('form.or')}</Box>
         <form className={classes.form} onSubmit={handleLogin} noValidate>
-          <InputField values={email} label={t('form.email')} required={true} />
+          <InputField
+            values={email}
+            label={t('form.email')}
+            required={true}
+            inputRef={focusField}
+          />
           <InputField
             values={password}
             label={t('form.password')}
@@ -121,7 +131,10 @@ const LoginForm = ({ setUser }) => {
             required={true}
           />
           {alert.show && (
-            <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
+            <Alert
+              severity={alert.severity}
+              onClose={() => setAlert({ ...alert, show: false })}
+            >
               {alert.message}
             </Alert>
           )}
