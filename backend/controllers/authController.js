@@ -8,6 +8,7 @@ import sendResetEmail from '../utilities/email.js';
 import google from '../utilities/google.js';
 import fortytwo from '../utilities/42.js';
 
+const FRONTEND_URL = process.env.NODE_ENV === 'production' ? 'http://localhost' : FRONTEND_URL_DEV;
 const userToken = {};
 
 const setUserToken = (id, lang) => {
@@ -95,7 +96,7 @@ const googleCallback = async (req, res) => {
 
   const key = setUserToken(userFromDB._id, userFromDB.language);
 
-  return res.redirect(`${process.env.FRONTEND_URL_DEV}?auth=${key}`);
+  return res.redirect(`${FRONTEND_URL}?auth=${key}`);
 };
 
 const fortytwoURL = (req, res) => {
@@ -106,7 +107,7 @@ const fortytwoCallback = async (req, res) => {
   const { code, state } = req.query;
 
   if (code === undefined || state !== process.env.FORTYTWO_STATE) {
-    return res.redirect(process.env.FRONTEND_URL_DEV);
+    return res.redirect(FRONTEND_URL);
   }
 
   const token = await fortytwo.getAuthorizationToken(code, state);
@@ -117,7 +118,7 @@ const fortytwoCallback = async (req, res) => {
 
   const key = setUserToken(userFromDB._id, userFromDB.language);
 
-  return res.redirect(`${process.env.FRONTEND_URL_DEV}?auth=${key}`);
+  return res.redirect(`${FRONTEND_URL}?auth=${key}`);
 };
 
 export default {
