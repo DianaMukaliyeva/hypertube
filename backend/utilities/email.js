@@ -52,11 +52,11 @@ const translations = (lang, name) => {
     };
     case ('de'): return {
       subject: 'HYPERTUBE password reset',
-      title: `Hi, ${name.charAt(0).toUpperCase() + name.slice(1)}! You have submitted a password change request.`,
-      info: 'If it was you, to change your Hypertube password click the link below.',
-      link: 'Reset my password',
-      thanks: 'Thank you for using Hypertube',
-      team: 'Hypertube team',
+      title: `Hallo, ${name.charAt(0).toUpperCase() + name.slice(1)}! Sie haben erfolgreich Ihr Passwort zurückgesetzt.`,
+      info: 'Bitte klicken Sie den unten angegebenen Link, um Ihr Passwort zu ändern.',
+      link: 'Passwort zurücksetzen',
+      thanks: 'Vielen Dank für die Nutzung von Hypertube',
+      team: 'Ihr Hypertube Team',
     };
     default: return {
       subject: 'HYPERTUBE password reset',
