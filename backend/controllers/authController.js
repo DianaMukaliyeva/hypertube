@@ -56,7 +56,7 @@ const recoveryEmail = async (req, res) => {
   const token = jwt.sign(userForToken, process.env.SECRET);
   user.token = token;
   await user.save();
-  sendResetEmail(user.email, user.firstname, token, req);
+  sendResetEmail(user.email, user.firstname, token, req, user.language);
 
   res.status(200).json('success');
 };
