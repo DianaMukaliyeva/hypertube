@@ -1,12 +1,15 @@
 import { google } from 'googleapis';
 import axios from 'axios';
 
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BACKEND_URL } = process.env;
+const {
+  GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BACKEND_URL, NODE_ENV,
+} = process.env;
+const backendURI = NODE_ENV === 'production' ? 'http://localhost' : BACKEND_URL;
 
 const oauth2Client = new google.auth.OAuth2(
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
-  `${BACKEND_URL}/api/auth/google/callback`,
+  `${backendURI}/api/auth/google/callback`,
 );
 
 const getGoogleAuthURL = () => {
