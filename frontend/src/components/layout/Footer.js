@@ -52,8 +52,12 @@ const Footer = () => {
           zIndex="1"
           bgcolor="background.secondary"
           color="text.secondary"
-          textAlign="center">
-          <Typography variant="body2"> © Copyright 2020 All Rights Reserved. </Typography>
+          textAlign="center"
+        >
+          <Typography variant="body2">
+            {' '}
+            © Copyright 2021 All Rights Reserved.{' '}
+          </Typography>
           {authors.map((value, index) => {
             return (
               <span key={index}>
@@ -62,7 +66,8 @@ const Footer = () => {
                     size="small"
                     target="_blank"
                     href={value.github}
-                    className={classes.button}>
+                    className={classes.button}
+                  >
                     {value.name}
                   </Button>
                 </Tooltip>{' '}
