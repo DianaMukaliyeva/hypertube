@@ -15,9 +15,6 @@ services:
         - NODE_ENV=production
     container_name: backend_hyper_prod
     image: backend_hyper_prod
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
     environment:
       - PORT=5999
     env_file: ./.env
@@ -26,21 +23,21 @@ services:
     depends_on:
       - mongo
     command: ['node', 'server.js']
-    restart: unless-stopped
+    restart: 'no'
 
-  frontend_hyper_prod:
+  nginx_server:
     build:
       context: ./frontend
       dockerfile: Dockerfile.prod
       args:
-        BACKEND_URL: http://localhost:5999
-    container_name: frontend_hyper_prod
-    image: frontend_hyper_prod
+        BACKEND_URL: ''
+    container_name: nginx_hyper_server
+    image: nginx_server_hyper
     ports:
       - 80:80
     depends_on:
       - backend_hyper_prod
-    restart: unless-stopped
+    restart: 'no'
 
 volumes:
   somedb:
