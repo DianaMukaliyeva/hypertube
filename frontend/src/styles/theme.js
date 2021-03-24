@@ -25,6 +25,9 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: ['Roboto', 'sans-serif'],
+    body2: {
+      fontWeight: 500,
+    },
   },
   appBar: {
     color: dark2,
