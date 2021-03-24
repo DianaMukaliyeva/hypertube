@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const redirectURI = 'http://localhost:5003/api/auth/42/callback';
+const backendURI = process.env.NODE_ENV === 'production' ? 'http://localhost' : process.env.BACKEND_URL;
+const redirectURI = `${backendURI}/api/auth/42/callback`;
 
 const get42URL = () => {
   const baseURL = 'https://api.intra.42.fr/oauth/authorize';
@@ -38,5 +39,7 @@ const getUser = async (token) => {
 };
 
 export default {
-  redirectURI, get42URL, getAuthorizationToken, getUser,
+  get42URL,
+  getAuthorizationToken,
+  getUser,
 };

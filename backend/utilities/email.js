@@ -1,10 +1,12 @@
 import nodemailer from 'nodemailer';
 
-const email = process.env.EMAIL;
-const emailPassword = process.env.EMAIL_PWD;
+const {
+  EMAIL, EMAIL_PWD, FRONTEND_URL_DEV, NODE_ENV,
+} = process.env;
+const email = EMAIL;
+const emailPassword = EMAIL_PWD;
 
-// TO DO change url for production
-const url = process.env.FRONTEND_URL_DEV;
+const url = NODE_ENV === 'production' ? 'http://localhost' : FRONTEND_URL_DEV;
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
