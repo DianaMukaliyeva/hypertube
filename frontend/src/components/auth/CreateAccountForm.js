@@ -115,7 +115,7 @@ const CreateAccountForm = () => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
+        <Typography component="h2" variant="h5">
           {t('createAccount.title')}
         </Typography>
         <OmniAuthLogin />

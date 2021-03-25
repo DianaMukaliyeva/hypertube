@@ -33,22 +33,26 @@ const TitleBanner = ({ movie }) => {
 
   return (
     <div>
-      <Typography variant={isMobile ? 'h5' : 'h2'}>{movie.title}</Typography>
+      <Typography component="h1" variant={isMobile ? 'h5' : 'h2'}>
+        {movie.title}
+      </Typography>
       <Box mt={3} display="flex" flexDirection={isMobile ? 'column' : 'row'}>
         {movie.imdbRating && (
-          <Typography variant="subtitle2" className={classes.imdb}>
+          <Typography variant="body2" className={classes.imdb}>
             IMDb {movie.imdbRating}
           </Typography>
         )}
-        <Typography variant="subtitle2" className={classes.genre}>
+        <Typography variant="body2" className={classes.genre}>
           {movie.genre}
         </Typography>
-        <Typography variant="subtitle2" className={classes.year}>
+        <Typography variant="body2" className={classes.year}>
           {movie.year}
         </Typography>
-        {movie.length && <Typography variant="subtitle2">{movie.length} min</Typography>}
+        {movie.length && (
+          <Typography variant="body2">{movie.length} min</Typography>
+        )}
       </Box>
-      <Typography variant="subtitle1" className={classes.description}>
+      <Typography variant="body1" className={classes.description}>
         {movie.description}
       </Typography>
     </div>

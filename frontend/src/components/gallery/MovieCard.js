@@ -66,7 +66,9 @@ const MovieCard = ({ movie }) => {
       <Card onClick={movieModal.handleClickOpen} className={classes.root}>
         <CardActionArea>
           <CardMedia
-            className={classes.cardMedia + ' ' + (movie.watched ? classes.overlay : '')}
+            className={
+              classes.cardMedia + ' ' + (movie.watched ? classes.overlay : '')
+            }
             component="img"
             alt={movie.title}
             image={movie.thumbnail}
@@ -81,12 +83,16 @@ const MovieCard = ({ movie }) => {
             )}
             <Typography
               color={movie.watched ? 'textSecondary' : 'textPrimary'}
+              component="h2"
               variant="h6"
-              className={classes.title}>
+              className={classes.title}
+            >
               {movie.title}
             </Typography>
             <Box justifyContent="space-between" display="flex">
-              <Typography color="textSecondary">IMDb {movie.imdbRating}</Typography>
+              <Typography color="textSecondary">
+                IMDb {movie.imdbRating}
+              </Typography>
               <Typography color="textSecondary">{movie.year}</Typography>
             </Box>
           </CardContent>

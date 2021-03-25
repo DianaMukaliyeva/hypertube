@@ -138,7 +138,7 @@ const MyProfile = ({ user, setUser }) => {
   return userData ? (
     <Container component="main" className={classes.paper} maxWidth="sm">
       <CssBaseline />
-      <Typography component="h2" variant="h4" gutterBottom>
+      <Typography component="h1" variant="h5" gutterBottom>
         {t('myProfile.title')}
       </Typography>
 
