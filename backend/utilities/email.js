@@ -1,6 +1,8 @@
 import nodemailer from 'nodemailer';
 
-const { EMAIL, EMAIL_PWD, FRONTEND_URL_DEV, NODE_ENV } = process.env;
+const {
+  EMAIL, EMAIL_PWD, FRONTEND_URL_DEV, NODE_ENV,
+} = process.env;
 const email = EMAIL;
 const emailPassword = EMAIL_PWD;
 
