@@ -6,6 +6,7 @@ const movieSchema = new mongoose.Schema({
   imdbCode: { type: String, unique: true, required: true },
   downloadComplete: { type: Boolean, default: false },
   magnet: { type: String },
+  size: { type: Number, default: 0 },
   lastWatched: { type: Date },
   comments: [
     {
