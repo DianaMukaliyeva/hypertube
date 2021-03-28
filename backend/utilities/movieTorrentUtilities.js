@@ -16,9 +16,10 @@ const saveFilePath = async ({ imdbCode, magnet }, serverLocation, size) => {
     });
     await newMovie.save();
   }
-}; 
+};
 
 const startFileStream = (req, res) => {
+  console.log('startFileStream');
   let notLoaded = false;
   const filePath = `./movies/${req.params.imdbCode}/${req.serverLocation}`;
   const isMp4 = filePath.endsWith('mp4');
@@ -46,9 +47,7 @@ const startFileStream = (req, res) => {
     range,
     ', contentLength: ',
     contentLength,
-    
   );
- 
 
   const headers = {
     'Content-Range': `bytes ${start}-${end}/${req.movieSize}`,
@@ -59,12 +58,17 @@ const startFileStream = (req, res) => {
   // if (notLoaded) {
   //   res.writeHead(200, headers);
   // } else {
-    res.writeHead(206, headers);
+  res.writeHead(206, headers);
   // }
   const readStream = fs.createReadStream(filePath, { start, end });
   if (isMp4) readStream.pipe(res);
   else {
-    ffmpeg(readStream).format('webm').on('error', (err) => { console.log("ERROR FORMAT", err)}).pipe(res);
+    ffmpeg(readStream)
+      .format('webm')
+      .on('error', (err) => {
+        console.log('ERROR FORMAT', err);
+      })
+      .pipe(res);
   }
 };
 
@@ -78,28 +82,30 @@ const getMagnet = async (imdbCode) => {
 };
 
 // not in use as it is way too slow
-// const convertMovieToMp4 = (movie) => {
-//   const { imdbCode } = movie;
-//   const moviePath = `./movies/${imdbCode}/${movie.serverLocation}`;
-//   const savePath = path.parse(movie.serverLocation);
-//   const fileLocation = `${savePath.dir}/${savePath.name}.mp4`;
-//   ffmpeg(moviePath)
-//     .format('mp4')
-//     .on('end', async () => {
-//       Movie.findOneAndUpdate({ imdbCode }, { serverLocation: fileLocation });
-//     })
-//     .on('error', () => {})
-//     .save(`./movies/${imdbCode}/${fileLocation}`);
-// };
+const convertMovieToMp4 = (movie) => {
+  console.log('CONVERT MOVIE TO MP4');
+  const { imdbCode } = movie;
+  const moviePath = `./movies/${imdbCode}/${movie.serverLocation}`;
+  const savePath = path.parse(movie.serverLocation);
+  const fileLocation = `${savePath.dir}/${savePath.name}.mp4`;
+  ffmpeg(moviePath)
+    .format('mp4')
+    .on('end', async () => {
+      Movie.findOneAndUpdate({ imdbCode }, { serverLocation: fileLocation });
+    })
+    .on('error', () => {})
+    .save(`./movies/${imdbCode}/${fileLocation}`);
+};
 
 const setMovieAsCompleted = async (imdbCode) => {
   await Movie.findOneAndUpdate({ imdbCode }, { downloadComplete: true }, { new: true });
   // we could convert the completed file in the background but it is very cpu intensive
-  // if (movie.serverLocation.endsWith('.mkv')) convertMovieToMp4(movie);
+  if (movie.serverLocation.endsWith('.mkv')) convertMovieToMp4(movie);
 };
 
 const downloadMovie = async (movie, downloadCache) =>
   new Promise((resolve) => {
+    console.log('downloadMovie');
     let filePath;
     let size = 0;
     const engine = torrentStream(movie.magnet, {
@@ -131,7 +137,7 @@ const downloadMovie = async (movie, downloadCache) =>
 
     engine.on('download', () => {
       const moviePath = `./movies/${movie.imdbCode}/${filePath}`;
-      if (fs.existsSync(moviePath) && !downloadCache.has(movie.imdbCode)) {
+      if (fs.existsSync(moviePath) && !downloadCache.has(movie.imdbCode) && !filePath.endsWith('.mkv')) {
         if (fs.statSync(moviePath).size / (1024 * 1024) > 20) {
           downloadCache.set(movie.imdbCode, 'downloading');
           // console.log('resolved', fs.statSync(moviePath).size / (1024 * 1024), movie.imdbCode);
@@ -144,6 +150,9 @@ const downloadMovie = async (movie, downloadCache) =>
     engine.on('idle', () => {
       setMovieAsCompleted(movie.imdbCode);
       downloadCache.del(movie.imdbCode);
+      if (filePath.endsWith('.mkv')) {
+        resolve();
+      }
       engine.destroy();
     });
   });
