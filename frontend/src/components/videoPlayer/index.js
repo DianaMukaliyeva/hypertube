@@ -58,7 +58,6 @@ const VideoPlayer = (data) => {
       if (data.movie.seeds <= seedersMin) {
         alert.showError(t('movie.noSeeds'));
       }
-      console.log('seeds', data.movie.seeds);
       setSubsTracks(buildTracks(data.movie.imdbCode, res.subtitles, t));
       setLoading(false);
       setRefresh(false);

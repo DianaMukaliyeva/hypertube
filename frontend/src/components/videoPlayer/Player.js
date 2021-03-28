@@ -1,61 +1,69 @@
 import React, { useState, useRef } from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 import PlayCircleFilledWhiteOutlined from '@material-ui/icons/PlayCircleFilledWhiteOutlined';
+import Typography from '@material-ui/core/Typography';
 
 import img from '../../images/video-banner.png';
 import movieService from '../../services/movie';
 
 const Player = ({ subsTracks, imdbCode }) => {
   const token = localStorage.getItem('token');
+  const { t } = useTranslation();
   const playerRef = useRef(null);
   // eslint-disable-next-line no-undef
   const streamUrl = process.env.REACT_APP_BACKEND_URL + `/api/movies/${imdbCode}/play/${token}`;
 
   const [statusPlayer, setStatusPlayer] = useState('');
   const [error, setError] = useState(false);
-  const [loadError, setLoadError] = useState(false);
 
-  const handlePlay = () => {
-    console.log('ONPLAY');
-    if (!error || !loadError) {
-      setStatusPlayer('PLAY');
-      movieService.setWatched(imdbCode);
-    }
+  const onPlay = () => {
+    // if (!error) {
+    setStatusPlayer(t('movie.playing'));
+    movieService.setWatched(imdbCode);
+    // }
+    // else {
+    //   setStatusPlayer('');
+    // }
   };
+
   const onBuffer = () => {
-    console.log('BUFFERING');
-    if (!error || !loadError) {
-      setStatusPlayer('BUFFERING');
-    }
+    // if (!error) {
+    setStatusPlayer(t('movie.buffering'));
+    // } else {
+    //   setStatusPlayer('');
+    // }
   };
-  const onStart = () => {
-    console.log('START');
-    if (!error || !loadError) {
-      setStatusPlayer('START');
-    }
+
+  const onBufferEnd = () => {
+    // if (!error) {
+    setStatusPlayer(t('movie.playing'));
+    // }
+  };
+
+  const onPause = () => {
+    // if (!error) {
+    setStatusPlayer(t('movie.paused'));
+    // }
   };
 
   const onError = (err) => {
-    console.log('!!!!!!!!   ERROR  !!!!!!!!!!!!!!!', err);
-    // playerRef.current.seekTo(0);
-    if (err.target.error && err.target.error.code === 3) {
-      setStatusPlayer('File corrupted');
+    if (
+      err.target.error &&
+      (err.target.error.code === 3 || err.target.error.code === 4 || err.target.error.code === 1)
+    ) {
+      setStatusPlayer(t('movie.sourceFileError'));
       setError(true);
       playerRef.current.showPreview();
     }
   };
 
   const onProgress = ({ playedSeconds, loadedSeconds }) => {
-    // console.log('ON PROGRESS', 'sec played', playedSeconds, 'sec loaded', loadedSeconds);
     if (playedSeconds > loadedSeconds && !error) {
-      console.log('NOT LOADED YET, Try earlier piece');
-      setStatusPlayer('NOT LOADED YET, the movie will be set to start');
-      // console.log('ref', playerRef.current);
-      playerRef.current.seekTo(0);
-      setLoadError(true);
-      // setError(false);
+      setStatusPlayer(t('movie.notLoadedError'));
+      playerRef.current.showPreview();
     }
   };
 
@@ -68,14 +76,15 @@ const Player = ({ subsTracks, imdbCode }) => {
         controls={true}
         pip={false}
         url={streamUrl}
-        onPlay={handlePlay}
+        onPlay={onPlay}
         width="100%"
         light={img}
         playIcon={<PlayCircleFilledWhiteOutlined fontSize="large" />}
         onBuffer={onBuffer}
-        onStart={onStart}
         onProgress={onProgress}
         onError={onError}
+        onPause={onPause}
+        onBufferEnd={onBufferEnd}
         config={{
           file: {
             attributes: {
@@ -85,12 +94,10 @@ const Player = ({ subsTracks, imdbCode }) => {
           },
         }}
       />
-      <div className="center color-black60 bg-black100 p-4">
-        <div>{statusPlayer}</div>
-        {/* <div>played: {Math.round(secondsPlayed)} seconds</div>
-        <div>
-          loaded: {Math.round(secondsLoaded)} / {Math.round(totalSeconds)} seconds
-        </div> */}
+      <div>
+        <Typography variant="body2" style={{ color: '#707281', fontStyle: 'italic' }}>
+          {statusPlayer}
+        </Typography>
       </div>
     </div>
   );
