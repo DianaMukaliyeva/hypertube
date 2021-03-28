@@ -39,7 +39,8 @@
     "google": "Войти через Google",
     "42": "Войти через 42",
     "login": "Войти",
-    "forgotPw": "Не помню пароль"
+    "forgotPw": "Не помню пароль",
+    "tryAgain": "Something went wrong. Please login again!"
   },
   "pwRecovery": {
     "title": "Восстановить пароль",
@@ -62,15 +63,22 @@
     "updatePassword": "Обновить пароль"
   },
   "profile": {
-    "title": "Профиль"
+    "title": "Профиль",
+    "imgSize": "Макс. размер 350 кб"
   },
   "movie": {
     "rating": "рейтинг",
     "watched": "просмотрено",
     "notAvailable": "недоступны",
-     "subtitles": "Субтитры",
-     "director": "Режиссер",
-     "cast": "В ролях"
+    "subtitles": "Субтитры",
+    "director": "Режиссер",
+    "cast": "В ролях",
+    "noSeeds": "Видео недоступно, недостаточно seeders. Повторите попытку позже", 
+    "playing": "проигрывается...",
+    "buffering": "загрузка...",
+    "paused": "пауза",
+    "sourceFileError": "Ошибка с исходным файлом",
+    "notLoadedError": "На загружено, вы будете перенаправлены на начало фильма"
   },
   "filter": {
     "A-Z": "От A до Я",

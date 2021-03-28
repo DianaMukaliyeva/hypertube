@@ -20,11 +20,11 @@ import CustomModal from '../common/CustomModal';
 
 import PropTypes from 'prop-types';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   button: {
     '&:hover': {
       background: 'inherit',
-      color: '#fb3b64',
+      color: theme.palette.primary.main,
     },
   },
 }));

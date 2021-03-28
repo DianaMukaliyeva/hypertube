@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { useTranslation } from 'react-i18next';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -61,14 +60,15 @@ const useStyles = makeStyles((theme) => ({
 const MovieCard = ({ movie }) => {
   const movieModal = useModal(<VideoPlayer movie={movie} />, 'lg');
   const classes = useStyles();
-  // const { t } = useTranslation();
 
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
       <Card onClick={movieModal.handleClickOpen} className={classes.root}>
         <CardActionArea>
           <CardMedia
-            className={classes.cardMedia + ' ' + (movie.watched ? classes.overlay : '')}
+            className={
+              classes.cardMedia + ' ' + (movie.watched ? classes.overlay : '')
+            }
             component="img"
             alt={movie.title}
             image={movie.thumbnail}
@@ -83,12 +83,16 @@ const MovieCard = ({ movie }) => {
             )}
             <Typography
               color={movie.watched ? 'textSecondary' : 'textPrimary'}
+              component="h2"
               variant="h6"
-              className={classes.title}>
+              className={classes.title}
+            >
               {movie.title}
             </Typography>
             <Box justifyContent="space-between" display="flex">
-              <Typography color="textSecondary">IMDb {movie.imdbRating}</Typography>
+              <Typography color="textSecondary">
+                IMDb {movie.imdbRating}
+              </Typography>
               <Typography color="textSecondary">{movie.year}</Typography>
             </Box>
           </CardContent>

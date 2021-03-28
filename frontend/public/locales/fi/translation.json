@@ -39,7 +39,8 @@
     "google": "Kirjaudu Google-tilillä",
     "42": "Kirjaudu 42-tilillä",
     "login": "Kirjaudu",
-    "forgotPw": "Unohtuiko salasana?"
+    "forgotPw": "Unohtuiko salasana?",
+    "tryAgain": "Something went wrong. Please login again!"
   },
   "pwRecovery": {
     "title": "Palauta salasana",
@@ -62,7 +63,8 @@
     "updatePassword": "Päivitä salasana"
   },
   "profile": {
-    "title": "Profiili"
+    "title": "Profiili",
+    "imgSize": "Max photo size is 350kb"
   },
   "movie": {
     "rating": "Arvio",
@@ -70,7 +72,13 @@
     "notAvailable": "not available",
     "subtitles": "Subtitles",
     "director": "Director",
-    "cast": "Cast"
+    "cast": "Cast",
+    "noSeeds": "Video unavailable, not enough seeders. Please, come back later", 
+    "playing": "playing...",
+    "buffering": "buffering...",
+    "paused": "paused",
+    "sourceFileError": "Error with the source file",
+    "notLoadedError": "Not loaded yet, the movie will be set to start"
   },
   "filter": {
     "A-Z": "A - Z",

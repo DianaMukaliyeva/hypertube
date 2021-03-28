@@ -30,14 +30,18 @@ const Comments = ({ comments }) => {
         <List>
           {comments.map((comment) => {
             return (
-              <ListItem key={comment._id} alignItems="flex-start" className={classes.comment}>
+              <ListItem
+                key={comment._id}
+                alignItems="flex-start"
+                className={classes.comment}
+              >
                 <ListItemAvatar>
                   <Profile user={comment.user} />
                 </ListItemAvatar>
                 <ListItemText
                   primary={comment.user.username}
                   secondary={
-                    <Typography component="span" variant="body2" color="textSecondary">
+                    <Typography component="span" color="textSecondary">
                       {comment.comment}
                     </Typography>
                   }

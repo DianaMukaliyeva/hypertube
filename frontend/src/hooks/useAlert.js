@@ -3,38 +3,20 @@ import { useState } from 'react';
 const useAlert = () => {
   const [values, setValues] = useState({ show: false, severity: '', message: '' });
 
-  const showError = (message, timeout) => {
+  const showError = (message) => {
     setValues({
       show: true,
       severity: 'error',
       message,
     });
-    if (timeout) {
-      setTimeout(() => {
-        setValues({
-          show: false,
-          severity: '',
-          message: '',
-        });
-      }, timeout);
-    }
   };
 
-  const showSuccess = (message, timeout) => {
+  const showSuccess = (message) => {
     setValues({
       show: true,
       severity: 'success',
       message: message,
     });
-    if (timeout) {
-      setTimeout(() => {
-        setValues({
-          show: false,
-          severity: '',
-          message: '',
-        });
-      }, timeout);
-    }
   };
 
   const closeAlert = () => {

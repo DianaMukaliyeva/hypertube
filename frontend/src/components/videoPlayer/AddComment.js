@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -34,28 +34,34 @@ const AddComment = ({ imdbCode, setRefresh }) => {
   const [btnDisabled, setBtnDisabled] = useState(false);
   const alert = useAlert();
   const { t } = useTranslation();
+  const mountedRef = React.useRef(true);
+
+  useEffect(() => {
+    return () => (mountedRef.current = false);
+  }, []);
 
   const handleComment = async () => {
     try {
       setBtnDisabled(true);
       await movieService.createComment({ comment }, imdbCode);
+      if (mountedRef.current === false) return null;
       setComment('');
       setRefresh(true);
-      alert.showSuccess(t('comment.success'), 5000);
+      alert.showSuccess(t('comment.success'));
     } catch (err) {
-      if (err.response && err.response.data) {
+      if (err.response && err.response.data && mountedRef.current === true) {
         switch (err.response.data.statusCode) {
           case 400:
-            alert.showError(t('comment.invalidFormat'), 5000);
+            alert.showError(t('comment.invalidFormat'));
             break;
           case 401:
-            alert.showError(t('error.unauthorized'), 5000);
+            alert.showError(t('error.unauthorized'));
             break;
           case 500:
-            alert.showError(t('error.server'), 5000);
+            alert.showError(t('error.server'));
             break;
           default:
-            alert.showError(t('error.unexpected'), 5000);
+            alert.showError(t('error.unexpected'));
             break;
         }
       }
@@ -65,14 +71,15 @@ const AddComment = ({ imdbCode, setRefresh }) => {
 
   return (
     <div>
-      <Typography variant="h5" className={classes.title}>
+      <Typography component="h2" variant="h5" className={classes.title}>
         {t('comment.leaveComment')}
       </Typography>
       {alert.values.show && (
         <Alert
           className={classes.title}
           severity={alert.values.severity}
-          onClose={alert.closeAlert}>
+          onClose={alert.closeAlert}
+        >
           {alert.values.message}
         </Alert>
       )}
@@ -91,7 +98,8 @@ const AddComment = ({ imdbCode, setRefresh }) => {
         color="secondary"
         size="small"
         disabled={btnDisabled}
-        className={classes.buttonStyle}>
+        className={classes.buttonStyle}
+      >
         {t('comment.post')}
       </Button>
     </div>

@@ -88,7 +88,8 @@ const playMovie = async (req, res, next) => {
     movie = await Movie.findOne({ imdbCode });
   }
   req.serverLocation = movie.serverLocation;
-  await movieTorrentUtils.startFileStream(req, res, next);
+  req.movieSize = movie.size;
+  movieTorrentUtils.startFileStream(req, res, next);
 };
 
 // a controller to demonstrate mkv conversion

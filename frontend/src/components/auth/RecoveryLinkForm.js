@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,12 +9,12 @@ import useField from '../../hooks/useField';
 import InputField from '../common/InputField';
 import FormButton from '../common/FormButton';
 import sharedFunctions from '../../utils/sharedFunctions';
+import useAlert from '../../hooks/useAlert';
 
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Alert } from '@material-ui/lab';
 
-// TO DO: move to styles
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(6),
@@ -31,22 +31,15 @@ const useStyles = makeStyles((theme) => ({
 
 const RecoveryLinkForm = () => {
   const { t } = useTranslation();
+  const focusField = useRef();
   const email = useField('email', 'email', 'forgot-email');
-  const [alert, setAlert] = useState({
-    show: false,
-    message: '',
-    severity: '',
-  });
+  const alert = useAlert();
 
   const handleForgotPwd = async (event) => {
     event.preventDefault();
     try {
       await authService.recoveryLink(email.value);
-      setAlert({
-        show: true,
-        message: t('pwRecovery.checkEmail'),
-        severity: 'success',
-      });
+      alert.showSuccess(t('pwRecovery.checkEmail'));
     } catch (err) {
       switch (err.response.data.statusCode) {
         case 400:
@@ -55,22 +48,18 @@ const RecoveryLinkForm = () => {
           });
           break;
         case 500:
-          setAlert({
-            show: true,
-            message: t('error.server'),
-            severity: 'error',
-          });
+          alert.showError(t('error.server'));
           break;
         default:
-          setAlert({
-            show: true,
-            message: t('error.unexpected'),
-            severity: 'error',
-          });
+          alert.showError(t('error.unexpected'));
           break;
       }
     }
   };
+
+  useEffect(() => {
+    focusField.current && focusField.current.focus();
+  }, []);
 
   const classes = useStyles();
 
@@ -84,12 +73,9 @@ const RecoveryLinkForm = () => {
 
         <form className={classes.form} onSubmit={handleForgotPwd} noValidate>
           <InputField values={email} label={t('form.email')} required={true} />
-          {alert.show && (
-            <Alert
-              severity={alert.severity}
-              onClose={() => setAlert({ ...alert, show: false })}
-            >
-              {alert.message}
+          {alert.values.show && (
+            <Alert severity={alert.values.severity} onClose={alert.closeAlert}>
+              {alert.values.message}
             </Alert>
           )}
           <FormButton name={t('pwRecovery.send')} />

@@ -25,6 +25,9 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: ['Roboto', 'sans-serif'],
+    body2: {
+      fontWeight: 500,
+    },
   },
   appBar: {
     color: dark2,
@@ -107,13 +110,6 @@ const theme = createMuiTheme({
       },
       noOptions: {
         backgroundColor: dark3,
-      },
-    },
-    MuiIconButton: {
-      root: {
-        '&:hover': {
-          // backgroundColor: pink1,
-        },
       },
     },
   },

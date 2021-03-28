@@ -17,7 +17,7 @@
     "de": "Deutsch",
     "ru": "Russisch",
     "fi": "Finnisch",
-    "or": "or"
+    "or": "oder"
   },
   "formValidation": {
     "required": "Pflichtfeld",
@@ -39,7 +39,8 @@
     "google": "Anmelden mit Google",
     "42": "Anmelden mit 42",
     "login": "Anmelden",
-    "forgotPw": "Passwort vergessen?"
+    "forgotPw": "Passwort vergessen?",
+    "tryAgain": "Something went wrong. Please login again!"
   },
   "pwRecovery": {
     "title": "Passwort wiederherstellen",
@@ -62,7 +63,8 @@
     "updatePassword": "Passwort aktualisieren"
   },
   "profile": {
-    "title": "Profil"
+    "title": "Profil",
+    "imgSize": "Die maximale Bildgröße beträgt 350kb"
   },
   "movie": {
     "rating": "Bewertung",
@@ -70,7 +72,13 @@
     "notAvailable": "Nicht verfügbar",
     "subtitles": "Untertitel",
     "director": "Regisseur",
-    "cast": "Filmbesetzung"
+    "cast": "Filmbesetzung",
+    "noSeeds": "Video unavailable, not enough seeders. Please, come back later",
+    "playing": "playing...",
+    "buffering": "buffering...",
+    "paused": "paused",
+    "sourceFileError": "Error with the source file",
+    "notLoadedError": "Not loaded yet, the movie will be set to start"
   },
   "filter": {
     "A-Z": "A - Z",

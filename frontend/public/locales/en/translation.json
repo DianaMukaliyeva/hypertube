@@ -39,7 +39,8 @@
     "google": "Login with Google",
     "42": "Login with 42",
     "login": "Login",
-    "forgotPw": "Forgot password?"
+    "forgotPw": "Forgot password?",
+    "tryAgain": "Something went wrong. Please login again!"
   },
   "pwRecovery": {
     "title": "Recover password",
@@ -62,7 +63,8 @@
     "updatePassword": "Update Password"
   },
   "profile": {
-    "title": "Profile"
+    "title": "Profile",
+    "imgSize": "Max photo size is 350kb"
   },
   "movie": {
     "rating": "rating",
@@ -70,7 +72,13 @@
     "notAvailable": "not available",
     "subtitles": "Subtitles",
     "director": "Director",
-    "cast": "Cast"
+    "cast": "Cast",
+    "noSeeds": "Video unavailable, not enough seeders. Please, come back later",
+    "playing": "playing...",
+    "buffering": "buffering...",
+    "paused": "paused",
+    "sourceFileError": "Error with the source file",
+    "notLoadedError": "Not loaded yet, the movie will be set to start"
   },
   "filter": {
     "A-Z": "",

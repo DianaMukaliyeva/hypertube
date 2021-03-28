@@ -41,7 +41,11 @@ const MovieDetails = ({ movie }) => {
     <div className={classes.root}>
       {details.map((option, index) => {
         return (
-          <Typography key={`detail-${index}`} variant="subtitle1" className={classes.intro}>
+          <Typography
+            key={`detail-${index}`}
+            variant="body2"
+            className={classes.intro}
+          >
             {option.text}
           </Typography>
         );
