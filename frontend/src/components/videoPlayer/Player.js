@@ -20,33 +20,20 @@ const Player = ({ subsTracks, imdbCode }) => {
   const [error, setError] = useState(false);
 
   const onPlay = () => {
-    // if (!error) {
     setStatusPlayer(t('movie.playing'));
     movieService.setWatched(imdbCode);
-    // }
-    // else {
-    //   setStatusPlayer('');
-    // }
   };
 
   const onBuffer = () => {
-    // if (!error) {
     setStatusPlayer(t('movie.buffering'));
-    // } else {
-    //   setStatusPlayer('');
-    // }
   };
 
   const onBufferEnd = () => {
-    // if (!error) {
     setStatusPlayer(t('movie.playing'));
-    // }
   };
 
   const onPause = () => {
-    // if (!error) {
     setStatusPlayer(t('movie.paused'));
-    // }
   };
 
   const onError = (err) => {
