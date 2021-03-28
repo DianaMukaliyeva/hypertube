@@ -48,7 +48,7 @@ const VideoPlayer = (data) => {
   const isMobile = useMediaQuery('(max-width:600px)');
   const [refresh, setRefresh] = useState(false);
   const mountedRef = React.useRef(true);
-  const seedersMin = 5;
+  const seedersMin = 55;
 
   const getMovieData = async () => {
     try {
@@ -58,6 +58,7 @@ const VideoPlayer = (data) => {
       if (data.movie.seeds <= seedersMin) {
         alert.showError(t('movie.noSeeds'));
       }
+      console.log('seeds', data.movie.seeds);
       setSubsTracks(buildTracks(data.movie.imdbCode, res.subtitles, t));
       setLoading(false);
       setRefresh(false);

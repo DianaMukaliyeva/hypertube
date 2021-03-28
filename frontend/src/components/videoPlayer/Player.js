@@ -14,55 +14,50 @@ const Player = ({ subsTracks, imdbCode }) => {
   const streamUrl = process.env.REACT_APP_BACKEND_URL + `/api/movies/${imdbCode}/play/${token}`;
 
   const [statusPlayer, setStatusPlayer] = useState('');
-  // const [error, setError] = useState(false);
+  const [error, setError] = useState(false);
+  const [loadError, setLoadError] = useState(false);
 
   const handlePlay = () => {
     console.log('ONPLAY');
-    // if (!error) {
-    setStatusPlayer('PLAY');
-    movieService.setWatched(imdbCode);
-    // }
+    if (!error || !loadError) {
+      setStatusPlayer('PLAY');
+      movieService.setWatched(imdbCode);
+    }
   };
   const onBuffer = () => {
     console.log('BUFFERING');
-    // if (!error) {
-    setStatusPlayer('BUFFERING');
-    // }
+    if (!error || !loadError) {
+      setStatusPlayer('BUFFERING');
+    }
   };
   const onStart = () => {
     console.log('START');
-    // if (!error) {
-    setStatusPlayer('START');
-    // }
+    if (!error || !loadError) {
+      setStatusPlayer('START');
+    }
   };
 
-  const onError = (a) => {
-    console.log('!!!!!!!!   ERROR  !!!!!!!!!!!!!!!', a);
-    setStatusPlayer('File is not loaded');
-    playerRef.current.seekTo(0);
-    // setError(true);
+  const onError = (err) => {
+    console.log('!!!!!!!!   ERROR  !!!!!!!!!!!!!!!', err);
+    // playerRef.current.seekTo(0);
+    if (err.target.error && err.target.error.code === 3) {
+      setStatusPlayer('File corrupted');
+      setError(true);
+      playerRef.current.showPreview();
+    }
   };
-  // const onBufferEnd = (a) => {
-  //   console.log('onBufferEnd', a);
-  //   setStatusPlayer('onBufferEnd');
-  // };
-  // const onPause = (a) => {
-  //   console.log('PAUSE', a);
-  //   setStatusPlayer('PAUSE');
-  // };
 
-  // const onProgress = ({ playedSeconds, loadedSeconds }) => {
-  //   // console.log('ON PROGRESS', 'sec played', playedSeconds, 'sec loaded', loadedSeconds);
-  //   if (playedSeconds > loadedSeconds) {
-  //     console.log('NOT LOADED YET, Try earlier piece');
-  //     setStatusPlayer('NOT LOADED YET, the movie will be set to start');
-  //     console.log('ref', playerRef.current);
-  //     playerRef.current.seekTo(0);
-  //     setError(false);
-  //   }
-  //   // setSecondsPlayed(playedSeconds);
-  //   // setSecondsLoaded(loadedSeconds);
-  // };
+  const onProgress = ({ playedSeconds, loadedSeconds }) => {
+    // console.log('ON PROGRESS', 'sec played', playedSeconds, 'sec loaded', loadedSeconds);
+    if (playedSeconds > loadedSeconds && !error) {
+      console.log('NOT LOADED YET, Try earlier piece');
+      setStatusPlayer('NOT LOADED YET, the movie will be set to start');
+      // console.log('ref', playerRef.current);
+      playerRef.current.seekTo(0);
+      setLoadError(true);
+      // setError(false);
+    }
+  };
 
   return (
     <div className="player-wrapper">
@@ -79,10 +74,8 @@ const Player = ({ subsTracks, imdbCode }) => {
         playIcon={<PlayCircleFilledWhiteOutlined fontSize="large" />}
         onBuffer={onBuffer}
         onStart={onStart}
-        // onProgress={onProgress}
+        onProgress={onProgress}
         onError={onError}
-        // onBufferEnd={onBufferEnd}
-        // onPause={onPause}
         config={{
           file: {
             attributes: {
