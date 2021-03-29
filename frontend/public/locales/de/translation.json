@@ -72,7 +72,13 @@
     "notAvailable": "Nicht verfügbar",
     "subtitles": "Untertitel",
     "director": "Regisseur",
-    "cast": "Filmbesetzung"
+    "cast": "Filmbesetzung",
+    "noSeeds": "Video unavailable, not enough seeders. Please, come back later",
+    "playing": "playing...",
+    "buffering": "buffering...",
+    "paused": "paused",
+    "sourceFileError": "Error with the source file",
+    "notLoadedError": "Not loaded yet, the movie will be set to start"
   },
   "filter": {
     "A-Z": "A - Z",

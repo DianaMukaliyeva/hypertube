@@ -73,7 +73,12 @@
     "subtitles": "Subtitles",
     "director": "Director",
     "cast": "Cast",
-    "noSeeds": "Video unavailable, not enough seeders. Please, come back later"
+    "noSeeds": "Video unavailable, not enough seeders. Please, come back later", 
+    "playing": "playing...",
+    "buffering": "buffering...",
+    "paused": "paused",
+    "sourceFileError": "Error with the source file",
+    "notLoadedError": "Not loaded yet, the movie will be set to start"
   },
   "filter": {
     "A-Z": "A - Z",
