@@ -19,35 +19,34 @@ const saveFilePath = async ({ imdbCode, magnet }, serverLocation, size) => {
 };
 
 const startFileStream = (req, res) => {
+  let notLoaded = false;
   const filePath = `./movies/${req.params.imdbCode}/${req.serverLocation}`;
   const isMp4 = filePath.endsWith('mp4');
   const fileSize = fs.statSync(filePath).size;
   const { range } = req.headers;
-  const CHUNK_SIZE = 20971520; // 20 Mb
+  const CHUNK_SIZE = 20e+6; // 20 Mb
   let start = range ? Number(range.replace(/\D/g, '')) : 0;
-  let end = Math.min(start + CHUNK_SIZE, fileSize - 1);
   if (start > fileSize - 1) {
+    notLoaded = true;
     start = 0;
-    end = start;
   }
+  const end = Math.min(start + CHUNK_SIZE, fileSize - 1);
   const contentLength = end - start + 1;
-
   const headers = {
     'Content-Range': `bytes ${start}-${end}/${req.movieSize}`,
     'Accept-Ranges': 'bytes',
     'Content-Length': contentLength,
     'Content-Type': isMp4 ? 'video/mp4' : 'video/webm',
   };
-
-  res.writeHead(206, headers);
-
+  if (notLoaded) {
+    res.writeHead(200, headers);
+  } else {
+    res.writeHead(206, headers);
+  }
   const readStream = fs.createReadStream(filePath, { start, end });
   if (isMp4) readStream.pipe(res);
   else {
-    ffmpeg(readStream)
-      .format('webm')
-      .on('error', () => {})
-      .pipe(res);
+    ffmpeg(readStream).format('webm').on('error', () => {}).pipe(res);
   }
 };
 
