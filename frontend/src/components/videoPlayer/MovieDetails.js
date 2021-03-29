@@ -30,7 +30,7 @@ const MovieDetails = ({ movie }) => {
     { text: movie.cast ? `${t('movie.cast')}: ${movie.cast}` : '' },
     {
       text: `${t('movie.subtitles')}: ${
-        movie.subtitles.length > 0
+        movie.subtitles && movie.subtitles.length > 0
           ? movie.subtitles.map((s) => t(`form.${s}`)).join(', ')
           : t('movie.notAvailable')
       }`,
