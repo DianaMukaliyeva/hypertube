@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch, useLocation, useHistory } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useLocation,
+  useHistory,
+} from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
@@ -76,14 +82,18 @@ function App() {
           <Box mt={10}>
             <Route exact path="/">
               {user.userId ? (
-                <Hypertube clearFilter={clearFilter} user={user} setUser={setUser} />
+                <Hypertube
+                  clearFilter={clearFilter}
+                  user={user}
+                  setUser={setUser}
+                />
               ) : (
                 <Landing setUser={setUser} alert={alert} />
               )}
             </Route>
             <Switch>
               <Route path="/recoverylink">
-                <Landing user={user} setUser={setUser} />
+                <Landing setUser={setUser} alert={alert} />
               </Route>
             </Switch>
           </Box>

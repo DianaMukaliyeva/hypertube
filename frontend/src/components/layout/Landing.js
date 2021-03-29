@@ -123,7 +123,12 @@ const Landing = ({ setUser, alert }) => {
   return (
     <div>
       {isMobile ? (
-        <Typography variant="h3" className={classes.titleMobile} align="center">
+        <Typography
+          component="h1"
+          variant="h3"
+          className={classes.titleMobile}
+          align="center"
+        >
           HYPERTUBE
         </Typography>
       ) : (
@@ -192,8 +197,8 @@ const Landing = ({ setUser, alert }) => {
 };
 
 Landing.propTypes = {
-  setUser: PropTypes.func,
-  alert: PropTypes.object,
+  setUser: PropTypes.func.isRequired,
+  alert: PropTypes.object.isRequired,
 };
 
 export default Landing;

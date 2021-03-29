@@ -71,7 +71,7 @@ const AddComment = ({ imdbCode, setRefresh }) => {
 
   return (
     <div>
-      <Typography variant="h5" className={classes.title}>
+      <Typography component="h2" variant="h5" className={classes.title}>
         {t('comment.leaveComment')}
       </Typography>
       {alert.values.show && (

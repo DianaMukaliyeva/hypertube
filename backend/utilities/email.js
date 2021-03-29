@@ -34,38 +34,50 @@ const sendMail = (recipient, subject, content) => {
 
 const translations = (lang, name) => {
   switch (lang) {
-    case ('fi'): return {
-      subject: 'HYPERTUBE salasanan vaihto',
-      title: `Hei, ${name.charAt(0).toUpperCase() + name.slice(1)}! Saimme pyynnön vaihtaa salasanasi.`,
-      info: 'Jos haluat vaihtaa salasanan, klikkaa linkkiä.',
-      link: 'Vaihda salasana',
-      thanks: 'Kiitos, että käytät Hypertubea!',
-      team: 'Hypertube-tiimi',
-    };
-    case ('ru'): return {
-      subject: 'HYPERTUBE password reset',
-      title: `Hi, ${name.charAt(0).toUpperCase() + name.slice(1)}! You have submitted a password change request.`,
-      info: 'If it was you, to change your Hypertube password click the link below.',
-      link: 'Reset my password',
-      thanks: 'Thank you for using Hypertube',
-      team: 'Hypertube team',
-    };
-    case ('de'): return {
-      subject: 'HYPERTUBE password reset',
-      title: `Hi, ${name.charAt(0).toUpperCase() + name.slice(1)}! You have submitted a password change request.`,
-      info: 'If it was you, to change your Hypertube password click the link below.',
-      link: 'Reset my password',
-      thanks: 'Thank you for using Hypertube',
-      team: 'Hypertube team',
-    };
-    default: return {
-      subject: 'HYPERTUBE password reset',
-      title: `Hi, ${name.charAt(0).toUpperCase() + name.slice(1)}! You have submitted a password change request.`,
-      info: 'If it was you, to change your Hypertube password click the link below.',
-      link: 'Reset my password',
-      thanks: 'Thank you for using Hypertube',
-      team: 'Hypertube team',
-    };
+    case 'fi':
+      return {
+        subject: 'HYPERTUBE salasanan vaihto',
+        title: `Hei, ${
+          name.charAt(0).toUpperCase() + name.slice(1)
+        }! Saimme pyynnön vaihtaa salasanasi.`,
+        info: 'Jos haluat vaihtaa salasanan, klikkaa linkkiä.',
+        link: 'Vaihda salasana',
+        thanks: 'Kiitos, että käytät Hypertubea!',
+        team: 'Hypertube-tiimi',
+      };
+    case 'ru':
+      return {
+        subject: 'HYPERTUBE восстановление пароля',
+        title: `Здравствуйте, ${
+          name.charAt(0).toUpperCase() + name.slice(1)
+        }! Вы отправили запрос на восстановление пароля.`,
+        info: 'Если это были вы, для ввода нового пароля Hypertube, перейдите по ссылке.',
+        link: 'Изменить пароль',
+        thanks: 'Спасибо за использование сервиса Hypertube!',
+        team: 'Команда Hypertube',
+      };
+    case 'de':
+      return {
+        subject: 'HYPERTUBE password reset',
+        title: `Hallo, ${
+          name.charAt(0).toUpperCase() + name.slice(1)
+        }! Sie haben erfolgreich Ihr Passwort zurückgesetzt.`,
+        info: 'Bitte klicken Sie den unten angegebenen Link, um Ihr Passwort zu ändern.',
+        link: 'Passwort zurücksetzen',
+        thanks: 'Vielen Dank für die Nutzung von Hypertube',
+        team: 'Ihr Hypertube Team',
+      };
+    default:
+      return {
+        subject: 'HYPERTUBE password reset',
+        title: `Hi, ${
+          name.charAt(0).toUpperCase() + name.slice(1)
+        }! You have submitted a password change request.`,
+        info: 'If it was you, to change your Hypertube password click the link below.',
+        link: 'Reset my password',
+        thanks: 'Thank you for using Hypertube',
+        team: 'Hypertube team',
+      };
   }
 };
 
