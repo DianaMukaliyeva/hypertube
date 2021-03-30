@@ -20,15 +20,9 @@ const Player = ({ subsTracks, imdbCode }) => {
 
   const [statusPlayer, setStatusPlayer] = useState('');
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const onClickPreview = () => {
-    setLoading(true);
     setStatusPlayer(t('movie.buffering'));
-  };
-
-  const onReady = () => {
-    setLoading(false);
   };
 
   const onPlay = () => {
@@ -74,7 +68,7 @@ const Player = ({ subsTracks, imdbCode }) => {
         className="react-player"
         ref={playerRef}
         playing={true}
-        controls={!loading}
+        controls={statusPlayer !== t('movie.buffering')}
         pip={false}
         url={streamUrl}
         onPlay={onPlay}
@@ -86,7 +80,6 @@ const Player = ({ subsTracks, imdbCode }) => {
         onError={onError}
         onPause={onPause}
         onBufferEnd={onBufferEnd}
-        onReady={onReady}
         onClickPreview={onClickPreview}
         config={{
           file: {
@@ -106,7 +99,7 @@ const Player = ({ subsTracks, imdbCode }) => {
           {statusPlayer}
         </Typography>
       </div>
-      {loading && <LinearProgress />}
+      {statusPlayer === t('movie.buffering') && <LinearProgress />}
     </div>
   );
 };
