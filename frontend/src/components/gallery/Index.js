@@ -93,6 +93,7 @@ const Gallery = ({ setUser, clearFilter }) => {
               <MovieCard key={index} movie={movie} />
             ))}
           </Grid>
+          <Box p={3}></Box>
         </InfiniteScroll>
       )}
     </div>
