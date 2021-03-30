@@ -1,10 +1,7 @@
-import path from 'path';
 import fs from 'fs';
 import torrentStream from 'torrent-stream';
 import ffmpeg from 'fluent-ffmpeg';
-import {
-  Worker, isMainThread, parentPort,
-} from 'worker_threads';
+import { Worker } from 'worker_threads';
 
 import movieListUtils from './movieAPIUtilities.js';
 import Movie from '../models/Movie.js';
@@ -62,7 +59,7 @@ const getMagnet = async (imdbCode) => {
 const conversionService = (movie) => {
   const { serverLocation, imdbCode } = movie;
   const worker = new Worker('./utilities/convert.js', { workerData: { serverLocation, imdbCode } });
-  worker.on('error', (error) => console.log(error));
+  worker.on('error', () => {});
 };
 
 const setMovieAsCompleted = async (imdbCode) => {
