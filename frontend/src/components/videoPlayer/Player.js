@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -13,11 +14,22 @@ const Player = ({ subsTracks, imdbCode }) => {
   const token = localStorage.getItem('token');
   const { t } = useTranslation();
   const playerRef = useRef(null);
-  // eslint-disable-next-line no-undef
-  const streamUrl = process.env.REACT_APP_BACKEND_URL + `/api/movies/${imdbCode}/play/${token}`;
+  const streamUrl =
+    // eslint-disable-next-line no-undef
+    process.env.REACT_APP_BACKEND_URL + `/api/movies/${imdbCode}/play/${token}`;
 
   const [statusPlayer, setStatusPlayer] = useState('');
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const onClickPreview = () => {
+    setLoading(true);
+    setStatusPlayer(t('movie.buffering'));
+  };
+
+  const onReady = () => {
+    setLoading(false);
+  };
 
   const onPlay = () => {
     setStatusPlayer(t('movie.playing'));
@@ -39,7 +51,9 @@ const Player = ({ subsTracks, imdbCode }) => {
   const onError = (err) => {
     if (
       err.target.error &&
-      (err.target.error.code === 3 || err.target.error.code === 4 || err.target.error.code === 1)
+      (err.target.error.code === 3 ||
+        err.target.error.code === 4 ||
+        err.target.error.code === 1)
     ) {
       setStatusPlayer(t('movie.sourceFileError'));
       setError(true);
@@ -59,8 +73,8 @@ const Player = ({ subsTracks, imdbCode }) => {
       <ReactPlayer
         className="react-player"
         ref={playerRef}
-        playing={false}
-        controls={true}
+        playing={true}
+        controls={!loading}
         pip={false}
         url={streamUrl}
         onPlay={onPlay}
@@ -72,6 +86,8 @@ const Player = ({ subsTracks, imdbCode }) => {
         onError={onError}
         onPause={onPause}
         onBufferEnd={onBufferEnd}
+        onReady={onReady}
+        onClickPreview={onClickPreview}
         config={{
           file: {
             attributes: {
@@ -81,11 +97,16 @@ const Player = ({ subsTracks, imdbCode }) => {
           },
         }}
       />
+
       <div>
-        <Typography variant="body2" style={{ color: '#707281', fontStyle: 'italic' }}>
+        <Typography
+          variant="body2"
+          style={{ color: '#707281', fontStyle: 'italic' }}
+        >
           {statusPlayer}
         </Typography>
       </div>
+      {loading && <LinearProgress />}
     </div>
   );
 };
