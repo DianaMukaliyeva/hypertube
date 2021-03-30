@@ -82,7 +82,6 @@ const playMovie = async (req, res, next) => {
     if (!movie) {
       movie = { imdbCode };
     }
-
     if (!movie.magnet) movie.magnet = await movieTorrentUtils.getMagnet(imdbCode);
     await movieTorrentUtils.downloadMovie(movie, downloadCache);
     movie = await Movie.findOne({ imdbCode });

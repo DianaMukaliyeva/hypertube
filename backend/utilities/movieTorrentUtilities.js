@@ -1,6 +1,10 @@
+import path from 'path';
 import fs from 'fs';
 import torrentStream from 'torrent-stream';
 import ffmpeg from 'fluent-ffmpeg';
+import {
+  Worker, isMainThread, parentPort,
+} from 'worker_threads';
 
 import movieListUtils from './movieAPIUtilities.js';
 import Movie from '../models/Movie.js';
@@ -31,11 +35,9 @@ const startFileStream = (req, res) => {
     start = 0;
   }
   const end = Math.min(start + CHUNK_SIZE, fileSize - 1);
-  const contentLength = end - start + 1;
   const headers = {
     'Content-Range': `bytes ${start}-${end}/${req.movieSize}`,
     'Accept-Ranges': 'bytes',
-    'Content-Length': contentLength,
     'Content-Type': isMp4 ? 'video/mp4' : 'video/webm',
   };
   if (notLoaded) {
@@ -57,20 +59,10 @@ const getMagnet = async (imdbCode) => {
   return `magnet:?xt=urn:btih:${hash}&dn=${torrentData.title_long.split(' ').join('+')}`;
 };
 
-// not in use as it is way too slow
-const convertMovieToMp4 = (movie) => {
-  const { imdbCode } = movie;
-  const moviePath = `./movies/${imdbCode}/${movie.serverLocation}`;
-  // eslint-disable-next-line
-  const savePath = path.parse(movie.serverLocation);
-  const fileLocation = `${savePath.dir}/${savePath.name}.mp4`;
-  ffmpeg(moviePath)
-    .format('mp4')
-    .on('end', async () => {
-      Movie.findOneAndUpdate({ imdbCode }, { serverLocation: fileLocation });
-    })
-    .on('error', () => {})
-    .save(`./movies/${imdbCode}/${fileLocation}`);
+const conversionService = (movie) => {
+  const { serverLocation, imdbCode } = movie;
+  const worker = new Worker('./utilities/convert.js', { workerData: { serverLocation, imdbCode } });
+  worker.on('error', (error) => console.log(error));
 };
 
 const setMovieAsCompleted = async (imdbCode) => {
@@ -79,8 +71,9 @@ const setMovieAsCompleted = async (imdbCode) => {
     { downloadComplete: true },
     { new: true },
   );
+
   // we could convert the completed file in the background but it is very cpu intensive
-  if (movie.serverLocation.endsWith('.mkv')) convertMovieToMp4(movie);
+  if (movie.serverLocation.endsWith('.mkv')) conversionService(movie);
 };
 
 const downloadMovie = async (movie, downloadCache) => new Promise((resolve) => {
@@ -117,7 +110,6 @@ const downloadMovie = async (movie, downloadCache) => new Promise((resolve) => {
     if (
       fs.existsSync(moviePath)
         && !downloadCache.has(movie.imdbCode)
-        && !filePath.endsWith('.mkv')
     ) {
       if (fs.statSync(moviePath).size / (1024 * 1024) > 20) {
         downloadCache.set(movie.imdbCode, 'downloading');
@@ -129,9 +121,6 @@ const downloadMovie = async (movie, downloadCache) => new Promise((resolve) => {
   engine.on('idle', () => {
     setMovieAsCompleted(movie.imdbCode);
     downloadCache.del(movie.imdbCode);
-    if (filePath.endsWith('.mkv')) {
-      resolve();
-    }
     engine.destroy();
   });
 });
