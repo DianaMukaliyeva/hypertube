@@ -73,7 +73,7 @@
     "subtitles": "Subtitles",
     "director": "Director",
     "cast": "Cast",
-    "noSeeds": "Video unavailable, not enough seeders. Please, come back later", 
+    "noSeeds": "Video unavailable, not enough seeders. Please, come back later",
     "playing": "playing...",
     "buffering": "buffering...",
     "paused": "paused",
@@ -121,7 +121,8 @@
   "error": {
     "unauthorized": "Sisältö vaatii kirjautumisen",
     "server": "Palvelinvirhe",
-    "unexpected": "Odottamaton virhe"
+    "unexpected": "Odottamaton virhe",
+    "notFound": "Movie not found"
   },
   "comment": {
     "invalidFormat": "Wrong format",
