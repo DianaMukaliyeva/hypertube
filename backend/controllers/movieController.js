@@ -106,9 +106,9 @@ const streamMkv = async (req, res, next) => {
   req.params = { imdbCode };
   await playMovie(req, res, next);
 
-  // to test: comment line 107
-  // replace the .mkv file in MKV_STREAM with a smaller .mkv file and
-  // go straight to conversion by uncommenting the following
+  // to test: comment line 107 to not go to the movie route
+  // replace the .mkv file in MKV_SAMPLE/{dir}/{filename}.mkv with a smaller .mkv file of the same
+  // name and go start conversion from this endpoint by uncommenting the following
   // movieTorrentUtils.conversionService(movie);
 };
 
