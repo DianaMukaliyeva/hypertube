@@ -11,6 +11,7 @@ ffmpeg(moviePath)
   .on('end', async () => {
     parentPort.postMessage(fileLocation);
   })
+  .videoBitrate(1000)
   .on('error', () => {})
   .on('progress', (progress) => {
     console.log(`Processing: ${progress.percent}% done`);
