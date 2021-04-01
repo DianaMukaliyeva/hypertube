@@ -65,7 +65,7 @@ const getParsedInfo = (res) => {
       Title: movie.title || '',
       imdbRating: movie.rating || '',
       Year: movie.year || '',
-      Genre: movie.genres.join(', '),
+      Genre: movie.genres && movie.genres.join(', '),
       Plot: movie.description_full || '',
       Runtime: '',
       Director: '',
