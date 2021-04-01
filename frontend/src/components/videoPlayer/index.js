@@ -59,13 +59,15 @@ const VideoPlayer = (data) => {
         alert.showError(t('movie.noSeeds'));
       }
       setSubsTracks(buildTracks(data.movie.imdbCode, res.subtitles, t));
-      setLoading(false);
       setRefresh(false);
     } catch (err) {
       if (err.response && err.response.data) {
         switch (err.response.data.statusCode) {
           case 401:
             alert.showError(t('error.unauthorized'));
+            break;
+          case 404:
+            alert.showError(t('error.notFound'));
             break;
           case 500:
             alert.showError(t('error.server'));
@@ -76,6 +78,7 @@ const VideoPlayer = (data) => {
         }
       }
     }
+    setLoading(false);
   };
 
   useEffect(() => {

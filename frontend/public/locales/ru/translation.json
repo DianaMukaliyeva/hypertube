@@ -40,7 +40,7 @@
     "42": "Войти через 42",
     "login": "Войти",
     "forgotPw": "Не помню пароль",
-    "tryAgain": "Something went wrong. Please login again!"
+    "tryAgain": "Что-то пошло не так. Пожалуйста, повторите попытку!"
   },
   "pwRecovery": {
     "title": "Восстановить пароль",
@@ -73,7 +73,7 @@
     "subtitles": "Субтитры",
     "director": "Режиссер",
     "cast": "В ролях",
-    "noSeeds": "Видео недоступно, недостаточно seeders. Повторите попытку позже", 
+    "noSeeds": "Видео недоступно, недостаточно seeders. Повторите попытку позже",
     "playing": "проигрывается...",
     "buffering": "загрузка...",
     "paused": "пауза",
@@ -121,7 +121,8 @@
   "error": {
     "unauthorized": "Требуется авторизация",
     "server": "Ошибка сервера",
-    "unexpected": "Ошибка"
+    "unexpected": "Ошибка",
+    "notFound": "Фильм не найден"
   },
   "comment": {
     "invalidFormat": "Неверный формат",

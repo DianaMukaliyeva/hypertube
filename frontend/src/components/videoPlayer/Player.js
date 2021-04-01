@@ -44,6 +44,7 @@ const Player = ({ subsTracks, imdbCode }) => {
 
   const onError = (err) => {
     if (
+      err && err.target &&
       err.target.error &&
       (err.target.error.code === 3 ||
         err.target.error.code === 4 ||
