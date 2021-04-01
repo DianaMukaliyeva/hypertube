@@ -1,12 +1,9 @@
 import fs from 'fs';
 import torrentStream from 'torrent-stream';
 import ffmpeg from 'fluent-ffmpeg';
-import NodeCache from 'node-cache';
 
 import movieListUtils from './movieAPIUtilities.js';
 import Movie from '../models/Movie.js';
-
-const conversionCache = new NodeCache({ checkPeriod: 0 });
 
 const saveFilePath = async ({ imdbCode, magnet }, serverLocation, size) => {
   const movie = await Movie.findOneAndUpdate({ imdbCode }, { serverLocation, size });
@@ -33,7 +30,7 @@ const startFileStream = (req, res) => {
     notLoaded = true;
     start = 0;
   }
-  const end = Math.min(start + CHUNK_SIZE, fileSize - 1);
+  const end = isMp4 ? Math.min(start + CHUNK_SIZE, fileSize - 1) : fileSize - 1;
   const headers = {
     'Content-Range': `bytes ${start}-${end}/${req.movieSize}`,
     'Accept-Ranges': 'bytes',
