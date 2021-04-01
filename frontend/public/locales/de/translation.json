@@ -121,7 +121,8 @@
   "error": {
     "unauthorized": "Unbefugt",
     "server": "Der Server ist nich verfügbar",
-    "unexpected": "Unerwarteter Fehler"
+    "unexpected": "Unerwarteter Fehler",
+    "notFound": "Movie not found"
   },
   "comment": {
     "invalidFormat": "Falsches Format",

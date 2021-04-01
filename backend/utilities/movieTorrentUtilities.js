@@ -30,7 +30,7 @@ const startFileStream = (req, res) => {
     notLoaded = true;
     start = 0;
   }
-  const end = Math.min(start + CHUNK_SIZE, fileSize - 1);
+  const end = isMp4 ? Math.min(start + CHUNK_SIZE, fileSize - 1) : fileSize - 1;
   const contentLength = end - start + 1;
   const headers = {
     'Content-Range': `bytes ${start}-${end}/${req.movieSize}`,
@@ -57,30 +57,12 @@ const getMagnet = async (imdbCode) => {
   return `magnet:?xt=urn:btih:${hash}&dn=${torrentData.title_long.split(' ').join('+')}`;
 };
 
-// not in use as it is way too slow
-const convertMovieToMp4 = (movie) => {
-  const { imdbCode } = movie;
-  const moviePath = `./movies/${imdbCode}/${movie.serverLocation}`;
-  // eslint-disable-next-line
-  const savePath = path.parse(movie.serverLocation);
-  const fileLocation = `${savePath.dir}/${savePath.name}.mp4`;
-  ffmpeg(moviePath)
-    .format('mp4')
-    .on('end', async () => {
-      Movie.findOneAndUpdate({ imdbCode }, { serverLocation: fileLocation });
-    })
-    .on('error', () => {})
-    .save(`./movies/${imdbCode}/${fileLocation}`);
-};
-
 const setMovieAsCompleted = async (imdbCode) => {
-  const movie = await Movie.findOneAndUpdate(
+  await Movie.findOneAndUpdate(
     { imdbCode },
     { downloadComplete: true },
     { new: true },
   );
-  // we could convert the completed file in the background but it is very cpu intensive
-  if (movie.serverLocation.endsWith('.mkv')) convertMovieToMp4(movie);
 };
 
 const downloadMovie = async (movie, downloadCache) => new Promise((resolve) => {
@@ -117,7 +99,6 @@ const downloadMovie = async (movie, downloadCache) => new Promise((resolve) => {
     if (
       fs.existsSync(moviePath)
         && !downloadCache.has(movie.imdbCode)
-        && !filePath.endsWith('.mkv')
     ) {
       if (fs.statSync(moviePath).size / (1024 * 1024) > 20) {
         downloadCache.set(movie.imdbCode, 'downloading');
@@ -129,9 +110,6 @@ const downloadMovie = async (movie, downloadCache) => new Promise((resolve) => {
   engine.on('idle', () => {
     setMovieAsCompleted(movie.imdbCode);
     downloadCache.del(movie.imdbCode);
-    if (filePath.endsWith('.mkv')) {
-      resolve();
-    }
     engine.destroy();
   });
 });

@@ -58,22 +58,46 @@ const fetchTorrentData = async (imdbCode) => {
   return movieData;
 };
 
+const getParsedInfo = (res) => {
+  if (res && res.data && res.data.data && res.data.data.movies && res.data.data.movies[0]) {
+    const movie = res.data.data.movies[0];
+    return {
+      Title: movie.title || '',
+      imdbRating: movie.rating || '',
+      Year: movie.year || '',
+      Genre: movie.genres && movie.genres.join(', '),
+      Plot: movie.description_full || '',
+      Runtime: '',
+      Director: '',
+      Actors: '',
+    };
+  }
+  throw notFoundError();
+};
+
 const fetchMovieInfo = async (imdbCode) => {
-  const res = await axios.get(`http://www.omdbapi.com/?i=${imdbCode}&apikey=${OMDB_KEY}`);
-  const movieData = res.data;
-  if (res.status !== 200 || movieData.Response === 'False') throw notFoundError(); // omdbapi is not very restful
+  let movieData;
+  let res;
+  try {
+    res = await axios.get(`http://www.omdbapi.com/?i=${imdbCode}&apikey=${OMDB_KEY}`);
+    movieData = res.data;
+    if (res.status !== 200 || movieData.Response === 'False') throw notFoundError();
+  } catch (e) {
+    res = await axios.get(`${TORRENT_API}?query_term=${imdbCode}`);
+    movieData = getParsedInfo(res);
+  }
   return movieData;
 };
 
 const parseMovieResponse = (movieInfo, comments, subtitles) => ({
-  title: movieInfo.Title,
-  imdbRating: movieInfo.imdbRating,
-  year: movieInfo.Year,
-  genre: movieInfo.Genre,
-  description: movieInfo.Plot,
+  title: movieInfo.Title || '',
+  imdbRating: movieInfo.imdbRating || '',
+  year: movieInfo.Year || '',
+  genre: movieInfo.Genre || '',
+  description: movieInfo.Plot || '',
   length: parseInt(movieInfo.Runtime, 10),
-  director: movieInfo.Director,
-  cast: movieInfo.Actors,
+  director: movieInfo.Director || '',
+  cast: movieInfo.Actors || '',
   comments,
   subtitles,
 });

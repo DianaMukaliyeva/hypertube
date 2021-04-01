@@ -13,7 +13,7 @@ const OmniAuthLogin = () => {
       const data = await authService.googleUrl();
       window.location = data.url;
     } catch (e) {
-      console.log(e);
+      console.log();
     }
   };
 
@@ -22,7 +22,7 @@ const OmniAuthLogin = () => {
       const data = await authService.fortytwoUrl();
       window.location = data.url;
     } catch (e) {
-      console.log(e);
+      console.log();
     }
   };
 

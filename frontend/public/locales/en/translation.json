@@ -121,7 +121,8 @@
   "error": {
     "unauthorized": "Unauthorized",
     "server": "Server error",
-    "unexpected": "Unexpected error"
+    "unexpected": "Unexpected error",
+    "notFound": "Movie not found"
   },
   "comment": {
     "invalidFormat": "Wrong format",

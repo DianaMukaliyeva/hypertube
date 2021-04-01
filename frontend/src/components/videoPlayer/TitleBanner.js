@@ -37,7 +37,7 @@ const TitleBanner = ({ movie }) => {
         {movie.title}
       </Typography>
       <Box mt={3} display="flex" flexDirection={isMobile ? 'column' : 'row'}>
-        {movie.imdbRating && (
+        {movie.imdbRating >= 0 && (
           <Typography variant="body2" className={classes.imdb}>
             IMDb {movie.imdbRating}
           </Typography>
@@ -48,9 +48,7 @@ const TitleBanner = ({ movie }) => {
         <Typography variant="body2" className={classes.year}>
           {movie.year}
         </Typography>
-        {movie.length && (
-          <Typography variant="body2">{movie.length} min</Typography>
-        )}
+        {movie.length && <Typography variant="body2">{movie.length} min</Typography>}
       </Box>
       <Typography variant="body1" className={classes.description}>
         {movie.description}
