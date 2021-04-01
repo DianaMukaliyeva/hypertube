@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactPlayer from 'react-player/lazy';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import PropTypes from 'prop-types';
@@ -20,9 +20,15 @@ const Player = ({ subsTracks, imdbCode }) => {
 
   const [statusPlayer, setStatusPlayer] = useState('');
   const [error, setError] = useState(false);
+  const buffering = useRef(false);
 
   const onClickPreview = () => {
     setStatusPlayer(t('movie.buffering'));
+    buffering.current = true;
+  };
+
+  const onReady = () => {
+    buffering.current = false;
   };
 
   const onPlay = () => {
@@ -32,10 +38,12 @@ const Player = ({ subsTracks, imdbCode }) => {
 
   const onBuffer = () => {
     setStatusPlayer(t('movie.buffering'));
+    buffering.current = true;
   };
 
   const onBufferEnd = () => {
     setStatusPlayer(t('movie.playing'));
+    buffering.current = false;
   };
 
   const onPause = () => {
@@ -63,13 +71,19 @@ const Player = ({ subsTracks, imdbCode }) => {
     }
   };
 
+  useEffect(() => {
+    return () => {
+      if (buffering.current === true) window.location.reload();
+    };
+  }, []);
+
   return (
     <div className="player-wrapper">
       <ReactPlayer
         className="react-player"
         ref={playerRef}
         playing={true}
-        controls={statusPlayer !== t('movie.buffering')}
+        controls={buffering.current === false}
         pip={false}
         url={streamUrl}
         onPlay={onPlay}
@@ -80,6 +94,7 @@ const Player = ({ subsTracks, imdbCode }) => {
         onProgress={onProgress}
         onError={onError}
         onPause={onPause}
+        onReady={onReady}
         onBufferEnd={onBufferEnd}
         onClickPreview={onClickPreview}
         config={{
@@ -100,7 +115,7 @@ const Player = ({ subsTracks, imdbCode }) => {
           {statusPlayer}
         </Typography>
       </div>
-      {statusPlayer === t('movie.buffering') && <LinearProgress />}
+      {buffering.current === true && <LinearProgress />}
     </div>
   );
 };
