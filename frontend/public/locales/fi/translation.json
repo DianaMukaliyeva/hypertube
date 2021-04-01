@@ -64,7 +64,8 @@
   },
   "profile": {
     "title": "Profiili",
-    "imgSize": "Kuvan maksimikoko on 350kb"
+    "imgSize": "Kuvan maksimikoko on 350kb",
+    "notImage": "Vain jpg/jpeg/png/gif sallittu"
   },
   "movie": {
     "rating": "Arvio",
