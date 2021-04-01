@@ -1,7 +1,6 @@
 import fs from 'fs';
 import torrentStream from 'torrent-stream';
 import ffmpeg from 'fluent-ffmpeg';
-import { Worker } from 'worker_threads';
 import NodeCache from 'node-cache';
 
 import movieListUtils from './movieAPIUtilities.js';
@@ -59,31 +58,12 @@ const getMagnet = async (imdbCode) => {
   return `magnet:?xt=urn:btih:${hash}&dn=${torrentData.title_long.split(' ').join('+')}`;
 };
 
-const changeMovieLocation = async (imdbCode, serverLocation) => {
-  const { size } = fs.statSync(`./movies/${imdbCode}/${serverLocation}`);
-  await Movie.findOneAndUpdate({ imdbCode }, { serverLocation, size });
-};
-
-const conversionService = (movie) => {
-  const { serverLocation, imdbCode } = movie;
-  if (conversionCache.has(imdbCode)) return;
-  conversionCache.set(imdbCode, 'processing');
-  const worker = new Worker('./utilities/convert.js', { workerData: { serverLocation, imdbCode } });
-  worker.on('message', (newLocation) => {
-    changeMovieLocation(imdbCode, newLocation);
-    conversionCache.del(imdbCode);
-  });
-  worker.on('error', () => {});
-};
-
 const setMovieAsCompleted = async (imdbCode) => {
-  const movie = await Movie.findOneAndUpdate(
+  await Movie.findOneAndUpdate(
     { imdbCode },
     { downloadComplete: true },
     { new: true },
   );
-  // we could convert the completed file in the background but it is very cpu intensive
-  if (movie.serverLocation.endsWith('.mkv')) conversionService(movie);
 };
 
 const downloadMovie = async (movie, downloadCache) => new Promise((resolve) => {
@@ -139,6 +119,4 @@ export default {
   downloadMovie,
   startFileStream,
   getMagnet,
-  // todo: delete this on final version
-  conversionService,
 };
