@@ -31,9 +31,11 @@ const startFileStream = (req, res) => {
     start = 0;
   }
   const end = isMp4 ? Math.min(start + CHUNK_SIZE, fileSize - 1) : fileSize - 1;
+  const contentLength = end - start + 1;
   const headers = {
     'Content-Range': `bytes ${start}-${end}/${req.movieSize}`,
     'Accept-Ranges': 'bytes',
+    'Content-Length': contentLength,
     'Content-Type': isMp4 ? 'video/mp4' : 'video/webm',
   };
   if (notLoaded) {
