@@ -1,9 +1,10 @@
 import NodeCache from 'node-cache';
-import movieListUtils from '../utilities/movieAPIUtilities.js';
-import subtitlesUtils from '../utilities/subtitlesAPI.js';
-import movieTorrentUtils from '../utilities/movieTorrentUtilities.js';
-import Movie from '../models/Movie.js';
+
 import User from '../models/User.js';
+import Movie from '../models/Movie.js';
+import movieListUtils from '../utilities/movieAPI.js';
+import subtitlesUtils from '../utilities/subtitlesAPI.js';
+import movieTorrentUtils from '../utilities/movieTorrent.js';
 import { detailedError } from '../utilities/errors.js';
 
 const downloadCache = new NodeCache({ checkPeriod: 0 });

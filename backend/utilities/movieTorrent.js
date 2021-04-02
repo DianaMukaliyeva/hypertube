@@ -2,7 +2,7 @@ import fs from 'fs';
 import torrentStream from 'torrent-stream';
 import ffmpeg from 'fluent-ffmpeg';
 
-import movieListUtils from './movieAPIUtilities.js';
+import movieListUtils from './movieAPI.js';
 import Movie from '../models/Movie.js';
 
 const saveFilePath = async ({ imdbCode, magnet }, serverLocation, size) => {
