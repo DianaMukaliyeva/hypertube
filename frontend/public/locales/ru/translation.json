@@ -64,7 +64,8 @@
   },
   "profile": {
     "title": "Профиль",
-    "imgSize": "Макс. размер 350 кб"
+    "imgSize": "Макс. размер 350 кб",
+    "notImage": "Только jpg/jpeg/png/gif формат"
   },
   "movie": {
     "rating": "рейтинг",

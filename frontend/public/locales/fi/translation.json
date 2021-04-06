@@ -17,7 +17,7 @@
     "de": "Saksa",
     "ru": "Venäjä",
     "fi": "Suomi",
-    "or": "or"
+    "or": "tai"
   },
   "formValidation": {
     "required": "Pakollinen kenttä",
@@ -40,7 +40,7 @@
     "42": "Kirjaudu 42-tilillä",
     "login": "Kirjaudu",
     "forgotPw": "Unohtuiko salasana?",
-    "tryAgain": "Something went wrong. Please login again!"
+    "tryAgain": "Jokin meni pieleen. Yritä uudestaan!"
   },
   "pwRecovery": {
     "title": "Palauta salasana",
@@ -64,21 +64,22 @@
   },
   "profile": {
     "title": "Profiili",
-    "imgSize": "Max photo size is 350kb"
+    "imgSize": "Kuvan maksimikoko on 350kb",
+    "notImage": "Vain jpg/jpeg/png/gif sallittu"
   },
   "movie": {
     "rating": "Arvio",
     "watched": "Nähty",
-    "notAvailable": "not available",
-    "subtitles": "Subtitles",
-    "director": "Director",
-    "cast": "Cast",
-    "noSeeds": "Video unavailable, not enough seeders. Please, come back later",
-    "playing": "playing...",
-    "buffering": "buffering...",
-    "paused": "paused",
-    "sourceFileError": "Error with the source file",
-    "notLoadedError": "Not loaded yet, the movie will be set to start"
+    "notAvailable": "Ei saatavilla",
+    "subtitles": "Tekstitys",
+    "director": "Ohjaaja",
+    "cast": "Näyttelijät",
+    "noSeeds": "Videoa ei jaeta juuri nyt riittävästi. Yritä myöhemmin uudestaan!",
+    "playing": "toistetaan...",
+    "buffering": "ladataan...",
+    "paused": "tauko",
+    "sourceFileError": "Tiedosto on viallinen",
+    "notLoadedError": "Ei vielä ladattu, palataan alkuun"
   },
   "filter": {
     "A-Z": "A - Z",
@@ -122,12 +123,12 @@
     "unauthorized": "Sisältö vaatii kirjautumisen",
     "server": "Palvelinvirhe",
     "unexpected": "Odottamaton virhe",
-    "notFound": "Movie not found"
+    "notFound": "Elokuvaa ei löydy"
   },
   "comment": {
-    "invalidFormat": "Wrong format",
-    "success": "Thanks for the comment!",
-    "post": "post comment",
-    "leaveComment": "Leave your comment here"
+    "invalidFormat": "Virheellinen formaatti",
+    "success": "Kiitos kommentista!",
+    "post": "lähetä kommentti",
+    "leaveComment": "Kirjoita kommenttisi tähän"
   }
 }
