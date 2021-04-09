@@ -21,7 +21,6 @@ undefined
 .env
 user_photo/
 images/
-movies/
 subtitles/
 
 npm-debug.log*
