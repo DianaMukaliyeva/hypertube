@@ -1,4 +1,4 @@
-import NodeCache from 'node-cache';
+// import NodeCache from 'node-cache';
 
 import User from '../models/User.js';
 import Movie from '../models/Movie.js';
@@ -7,7 +7,7 @@ import subtitlesUtils from '../utilities/subtitlesAPI.js';
 import movieTorrentUtils from '../utilities/movieTorrent.js';
 import { detailedError } from '../utilities/errors.js';
 
-const downloadCache = new NodeCache({ checkPeriod: 0 });
+// const downloadCache = new NodeCache({ checkPeriod: 0 });
 
 const getMovieList = async (req, res) => {
   const userId = req.user;
