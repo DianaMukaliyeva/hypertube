@@ -94,10 +94,8 @@ OPENSUBTITLES_PASSWORD=your_opensubtitles_password
 
 ```
 
-- To start it - run command `make up`
-  - Delelopment mode running on `localhost:3001`
+- **To start the app** - run command `make up`
+  - Development mode running on `localhost:3001`
   - MongoDb tools `localhost:8081`
 
-`make -j lint` - will check linter for both frontend and backend
-`make lint-front` - will check linter for frontend
-`make lint-back` - will check linter for backend
+
