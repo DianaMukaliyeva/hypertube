@@ -16,12 +16,11 @@ The web application is for education purpose only and is not meant for streaming
 
 ## Team
 
-|  | Tatiana | Diana | Ilja | Esa | Liisa |
+|  | [Tatiana](https://github.com/T7Q) | [Diana](https://github.com/DianaMukaliyeva) | [Ilja](https://github.com/iljaSL) | [Esa](https://github.com/ehalmkro) | [Liisa](https://github.com/lapaset) |
 | - | - |- | - | - | - |
 | *backend* | Auth route | User routes | Github actions, tests, comments routes | Movie routes, filestream, torrent logic | oAuth routes |
 | *frontend* | Forms (login/register/signin) components, UI/UX | Gallery, Filter components | Video player component | - | Profile components, tests, localization |
 | *lead in* | Team lead, frontend lead | Docker / production | Backend tests lead | Backend lead | Frontend test lead |
-|  | [check profile](https://github.com/T7Q) | [check profile](https://github.com/DianaMukaliyeva) | [check profile](https://github.com/iljaSL) | [check profile](https://github.com/ehalmkro) | [check profile](https://github.com/lapaset) |
 
 ## Tech Stack
 
