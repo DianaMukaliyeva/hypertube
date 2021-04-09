@@ -66,11 +66,31 @@ You need to have `.env` file at the root of the project:
 ```
 # development environment variables
 
-# if change BACKEND_PORT_DEV, than also change port in BACKEND_URL
 BACKEND_PORT_DEV=5003
 BACKEND_URL=http://localhost:5003
+SECRET=your_super_big_secret
 
+FRONTEND_URL_DEV=http://localhost:3001
 FRONTEND_PORT_DEV=3001
+
+EMAIL=email_to_send_recovery_link
+EMAIL_PWD=email_password_to_send_recovery_link
+
+OMDB_KEY=your_omdb_key
+TORRENT_API=your_legal_torrent_api
+FRONTEND_PORT_DEV=3001
+
+
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+OMNIAUTH_PW=fake_pwd_for_omniauth
+FORTYTWO_CLIENT_ID=your_fortytwo_client_id
+FORTYTWO_CLIENT_SECRET=your_fortytwo_client_secret
+FORTYTWO_STATE=fake_pwd_for_fortywto
+
+OPENSUBTITLES_MY_USER_AGENT=your_opensubtitles_user_agent
+OPENSUBTITLES_USERNAME=your_opensubtitles_username
+OPENSUBTITLES_PASSWORD=your_opensubtitles_password
 
 ```
 
