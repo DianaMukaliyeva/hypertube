@@ -2,7 +2,7 @@ import fs from 'fs';
 import torrentStream from 'torrent-stream';
 import ffmpeg from 'fluent-ffmpeg';
 
-import movieListUtils from './movieAPIUtilities.js';
+import movieListUtils from './movieAPI.js';
 import Movie from '../models/Movie.js';
 
 const saveFilePath = async ({ imdbCode, magnet }, serverLocation, size) => {
@@ -32,21 +32,30 @@ const startFileStream = (req, res) => {
   }
   const end = isMp4 ? Math.min(start + CHUNK_SIZE, fileSize - 1) : fileSize - 1;
   const contentLength = end - start + 1;
-  const headers = {
-    'Content-Range': `bytes ${start}-${end}/${req.movieSize}`,
-    'Accept-Ranges': 'bytes',
-    'Content-Length': contentLength,
-    'Content-Type': isMp4 ? 'video/mp4' : 'video/webm',
-  };
+  const headers = isMp4
+    ? {
+      'Content-Range': `bytes ${start}-${end}/${req.movieSize}`,
+      'Accept-Ranges': 'bytes',
+      'Content-Length': contentLength,
+      'Content-Type': 'video/mp4',
+    }
+    : {
+      'Content-Range': `bytes ${start}-${end}/${req.movieSize}`,
+      'Accept-Ranges': 'bytes',
+      'Content-Type': 'video/webm',
+    };
   if (notLoaded) {
-    res.writeHead(200, headers);
+    res.writeHead(416, headers);
   } else {
     res.writeHead(206, headers);
   }
   const readStream = fs.createReadStream(filePath, { start, end });
   if (isMp4) readStream.pipe(res);
   else {
-    ffmpeg(readStream).format('webm').on('error', () => {}).pipe(res);
+    ffmpeg(readStream)
+      .format('webm')
+      .on('error', () => {})
+      .pipe(res);
   }
 };
 
@@ -58,11 +67,7 @@ const getMagnet = async (imdbCode) => {
 };
 
 const setMovieAsCompleted = async (imdbCode) => {
-  await Movie.findOneAndUpdate(
-    { imdbCode },
-    { downloadComplete: true },
-    { new: true },
-  );
+  await Movie.findOneAndUpdate({ imdbCode }, { downloadComplete: true }, { new: true });
 };
 
 const downloadMovie = async (movie, downloadCache) => new Promise((resolve) => {
@@ -96,10 +101,7 @@ const downloadMovie = async (movie, downloadCache) => new Promise((resolve) => {
 
   engine.on('download', () => {
     const moviePath = `./movies/${movie.imdbCode}/${filePath}`;
-    if (
-      fs.existsSync(moviePath)
-        && !downloadCache.has(movie.imdbCode)
-    ) {
+    if (fs.existsSync(moviePath) && !downloadCache.has(movie.imdbCode)) {
       if (fs.statSync(moviePath).size / (1024 * 1024) > 20) {
         downloadCache.set(movie.imdbCode, 'downloading');
         resolve();

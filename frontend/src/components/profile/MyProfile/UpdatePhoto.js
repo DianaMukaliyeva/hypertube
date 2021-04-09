@@ -54,6 +54,15 @@ const UpdatePhoto = ({ avatar, setAvatar }) => {
 
     if (!file) return;
 
+    if (!file.name.match(/.(jpg|jpeg|png|gif)$/i)) {
+      setAlert({
+        show: true,
+        message: t('profile.notImage'),
+        severity: 'error',
+      });
+      return;
+    }
+
     if (file.size > 350000) {
       setAlert({
         show: true,
@@ -103,13 +112,17 @@ const UpdatePhoto = ({ avatar, setAvatar }) => {
           color="inherit"
           key="logout"
           onClick={handleDelete}
-          title="delete">
+          title="delete"
+        >
           <DeleteIcon title="trash can" />
         </IconButton>
       )}
 
       {alert.show && (
-        <Alert severity={alert.severity} onClose={() => setAlert({ ...alert, show: false })}>
+        <Alert
+          severity={alert.severity}
+          onClose={() => setAlert({ ...alert, show: false })}
+        >
           {alert.message}
         </Alert>
       )}

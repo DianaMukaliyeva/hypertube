@@ -64,7 +64,8 @@
   },
   "profile": {
     "title": "Profil",
-    "imgSize": "Die maximale Bildgröße beträgt 350kb"
+    "imgSize": "Die maximale Bildgröße beträgt 350kb",
+    "notImage": "Nur jpg/jpeg/png/gif erlaubt"
   },
   "movie": {
     "rating": "Bewertung",

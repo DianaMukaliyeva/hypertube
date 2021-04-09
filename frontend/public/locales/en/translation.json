@@ -64,7 +64,8 @@
   },
   "profile": {
     "title": "Profile",
-    "imgSize": "Max photo size is 350kb"
+    "imgSize": "Max photo size is 350kb",
+    "notImage": "Only jpg/jpeg/png/gif allowed"
   },
   "movie": {
     "rating": "rating",

@@ -30,7 +30,7 @@ const getDateMonthAgo = () => {
 
 const job = new CronJob('00 00 00 * * *', async () => {
   const dateMonthAgo = getDateMonthAgo();
-  const movies = await Movie.find({ lastWatched: { $lte: dateMonthAgo } });
+  const movies = await Movie.find({ downloadComplete: true, lastWatched: { $lte: dateMonthAgo } });
   movies.forEach((movie) => removeMovie(movie));
 });
 

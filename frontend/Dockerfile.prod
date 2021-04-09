@@ -6,12 +6,10 @@ ENV REACT_APP_BACKEND_URL $BACKEND_URL
 
 WORKDIR /app
 
-# Install app dependencies
-COPY package*.json ./
-RUN npm ci
-
 # Bundle app source
 COPY . .
+# Install app dependencies
+RUN npm ci
 
 RUN npm run build
 
