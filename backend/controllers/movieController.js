@@ -1,9 +1,10 @@
 import NodeCache from 'node-cache';
-import movieListUtils from '../utilities/movieAPIUtilities.js';
-import subtitlesUtils from '../utilities/subtitlesAPI.js';
-import movieTorrentUtils from '../utilities/movieTorrentUtilities.js';
-import Movie from '../models/Movie.js';
+
 import User from '../models/User.js';
+import Movie from '../models/Movie.js';
+import movieListUtils from '../utilities/movieAPI.js';
+import subtitlesUtils from '../utilities/subtitlesAPI.js';
+import movieTorrentUtils from '../utilities/movieTorrent.js';
 import { detailedError } from '../utilities/errors.js';
 
 const downloadCache = new NodeCache({ checkPeriod: 0 });
@@ -91,22 +92,6 @@ const playMovie = async (req, res, next) => {
   movieTorrentUtils.startFileStream(req, res, next);
 };
 
-// a controller to demonstrate mkv conversion
-const streamMkv = async (req, res, next) => {
-  const imdbCode = 'MKV_SAMPLE';
-  const magnet = process.env.MKV_MAGNET_LINK;
-  const movie = await Movie.findOne({ imdbCode });
-  if (!movie) {
-    const newMovie = new Movie({
-      imdbCode,
-      magnet,
-    });
-    await newMovie.save();
-  }
-  req.params = { imdbCode };
-  await playMovie(req, res, next);
-};
-
 const getComment = async (req, res) => {
   const { imdbCode } = req.params;
 
@@ -156,7 +141,6 @@ export default {
   getMovieEntry,
   playMovie,
   addComment,
-  streamMkv,
   getComment,
   setWatched,
 };

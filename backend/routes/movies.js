@@ -7,12 +7,6 @@ import inputValidator from '../utilities/inputValidator.js';
 
 const movieRoute = express.Router();
 
-// special route to prove mkv backend .mkv file conversion capabilities
-if (process.env.NODE_ENV === 'development') {
-  movieRoute.get('/streamMkv',
-    movieController.streamMkv);
-}
-
 movieRoute.get('/:imdbCode/play/:token', inputValidator.validateToken, movieController.playMovie);
 
 movieRoute.get('/:imdb_code', middleware.authRequired, movieController.getMovieEntry);
