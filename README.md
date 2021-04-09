@@ -64,6 +64,8 @@ The web application is for education purpose only and is not meant for streaming
 
 ![search&filter](../assets/search_and_filter.gif?raw=true)
 
+![browse&play](../assets/browse_and_play.gif?raw=true)
+
 ## Run locally
 
 - **Create `.env` file at the root of the repo:**
