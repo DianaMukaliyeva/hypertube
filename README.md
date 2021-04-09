@@ -61,7 +61,7 @@ The web application is for education purpose only and is not meant for streaming
 
 ## Run locally
 
-You need to have `.env` file at the root of the project:
+- **Create `.env` file at the root of the repo:**
 
 ```
 # development environment variables
@@ -94,8 +94,9 @@ OPENSUBTITLES_PASSWORD=your_opensubtitles_password
 
 ```
 
-- **To start the app** - run command `make up`
+**To start the app** - run command `make up`
   - Development mode running on `localhost:3001`
   - MongoDb tools `localhost:8081`
+  - Swagger docs `localhost:5003/docs`
 
 
