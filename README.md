@@ -1,10 +1,10 @@
-# Hypertube - streaming site
+# Hypertube - single page torrent-based streaming site
 
 This is a team project, a part of the web branch at [Hive Helsinki](https://www.hive.fi/) coding school.
 
-Web application allowing a user to search and watch movies.
-The videos are downloaded through the BitTorrent protocol.
-TBC....
+Web application allowing a user to search, watch movies and comment.
+The videos are downloaded through the BitTorrent protocol. 
+The web application is for education purpose only and is not meant for streaming torrent. 
 
 - [Team](#team)
 - [Tech stack](#tech-stack)
@@ -15,15 +15,12 @@ TBC....
 
 ## Team
 
-**Tatiana** - _Back/Front_ - [check profile](https://github.com/T7Q)
-
-**Diana** - _Back/Front_ - [check profile](https://github.com/DianaMukaliyeva)
-
-**Ilja** - _Back/Front_ - [check profile](https://github.com/iljaSL)
-
-**Esa** - _Back/Front_ - [check profile](https://github.com/ehalmkro)
-
-**Liisa** - _Back/Front_ - [check profile](https://github.com/lapaset)
+|  | Tatiana | Diana | Ilja | Esa | Liisa |
+| - | - |- | - | - | - |
+| backend | Auth route | User routes | Github actions, tests, comments routes | Movie routes, filestream, torrent logic | oAuth routes |
+| frontend | Forms (login/register/signin) components, UI/UX | Gallery, Filter components | Video player component | - | Profile components, tests, localization |
+| lead in | Team lead, frontend lead | Docker / production | Backend tests lead | Backend lead | Frontend test lead |
+|  | [check profile](https://github.com/T7Q) | [check profile](https://github.com/DianaMukaliyeva) | [check profile](https://github.com/iljaSL) | [check profile](https://github.com/ehalmkro) | [check profile](https://github.com/lapaset) |
 
 ## Tech Stack
 
@@ -33,7 +30,11 @@ TBC....
 - **Libraries:** Material UI
 
 - **Internal API:** REST, view documentation here
-- **External API:** torrent 1?, IMDB, subtitles?
+- **External API:** a Torrent API, OMDB, Open Subtitles
+- **oAuth:** 42, Google
+
+
+![architecture](../assets/architecture.jpg?raw=true)
 
 ## Functionality
 
