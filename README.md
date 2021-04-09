@@ -11,6 +11,7 @@ The web application is for education purpose only and is not meant for streaming
 - [Functionality](#functionality)
 - [App Video Preview](#app-live-preview)
 - [Preview on Heroku](#preview-on-heroku)
+- [App video preview](#app-video-preview)
 - [Run locally](#run-locally)
 
 ## Team
@@ -58,6 +59,9 @@ The web application is for education purpose only and is not meant for streaming
 - Uninterrupted streaming
 - List of comments, option of leaving a comment
 - Movies unwatched for a month erased from the server
+
+## App video preview
+
 
 ## Run locally
 
