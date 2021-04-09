@@ -34,7 +34,7 @@ The web application is for education purpose only and is not meant for streaming
 - **oAuth:** 42, Google
 
 
-![architecture](../assets/architecture.jpg?raw=true)
+![architecture](../assets/architecture.png?raw=true)
 
 ## Functionality
 
