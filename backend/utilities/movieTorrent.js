@@ -20,7 +20,7 @@ const saveFilePath = async ({ imdbCode, magnet }, serverLocation, size) => {
 
 const startFileStream = (req, res) => {
   let notLoaded = false;
-  const filePath = `./movies/${req.params.imdbCode}/${req.serverLocation}`;
+  const filePath = './movies/Jellyfish-10480.mp4';
   const isMp4 = filePath.endsWith('mp4');
   const fileSize = fs.statSync(filePath).size;
   const { range } = req.headers;
@@ -34,7 +34,7 @@ const startFileStream = (req, res) => {
   const contentLength = end - start + 1;
   const headers = isMp4
     ? {
-      'Content-Range': `bytes ${start}-${end}/${req.movieSize}`,
+      'Content-Range': `bytes ${start}-${end}/${fileSize}`,
       'Accept-Ranges': 'bytes',
       'Content-Length': contentLength,
       'Content-Type': 'video/mp4',

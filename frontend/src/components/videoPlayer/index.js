@@ -48,7 +48,7 @@ const VideoPlayer = (data) => {
   const isMobile = useMediaQuery('(max-width:600px)');
   const [refresh, setRefresh] = useState(false);
   const mountedRef = React.useRef(true);
-  const seedersMin = 55;
+  const seedersMin = -1;
 
   const getMovieData = async () => {
     try {

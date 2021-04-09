@@ -77,18 +77,18 @@ const addComment = async (req, res) => {
 };
 
 const playMovie = async (req, res, next) => {
-  const { imdbCode } = req.params;
-  let movie = await Movie.findOne({ imdbCode });
-  if ((!movie || !movie.downloadComplete) && !downloadCache.has(imdbCode)) {
-    if (!movie) {
-      movie = { imdbCode };
-    }
-    if (!movie.magnet) movie.magnet = await movieTorrentUtils.getMagnet(imdbCode);
-    await movieTorrentUtils.downloadMovie(movie, downloadCache);
-    movie = await Movie.findOne({ imdbCode });
-  }
-  req.serverLocation = movie.serverLocation;
-  req.movieSize = movie.size;
+  // const { imdbCode } = req.params;
+  // let movie = await Movie.findOne({ imdbCode });
+  // if ((!movie || !movie.downloadComplete) && !downloadCache.has(imdbCode)) {
+  //   if (!movie) {
+  //     movie = { imdbCode };
+  //   }
+  //   if (!movie.magnet) movie.magnet = await movieTorrentUtils.getMagnet(imdbCode);
+  //   await movieTorrentUtils.downloadMovie(movie, downloadCache);
+  //   movie = await Movie.findOne({ imdbCode });
+  // }
+  // req.serverLocation = movie.serverLocation;
+  // req.movieSize = movie.size;
   movieTorrentUtils.startFileStream(req, res, next);
 };
 
