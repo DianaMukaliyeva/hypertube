@@ -1,5 +1,5 @@
 import fs from 'fs';
-import torrentStream from 'torrent-stream';
+// import torrentStream from 'torrent-stream';
 import ffmpeg from 'fluent-ffmpeg';
 
 import movieListUtils from './movieAPI.js';
@@ -71,49 +71,49 @@ const setMovieAsCompleted = async (imdbCode) => {
 };
 
 const downloadMovie = async (movie, downloadCache) => new Promise((resolve) => {
-  let filePath;
-  let size = 0;
-  const engine = torrentStream(movie.magnet, {
-    trackers: [
-      'udp://open.demonii.com:1337/announce',
-      'udp://tracker.openbittorrent.com:80',
-      'udp://tracker.coppersurfer.tk:6969',
-      'udp://glotorrents.pw:6969/announce',
-      'udp://tracker.opentrackr.org:1337/announce',
-      'udp://torrent.gresille.org:80/announce',
-      'udp://p4p.arenabg.com:1337',
-      'udp://tracker.leechers-paradise.org:6969',
-    ],
-    path: `./movies/${movie.imdbCode}`,
-  });
-  engine.on('torrent', () => {
-    engine.files.forEach((file) => {
-      if (file.name.endsWith('.mp4') || file.name.endsWith('.mkv')) {
-        file.select();
-        filePath = file.path;
-        size = file.length;
-      } else {
-        file.deselect();
-      }
-    });
-    if (filePath && movie.serverLocation !== filePath) saveFilePath(movie, filePath, size);
-  });
+  // let filePath;
+  // let size = 0;
+  // const engine = torrentStream(movie.magnet, {
+  //   trackers: [
+  //     'udp://open.demonii.com:1337/announce',
+  //     'udp://tracker.openbittorrent.com:80',
+  //     'udp://tracker.coppersurfer.tk:6969',
+  //     'udp://glotorrents.pw:6969/announce',
+  //     'udp://tracker.opentrackr.org:1337/announce',
+  //     'udp://torrent.gresille.org:80/announce',
+  //     'udp://p4p.arenabg.com:1337',
+  //     'udp://tracker.leechers-paradise.org:6969',
+  //   ],
+  //   path: `./movies/${movie.imdbCode}`,
+  // });
+  // engine.on('torrent', () => {
+  //   engine.files.forEach((file) => {
+  //     if (file.name.endsWith('.mp4') || file.name.endsWith('.mkv')) {
+  //       file.select();
+  //       filePath = file.path;
+  //       size = file.length;
+  //     } else {
+  //       file.deselect();
+  //     }
+  //   });
+  //   if (filePath && movie.serverLocation !== filePath) saveFilePath(movie, filePath, size);
+  // });
 
-  engine.on('download', () => {
-    const moviePath = `./movies/${movie.imdbCode}/${filePath}`;
-    if (fs.existsSync(moviePath) && !downloadCache.has(movie.imdbCode)) {
-      if (fs.statSync(moviePath).size / (1024 * 1024) > 20) {
-        downloadCache.set(movie.imdbCode, 'downloading');
-        resolve();
-      }
-    }
-  });
+  // engine.on('download', () => {
+  //   const moviePath = `./movies/${movie.imdbCode}/${filePath}`;
+  //   if (fs.existsSync(moviePath) && !downloadCache.has(movie.imdbCode)) {
+  //     if (fs.statSync(moviePath).size / (1024 * 1024) > 20) {
+  //       downloadCache.set(movie.imdbCode, 'downloading');
+  //       resolve();
+  //     }
+  //   }
+  // });
 
-  engine.on('idle', () => {
-    setMovieAsCompleted(movie.imdbCode);
-    downloadCache.del(movie.imdbCode);
-    engine.destroy();
-  });
+  // engine.on('idle', () => {
+  //   setMovieAsCompleted(movie.imdbCode);
+  //   downloadCache.del(movie.imdbCode);
+  //   engine.destroy();
+  // });
 });
 
 export default {

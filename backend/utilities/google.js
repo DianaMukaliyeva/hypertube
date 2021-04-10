@@ -1,6 +1,7 @@
-import { google } from 'googleapis';
+import pkg from 'googleapis';
 import axios from 'axios';
 
+const { google } = pkg;
 const {
   GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BACKEND_URL, NODE_ENV,
 } = process.env;

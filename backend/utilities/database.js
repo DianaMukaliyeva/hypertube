@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
 const connect = () => {
-  const database = process.env.NODE_ENV === 'test' ? 'test' : 'hypertube';
-  mongoose.connect(`mongodb://mongo:27017/${database}`, {
+  // const database = process.env.NODE_ENV === 'test' ? 'test' : 'hypertube';
+  mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,

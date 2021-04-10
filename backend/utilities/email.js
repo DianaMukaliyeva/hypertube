@@ -1,35 +1,33 @@
-import nodemailer from 'nodemailer';
+import request from 'request';
 
-const {
-  EMAIL, EMAIL_PWD, FRONTEND_URL_DEV, NODE_ENV,
-} = process.env;
-const email = EMAIL;
-const emailPassword = EMAIL_PWD;
-
-const url = NODE_ENV === 'production' ? 'http://localhost' : FRONTEND_URL_DEV;
-
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: email,
-    pass: emailPassword,
-  },
-});
-
-const getRootUrl = () => {
-  if (url) return url;
-  return url;
+const getRootUrl = (req) => {
+  return req.protocol + '://' + req.get('host');
 };
 
-const sendMail = (recipient, subject, content) => {
-  const mailOptions = {
-    from: 'hypertube@no-reply.com',
-    to: recipient,
-    subject,
-    html: content,
-  };
+const { TRUSTIFI_KEY, TRUSTIFI_SECRET, TRUSTIFI_URL } = process.env;
 
-  transporter.sendMail(mailOptions);
+const sendMail = (recipient, subject, content) => {
+  const data = {
+    recipients: [{ email: recipient }],
+    title: subject,
+    html: content,
+    recipient,
+  };
+  request.post(
+    TRUSTIFI_URL + '/api/i/v1/email',
+    {
+      headers: {
+        'x-trustifi-key': TRUSTIFI_KEY,
+        'x-trustifi-secret': TRUSTIFI_SECRET,
+        'content-type': 'application/json',
+      },
+      json: data,
+    },
+    (err, res, body) => {
+      console.log(body);
+      console.log('error', err);
+    },
+  );
 };
 
 const translations = (lang, name) => {

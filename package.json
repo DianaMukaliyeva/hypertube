@@ -1,0 +1,22 @@
+{
+  "name": "hypertube",
+  "version": "1.0.0",
+  "description": "This is a team project, a part of the web branch at [Hive Helsinki](https://www.hive.fi/) coding school.",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "install": "cd backend && npm install",
+    "start": "cd backend && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DianaMukaliyeva/hypertube.git"
+  },
+  "author": "",
+  "type": "module",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DianaMukaliyeva/hypertube/issues"
+  },
+  "homepage": "https://github.com/DianaMukaliyeva/hypertube#readme"
+}
