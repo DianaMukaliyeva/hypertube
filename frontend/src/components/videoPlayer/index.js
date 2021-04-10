@@ -22,8 +22,7 @@ const Loader = () => (
 
 const buildTracks = (imdbCode, subsAvailableIn, t) => {
   const subsLables = { en: t('form.en'), de: t('form.de'), fi: t('form.fi'), ru: t('form.ru') };
-  // eslint-disable-next-line no-undef
-  const baseUrl = process.env.REACT_APP_BACKEND_URL;
+  const baseUrl = '';
 
   const token = localStorage.getItem('token');
 

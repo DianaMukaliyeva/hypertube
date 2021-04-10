@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-// eslint-disable-next-line no-undef
-const baseUrl = process.env.REACT_APP_BACKEND_URL + '/api/users';
+const baseUrl = '/api/users';
 
 const get = async (userId) => {
   const res = await axios.get(baseUrl + `/${userId}`);

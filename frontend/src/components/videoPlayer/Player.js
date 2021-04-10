@@ -14,9 +14,7 @@ const Player = ({ subsTracks, imdbCode }) => {
   const token = localStorage.getItem('token');
   const { t } = useTranslation();
   const playerRef = useRef(null);
-  const streamUrl =
-    // eslint-disable-next-line no-undef
-    process.env.REACT_APP_BACKEND_URL + `/api/movies/${imdbCode}/play/${token}`;
+  const streamUrl = `/api/movies/${imdbCode}/play/${token}`;
 
   const [statusPlayer, setStatusPlayer] = useState('');
   const [error, setError] = useState(false);

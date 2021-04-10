@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-// eslint-disable-next-line no-undef
-const baseUrl = process.env.REACT_APP_BACKEND_URL + '/api/movies';
+const baseUrl = '/api/movies';
 
 const generateQueryParams = (filter, search) => {
   let params = Object.keys(filter).reduce((result, key) => {
