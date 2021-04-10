@@ -1,3 +1,4 @@
+/* eslint-disable */
 import express from 'express';
 import cors from 'cors';
 import 'express-async-errors';
@@ -12,6 +13,7 @@ import database from './utilities/database.js';
 import middleware from './utilities/middleware.js';
 // import swaggerDocs from './utilities/swagger.js';
 import { fileURLToPath } from 'url';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -30,7 +32,6 @@ app.use('/api/users', userRoute);
 // app.use('/docs', swaggerDocs);
 
 app.get('*', (req, res) => {
-  console.log('we are here');
   res.sendFile(path.join(__dirname + '/build/index.html'));
 });
 

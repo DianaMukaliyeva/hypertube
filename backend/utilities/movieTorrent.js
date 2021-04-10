@@ -66,13 +66,13 @@ const getMagnet = async (imdbCode) => {
   return `magnet:?xt=urn:btih:${hash}&dn=${torrentData.title_long.split(' ').join('+')}`;
 };
 
-const setMovieAsCompleted = async (imdbCode) => {
-  await Movie.findOneAndUpdate({ imdbCode }, { downloadComplete: true }, { new: true });
-};
+// const setMovieAsCompleted = async (imdbCode) => {
+//   await Movie.findOneAndUpdate({ imdbCode }, { downloadComplete: true }, { new: true });
+// };
 
 const downloadMovie = async (movie, downloadCache) => new Promise((resolve) => {
-  // let filePath;
-  // let size = 0;
+  let filePath;
+  const size = 0;
   // const engine = torrentStream(movie.magnet, {
   //   trackers: [
   //     'udp://open.demonii.com:1337/announce',
@@ -96,17 +96,17 @@ const downloadMovie = async (movie, downloadCache) => new Promise((resolve) => {
   //       file.deselect();
   //     }
   //   });
-  //   if (filePath && movie.serverLocation !== filePath) saveFilePath(movie, filePath, size);
+  if (filePath && movie.serverLocation !== filePath) saveFilePath(movie, filePath, size);
   // });
 
   // engine.on('download', () => {
-  //   const moviePath = `./movies/${movie.imdbCode}/${filePath}`;
-  //   if (fs.existsSync(moviePath) && !downloadCache.has(movie.imdbCode)) {
-  //     if (fs.statSync(moviePath).size / (1024 * 1024) > 20) {
-  //       downloadCache.set(movie.imdbCode, 'downloading');
-  //       resolve();
-  //     }
-  //   }
+  const moviePath = `./movies/${movie.imdbCode}/${filePath}`;
+  if (fs.existsSync(moviePath) && !downloadCache.has(movie.imdbCode)) {
+    if (fs.statSync(moviePath).size / (1024 * 1024) > 20) {
+      downloadCache.set(movie.imdbCode, 'downloading');
+      resolve();
+    }
+  }
   // });
 
   // engine.on('idle', () => {

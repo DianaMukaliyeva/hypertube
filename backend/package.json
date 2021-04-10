@@ -7,7 +7,7 @@
     "start": "node server.js",
     "dev": "nodemon --inspect=0.0.0.0 -e yaml,js server.js",
     "test": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --verbose --runInBand --detectOpenHandles",
-    "lint": "eslint . --ignore-path .gitignore --max-warnings 0",
+    "lint": "eslint . --ignore-path .gitignore --max-warnings 0 --ignore-pattern build",
     "lint:fix": "eslint --fix --ext .js,.jsx ."
   },
   "author": "",

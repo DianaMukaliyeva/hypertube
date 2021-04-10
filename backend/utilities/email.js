@@ -1,3 +1,4 @@
+/* eslint-disable */
 import request from 'request';
 
 const getRootUrl = (req) => {
