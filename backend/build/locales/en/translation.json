@@ -1,0 +1,134 @@
+{
+  "navbar": {
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "form": {
+    "username": "Username",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "password": "Password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "selectLanguage": "Select language",
+    "en": "English",
+    "de": "German",
+    "ru": "Russian",
+    "fi": "Finnish",
+    "or": "or"
+  },
+  "formValidation": {
+    "required": "Required field",
+    "unique": "Not unique",
+    "minLen": "Must be at least 2 characters",
+    "maxLen": "Must be max 45 characters",
+    "nameFormat": "Must contain only letters and numbers",
+    "passwordFormat": "Must contain at least 1 upper case, 1 lower case, 1 number",
+    "emailFormat": "Must be valid email",
+    "pwNoMatch": "Passwords don't match",
+    "wrongPw": "Wrong password",
+    "invalidCredentials": "Invalid credentials",
+    "notFound": "Not found",
+    "notValid": "Not valid",
+    "correct": "✔️"
+  },
+  "login": {
+    "title": "Login",
+    "google": "Login with Google",
+    "42": "Login with 42",
+    "login": "Login",
+    "forgotPw": "Forgot password?",
+    "tryAgain": "Something went wrong. Please login again!"
+  },
+  "pwRecovery": {
+    "title": "Recover password",
+    "send": "Send",
+    "helper": "Recovery link will be send to your email",
+    "checkEmail": "Check your email for further instructions",
+    "invalidLink": "Invalid link, please try again",
+    "success": "Password was successfully updated",
+    "pwResetTitle": "Reset Password",
+    "save": "Save"
+  },
+  "createAccount": {
+    "title": "Create Account",
+    "success": "Account created successfully",
+    "create": "Create Account"
+  },
+  "myProfile": {
+    "title": "My Profile",
+    "update": "Update Information",
+    "updatePassword": "Update Password"
+  },
+  "profile": {
+    "title": "Profile",
+    "imgSize": "Max photo size is 350kb",
+    "notImage": "Only jpg/jpeg/png/gif allowed"
+  },
+  "movie": {
+    "rating": "rating",
+    "watched": "watched movie",
+    "notAvailable": "not available",
+    "subtitles": "Subtitles",
+    "director": "Director",
+    "cast": "Cast",
+    "noSeeds": "Video unavailable, not enough seeders. Please, come back later",
+    "playing": "playing...",
+    "buffering": "buffering...",
+    "paused": "paused",
+    "sourceFileError": "Error with the source file",
+    "notLoadedError": "Not loaded yet, the movie will be set to start"
+  },
+  "filter": {
+    "A-Z": "",
+    "Z-A": "",
+    "searchLabel": "Search",
+    "ratingLabel": "IMDb rating",
+    "genreLabel": "Genre",
+    "sortLabel": "Sort by",
+    "mostPopular": "Most Popular",
+    "leastPopular": "Least Popular",
+    "newest": "Newest",
+    "oldest": "Oldest"
+  },
+  "genres": {
+    "comedy": "Comedy",
+    "sci-fi": "Sci-Fi",
+    "horror": "Horror",
+    "romance": "Romance",
+    "action": "Action",
+    "thriller": "Thriller",
+    "drama": "Drama",
+    "documentary": "Documentary",
+    "mystery": "Mystery",
+    "crime": "Crime",
+    "animation": "Animation",
+    "adventure": "Adventure",
+    "fantasy": "Fantasy",
+    "superhero": "Superhero",
+    "biography": "Biography",
+    "family": "Family",
+    "history": "History",
+    "film-noir": "Film Noir",
+    "musical": "Musical",
+    "sport": "Sport",
+    "war": "War"
+  },
+  "gallery": {
+    "noMovies": "No movies found"
+  },
+  "error": {
+    "unauthorized": "Unauthorized",
+    "server": "Server error",
+    "unexpected": "Unexpected error",
+    "notFound": "Movie not found"
+  },
+  "comment": {
+    "invalidFormat": "Wrong format",
+    "success": "Thanks for the comment!",
+    "post": "post comment",
+    "leaveComment": "Leave a comment"
+  }
+}

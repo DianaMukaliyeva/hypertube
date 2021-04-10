@@ -1,0 +1,134 @@
+{
+  "navbar": {
+    "profile": "Profil",
+    "logout": "Abmelden"
+  },
+  "form": {
+    "username": "Benutzername",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "Email",
+    "password": "Passwort",
+    "currentPassword": "Aktueller Passwort",
+    "newPassword": "Neuer Passwort",
+    "confirmPassword": "Bestätige Passwort",
+    "selectLanguage": "Wähle Benutzersprache",
+    "en": "Englisch",
+    "de": "Deutsch",
+    "ru": "Russisch",
+    "fi": "Finnisch",
+    "or": "oder"
+  },
+  "formValidation": {
+    "required": "Pflichtfeld",
+    "unique": "Vergeben",
+    "minLen": "Mindestens 2 Zeichen notwendig",
+    "maxLen": "Maximal 45 Zeichen zulässig",
+    "nameFormat": "Erlaubt sind nur Buchstaben und Zahlen",
+    "passwordFormat": "Passwort muss mindestens einen Grossbuchstaben, Kleinbuchstaben und Zahl enthalten",
+    "emailFormat": "Email ist nicht gültig",
+    "pwNoMatch": "Die Passwörter stimmen nicht überein",
+    "wrongPw": "Falsches Passwort",
+    "invalidCredentials": "Falsche Anmeldungsdaten",
+    "notFound": "Datei nicht gefunden",
+    "notValid": "Ungültig",
+    "correct": "✔️"
+  },
+  "login": {
+    "title": "Anmelden",
+    "google": "Anmelden mit Google",
+    "42": "Anmelden mit 42",
+    "login": "Anmelden",
+    "forgotPw": "Passwort vergessen?",
+    "tryAgain": "Something went wrong. Please login again!"
+  },
+  "pwRecovery": {
+    "title": "Passwort wiederherstellen",
+    "send": "Senden",
+    "helper": "Der Wiederherstellungslink wird an Ihre angegebene Email versendet",
+    "checkEmail": "Bitte überprüfen Sie ihre Email und folgen Sie den Anweisungen",
+    "invalidLink": "Ungültiger Link, versuchen Sie erneut",
+    "success": "Passwort wurde erfolgreich aktualisiert",
+    "pwResetTitle": "Passwort zurücksetzen",
+    "save": "Speichern"
+  },
+  "createAccount": {
+    "title": "Account erstellen",
+    "success": "Account erfolgreich erstellt",
+    "create": "Account erstellen"
+  },
+  "myProfile": {
+    "title": "Mein Profil",
+    "update": "Informationen aktualisieren",
+    "updatePassword": "Passwort aktualisieren"
+  },
+  "profile": {
+    "title": "Profil",
+    "imgSize": "Die maximale Bildgröße beträgt 350kb",
+    "notImage": "Nur jpg/jpeg/png/gif erlaubt"
+  },
+  "movie": {
+    "rating": "Bewertung",
+    "watched": "Film angeschaut",
+    "notAvailable": "Nicht verfügbar",
+    "subtitles": "Untertitel",
+    "director": "Regisseur",
+    "cast": "Filmbesetzung",
+    "noSeeds": "Video unavailable, not enough seeders. Please, come back later",
+    "playing": "playing...",
+    "buffering": "buffering...",
+    "paused": "paused",
+    "sourceFileError": "Error with the source file",
+    "notLoadedError": "Not loaded yet, the movie will be set to start"
+  },
+  "filter": {
+    "A-Z": "A - Z",
+    "Z-A": "A - Z",
+    "searchLabel": "Suche nach einen Film",
+    "ratingLabel": "IMDb Bewertung",
+    "genreLabel": "Genre",
+    "sortLabel": "Sortiert nach",
+    "mostPopular": "Beliebteste",
+    "leastPopular": "Unbeliebteste",
+    "newest": "Neueste",
+    "oldest": "Älteste"
+  },
+  "genres": {
+    "comedy": "Komödie",
+    "sci-fi": "Sci-Fi",
+    "horror": "Horror",
+    "romance": "Romantik",
+    "action": "Action",
+    "thriller": "Thriller",
+    "drama": "Drama",
+    "documentary": "Dokumentarfilm",
+    "mystery": "Mystery",
+    "crime": "Krimi",
+    "animation": "Animation",
+    "adventure": "Abenteuer",
+    "fantasy": "Fantasy",
+    "superhero": "Superhelden",
+    "biography": "Biographie",
+    "family": "Familie",
+    "history": "Historie",
+    "film-noir": "Film Noir",
+    "musical": "Musical",
+    "sport": "Sport",
+    "war": "Krieg"
+  },
+  "gallery": {
+    "noMovies": "Keine Filme gefunden"
+  },
+  "error": {
+    "unauthorized": "Unbefugt",
+    "server": "Der Server ist nich verfügbar",
+    "unexpected": "Unerwarteter Fehler",
+    "notFound": "Movie not found"
+  },
+  "comment": {
+    "invalidFormat": "Falsches Format",
+    "success": "Vielen Dank für den Kommentar",
+    "post": "Senden",
+    "leaveComment": "Hinterlassen Sie hier Ihr Kommentar"
+  }
+}

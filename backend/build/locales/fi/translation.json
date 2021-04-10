@@ -1,0 +1,134 @@
+{
+  "navbar": {
+    "profile": "Profiili",
+    "logout": "Kirjaudu ulos"
+  },
+  "form": {
+    "username": "Käyttäjänimi",
+    "firstName": "Etunimi",
+    "lastName": "Sukunimi",
+    "email": "Email",
+    "password": "Salasana",
+    "currentPassword": "Nykyinen salasana",
+    "newPassword": "Uusi salasana",
+    "confirmPassword": "Vahvista salasana",
+    "selectLanguage": "Valitse kieli",
+    "en": "Englanti",
+    "de": "Saksa",
+    "ru": "Venäjä",
+    "fi": "Suomi",
+    "or": "tai"
+  },
+  "formValidation": {
+    "required": "Pakollinen kenttä",
+    "unique": "Ei uniikki",
+    "minLen": "Vähintään kaksi merkkiä",
+    "maxLen": "Enintään 45 merkkiä",
+    "nameFormat": "Vain kirjaimet ja numerot on sallittu",
+    "passwordFormat": "Vähintään yksi iso ja pieni kirjain sekä yksi numero vaaditaan",
+    "emailFormat": "Toimiva email osoite vaaditaan",
+    "pwNoMatch": "Salasanat eivät täsmää",
+    "wrongPw": "Väärä salasana",
+    "invalidCredentials": "Virhe kirjautumistiedoissa",
+    "notFound": "Ei löydy",
+    "notValid": "Virheellinen tieto",
+    "correct": "✔️"
+  },
+  "login": {
+    "title": "Kirjaudu sisään",
+    "google": "Kirjaudu Google-tilillä",
+    "42": "Kirjaudu 42-tilillä",
+    "login": "Kirjaudu",
+    "forgotPw": "Unohtuiko salasana?",
+    "tryAgain": "Jokin meni pieleen. Yritä uudestaan!"
+  },
+  "pwRecovery": {
+    "title": "Palauta salasana",
+    "send": "Lähetä",
+    "helper": "Lähetämme palautuslinkin sähköpostiisi",
+    "checkEmail": "Löydät jatko-ohjeet sähköpostistasi",
+    "invalidLink": "Viallinen linkki, yritä uudestaan",
+    "success": "Salasanan päivitys onnistui",
+    "pwResetTitle": "Päivitä salasana",
+    "save": "Tallenna"
+  },
+  "createAccount": {
+    "title": "Luo tili",
+    "success": "Käyttäjätilin luominen onnistui",
+    "create": "Luo tili"
+  },
+  "myProfile": {
+    "title": "Minun profiilini",
+    "update": "Päivitä tiedot",
+    "updatePassword": "Päivitä salasana"
+  },
+  "profile": {
+    "title": "Profiili",
+    "imgSize": "Kuvan maksimikoko on 350kb",
+    "notImage": "Vain jpg/jpeg/png/gif sallittu"
+  },
+  "movie": {
+    "rating": "Arvio",
+    "watched": "Nähty",
+    "notAvailable": "Ei saatavilla",
+    "subtitles": "Tekstitys",
+    "director": "Ohjaaja",
+    "cast": "Näyttelijät",
+    "noSeeds": "Videoa ei jaeta juuri nyt riittävästi. Yritä myöhemmin uudestaan!",
+    "playing": "toistetaan...",
+    "buffering": "ladataan...",
+    "paused": "tauko",
+    "sourceFileError": "Tiedosto on viallinen",
+    "notLoadedError": "Ei vielä ladattu, palataan alkuun"
+  },
+  "filter": {
+    "A-Z": "A - Z",
+    "Z-A": "A - Z",
+    "searchLabel": "Etsi elokuvaa",
+    "ratingLabel": "IMDb arvio",
+    "genreLabel": "Genre",
+    "sortLabel": "Lajittele",
+    "mostPopular": "Suosituin",
+    "leastPopular": "Vähiten suosittu",
+    "newest": "Uusin",
+    "oldest": "Vanhin"
+  },
+  "genres": {
+    "comedy": "Komedia",
+    "sci-fi": "Scifi",
+    "horror": "Kauhu",
+    "romance": "Romantiikka",
+    "action": "Toiminta",
+    "thriller": "Trilleri",
+    "drama": "Draama",
+    "documentary": "Documentti",
+    "mystery": "Mysteeri",
+    "crime": "Rikos",
+    "animation": "Animaatio",
+    "adventure": "Seikkailu",
+    "fantasy": "Fantasia",
+    "superhero": "Supersankari",
+    "biography": "Elämänkerta",
+    "family": "Perhe",
+    "history": "Historia",
+    "film-noir": "Film Noir",
+    "musical": "Musikaali",
+    "sport": "Urheilu",
+    "war": "Sota"
+  },
+  "gallery": {
+    "noMovies": "Elokuvia ei löytynyt"
+  },
+  "error": {
+    "unauthorized": "Sisältö vaatii kirjautumisen",
+    "server": "Palvelinvirhe",
+    "unexpected": "Odottamaton virhe",
+    "notFound": "Elokuvaa ei löydy"
+  },
+  "comment": {
+    "invalidFormat": "Virheellinen formaatti",
+    "success": "Kiitos kommentista!",
+    "post": "lähetä kommentti",
+    "leaveComment": "Kirjoita kommenttisi tähän"
+  }
+}
