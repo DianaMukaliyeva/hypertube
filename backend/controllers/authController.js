@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import { v4 as uuid } from 'uuid';
 
 import User from '../models/User.js';
-// import sendResetEmail from '../utilities/email.js';
+import sendResetEmail from '../utilities/email.js';
 import google from '../utilities/google.js';
 import fortytwo from '../utilities/42.js';
 
@@ -57,7 +57,7 @@ const recoveryEmail = async (req, res) => {
   const token = jwt.sign(userForToken, process.env.SECRET);
   user.token = token;
   await user.save();
-  // sendResetEmail(user.email, user.firstname, token, req, user.language);
+  sendResetEmail(user.email, user.firstname, token, req, user.language);
 
   res.status(200).json('success');
 };
