@@ -2,10 +2,8 @@ import pkg from 'googleapis';
 import axios from 'axios';
 
 const { google } = pkg;
-const {
-  GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BACKEND_URL, NODE_ENV,
-} = process.env;
-const backendURI = NODE_ENV === 'production' ? 'http://localhost' : BACKEND_URL;
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
+const backendURI = 'https://hypertube-demo.herokuapp.com';
 
 const oauth2Client = new google.auth.OAuth2(
   GOOGLE_CLIENT_ID,

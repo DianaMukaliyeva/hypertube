@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const backendURI = process.env.NODE_ENV === 'production' ? 'http://localhost' : process.env.BACKEND_URL;
+const backendURI = 'https://hypertube-demo.herokuapp.com';
 const redirectURI = `${backendURI}/api/auth/42/callback`;
 
 const get42URL = () => {
