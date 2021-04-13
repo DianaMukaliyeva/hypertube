@@ -7,7 +7,7 @@ import sendResetEmail from '../utilities/email.js';
 import google from '../utilities/google.js';
 import fortytwo from '../utilities/42.js';
 
-const { FRONTEND_URL } = process.env;
+const FRONTEND_URL = 'https://hypertube-demo.herokuapp.com';
 const userToken = {};
 
 const setUserToken = (id, lang) => {
