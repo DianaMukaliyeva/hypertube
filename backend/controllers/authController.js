@@ -7,7 +7,7 @@ import sendResetEmail from '../utilities/email.js';
 import google from '../utilities/google.js';
 import fortytwo from '../utilities/42.js';
 
-const FRONTEND_URL = process.env.FRONTEND_URL;
+const { FRONTEND_URL } = process.env;
 const userToken = {};
 
 const setUserToken = (id, lang) => {
