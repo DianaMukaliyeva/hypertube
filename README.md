@@ -10,7 +10,7 @@ The web application is for education purpose only and is not meant for streaming
 - [Tech stack](#tech-stack)
 - [Functionality](#functionality)
 - [App Video Preview](#app-live-preview)
-- [Preview on Heroku(TBC)](#preview-on-heroku)
+- [Preview on Heroku(TBC)](https://hypertube-demo.herokuapp.com/)
 - [App video preview](#app-video-preview)
 - [Run locally](#run-locally)
 
