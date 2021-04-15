@@ -10,9 +10,9 @@ The web application is for education purpose only and is not meant for streaming
 - [Tech stack](#tech-stack)
 - [API Documentation](https://app.swaggerhub.com/apis-docs/hypertubeHive/Hypertube/1.0.0)
 - [Functionality](#functionality)
-- [App Preview](#app-preview)
-- [Preview on Heroku](https://hypertube-demo.herokuapp.com/)
-- [App Preview](#app-preview)
+- Preview
+  - [Heroku](https://hypertube-demo.herokuapp.com/)
+  - [App Preview](#app-preview)
 - [Run locally](#run-locally)
 
 ## Team
