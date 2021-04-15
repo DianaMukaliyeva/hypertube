@@ -30,7 +30,7 @@ The web application is for education purpose only and is not meant for streaming
 - **[Micro]Frameworks:** NodeJs - Express - React
 - **Libraries:** Material UI
 
-- **Internal API:** REST, view [**API documentation**]((https://app.swaggerhub.com/apis-docs/hypertubeHive/Hypertube/1.0.0))
+- **Internal API:** REST, view [**API documentation**](https://app.swaggerhub.com/apis-docs/hypertubeHive/Hypertube/1.0.0)
 - **External API:** a Torrent API, OMDB, Open Subtitles
 - **oAuth:** 42, Google
 
