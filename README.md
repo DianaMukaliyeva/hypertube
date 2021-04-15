@@ -4,6 +4,7 @@ This is a team project, a part of the web branch at [Hive Helsinki](https://www.
 
 Web application allowing a user to search, watch movies and comment.
 The videos are downloaded through the BitTorrent protocol. 
+
 The web application is for education purpose only and is not meant for streaming torrent. 
 
 - [Team](#team)
