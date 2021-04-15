@@ -10,9 +10,9 @@ The web application is for education purpose only and is not meant for streaming
 - [Tech stack](#tech-stack)
 - [API Documentation](https://app.swaggerhub.com/apis-docs/hypertubeHive/Hypertube/1.0.0)
 - [Functionality](#functionality)
-- [App Video Preview](#app-live-preview)
+- [App Preview](#app-preview)
 - [Preview on Heroku](https://hypertube-demo.herokuapp.com/)
-- [App video preview](#app-video-preview)
+- [App Preview](#app-preview)
 - [Run locally](#run-locally)
 
 ## Team
@@ -30,7 +30,7 @@ The web application is for education purpose only and is not meant for streaming
 - **[Micro]Frameworks:** NodeJs - Express - React
 - **Libraries:** Material UI
 
-- **Internal API:** REST, view documentation here
+- **Internal API:** REST, view [**API documentation**]((https://app.swaggerhub.com/apis-docs/hypertubeHive/Hypertube/1.0.0))
 - **External API:** a Torrent API, OMDB, Open Subtitles
 - **oAuth:** 42, Google
 
@@ -60,7 +60,7 @@ The web application is for education purpose only and is not meant for streaming
 - List of comments, option of leaving a comment
 - Movies unwatched for a month erased from the server
 
-## App video preview
+## App preview
 ![login](../assets/login.gif?raw=true)
 
 ![search&filter](../assets/search_and_filter.gif?raw=true)
