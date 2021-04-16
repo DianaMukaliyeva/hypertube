@@ -20,8 +20,8 @@ The web application is for education purpose only and is not meant for streaming
 
 |                                             | lead in                   | backend                             | frontend                                             |
 | ------------------------------------------- | ---------------------------- | --------------------------------------- | --------------------------------------------------------- |
-| [Tatiana](https://github.com/T7Q)           | **Team lead, frontend lead** | Auth, subtitles routes                  | Forms components (login / register / pwd recovery), UI/UX |
-| [Diana](https://github.com/DianaMukaliyeva) | **Docker, production lead**  | User routes                             | Gallery, Filter components                                |
+| [Tatiana](https://github.com/T7Q)           | **Team lead, Frontend lead** | Auth, subtitles routes                  | Forms components (login / register / pwd recovery), UI/UX |
+| [Diana](https://github.com/DianaMukaliyeva) | **DevOps lead (Docker, production)**  | User routes                             | Gallery, Filter components                                |
 | [Ilja](https://github.com/iljaSL)           | **Backend tests lead**       | Github actions, tests, comments routes  | Video player component                                    |
 | [Esa](https://github.com/ehalmkro)          | **Backend lead**             | Movie routes, filestream, torrent logic | -                                                         |
 | [Liisa](https://github.com/lapaset)         | **Frontend test lead**       | oAuth routes                            | Profile components, tests, localization                   |
