@@ -12,7 +12,7 @@ The web application is for education purpose only and is not meant for streaming
 - [API Documentation](https://app.swaggerhub.com/apis-docs/hypertubeHive/Hypertube/1.0.0)
 - [Functionality](#functionality)
 - Preview
-  - [Heroku](https://hypertube-demo.herokuapp.com/)
+  - [**Heroku** (demo username **hypertube2021@gmail.com** password **1234Aa**)](https://hypertube-demo.herokuapp.com/)
   - [App Preview](#app-preview)
 - [Run locally](#run-locally)
 
