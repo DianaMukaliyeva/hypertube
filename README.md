@@ -12,7 +12,7 @@ The web application is for education purpose only and is not meant for streaming
 - [API Documentation](https://app.swaggerhub.com/apis-docs/hypertubeHive/Hypertube/1.0.0)
 - [Functionality](#functionality)
 - Preview
-  - [**Heroku** (demo username **hypertube2021@gmail.com** password **1234Aa**)](https://hypertube-demo.herokuapp.com/)
+  - **DISABLED FOR NOW** ~~[**Heroku** (demo username **hypertube2021@gmail.com** password **1234Aa**)](https://hypertube-demo.herokuapp.com/)~~
   - [App Preview](#app-preview)
 - [Run locally](#run-locally)
 
@@ -72,36 +72,46 @@ The web application is for education purpose only and is not meant for streaming
 
 ## Run locally
 
-- **Create `.env` file at the root of the repo:**
+- Requirements: **Docker 19.03.0 or higher**, accounts/API keys for [Google/Gmail](https://accounts.google.com/SignUp), 
+[OMDb API](http://www.omdbapi.com), [42API](https://api.intra.42.fr/apidoc) and 
+[OpenSubtitles API](https://opensubtitles.stoplight.io/docs/opensubtitles-api/ZG9jOjI3NTQ2OTAy-getting-started).
+
+- Create `.env` file at the root of the repo and set the variables:
 
 ```
 # development environment variables
 
 BACKEND_PORT_DEV=5003
 BACKEND_URL=http://localhost:5003
-SECRET=your_super_big_secret
+SECRET=[your_secret]
 
 FRONTEND_URL_DEV=http://localhost:3001
 FRONTEND_PORT_DEV=3001
 
-EMAIL=email_to_send_recovery_link
-EMAIL_PWD=email_password_to_send_recovery_link
 
-OMDB_KEY=your_omdb_key
-TORRENT_API=your_legal_torrent_api
-FRONTEND_PORT_DEV=3001
+# API keys / credentials
 
+# Google/Gmail
+EMAIL=[gmail_to_send_recovery_link]
+EMAIL_PWD=[gmail_password_to_send_recovery_link]
 
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-OMNIAUTH_PW=fake_pwd_for_omniauth
-FORTYTWO_CLIENT_ID=your_fortytwo_client_id
-FORTYTWO_CLIENT_SECRET=your_fortytwo_client_secret
-FORTYTWO_STATE=fake_pwd_for_fortywto
+GOOGLE_CLIENT_ID=[your_google_client_id]
+GOOGLE_CLIENT_SECRET=[your_google_client_secret]
 
-OPENSUBTITLES_MY_USER_AGENT=your_opensubtitles_user_agent
-OPENSUBTITLES_USERNAME=your_opensubtitles_username
-OPENSUBTITLES_PASSWORD=your_opensubtitles_password
+# OMDB / A Torrent API
+OMDB_KEY=[your_omdb_key]
+TORRENT_API=[your_legal_torrent_api_address]
+
+# 42API
+OMNIAUTH_PW=[your_pwd_for_omniauth]
+FORTYTWO_CLIENT_ID=[your_fortytwo_client_id]
+FORTYTWO_CLIENT_SECRET=[your_fortytwo_client_secret]
+FORTYTWO_STATE=[fake_pwd_for_fortytwo]
+
+# OpenSubtitles
+OPENSUBTITLES_MY_USER_AGENT=[your_opensubtitles_user_agent]
+OPENSUBTITLES_USERNAME=[your_opensubtitles_username]
+OPENSUBTITLES_PASSWORD=[your_opensubtitles_password]
 
 ```
 
